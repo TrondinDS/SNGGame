@@ -1,0 +1,40 @@
+@startuml Databases Organization
+
+title Организация баз данных
+
+rectangle "User"
+rectangle "Ban"
+rectangle "ChatFeedback"
+rectangle "Complain"
+
+package "StudioGame" {
+    rectangle "Studio"
+    rectangle "Game"
+    Studio --> Game
+}
+
+package "UserActivity" {
+    rectangle "Topic"
+    rectangle "Comment"
+    rectangle "Reaction"
+    
+    Topic --> Comment
+    Topic --> Reaction
+    Comment --> Reaction
+}
+
+package "OrganizerEvent" {
+    rectangle "Organizer"
+    rectangle "Event"
+    Organizer --> Event
+}
+
+StudioGame --> UserActivity
+OrganizerEvent --> UserActivity
+
+User --> Ban
+UserActivity --> Ban
+ChatFeedback --> User
+Complain --> User
+
+@enduml
