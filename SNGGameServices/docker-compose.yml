@@ -1,0 +1,38 @@
+services:
+  userservices:
+    build:
+      context: ./UserService
+      dockerfile: Dockerfile
+    image: myuserimage:latest
+    volumes:
+      - .:/app
+    ports:
+      - "5285:80"
+    depends_on:
+      - user-db
+
+  user-db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: userdb
+    ports:
+      - "5433:5432"
+    volumes:
+      - user_db_data:/var/lib/postgresql/data
+      - ./userdbinit.sql:/docker-entrypoint-initdb.d/init.sql
+  
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: 123
+    ports:
+      - "5050:80"
+    depends_on:
+      - user-db
+
+volumes:
+  user_db_data:
+
