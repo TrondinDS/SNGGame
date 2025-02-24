@@ -2,6 +2,7 @@
 
 title "Взаимодействия пользователя с системой"
 
+skinparam actorStyle awesome
 :Пользователь: as user
 
 usecase "Обсуждение студии" as studio_topic

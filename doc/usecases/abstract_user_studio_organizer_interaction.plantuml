@@ -2,7 +2,10 @@
 
 title "Взаимодействия между пользователем, студией и огранизатором"
 
+skinparam actorStyle awesome
 :Пользователь: as user
+
+skinparam actorStyle hollow
 :Студия: as studio
 :Организатор: as organizer
 
