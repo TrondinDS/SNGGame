@@ -1,0 +1,121 @@
+@startuml
+
+/'
+ ' Деталиpованная диаграмма случаев использования, которая скорее
+ ' всего сделана неправильно, потому что на этих диаграммах максимум
+ ' может быть примерно 7 случаев использования. Но пусть она лежит пока
+ ' здесь, вдруг потом пригодится.
+ '
+ ' Стоит отметить, что она ещё не завершена.
+ '/
+
+:Пользователь: as user
+:Студия: as studio
+' :Организатор: as organizer
+' :Модератор: as moder
+
+usecase "Подать жалобу" as file_complaint
+usecase "Редактировать\nпрофиль" as edit_profile
+usecase "Отреагировать\nна обсуждение\nигры" as react_on_game_topic
+usecase "Отреагировать\nнакомментарий\nобсуждения игры" as react_on_game_topic_comment
+usecase "Отреагировать\nна обсуждение студии" as react_on_studio_game_topic
+usecase "Отреагировать\nна комментарий обсуждения\nстудии" as react_on_studio_topic_comment
+
+usecase "Написать комментарий в обсуждении студии" as comment_in_studio_topic
+usecase "Написать коммнетарий в обсуждении игры" as comment_in_game_topic
+
+usecase "Создать страницу студии" as create_studio_page
+usecase "Редактировать страницу студии" as edit_studio_page
+
+usecase "Создать обсуждение студии" as create_studio_topic
+usecase "Модерировать обсуждение студии" as  mode_studio_topic
+
+usecase "Создать страницу игры" as create_game_page
+usecase "Редактировать страницу игры" as edit_game_page
+
+usecase "Создать обсуждение игры" as create_game_topic
+usecase "Модерировать обсуждение студии" as mode_game_topic
+
+usecase "Создать страницу студии" as create_studio_page
+usecase "Редактировать страницу студии" as edit_studio_page
+
+' usecase "Запретить писать комментарии пользователю"
+' usecase "Запретить создатьвать обсуждения пользователю"
+' usecase "Заблокировать пользователя"
+' usecase "Заблокировать студию"
+' usecase "Заблокировать игру"
+' usecase "Обработать обращение пользователя"
+
+
+user -> file_complaint
+user -> edit_profile
+user -> react_on_game_topic
+user -> react_on_game_topic_comment
+user -> react_on_studio_game_topic
+user -> react_on_studio_topic_comment
+user -> comment_in_studio_topic
+user -> comment_in_game_topic
+user -> create_studio_topic
+user -> create_game_topic
+
+studio --> react_on_game_topic
+studio --> react_on_game_topic_comment
+studio --> react_on_studio_game_topic
+studio --> react_on_studio_topic_comment
+studio --> comment_in_studio_topic
+studio --> comment_in_game_topic
+studio --> create_studio_page
+studio --> edit_studio_page
+studio --> create_studio_topic
+studio --> mode_studio_topic
+studio --> create_game_page
+studio --> edit_game_page
+studio --> create_game_topic
+studio --> mode_game_topic
+
+file_complaint -[hidden]-> edit_profile
+edit_profile -[hidden]-> react_on_game_topic
+react_on_game_topic -[hidden]-> react_on_game_topic_comment
+react_on_game_topic_comment -[hidden]-> react_on_studio_game_topic
+react_on_studio_game_topic -[hidden]-> react_on_studio_topic_comment
+react_on_studio_topic_comment -[hidden]-> comment_in_studio_topic
+comment_in_studio_topic -[hidden]-> comment_in_game_topic
+comment_in_game_topic -[hidden]-> create_studio_page
+create_studio_page -[hidden]-> edit_studio_page
+edit_studio_page -[hidden]-> create_studio_topic
+create_studio_topic -[hidden]-> mode_studio_topic
+mode_studio_topic -[hidden]-> create_game_page
+create_game_page -[hidden]-> edit_game_page
+edit_game_page -[hidden]-> create_game_topic
+create_game_topic -[hidden]-> mode_game_topic
+
+
+
+/' TODO
+ '
+ ' + Регистрация
+ ' + Восстановление пароля
+ ' + Настройка профиля (изменения логина, аватара, пароля, описания)
+ ' + Возможность пожаловаться на оскорбительные материалы администрации веб-портала
+ ' + Возможность связаться с администрацией веб-портала
+ ' + Создание студии
+ ' + Настройка страниц студии
+ ' + Создание игр
+ ' + Настройка страниц игр
+ ' + Создавать обсуждения
+ ' + Модерирование обсуждений студии
+ ' + Модерирование обсуждений игр
+ ' + Установка реакций у обсуждений и комментариев
+ ' + Писать комментарии в обсуждениях
+ ' + Запрет пользователю писать комментарии
+ ' + Запрет пользователю создавать обсуждения
+ ' + Блокировки пользователей 
+ ' + Блокировки студий 
+ ' + Блокировки игр
+ ' + Возможность промассировать страницы студий, игр и эвентов
+ ' + Обработка обращений и жалоб пользователя
+ ' - Создание эвентов
+ ' - Удаление эвентов
+ '/
+
+@enduml
