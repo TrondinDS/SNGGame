@@ -1,0 +1,23 @@
+@startuml
+
+:Пользователь: as user
+:Студия: as studio
+:Организатор: as organizer
+
+usecase "Обсуждения студий" as studio_topics
+usecase "Обсуждение игр" as game_topics
+usecase "Обсуждение огранизаторов" as organizer_topics
+usecase "Обсуждение событий" as event_topics
+
+user -up-> studio_topics
+user -up-> game_topics
+user -down-> organizer_topics
+user -down-> event_topics
+
+studio -down---> studio_topics
+studio -down---> game_topics
+
+organizer -up---> organizer_topics
+organizer -up---> event_topics
+
+@enduml
