@@ -1,0 +1,23 @@
+@startuml
+
+title "Взаимодействия пользователя с системой"
+
+:Пользователь: as user
+
+usecase "Обсуждение студии" as studio_topic
+usecase "Обсуждение игры" as game_topic
+usecase "Обсуждение огранизатора" as organizer_topic
+usecase "Обсуждение события" as event_topic
+usecase "Добавление комментария к обсуждению" as comment_topic
+usecase "Добавление реакции к обсуждению" as react_topic
+usecase "Добавление реакции к комментарию" as react_comment
+
+user -up-> studio_topic
+user -up-> game_topic
+user -right-> react_topic
+user -down-> organizer_topic
+user -down-> comment_topic
+user -down-> event_topic
+user -left-> react_comment
+
+@enduml
