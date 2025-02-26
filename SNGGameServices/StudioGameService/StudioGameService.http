@@ -1,0 +1,6 @@
+@StudioGameService_HostAddress = http://localhost:5287
+
+GET {{StudioGameService_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

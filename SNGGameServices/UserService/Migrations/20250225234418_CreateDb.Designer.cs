@@ -12,8 +12,8 @@ using UserService.DB.Context;
 namespace UserServices.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20250223143007_creatDB")]
-    partial class creatDB
+    [Migration("20250225234418_CreateDb")]
+    partial class CreateDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,8 +33,8 @@ namespace UserServices.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<DateOnly>("DateBirth")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("DateBirth")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Email")
                         .IsRequired()

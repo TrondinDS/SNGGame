@@ -30,8 +30,8 @@ namespace UserServices.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<DateOnly>("DateBirth")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("DateBirth")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Email")
                         .IsRequired()

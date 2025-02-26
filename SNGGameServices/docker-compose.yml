@@ -22,8 +22,15 @@ services:
       - "5433:5432"
     volumes:
       - user_db_data:/var/lib/postgresql/data
-      - ./userdbinit.sql:/docker-entrypoint-initdb.d/init.sql
-  
+      - ./userdbinit.sql:/docker-entrypoint-initdb.d/init.sql 
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d userdb"]
+      interval: 30s 
+      timeout: 10s  
+      retries: 3    
+      start_period: 30s
+
 
   banned-service:
     build:
@@ -48,6 +55,45 @@ services:
     volumes:
       - banned_db_data:/var/lib/postgresql/data
       - ./banneddbinit.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d banneddb"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  
+  studio-game-service:
+    build:
+      context: ./StudioGameService
+      dockerfile: Dockerfile
+    image: mystudiogameimage:latest
+    volumes:
+      - .:/app
+    ports:
+      - "5287:80"
+    depends_on:
+      - studio-game-db
+
+  studio-game-db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: studiogamedb
+    ports:
+      - "5435:5432"
+    volumes:
+      - studio_game_db_data:/var/lib/postgresql/data
+      - ./studiogamedbinit.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d studiogamedb"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
 
 
   pgadmin:
@@ -60,7 +106,9 @@ services:
     depends_on:
       - user-db
 
+
 volumes:
   user_db_data:
   banned_db_data:
+  studio_game_db_data:
 

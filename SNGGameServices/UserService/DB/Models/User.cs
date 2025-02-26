@@ -8,7 +8,8 @@ namespace UserService.DB.Models
         [Key]
         public int Id { get; set; }
         public required string Name { get; set; }
-        public DateOnly DateBirth { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime DateBirth { get; set; }
         public required string Email { get; set; }
         public required string FilepathToDescription { get; set; }
         public required string FilepathToPhotoIcon { get; set; }

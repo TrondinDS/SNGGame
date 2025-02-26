@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace UserServices.Migrations
 {
     /// <inheritdoc />
-    public partial class creatDB : Migration
+    public partial class CreateDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -19,7 +19,7 @@ namespace UserServices.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: false),
-                    DateBirth = table.Column<DateOnly>(type: "date", nullable: false),
+                    DateBirth = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Email = table.Column<string>(type: "text", nullable: false),
                     FilepathToDescription = table.Column<string>(type: "text", nullable: false),
                     FilepathToPhotoIcon = table.Column<string>(type: "text", nullable: false),
