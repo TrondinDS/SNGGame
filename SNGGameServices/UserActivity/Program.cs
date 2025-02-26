@@ -1,4 +1,7 @@
 
+using Microsoft.EntityFrameworkCore;
+using UserActivityService.DB.Context;
+
 namespace UserActivity
 {
     public class Program
@@ -13,7 +16,18 @@ namespace UserActivity
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
 
+            builder.Services.AddDbContext<ApplicationContext>(opt =>
+                opt.UseNpgsql(builder.Configuration.GetConnectionString("UserActivityServiceConnection"))
+                );
+
             var app = builder.Build();
+
+            // Применение миграций
+            using (var scope = app.Services.CreateScope())
+            {
+                var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationContext>();
+                dbContext.Database.Migrate();
+            }
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

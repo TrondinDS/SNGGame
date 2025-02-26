@@ -95,6 +95,36 @@ services:
       retries: 3
       start_period: 30s
 
+  user-activity-service:
+    build:
+      context: ./UserActivity
+      dockerfile: Dockerfile
+    image: myuseractivityimage:latest
+    volumes:
+      - .:/app
+    ports:
+      - "5288:80"
+    depends_on:
+      - user-activity-db
+
+  user-activity-db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: useractivitydb
+    ports:
+      - "5436:5432"
+    volumes:
+      - user_activity_db_data:/var/lib/postgresql/data
+      - ./useractivitydbinit.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d useractivitydb"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
 
   pgadmin:
     image: dpage/pgadmin4:latest
@@ -111,4 +141,5 @@ volumes:
   user_db_data:
   banned_db_data:
   studio_game_db_data:
+  user_activity_db_data:
 
