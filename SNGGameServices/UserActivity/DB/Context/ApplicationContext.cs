@@ -1,5 +1,4 @@
-﻿using BannedService.DB.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using UserActivityService.DB.Models;
 
 namespace UserActivityService.DB.Context

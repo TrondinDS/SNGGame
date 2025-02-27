@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Library
+using Library;
 
 namespace UserActivityService.DB.Models
 {

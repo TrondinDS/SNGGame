@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using UserActivityService.DB.Models.Interfaces;
 
 namespace UserActivityService.DB.Models
 {

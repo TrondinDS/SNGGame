@@ -1,6 +1,0 @@
-@BannedService_HostAddress = http://localhost:5286
-
-GET {{BannedService_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
