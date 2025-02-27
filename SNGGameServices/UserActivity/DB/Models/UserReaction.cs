@@ -3,7 +3,7 @@ using UserActivityService.DB.Models.Interfaces;
 
 namespace UserActivityService.DB.Models
 {
-    public class UserReaction : IsDeleted
+    public class UserReaction
     {
         [Key]
         public int Id { get; set; }
@@ -14,6 +14,5 @@ namespace UserActivityService.DB.Models
         [Required]
         public int ReactionType { get; set; }
         public Comment Comment { get; set; }
-        public bool IsDelet { get; set; }
     }
 }

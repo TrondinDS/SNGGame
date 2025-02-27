@@ -1,9 +1,10 @@
-﻿using StudioGameService.DB.Model.Interfaces;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using Library;
+
 
 namespace StudioGameService.DB.Model
 {
-    public class Studio : IsDeleted
+    public class Studio : IIsDeleted
     {
         [Key]
         public int Id { get; set; }
@@ -25,6 +26,7 @@ namespace StudioGameService.DB.Model
         public int CreatorId { get; set; }
         [Required]
         public int OwnerId { get; set; }
-        public bool IsDelet { get; set; }
+        public bool IsDeleted { get; set; }
+        public DateTime DateDeleted { get; set; }
     }
 }

@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using BannedService.DB.Models;
+using Microsoft.EntityFrameworkCore;
+using StudioGameService.DB.Model;
 using UserService.DB.Models;
 
 namespace UserService.DB.Context
@@ -11,6 +13,8 @@ namespace UserService.DB.Context
 
         DbSet<User> Users { get; set; }
         DbSet<UserSubscription> Subscriptions { get; set; }
+        DbSet<Banned> Banneds { get; set; }
+        DbSet<Job> Jobs { get; set; }
 
     }
 }

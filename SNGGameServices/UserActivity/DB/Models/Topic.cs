@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using UserActivityService.DB.Models.Interfaces;
+using Library
 
 namespace UserActivityService.DB.Models
 {
-    public class Topic : IsDeleted
+    public class Topic : IIsDeleted
     {
         [Key]
         public int Id { get; set; }
@@ -19,6 +19,7 @@ namespace UserActivityService.DB.Models
         public DateTime DateCreated { get; set; }
         [Required]
         public int UserCreatorId { get; set; }
-        public bool IsDelet { get; set; }
+        public bool IsDeleted { get; set; }
+        public DateTime DateDeleted { get; set; }
     }
 }

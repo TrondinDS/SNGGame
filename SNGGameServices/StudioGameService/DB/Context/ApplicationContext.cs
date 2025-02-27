@@ -14,7 +14,6 @@ namespace StudioGameService.DB.Context
         DbSet<GameSelectedTag> GameSelectedTags { get; set; }
         DbSet<Genre> Genres { get; set; }
         DbSet<Tag> Tags { get; set; }
-        DbSet<JobInStudio> JobsInStudio { get; set; }
         DbSet<Studio> Studios { get; set; }
     }
 }

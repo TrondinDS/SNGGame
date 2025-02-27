@@ -1,23 +1,24 @@
-﻿using StudioGameService.DB.Model.Interfaces;
+﻿using Library;
 using System.ComponentModel.DataAnnotations;
 
 namespace StudioGameService.DB.Model
 {
-    public class JobInStudio : IsDeleted
+    public class Job : IIsDeleted
     {
         [Key]
         public int Id { get; set; }
         [Required]
         public int UserId { get; set; }
+        public int EntityId { get; set; }
+        public required string EntityType { get; set; }
         [Required]
-        public int StudioId { get; set; }
         public bool IsModerator { get; set; }
         [Required]
         public DateTime DateStart { get; set; }
         public DateTime? DateFinish { get; set; } 
         [MaxLength(255)]
         public string Position { get; set; }
-        public Studio Studio { get; set; }
-        public bool IsDelet { get; set; }
+        public bool IsDeleted { get; set    ; }
+        public DateTime DateDeleted { get; set; }
     }
 }

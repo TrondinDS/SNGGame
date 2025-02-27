@@ -31,38 +31,6 @@ services:
       retries: 3    
       start_period: 30s
 
-
-  banned-service:
-    build:
-      context: ./BannedService
-      dockerfile: Dockerfile
-    image: mybannedimage:latest
-    volumes:
-      - .:/app
-    ports:
-      - "5286:80"
-    depends_on:
-      - banned-db
-
-  banned-db:
-    image: postgres:latest
-    environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: admin
-      POSTGRES_DB: banneddb
-    ports:
-      - "5434:5432"
-    volumes:
-      - banned_db_data:/var/lib/postgresql/data
-      - ./banneddbinit.sql:/docker-entrypoint-initdb.d/init.sql
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U admin -d banneddb"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 30s
-
   
   studio-game-service:
     build:
@@ -95,6 +63,7 @@ services:
       retries: 3
       start_period: 30s
 
+
   user-activity-service:
     build:
       context: ./UserActivity
@@ -126,6 +95,7 @@ services:
       retries: 3
       start_period: 30s
 
+
   pgadmin:
     image: dpage/pgadmin4:latest
     environment:
@@ -139,7 +109,6 @@ services:
 
 volumes:
   user_db_data:
-  banned_db_data:
   studio_game_db_data:
   user_activity_db_data:
 

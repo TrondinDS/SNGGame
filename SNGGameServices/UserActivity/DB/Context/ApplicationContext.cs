@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using BannedService.DB.Models;
+using Microsoft.EntityFrameworkCore;
 using UserActivityService.DB.Models;
 
 namespace UserActivityService.DB.Context
@@ -11,6 +12,5 @@ namespace UserActivityService.DB.Context
         DbSet<Comment> Comments { get; set; }
         DbSet<Topic> Topics { get; set; }
         DbSet<UserReaction> UserReactions { get; set; }
-
     }
 }

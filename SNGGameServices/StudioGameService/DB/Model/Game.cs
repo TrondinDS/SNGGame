@@ -1,9 +1,9 @@
-﻿using StudioGameService.DB.Model.Interfaces;
+﻿using Library;
 using System.ComponentModel.DataAnnotations;
 
 namespace StudioGameService.DB.Model
 {
-    public class Game : IsDeleted
+    public class Game : IIsDeleted
     {
         [Key]
         public int Id { get; set; }
@@ -15,6 +15,8 @@ namespace StudioGameService.DB.Model
         public string EnglishTitle { get; set; }
         [MaxLength(255)]
         public string AlternativeTitle { get; set; }
+        [MaxLength(255)]
+        public string ShortDescription { get; set; }
         [MaxLength(255)]
         public string FilepathToDescription { get; set; }
         [MaxLength(255)]
@@ -32,6 +34,7 @@ namespace StudioGameService.DB.Model
         [MaxLength(255)]
         public string Platform { get; set; }
         public Studio Studio { get; set; }
-        public bool IsDelet { get; set; }
+        public bool IsDeleted { get; set; }
+        public DateTime DateDeleted { get; set; }
     }
 }

@@ -1,9 +1,8 @@
-﻿using StudioGameService.DB.Model.Interfaces;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace StudioGameService.DB.Model
 {
-    public class Genre : IsDeleted
+    public class Genre
     {
         [Key]
         public int Id { get; set; }
@@ -13,6 +12,5 @@ namespace StudioGameService.DB.Model
         [Required]
         [MaxLength(255)]
         public required string Description { get; set; }
-        public bool IsDelet { get; set; }
     }
 }

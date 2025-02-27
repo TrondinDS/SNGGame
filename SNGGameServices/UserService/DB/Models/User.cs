@@ -1,9 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
-using UserService.DB.Models.Interfaces;
+﻿using Library;
+using System.ComponentModel.DataAnnotations;
 
 namespace UserService.DB.Models
 {
-    public class User : IsDeleted
+    public class User : IIsDeleted
     {
         [Key]
         public int Id { get; set; }
@@ -11,10 +11,11 @@ namespace UserService.DB.Models
         [DataType(DataType.Date)]
         public DateTime DateBirth { get; set; }
         public required string Email { get; set; }
-        public required string FilepathToDescription { get; set; }
         public required string FilepathToPhotoIcon { get; set; }
         public bool IsAdmin { get; set; } = false;
         public bool IsGlobalModerator { get; set; } = false;
         public bool IsDelet { get; set; } = false;
+        public bool IsDeleted { get; set; }
+        public DateTime DateDeleted { get; set; }
     }
 }
