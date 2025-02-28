@@ -12,5 +12,6 @@ namespace StudioGameService.DB.Model
         [Required]
         [MaxLength(255)]
         public required string Description { get; set; }
+        public ICollection<GameSelectedGenre> Games { get; set; } = new List<GameSelectedGenre>();
     }
 }

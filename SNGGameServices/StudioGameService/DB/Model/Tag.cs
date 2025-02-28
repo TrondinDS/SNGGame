@@ -9,5 +9,6 @@ namespace StudioGameService.DB.Model
         [Required]
         [MaxLength(255)]
         public required string Title { get; set; }
+        public ICollection<GameSelectedTag> Games { get; set; } = new List<GameSelectedTag>();
     }
 }

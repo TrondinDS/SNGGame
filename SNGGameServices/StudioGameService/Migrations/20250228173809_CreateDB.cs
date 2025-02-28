@@ -66,7 +66,6 @@ namespace StudioGameService.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    StudioId = table.Column<int>(type: "integer", nullable: false),
                     RussianTitle = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
                     EnglishTitle = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
                     AlternativeTitle = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
@@ -80,7 +79,8 @@ namespace StudioGameService.Migrations
                     LinkPageStore = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
                     Platform = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
-                    DateDeleted = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    DateDeleted = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    StudioId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -100,11 +100,11 @@ namespace StudioGameService.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     UserId = table.Column<int>(type: "integer", nullable: false),
-                    GameId = table.Column<int>(type: "integer", nullable: false),
                     Date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Status = table.Column<int>(type: "integer", nullable: false),
                     Rating = table.Column<int>(type: "integer", nullable: false),
-                    IsBought = table.Column<bool>(type: "boolean", nullable: false)
+                    IsBought = table.Column<bool>(type: "boolean", nullable: false),
+                    GameId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {

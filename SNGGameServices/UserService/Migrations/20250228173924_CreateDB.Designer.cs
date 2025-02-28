@@ -12,7 +12,7 @@ using UserService.DB.Context;
 namespace UserService.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20250227174955_CreateDB")]
+    [Migration("20250228173924_CreateDB")]
     partial class CreateDB
     {
         /// <inheritdoc />
@@ -67,6 +67,10 @@ namespace UserService.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("UserIdBanned");
+
+                    b.HasIndex("UserIdModerator");
+
                     b.ToTable("Banneds");
                 });
 
@@ -109,6 +113,8 @@ namespace UserService.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Jobs");
                 });
@@ -187,15 +193,56 @@ namespace UserService.Migrations
                     b.ToTable("Subscriptions");
                 });
 
-            modelBuilder.Entity("UserService.DB.Models.UserSubscription", b =>
+            modelBuilder.Entity("BannedService.DB.Models.Banned", b =>
+                {
+                    b.HasOne("UserService.DB.Models.User", "UserBanned")
+                        .WithMany("BannedRecords")
+                        .HasForeignKey("UserIdBanned")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("UserService.DB.Models.User", "UserModerator")
+                        .WithMany("ModeratedBans")
+                        .HasForeignKey("UserIdModerator")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UserBanned");
+
+                    b.Navigation("UserModerator");
+                });
+
+            modelBuilder.Entity("StudioGameService.DB.Model.Job", b =>
                 {
                     b.HasOne("UserService.DB.Models.User", "User")
-                        .WithMany()
+                        .WithMany("Jobs")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("UserService.DB.Models.UserSubscription", b =>
+                {
+                    b.HasOne("UserService.DB.Models.User", "User")
+                        .WithMany("Subscriptions")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("UserService.DB.Models.User", b =>
+                {
+                    b.Navigation("BannedRecords");
+
+                    b.Navigation("Jobs");
+
+                    b.Navigation("ModeratedBans");
+
+                    b.Navigation("Subscriptions");
                 });
 #pragma warning restore 612, 618
         }

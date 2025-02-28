@@ -1,8 +1,8 @@
 
+using AdministratumService.DB.Context;
 using Microsoft.EntityFrameworkCore;
-using StudioGameService.DB.Context;
 
-namespace StudioGameService
+namespace AdministratumService
 {
     public class Program
     {
@@ -17,7 +17,7 @@ namespace StudioGameService
             builder.Services.AddOpenApi();
 
             builder.Services.AddDbContext<ApplicationContext>(opt =>
-                opt.UseNpgsql(builder.Configuration.GetConnectionString("StudioGameServiceConnection"))
+                opt.UseNpgsql(builder.Configuration.GetConnectionString("AdministratumServiceConnection"))
                 );
 
             var app = builder.Build();

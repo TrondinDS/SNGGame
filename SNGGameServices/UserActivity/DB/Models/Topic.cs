@@ -21,5 +21,7 @@ namespace UserActivityService.DB.Models
         public int UserCreatorId { get; set; }
         public bool IsDeleted { get; set; }
         public DateTime DateDeleted { get; set; }
+
+        public ICollection<Comment> Comments { get; set; } = new List<Comment>();
     }
 }

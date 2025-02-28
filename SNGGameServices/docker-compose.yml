@@ -95,6 +95,36 @@ services:
       retries: 3
       start_period: 30s
 
+  administratum-service:
+    build:
+      context: ./AdministratumService
+      dockerfile: Dockerfile
+    image: myadministratumimage:latest
+    volumes:
+      - .:/app
+    ports:
+      - "5283:80"
+    depends_on:
+      - administratum-db
+      
+  administratum-db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: administratumdb
+    ports:
+      - "5437:5432"
+    volumes:
+      - administratum_db_data:/var/lib/postgresql/data
+      - ./administratumdbinit.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d administratumdb"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
 
   pgadmin:
     image: dpage/pgadmin4:latest
@@ -111,4 +141,5 @@ volumes:
   user_db_data:
   studio_game_db_data:
   user_activity_db_data:
+  administratum_db_data:
 

@@ -1,4 +1,6 @@
-﻿using Library;
+﻿using BannedService.DB.Models;
+using Library;
+using StudioGameService.DB.Model;
 using System.ComponentModel.DataAnnotations;
 
 namespace UserService.DB.Models
@@ -17,5 +19,16 @@ namespace UserService.DB.Models
         public bool IsDelet { get; set; } = false;
         public bool IsDeleted { get; set; }
         public DateTime DateDeleted { get; set; }
+
+        // Коллекция для всех банов, где пользователь является модератором
+        public ICollection<Banned> ModeratedBans { get; set; } = new List<Banned>();
+
+        // Коллекция для всех банов, где пользователь был забанен
+        public ICollection<Banned> BannedRecords { get; set; } = new List<Banned>();
+        // Коллекция для всех подписок пользователя
+        public ICollection<UserSubscription> Subscriptions { get; set; } = new List<UserSubscription>();
+
+        // Коллекция для всех работ пользователя
+        public ICollection<Job> Jobs { get; set; } = new List<Job>();
     }
 }

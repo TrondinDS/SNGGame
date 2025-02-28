@@ -277,7 +277,7 @@ namespace StudioGameService.Migrations
             modelBuilder.Entity("StudioGameService.DB.Model.Game", b =>
                 {
                     b.HasOne("StudioGameService.DB.Model.Studio", "Studio")
-                        .WithMany()
+                        .WithMany("Games")
                         .HasForeignKey("StudioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -288,7 +288,7 @@ namespace StudioGameService.Migrations
             modelBuilder.Entity("StudioGameService.DB.Model.GameLibrary", b =>
                 {
                     b.HasOne("StudioGameService.DB.Model.Game", "Game")
-                        .WithMany()
+                        .WithMany("GameLibrarys")
                         .HasForeignKey("GameId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -299,13 +299,13 @@ namespace StudioGameService.Migrations
             modelBuilder.Entity("StudioGameService.DB.Model.GameSelectedGenre", b =>
                 {
                     b.HasOne("StudioGameService.DB.Model.Game", "Game")
-                        .WithMany()
+                        .WithMany("Genres")
                         .HasForeignKey("GameId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("StudioGameService.DB.Model.Genre", "Genre")
-                        .WithMany()
+                        .WithMany("Games")
                         .HasForeignKey("GenreId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -318,13 +318,13 @@ namespace StudioGameService.Migrations
             modelBuilder.Entity("StudioGameService.DB.Model.GameSelectedTag", b =>
                 {
                     b.HasOne("StudioGameService.DB.Model.Game", "Game")
-                        .WithMany()
+                        .WithMany("Tags")
                         .HasForeignKey("GameId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("StudioGameService.DB.Model.Tag", "Tag")
-                        .WithMany()
+                        .WithMany("Games")
                         .HasForeignKey("TagId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -332,6 +332,30 @@ namespace StudioGameService.Migrations
                     b.Navigation("Game");
 
                     b.Navigation("Tag");
+                });
+
+            modelBuilder.Entity("StudioGameService.DB.Model.Game", b =>
+                {
+                    b.Navigation("GameLibrarys");
+
+                    b.Navigation("Genres");
+
+                    b.Navigation("Tags");
+                });
+
+            modelBuilder.Entity("StudioGameService.DB.Model.Genre", b =>
+                {
+                    b.Navigation("Games");
+                });
+
+            modelBuilder.Entity("StudioGameService.DB.Model.Studio", b =>
+                {
+                    b.Navigation("Games");
+                });
+
+            modelBuilder.Entity("StudioGameService.DB.Model.Tag", b =>
+                {
+                    b.Navigation("Games");
                 });
 #pragma warning restore 612, 618
         }

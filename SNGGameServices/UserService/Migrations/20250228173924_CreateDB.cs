@@ -13,49 +13,6 @@ namespace UserService.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Banneds",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    UserIdModerator = table.Column<int>(type: "integer", nullable: false),
-                    UserIdBanned = table.Column<int>(type: "integer", nullable: false),
-                    EntityId = table.Column<int>(type: "integer", nullable: false),
-                    EntityType = table.Column<string>(type: "text", nullable: false),
-                    Reason = table.Column<string>(type: "text", nullable: false),
-                    DateStart = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    DateFinish = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    TypePunishment = table.Column<int>(type: "integer", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
-                    DateDeleted = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Banneds", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Jobs",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    UserId = table.Column<int>(type: "integer", nullable: false),
-                    EntityId = table.Column<int>(type: "integer", nullable: false),
-                    EntityType = table.Column<string>(type: "text", nullable: false),
-                    IsModerator = table.Column<bool>(type: "boolean", nullable: false),
-                    DateStart = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    DateFinish = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    Position = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
-                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
-                    DateDeleted = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Jobs", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -77,16 +34,77 @@ namespace UserService.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Banneds",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    EntityId = table.Column<int>(type: "integer", nullable: false),
+                    EntityType = table.Column<string>(type: "text", nullable: false),
+                    Reason = table.Column<string>(type: "text", nullable: false),
+                    DateStart = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    DateFinish = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    TypePunishment = table.Column<int>(type: "integer", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
+                    DateDeleted = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UserIdModerator = table.Column<int>(type: "integer", nullable: false),
+                    UserIdBanned = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Banneds", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Banneds_Users_UserIdBanned",
+                        column: x => x.UserIdBanned,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Banneds_Users_UserIdModerator",
+                        column: x => x.UserIdModerator,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Jobs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    EntityId = table.Column<int>(type: "integer", nullable: false),
+                    EntityType = table.Column<string>(type: "text", nullable: false),
+                    IsModerator = table.Column<bool>(type: "boolean", nullable: false),
+                    DateStart = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    DateFinish = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    Position = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
+                    DateDeleted = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UserId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Jobs", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Jobs_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Subscriptions",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    UserId = table.Column<int>(type: "integer", nullable: false),
                     EntityId = table.Column<int>(type: "integer", nullable: false),
                     EntityType = table.Column<string>(type: "text", nullable: false),
                     DateStart = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    DateFinish = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    DateFinish = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UserId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -98,6 +116,21 @@ namespace UserService.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Banneds_UserIdBanned",
+                table: "Banneds",
+                column: "UserIdBanned");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Banneds_UserIdModerator",
+                table: "Banneds",
+                column: "UserIdModerator");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Jobs_UserId",
+                table: "Jobs",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Subscriptions_UserId",

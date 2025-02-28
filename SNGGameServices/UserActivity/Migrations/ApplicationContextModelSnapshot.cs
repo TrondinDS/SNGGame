@@ -51,6 +51,8 @@ namespace UserActivityService.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("TopicId");
+
                     b.ToTable("Comments");
                 });
 
@@ -118,15 +120,36 @@ namespace UserActivityService.Migrations
                     b.ToTable("UserReactions");
                 });
 
+            modelBuilder.Entity("UserActivityService.DB.Models.Comment", b =>
+                {
+                    b.HasOne("UserActivityService.DB.Models.Topic", "Topic")
+                        .WithMany("Comments")
+                        .HasForeignKey("TopicId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Topic");
+                });
+
             modelBuilder.Entity("UserActivityService.DB.Models.UserReaction", b =>
                 {
                     b.HasOne("UserActivityService.DB.Models.Comment", "Comment")
-                        .WithMany()
+                        .WithMany("UserReactions")
                         .HasForeignKey("CommentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Comment");
+                });
+
+            modelBuilder.Entity("UserActivityService.DB.Models.Comment", b =>
+                {
+                    b.Navigation("UserReactions");
+                });
+
+            modelBuilder.Entity("UserActivityService.DB.Models.Topic", b =>
+                {
+                    b.Navigation("Comments");
                 });
 #pragma warning restore 612, 618
         }

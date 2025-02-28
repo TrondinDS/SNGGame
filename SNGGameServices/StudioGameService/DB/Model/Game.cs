@@ -1,5 +1,6 @@
 ﻿using Library;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StudioGameService.DB.Model
 {
@@ -7,8 +8,6 @@ namespace StudioGameService.DB.Model
     {
         [Key]
         public int Id { get; set; }
-        [Required]
-        public int StudioId { get; set; }
         [MaxLength(255)]
         public string RussianTitle { get; set; }
         [MaxLength(255)]
@@ -33,8 +32,16 @@ namespace StudioGameService.DB.Model
         public string LinkPageStore { get; set; }
         [MaxLength(255)]
         public string Platform { get; set; }
-        public Studio Studio { get; set; }
         public bool IsDeleted { get; set; }
         public DateTime DateDeleted { get; set; }
+
+
+        [Required]
+        public int StudioId { get; set; }
+        [ForeignKey("StudioId")]
+        public Studio Studio { get; set; }
+        public ICollection<GameSelectedGenre> Genres { get; set; } = new List<GameSelectedGenre>();
+        public ICollection<GameSelectedTag> Tags { get; set; } = new List<GameSelectedTag>();
+        public ICollection<GameLibrary> GameLibrarys { get; set; } = new List<GameLibrary>();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace StudioGameService.DB.Model
 {
@@ -9,13 +10,15 @@ namespace StudioGameService.DB.Model
         [Required]
         public int UserId { get; set; }
         [Required]
-        public int GameId { get; set; }
         [DataType(DataType.Date)]
         public DateTime Date { get; set; }
         [Required]
         public int Status { get; set; }
         public int Rating { get; set; }
         public bool IsBought { get; set; }
+
+        public int GameId { get; set; }
+        [ForeignKey("GameId")]
         public Game Game { get; set; }
     }
 }

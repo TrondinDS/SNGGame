@@ -1,5 +1,7 @@
 ﻿using Library;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using UserService.DB.Models;
 
 namespace StudioGameService.DB.Model
 {
@@ -7,8 +9,6 @@ namespace StudioGameService.DB.Model
     {
         [Key]
         public int Id { get; set; }
-        [Required]
-        public int UserId { get; set; }
         public int EntityId { get; set; }
         public required string EntityType { get; set; }
         [Required]
@@ -20,5 +20,10 @@ namespace StudioGameService.DB.Model
         public string Position { get; set; }
         public bool IsDeleted { get; set    ; }
         public DateTime DateDeleted { get; set; }
+
+        [Required]
+        public int UserId { get; set; }
+        [ForeignKey("UserId")]
+        public User User { get; set; } // Навигационное свойство для модератора
     }
 }
