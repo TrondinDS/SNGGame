@@ -126,6 +126,38 @@ services:
       retries: 3
       start_period: 30s
 
+  
+  organizer-event-service:
+    build:
+      context: ./OrganizerEventService
+      dockerfile: Dockerfile
+    image: myorganizereventimage:latest
+    volumes:
+      - .:/app
+    ports:
+      - "5286:80"
+    depends_on:
+      - event-db
+
+  event-db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: eventdb
+    ports:
+      - "5434:5432"
+    volumes:
+      - event_db_data:/var/lib/postgresql/data
+      - ./eventdbinit.sql:/docker-entrypoint-initdb.d/init.sql 
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d eventdb"]
+      interval: 30s 
+      timeout: 10s  
+      retries: 3    
+      start_period: 30s
+
   pgadmin:
     image: dpage/pgadmin4:latest
     environment:
@@ -142,4 +174,5 @@ volumes:
   studio_game_db_data:
   user_activity_db_data:
   administratum_db_data:
+  event_db_data:
 
