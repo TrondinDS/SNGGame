@@ -95,6 +95,7 @@ services:
       retries: 3
       start_period: 30s
 
+
   administratum-service:
     build:
       context: ./AdministratumService
@@ -107,6 +108,7 @@ services:
     depends_on:
       - administratum-db
       
+
   administratum-db:
     image: postgres:latest
     environment:
@@ -139,6 +141,7 @@ services:
     depends_on:
       - event-db
 
+
   event-db:
     image: postgres:latest
     environment:
@@ -158,6 +161,26 @@ services:
       retries: 3    
       start_period: 30s
 
+  
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "mongo --eval 'db.runCommand({ ping: 1 })' && exit 0 || exit 1"]
+      interval: 30s 
+      timeout: 10s  
+      retries: 3    
+      start_period: 30s
+
+
   pgadmin:
     image: dpage/pgadmin4:latest
     environment:
@@ -168,11 +191,12 @@ services:
     depends_on:
       - user-db
 
-
 volumes:
   user_db_data:
   studio_game_db_data:
   user_activity_db_data:
   administratum_db_data:
   event_db_data:
+  mongodb_data:
+
 
