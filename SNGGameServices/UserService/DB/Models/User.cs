@@ -9,16 +9,20 @@ namespace UserService.DB.Models
     {
         [Key]
         public int Id { get; set; }
+        [MaxLength(255, ErrorMessage = "Name cannot exceed 255 characters")]
+        [MinLength(2, ErrorMessage = "Name must be at least 2 characters")]
         public required string Name { get; set; }
         [DataType(DataType.Date)]
-        public DateTime DateBirth { get; set; }
+        public DateTime? DateBirth { get; set; }
+        [MaxLength(255, ErrorMessage = "Email cannot exceed 255 characters")]
         public required string Email { get; set; }
-        public required string FilepathToPhotoIcon { get; set; }
+        public required int KeyIdPhotoAvatar { get; set; }
         public bool IsAdmin { get; set; } = false;
         public bool IsGlobalModerator { get; set; } = false;
-        public bool IsDelet { get; set; } = false;
-        public bool IsDeleted { get; set; }
-        public DateTime DateDeleted { get; set; }
+        public bool IsDeleted { get; set; } = false;
+
+        [DataType(DataType.DateTime)]
+        public DateTime? DateDeleted { get; set; }
 
         // Коллекция для всех банов, где пользователь является модератором
         public ICollection<Banned> ModeratedBans { get; set; } = new List<Banned>();

@@ -47,7 +47,7 @@ namespace OrganizerEventService.DB.Models
         public decimal? PriceMax { get; set; }
 
         public bool IsDeleted { get; set; }
-        public DateTime DateDeleted { get; set; }
+        public DateTime? DateDeleted { get; set; }
 
         [Required(ErrorMessage = "OrganizerEventId is required")]
         public int OrganizerEventId { get; set; }

@@ -12,7 +12,7 @@ namespace AdministratumService.DB.Models
         public string Content { get; set; }
         public DateTime Date { get; set; }
         public bool IsDeleted { get; set; }
-        public DateTime DateDeleted { get; set; }
+        public DateTime? DateDeleted { get; set; }
         // Навигационные свойства
         public int ChatFeedbackId { get; set; }
         [ForeignKey("ChatFeedbackId")]

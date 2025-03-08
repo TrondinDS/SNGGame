@@ -30,7 +30,7 @@ namespace OrganizerEventService.DB.Models
 
         public int OwnerId { get; set; }
         public bool IsDeleted { get; set; }
-        public DateTime DateDeleted { get; set; }
+        public DateTime? DateDeleted { get; set; }
 
         public ICollection<Event> Events { get; set; } = new List<Event>();
     }

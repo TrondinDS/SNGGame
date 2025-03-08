@@ -33,7 +33,7 @@ namespace StudioGameService.DB.Model
         [MaxLength(255)]
         public string Platform { get; set; }
         public bool IsDeleted { get; set; }
-        public DateTime DateDeleted { get; set; }
+        public DateTime? DateDeleted { get; set; }
 
 
         [Required]

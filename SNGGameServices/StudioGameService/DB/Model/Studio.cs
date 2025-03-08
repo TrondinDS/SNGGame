@@ -27,7 +27,7 @@ namespace StudioGameService.DB.Model
         [Required]
         public int OwnerId { get; set; }
         public bool IsDeleted { get; set; }
-        public DateTime DateDeleted { get; set; }
+        public DateTime? DateDeleted { get; set; }
 
         public ICollection<Game> Games { get; set; } = new List<Game>();
     }
