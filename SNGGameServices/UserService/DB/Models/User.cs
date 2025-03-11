@@ -9,7 +9,7 @@ namespace UserService.DB.Models
     public class User : IIsDeleted
     {
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         [MaxLength(255, ErrorMessage = "Name cannot exceed 255 characters")]
         [MinLength(2, ErrorMessage = "Name must be at least 2 characters")]
         public required string Name { get; set; }

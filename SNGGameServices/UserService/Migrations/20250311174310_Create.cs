@@ -16,8 +16,7 @@ namespace UserService.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
                     DateBirth = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     Email = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
@@ -46,8 +45,8 @@ namespace UserService.Migrations
                     TypePunishment = table.Column<int>(type: "integer", nullable: false),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
                     DateDeleted = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    UserIdModerator = table.Column<int>(type: "integer", nullable: false),
-                    UserIdBanned = table.Column<int>(type: "integer", nullable: false)
+                    UserIdModerator = table.Column<Guid>(type: "uuid", nullable: false),
+                    UserIdBanned = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -80,7 +79,7 @@ namespace UserService.Migrations
                     Position = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
                     DateDeleted = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    UserId = table.Column<int>(type: "integer", nullable: false)
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -102,8 +101,8 @@ namespace UserService.Migrations
                     EntityId = table.Column<int>(type: "integer", nullable: false),
                     EntityType = table.Column<int>(type: "integer", nullable: false),
                     DateStart = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    DateFinish = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    UserId = table.Column<int>(type: "integer", nullable: false)
+                    DateFinish = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {

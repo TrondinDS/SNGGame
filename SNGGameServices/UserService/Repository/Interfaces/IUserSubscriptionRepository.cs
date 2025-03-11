@@ -1,6 +1,9 @@
-﻿namespace UserService.Repository.Interfaces
+﻿using Library.GenericRepository.Interfaces;
+using UserService.DB.Models;
+
+namespace UserService.Repository.Interfaces
 {
-    public interface IUserSubscriptionRepository
+    public interface IUserSubscriptionRepository : IGenericRepository<UserSubscription, int>
     {
         // TODO : Create abstract method IUSRepository 
     }

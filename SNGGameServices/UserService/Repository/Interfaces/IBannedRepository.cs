@@ -1,6 +1,10 @@
-﻿namespace UserService.Repository.Interfaces
+﻿using BannedService.DB.Models;
+using Library.GenericRepository.Interfaces;
+using UserService.DB.Models;
+
+namespace UserService.Repository.Interfaces
 {
-    public interface IBannedRepository
+    public interface IBannedRepository : IGenericRepository<Banned, int>
     {
         // TODO : Create abstract method IBRepository
     }

@@ -12,7 +12,7 @@ using UserService.DB.Context;
 namespace UserService.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20250310122631_Create")]
+    [Migration("20250311174310_Create")]
     partial class Create
     {
         /// <inheritdoc />
@@ -58,11 +58,11 @@ namespace UserService.Migrations
                     b.Property<int>("TypePunishment")
                         .HasColumnType("integer");
 
-                    b.Property<int>("UserIdBanned")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("UserIdBanned")
+                        .HasColumnType("uuid");
 
-                    b.Property<int>("UserIdModerator")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("UserIdModerator")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -107,8 +107,8 @@ namespace UserService.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -119,11 +119,9 @@ namespace UserService.Migrations
 
             modelBuilder.Entity("UserService.DB.Models.User", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime?>("DateBirth")
                         .HasColumnType("timestamp with time zone");
@@ -165,7 +163,7 @@ namespace UserService.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("DateFinish")
+                    b.Property<DateTime?>("DateFinish")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("DateStart")
@@ -177,8 +175,8 @@ namespace UserService.Migrations
                     b.Property<int>("EntityType")
                         .HasColumnType("integer");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 

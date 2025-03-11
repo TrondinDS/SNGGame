@@ -5,9 +5,9 @@ using UserService.Repository.Interfaces;
 
 namespace UserService.Repository
 {
-    public class UserRepository : GenericRepository<User, Guid>, IUserRepository
+    public class UserSubscriptionRepository : GenericRepository<UserSubscription, int>,IUserSubscriptionRepository
     {
-        public UserRepository(ApplicationContext context) : base(context)
+        UserSubscriptionRepository(ApplicationContext context) : base(context)
         {
         }
     }
