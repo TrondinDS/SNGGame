@@ -4,6 +4,7 @@ using UserService.DB.Context;
 using UserService.Repository.Interfaces;
 using UserService.Repository;
 using UserService.Services.Interfaces;
+using Library;
 using UserService.Services;
 
 namespace UserService
@@ -13,6 +14,7 @@ namespace UserService
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            var mongo = new Library.Services.Mongo(builder.Configuration.GetConnectionString("UserServiceMongoConnection"));
 
             // Add services to the container.
             builder.Services.AddAutoMapper(typeof(Program));
