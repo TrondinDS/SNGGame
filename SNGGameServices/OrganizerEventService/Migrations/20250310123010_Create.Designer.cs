@@ -12,8 +12,8 @@ using OrganizerEventService.DB.Context;
 namespace OrganizerEventService.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20250303112811_CreateDB")]
-    partial class CreateDB
+    [Migration("20250310123010_Create")]
+    partial class Create
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -48,7 +48,7 @@ namespace OrganizerEventService.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
-                    b.Property<DateTime>("DateDeleted")
+                    b.Property<DateTime?>("DateDeleted")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("FilepathToDescription")
@@ -109,7 +109,7 @@ namespace OrganizerEventService.Migrations
                     b.Property<int>("CreatorId")
                         .HasColumnType("integer");
 
-                    b.Property<DateTime>("DateDeleted")
+                    b.Property<DateTime?>("DateDeleted")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("FilepathToDescription")

@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace UserActivityService.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateDB : Migration
+    public partial class Create : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -20,12 +20,12 @@ namespace UserActivityService.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     EntityId = table.Column<int>(type: "integer", nullable: false),
                     EntityType = table.Column<int>(type: "integer", nullable: false),
-                    Title = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    Title = table.Column<string>(type: "text", nullable: false),
                     Description = table.Column<string>(type: "text", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UserCreatorId = table.Column<int>(type: "integer", nullable: false),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
-                    DateDeleted = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    DateDeleted = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -42,7 +42,7 @@ namespace UserActivityService.Migrations
                     Body = table.Column<string>(type: "text", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
-                    DateDeleted = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    DateDeleted = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     TopicId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>

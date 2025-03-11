@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace StudioGameService.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateDB : Migration
+    public partial class Create : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -40,7 +40,7 @@ namespace StudioGameService.Migrations
                     CreatorId = table.Column<int>(type: "integer", nullable: false),
                     OwnerId = table.Column<int>(type: "integer", nullable: false),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
-                    DateDeleted = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    DateDeleted = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -79,7 +79,7 @@ namespace StudioGameService.Migrations
                     LinkPageStore = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
                     Platform = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
-                    DateDeleted = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    DateDeleted = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     StudioId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>

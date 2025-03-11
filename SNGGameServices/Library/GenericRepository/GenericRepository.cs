@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Library.GenericRepository
 {
-    public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
+    public class GenericRepository<TEntity, TId> : IGenericRepository<TEntity, TId> where TEntity : class
     {
         private readonly DbContext _context;
         private readonly DbSet<TEntity> _dbSet;

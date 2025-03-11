@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AdministratumService.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateDB : Migration
+    public partial class Create : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -34,13 +34,13 @@ namespace AdministratumService.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     EntityId = table.Column<int>(type: "integer", nullable: false),
-                    EntityType = table.Column<string>(type: "text", nullable: false),
+                    EntityType = table.Column<int>(type: "integer", nullable: false),
                     ComplainType = table.Column<string>(type: "text", nullable: false),
                     Status = table.Column<string>(type: "text", nullable: false),
                     CreationDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     StatusUpdateDatetime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
-                    DateDeleted = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    DateDeleted = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -57,7 +57,7 @@ namespace AdministratumService.Migrations
                     Content = table.Column<string>(type: "text", nullable: false),
                     Date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
-                    DateDeleted = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    DateDeleted = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     ChatFeedbackId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>

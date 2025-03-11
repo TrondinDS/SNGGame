@@ -40,7 +40,7 @@ namespace StudioGameService.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
 
-                    b.Property<DateTime>("DateDeleted")
+                    b.Property<DateTime?>("DateDeleted")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("EnglishTitle")
@@ -219,7 +219,7 @@ namespace StudioGameService.Migrations
                     b.Property<int>("CreatorId")
                         .HasColumnType("integer");
 
-                    b.Property<DateTime>("DateDeleted")
+                    b.Property<DateTime?>("DateDeleted")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Email")

@@ -12,8 +12,8 @@ using StudioGameService.DB.Context;
 namespace StudioGameService.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20250228173809_CreateDB")]
-    partial class CreateDB
+    [Migration("20250310122910_Create")]
+    partial class Create
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -43,7 +43,7 @@ namespace StudioGameService.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
 
-                    b.Property<DateTime>("DateDeleted")
+                    b.Property<DateTime?>("DateDeleted")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("EnglishTitle")
@@ -222,7 +222,7 @@ namespace StudioGameService.Migrations
                     b.Property<int>("CreatorId")
                         .HasColumnType("integer");
 
-                    b.Property<DateTime>("DateDeleted")
+                    b.Property<DateTime?>("DateDeleted")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Email")

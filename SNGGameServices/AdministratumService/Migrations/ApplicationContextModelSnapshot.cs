@@ -60,15 +60,14 @@ namespace AdministratumService.Migrations
                     b.Property<DateTime>("CreationDateTime")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<DateTime>("DateDeleted")
+                    b.Property<DateTime?>("DateDeleted")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("EntityId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("EntityType")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("EntityType")
+                        .HasColumnType("integer");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
@@ -103,7 +102,7 @@ namespace AdministratumService.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<DateTime>("DateDeleted")
+                    b.Property<DateTime?>("DateDeleted")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<bool>("IsDeleted")

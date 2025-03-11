@@ -30,7 +30,7 @@ namespace UserService.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("DateDeleted")
+                    b.Property<DateTime?>("DateDeleted")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("DateFinish")
@@ -42,9 +42,8 @@ namespace UserService.Migrations
                     b.Property<int>("EntityId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("EntityType")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("EntityType")
+                        .HasColumnType("integer");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
@@ -79,7 +78,7 @@ namespace UserService.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("DateDeleted")
+                    b.Property<DateTime?>("DateDeleted")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime?>("DateFinish")
@@ -91,9 +90,8 @@ namespace UserService.Migrations
                     b.Property<int>("EntityId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("EntityType")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("EntityType")
+                        .HasColumnType("integer");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
@@ -124,24 +122,17 @@ namespace UserService.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("DateBirth")
+                    b.Property<DateTime?>("DateBirth")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<DateTime>("DateDeleted")
+                    b.Property<DateTime?>("DateDeleted")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("FilepathToPhotoIcon")
-                        .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
 
                     b.Property<bool>("IsAdmin")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("IsDelet")
                         .HasColumnType("boolean");
 
                     b.Property<bool>("IsDeleted")
@@ -150,9 +141,13 @@ namespace UserService.Migrations
                     b.Property<bool>("IsGlobalModerator")
                         .HasColumnType("boolean");
 
+                    b.Property<int>("KeyIdPhotoAvatar")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
 
                     b.HasKey("Id");
 
@@ -176,9 +171,8 @@ namespace UserService.Migrations
                     b.Property<int>("EntityId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("EntityType")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("EntityType")
+                        .HasColumnType("integer");
 
                     b.Property<int>("UserId")
                         .HasColumnType("integer");

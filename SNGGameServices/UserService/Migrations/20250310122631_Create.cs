@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace UserService.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateDB : Migration
+    public partial class Create : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,15 +18,14 @@ namespace UserService.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "text", nullable: false),
-                    DateBirth = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    Email = table.Column<string>(type: "text", nullable: false),
-                    FilepathToPhotoIcon = table.Column<string>(type: "text", nullable: false),
+                    Name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
+                    DateBirth = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    Email = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
+                    KeyIdPhotoAvatar = table.Column<int>(type: "integer", nullable: false),
                     IsAdmin = table.Column<bool>(type: "boolean", nullable: false),
                     IsGlobalModerator = table.Column<bool>(type: "boolean", nullable: false),
-                    IsDelet = table.Column<bool>(type: "boolean", nullable: false),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
-                    DateDeleted = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    DateDeleted = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -40,13 +39,13 @@ namespace UserService.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     EntityId = table.Column<int>(type: "integer", nullable: false),
-                    EntityType = table.Column<string>(type: "text", nullable: false),
+                    EntityType = table.Column<int>(type: "integer", nullable: false),
                     Reason = table.Column<string>(type: "text", nullable: false),
                     DateStart = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     DateFinish = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     TypePunishment = table.Column<int>(type: "integer", nullable: false),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
-                    DateDeleted = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    DateDeleted = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     UserIdModerator = table.Column<int>(type: "integer", nullable: false),
                     UserIdBanned = table.Column<int>(type: "integer", nullable: false)
                 },
@@ -74,13 +73,13 @@ namespace UserService.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     EntityId = table.Column<int>(type: "integer", nullable: false),
-                    EntityType = table.Column<string>(type: "text", nullable: false),
+                    EntityType = table.Column<int>(type: "integer", nullable: false),
                     IsModerator = table.Column<bool>(type: "boolean", nullable: false),
                     DateStart = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     DateFinish = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     Position = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
-                    DateDeleted = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    DateDeleted = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     UserId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
@@ -101,7 +100,7 @@ namespace UserService.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     EntityId = table.Column<int>(type: "integer", nullable: false),
-                    EntityType = table.Column<string>(type: "text", nullable: false),
+                    EntityType = table.Column<int>(type: "integer", nullable: false),
                     DateStart = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     DateFinish = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UserId = table.Column<int>(type: "integer", nullable: false)

@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AdministratumService.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20250228173741_CreateDB")]
-    partial class CreateDB
+    [Migration("20250310123035_Create")]
+    partial class Create
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -63,15 +63,14 @@ namespace AdministratumService.Migrations
                     b.Property<DateTime>("CreationDateTime")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<DateTime>("DateDeleted")
+                    b.Property<DateTime?>("DateDeleted")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("EntityId")
                         .HasColumnType("integer");
 
-                    b.Property<string>("EntityType")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("EntityType")
+                        .HasColumnType("integer");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
@@ -106,7 +105,7 @@ namespace AdministratumService.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<DateTime>("DateDeleted")
+                    b.Property<DateTime?>("DateDeleted")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<bool>("IsDeleted")

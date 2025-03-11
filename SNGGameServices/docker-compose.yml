@@ -1,202 +1,202 @@
-services:
+    services:
 
-  userservices:
-    build:
-      context: ./UserService
-      dockerfile: Dockerfile
-    image: myuserimage:latest
-    volumes:
-      - .:/app
-    ports:
-      - "5285:80"
-    depends_on:
-      - user-db
+      userservices:
+        build:
+          context: ./UserService
+          dockerfile: Dockerfile
+        image: myuserimage:latest
+        volumes:
+          - .:/app
+        ports:
+          - "5285:80"
+        depends_on:
+          - user-db
 
-  user-db:
-    image: postgres:latest
-    environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: admin
-      POSTGRES_DB: userdb
-    ports:
-      - "5433:5432"
-    volumes:
-      - user_db_data:/var/lib/postgresql/data
-      - ./userdbinit.sql:/docker-entrypoint-initdb.d/init.sql 
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U admin -d userdb"]
-      interval: 30s 
-      timeout: 10s  
-      retries: 3    
-      start_period: 30s
+      user-db:
+        image: postgres:latest
+        environment:
+          POSTGRES_USER: admin
+          POSTGRES_PASSWORD: admin
+          POSTGRES_DB: userdb
+        ports:
+          - "5433:5432"
+        volumes:
+          - user_db_data:/var/lib/postgresql/data
+          - ./userdbinit.sql:/docker-entrypoint-initdb.d/init.sql 
+        restart: unless-stopped
+        healthcheck:
+          test: ["CMD-SHELL", "pg_isready -U admin -d userdb"]
+          interval: 30s 
+          timeout: 10s  
+          retries: 3    
+          start_period: 30s
 
   
-  studio-game-service:
-    build:
-      context: ./StudioGameService
-      dockerfile: Dockerfile
-    image: mystudiogameimage:latest
-    volumes:
-      - .:/app
-    ports:
-      - "5287:80"
-    depends_on:
-      - studio-game-db
+      studio-game-service:
+        build:
+          context: ./StudioGameService
+          dockerfile: Dockerfile
+        image: mystudiogameimage:latest
+        volumes:
+          - .:/app
+        ports:
+          - "5287:80"
+        depends_on:
+          - studio-game-db
 
-  studio-game-db:
-    image: postgres:latest
-    environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: admin
-      POSTGRES_DB: studiogamedb
-    ports:
-      - "5435:5432"
-    volumes:
-      - studio_game_db_data:/var/lib/postgresql/data
-      - ./studiogamedbinit.sql:/docker-entrypoint-initdb.d/init.sql
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U admin -d studiogamedb"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 30s
-
-
-  user-activity-service:
-    build:
-      context: ./UserActivity
-      dockerfile: Dockerfile
-    image: myuseractivityimage:latest
-    volumes:
-      - .:/app
-    ports:
-      - "5288:80"
-    depends_on:
-      - user-activity-db
-
-  user-activity-db:
-    image: postgres:latest
-    environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: admin
-      POSTGRES_DB: useractivitydb
-    ports:
-      - "5436:5432"
-    volumes:
-      - user_activity_db_data:/var/lib/postgresql/data
-      - ./useractivitydbinit.sql:/docker-entrypoint-initdb.d/init.sql
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U admin -d useractivitydb"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 30s
+      studio-game-db:
+        image: postgres:latest
+        environment:
+          POSTGRES_USER: admin
+          POSTGRES_PASSWORD: admin
+          POSTGRES_DB: studiogamedb
+        ports:
+          - "5435:5432"
+        volumes:
+          - studio_game_db_data:/var/lib/postgresql/data
+          - ./studiogamedbinit.sql:/docker-entrypoint-initdb.d/init.sql
+        restart: unless-stopped
+        healthcheck:
+          test: ["CMD-SHELL", "pg_isready -U admin -d studiogamedb"]
+          interval: 30s
+          timeout: 10s
+          retries: 3
+          start_period: 30s
 
 
-  administratum-service:
-    build:
-      context: ./AdministratumService
-      dockerfile: Dockerfile
-    image: myadministratumimage:latest
-    volumes:
-      - .:/app
-    ports:
-      - "5283:80"
-    depends_on:
-      - administratum-db
+      user-activity-service:
+        build:
+          context: ./UserActivity
+          dockerfile: Dockerfile
+        image: myuseractivityimage:latest
+        volumes:
+          - .:/app
+        ports:
+          - "5288:80"
+        depends_on:
+          - user-activity-db
+
+      user-activity-db:
+        image: postgres:latest
+        environment:
+          POSTGRES_USER: admin
+          POSTGRES_PASSWORD: admin
+          POSTGRES_DB: useractivitydb
+        ports:
+          - "5436:5432"
+        volumes:
+          - user_activity_db_data:/var/lib/postgresql/data
+          - ./useractivitydbinit.sql:/docker-entrypoint-initdb.d/init.sql
+        restart: unless-stopped
+        healthcheck:
+          test: ["CMD-SHELL", "pg_isready -U admin -d useractivitydb"]
+          interval: 30s
+          timeout: 10s
+          retries: 3
+          start_period: 30s
+
+
+      administratum-service:
+        build:
+          context: ./AdministratumService
+          dockerfile: Dockerfile
+        image: myadministratumimage:latest
+        volumes:
+          - .:/app
+        ports:
+          - "5283:80"
+        depends_on:
+          - administratum-db
       
 
-  administratum-db:
-    image: postgres:latest
-    environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: admin
-      POSTGRES_DB: administratumdb
-    ports:
-      - "5437:5432"
-    volumes:
-      - administratum_db_data:/var/lib/postgresql/data
-      - ./administratumdbinit.sql:/docker-entrypoint-initdb.d/init.sql
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U admin -d administratumdb"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 30s
+      administratum-db:
+        image: postgres:latest
+        environment:
+          POSTGRES_USER: admin
+          POSTGRES_PASSWORD: admin
+          POSTGRES_DB: administratumdb
+        ports:
+          - "5437:5432"
+        volumes:
+          - administratum_db_data:/var/lib/postgresql/data
+          - ./administratumdbinit.sql:/docker-entrypoint-initdb.d/init.sql
+        restart: unless-stopped
+        healthcheck:
+          test: ["CMD-SHELL", "pg_isready -U admin -d administratumdb"]
+          interval: 30s
+          timeout: 10s
+          retries: 3
+          start_period: 30s
 
   
-  organizer-event-service:
-    build:
-      context: ./OrganizerEventService
-      dockerfile: Dockerfile
-    image: myorganizereventimage:latest
-    volumes:
-      - .:/app
-    ports:
-      - "5286:80"
-    depends_on:
-      - event-db
+      organizer-event-service:
+        build:
+          context: ./OrganizerEventService
+          dockerfile: Dockerfile
+        image: myorganizereventimage:latest
+        volumes:
+          - .:/app
+        ports:
+          - "5286:80"
+        depends_on:
+          - event-db
 
 
-  event-db:
-    image: postgres:latest
-    environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: admin
-      POSTGRES_DB: eventdb
-    ports:
-      - "5434:5432"
-    volumes:
-      - event_db_data:/var/lib/postgresql/data
-      - ./eventdbinit.sql:/docker-entrypoint-initdb.d/init.sql 
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U admin -d eventdb"]
-      interval: 30s 
-      timeout: 10s  
-      retries: 3    
-      start_period: 30s
+      event-db:
+        image: postgres:latest
+        environment:
+          POSTGRES_USER: admin
+          POSTGRES_PASSWORD: admin
+          POSTGRES_DB: eventdb
+        ports:
+          - "5434:5432"
+        volumes:
+          - event_db_data:/var/lib/postgresql/data
+          - ./eventdbinit.sql:/docker-entrypoint-initdb.d/init.sql 
+        restart: unless-stopped
+        healthcheck:
+          test: ["CMD-SHELL", "pg_isready -U admin -d eventdb"]
+          interval: 30s 
+          timeout: 10s  
+          retries: 3    
+          start_period: 30s
 
   
-  mongodb:
-    image: mongo:latest
-    container_name: mongodb
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: admin
-    ports:
-      - "27017:27017"
+      mongodb:
+        image: mongo:latest
+        container_name: mongodb
+        environment:
+          MONGO_INITDB_ROOT_USERNAME: admin
+          MONGO_INITDB_ROOT_PASSWORD: admin
+        ports:
+          - "27017:27017"
+        volumes:
+          - mongodb_data:/data/db
+        restart: unless-stopped
+        healthcheck:
+          test: ["CMD-SHELL", "mongo --eval 'db.runCommand({ ping: 1 })' && exit 0 || exit 1"]
+          interval: 30s 
+          timeout: 10s  
+          retries: 3    
+          start_period: 30s
+
+
+      pgadmin:
+        image: dpage/pgadmin4:latest
+        environment:
+          PGADMIN_DEFAULT_EMAIL: admin@example.com
+          PGADMIN_DEFAULT_PASSWORD: 123
+        ports:
+          - "5050:80"
+        depends_on:
+          - user-db
+
     volumes:
-      - mongodb_data:/data/db
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD-SHELL", "mongo --eval 'db.runCommand({ ping: 1 })' && exit 0 || exit 1"]
-      interval: 30s 
-      timeout: 10s  
-      retries: 3    
-      start_period: 30s
-
-
-  pgadmin:
-    image: dpage/pgadmin4:latest
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@example.com
-      PGADMIN_DEFAULT_PASSWORD: 123
-    ports:
-      - "5050:80"
-    depends_on:
-      - user-db
-
-volumes:
-  user_db_data:
-  studio_game_db_data:
-  user_activity_db_data:
-  administratum_db_data:
-  event_db_data:
-  mongodb_data:
+      user_db_data:
+      studio_game_db_data:
+      user_activity_db_data:
+      administratum_db_data:
+      event_db_data:
+      mongodb_data:
 
 
