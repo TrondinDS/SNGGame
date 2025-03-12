@@ -10,9 +10,10 @@
         ports:
           - "8322:8080"
         depends_on:
-          - user-db
+          - user-service-db
+          - user-service-mongo
 
-      user-db:
+      user-service-db:
         image: postgres:latest
         environment:
           POSTGRES_USER: admin
@@ -21,7 +22,7 @@
         ports:
           - "5433:5432"
         volumes:
-          - user_db_data:/var/lib/postgresql/data
+          - user_service_db_data:/var/lib/postgresql/data
           - ./userdbinit.sql:/docker-entrypoint-initdb.d/init.sql 
         restart: unless-stopped
         healthcheck:
@@ -29,6 +30,23 @@
           interval: 30s 
           timeout: 10s  
           retries: 3    
+          start_period: 30s
+
+      user-service-mongo:
+        image: mongo:latest
+        environment:
+          MONGO_INITDB_ROOT_USERNAME: admin
+          MONGO_INITDB_ROOT_PASSWORD: admin
+        ports:
+          - "27018:27017"
+        volumes:
+          - user_service_mongo_data:/data/db
+        restart: unless-stopped
+        healthcheck:
+          test: ["CMD-SHELL", "mongo --eval 'db.runCommand({ ping: 1 })' && exit 0 || exit 1"]
+          interval: 30s
+          timeout: 10s
+          retries: 3
           start_period: 30s
 
   
@@ -162,23 +180,23 @@
           start_period: 30s
 
   
-      mongodb:
-        image: mongo:latest
-        container_name: mongodb
-        environment:
-          MONGO_INITDB_ROOT_USERNAME: admin
-          MONGO_INITDB_ROOT_PASSWORD: admin
-        ports:
-          - "27017:27017"
-        volumes:
-          - mongodb_data:/data/db
-        restart: unless-stopped
-        healthcheck:
-          test: ["CMD-SHELL", "mongo --eval 'db.runCommand({ ping: 1 })' && exit 0 || exit 1"]
-          interval: 30s 
-          timeout: 10s  
-          retries: 3    
-          start_period: 30s
+      # mongodb:
+      #   image: mongo:latest
+      #   container_name: mongodb
+      #   environment:
+      #     MONGO_INITDB_ROOT_USERNAME: admin
+      #     MONGO_INITDB_ROOT_PASSWORD: admin
+      #   ports:
+      #     - "27017:27017"
+      #   volumes:
+      #     - mongodb_data:/data/db
+      #   restart: unless-stopped
+      #   healthcheck:
+      #     test: ["CMD-SHELL", "mongo --eval 'db.runCommand({ ping: 1 })' && exit 0 || exit 1"]
+      #     interval: 30s 
+      #     timeout: 10s  
+      #     retries: 3    
+      #     start_period: 30s
 
 
       pgadmin:
@@ -189,14 +207,17 @@
         ports:
           - "5050:80"
         depends_on:
-          - user-db
+          - userservices
+
 
     volumes:
-      user_db_data:
+      user_service_db_data:
+      user_service_mongo_data:
+
       studio_game_db_data:
       user_activity_db_data:
       administratum_db_data:
       event_db_data:
-      mongodb_data:
+      # mongodb_data:
 
 

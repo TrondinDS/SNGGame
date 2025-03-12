@@ -12,19 +12,19 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["UserService/UserServices.csproj", "UserService/"]
-RUN dotnet restore "./UserService/UserServices.csproj"
+COPY ["UserService/UserService.csproj", "UserService/"]
+RUN dotnet restore "./UserService/UserService.csproj"
 COPY . .
 WORKDIR "/src/UserService"
-RUN dotnet build "./UserServices.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "./UserService.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # Этот этап используется для публикации проекта службы, который будет скопирован на последний этап
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./UserServices.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./UserService.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 # Этот этап используется в рабочей среде или при запуске из VS в обычном режиме (по умолчанию, когда конфигурация отладки не используется)
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "UserServices.dll"]
+ENTRYPOINT ["dotnet", "UserService.dll"]
