@@ -5,7 +5,8 @@ namespace UserService.DB.DTO.User
 {
     public class UserDTO
     {
-        public int Id { get; set; }
+        [RegularExpression("^[a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12}$", ErrorMessage = "UserId должен быть корректным GUID")]
+        public Guid Id { get; set; }
 
         [Required(ErrorMessage = "Поле Name является обязательным")]
         [MaxLength(255, ErrorMessage = "Поле Name должно иметь длинну до 255 символов")]

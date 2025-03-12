@@ -19,12 +19,12 @@ namespace BannedService.DB.Models
         public DateTime? DateDeleted { get; set; }
 
         // Внешний ключ для модератора
-        public int UserIdModerator { get; set; }
+        public Guid UserIdModerator { get; set; }
         [ForeignKey("UserIdModerator")]
         public User UserModerator { get; set; } // Навигационное свойство для модератора
 
         // Внешний ключ для забаненного пользователя
-        public int UserIdBanned { get; set; }
+        public Guid UserIdBanned { get; set; }
         [ForeignKey("UserIdBanned")]
         public User UserBanned { get; set; } // Навигационное свойство для забаненного пользователя
     }

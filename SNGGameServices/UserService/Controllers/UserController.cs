@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using UserService.DB.DTO.User;
 using UserService.DB.Models;
@@ -8,7 +7,7 @@ using UserService.Services.Interfaces;
 namespace UserService.Controllers
 {
     [ApiController]
-    [Route("api/[controller]/[action]")]
+    [Route("/api/[controller]/[action]")]
     public class UserController : ControllerBase
     {
         private readonly IUserService userService;
@@ -37,7 +36,7 @@ namespace UserService.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("{id}")]
-        public async Task<ActionResult<UserDTO>> GetUserById(int id)
+        public async Task<ActionResult<UserDTO>> GetUserById(Guid id)
         {
             var user = await userService.GetByIdAsync(id);
             if (user == null)
@@ -66,7 +65,7 @@ namespace UserService.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateUser(int id, UserDTO userDto)
+        public async Task<ActionResult> UpdateUser(Guid id, UserDTO userDto)
         {
             if (id != userDto.Id)
             {
@@ -89,7 +88,7 @@ namespace UserService.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteUser(int id)
+        public async Task<ActionResult> DeleteUser(Guid id)
         {
             await userService.DeleteAsync(id);
             return NoContent();

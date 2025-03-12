@@ -9,11 +9,11 @@ namespace UserService.DB.Models
         [Key]
         public int Id { get; set; }
         public int EntityId { get; set; }
-        public required int EntityType { get; set; }
+        public int EntityType { get; set; }
         public DateTime DateStart { get; set; }
-        public DateTime DateFinish { get; set; }
+        public DateTime? DateFinish { get; set; }
 
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
 
         [ForeignKey(nameof(UserId))]
         public User User { get; set; }

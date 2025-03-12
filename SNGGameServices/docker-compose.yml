@@ -8,7 +8,7 @@
         volumes:
           - .:/app
         ports:
-          - "5285:80"
+          - "8322:8080"
         depends_on:
           - user-service-db
           - user-service-mongo
@@ -58,7 +58,7 @@
         volumes:
           - .:/app
         ports:
-          - "5287:80"
+          - "5287:8080"
         depends_on:
           - studio-game-db
 
@@ -90,7 +90,7 @@
         volumes:
           - .:/app
         ports:
-          - "5288:80"
+          - "5288:8080"
         depends_on:
           - user-activity-db
 
@@ -122,7 +122,7 @@
         volumes:
           - .:/app
         ports:
-          - "5283:80"
+          - "5283:8080"
         depends_on:
           - administratum-db
       
@@ -155,7 +155,7 @@
         volumes:
           - .:/app
         ports:
-          - "5286:80"
+          - "5286:8080"
         depends_on:
           - event-db
 
