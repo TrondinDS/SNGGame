@@ -7,8 +7,7 @@ namespace UserService.Repository
 {
     public class UserRepository : GenericRepository<User, Guid>, IUserRepository
     {
-        public UserRepository(ApplicationContext context) : base(context)
-        {
-        }
+        public UserRepository(ApplicationContext context)
+            : base(context) { }
     }
 }

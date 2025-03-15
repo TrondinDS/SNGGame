@@ -7,8 +7,7 @@ namespace StudioGameService.Repository
 {
     public class TagRepository : GenericRepository<Tag, int>, ITagRepository
     {
-        public TagRepository(ApplicationContext context) : base(context)
-        {
-        }
+        public TagRepository(ApplicationContext context)
+            : base(context) { }
     }
 }

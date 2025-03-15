@@ -1,4 +1,3 @@
-
 using Microsoft.EntityFrameworkCore;
 using OrganizerEventService.DB.Context;
 
@@ -19,16 +18,20 @@ namespace OrganizerEventService
             builder.Services.AddSingleton<Library.Services.Mongo>(provider =>
             {
                 var config = provider.GetRequiredService<IConfiguration>();
-                return new Library.Services.Mongo(config.GetConnectionString("UserServiceMongoConnection"));
+                return new Library.Services.Mongo(
+                    config.GetConnectionString("UserServiceMongoConnection")
+                );
             });
 
             builder.Services.AddDbContext<ApplicationContext>(opt =>
-                opt.UseNpgsql(builder.Configuration.GetConnectionString("OrganizerEventServiceConnection"))
-                );
+                opt.UseNpgsql(
+                    builder.Configuration.GetConnectionString("OrganizerEventServiceConnection")
+                )
+            );
 
             var app = builder.Build();
 
-            // Применение миграций
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             using (var scope = app.Services.CreateScope())
             {
                 var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationContext>();
@@ -44,7 +47,6 @@ namespace OrganizerEventService
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 

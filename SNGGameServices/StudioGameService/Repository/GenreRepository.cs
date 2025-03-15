@@ -8,8 +8,7 @@ namespace StudioGameService.Repository
 {
     public class GenreRepository : GenericRepository<Genre, int>, IGenreRepository
     {
-        public GenreRepository(ApplicationContext context) : base(context)
-        {
-        }
+        public GenreRepository(ApplicationContext context)
+            : base(context) { }
     }
 }

@@ -1,4 +1,3 @@
-
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using StudioGameService.DB.Context;
@@ -21,13 +20,12 @@ namespace StudioGameService
             builder.Services.AddAutoMapper(typeof(Program));
             builder.Services.AddControllers();
 
-            // Добавляем Swagger
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Swagger
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
-
 
             builder.Services.AddTransient<IGameRepository, GameRepository>();
             builder.Services.AddTransient<IGameService, GameService>();
@@ -35,7 +33,10 @@ namespace StudioGameService
             builder.Services.AddTransient<IGameLibraryRepository, GameLibraryRepository>();
             builder.Services.AddTransient<IGameLibraryService, GameLibraryService>();
 
-            builder.Services.AddTransient<IGameSelectedGenreRepository, GameSelectedGenreRepository>();
+            builder.Services.AddTransient<
+                IGameSelectedGenreRepository,
+                GameSelectedGenreRepository
+            >();
             builder.Services.AddTransient<IGameSelectedGenreService, GameSelectedGenreService>();
 
             builder.Services.AddTransient<IGameSelectedTagRepository, GameSelectedTagRepository>();
@@ -50,14 +51,15 @@ namespace StudioGameService
             builder.Services.AddTransient<ITagRepository, TagRepository>();
             builder.Services.AddTransient<ITagService, TagService>();
 
-
             builder.Services.AddDbContext<ApplicationContext>(opt =>
-                opt.UseNpgsql(builder.Configuration.GetConnectionString("StudioGameServiceConnection"))
-                );
+                opt.UseNpgsql(
+                    builder.Configuration.GetConnectionString("StudioGameServiceConnection")
+                )
+            );
 
             var app = builder.Build();
 
-            // Применение миграций
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             using (var scope = app.Services.CreateScope())
             {
                 var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationContext>();
@@ -73,12 +75,12 @@ namespace StudioGameService
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
-                // Добавляем Swagger UI
+                // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Swagger UI
                 app.UseSwagger();
                 app.UseSwaggerUI(c =>
                 {
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V2");
-                    c.RoutePrefix = string.Empty; // Опционально: делает Swagger доступным по корневому URL
+                    c.RoutePrefix = string.Empty; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: пїЅпїЅпїЅпїЅпїЅпїЅ Swagger пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ URL
                 });
 
                 app.MapOpenApi();
@@ -87,7 +89,6 @@ namespace StudioGameService
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 

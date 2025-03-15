@@ -12,6 +12,7 @@ namespace StudioGameService.Services
         {
             this.gameLibraryRepository = gameLibraryRepository;
         }
+
         public async Task AddAsync(GameLibrary gameLibrary)
         {
             await gameLibraryRepository.AddAsync(gameLibrary);

@@ -1,4 +1,3 @@
-
 using Microsoft.EntityFrameworkCore;
 using UserActivityService.DB.Context;
 
@@ -17,12 +16,14 @@ namespace UserActivity
             builder.Services.AddOpenApi();
 
             builder.Services.AddDbContext<ApplicationContext>(opt =>
-                opt.UseNpgsql(builder.Configuration.GetConnectionString("UserActivityServiceConnection"))
-                );
+                opt.UseNpgsql(
+                    builder.Configuration.GetConnectionString("UserActivityServiceConnection")
+                )
+            );
 
             var app = builder.Build();
 
-            // Применение миграций
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             using (var scope = app.Services.CreateScope())
             {
                 var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationContext>();
@@ -38,7 +39,6 @@ namespace UserActivity
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 

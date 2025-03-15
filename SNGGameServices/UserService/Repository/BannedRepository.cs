@@ -7,8 +7,7 @@ namespace UserService.Repository
 {
     public class BannedRepository : GenericRepository<Banned, int>, IBannedRepository
     {
-        public BannedRepository(ApplicationContext context) : base(context)
-        { 
-        }
+        public BannedRepository(ApplicationContext context)
+            : base(context) { }
     }
 }

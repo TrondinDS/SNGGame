@@ -5,10 +5,11 @@ using UserService.Repository.Interfaces;
 
 namespace UserService.Repository
 {
-    public class UserSubscriptionRepository : GenericRepository<UserSubscription, int>,IUserSubscriptionRepository
+    public class UserSubscriptionRepository
+        : GenericRepository<UserSubscription, int>,
+            IUserSubscriptionRepository
     {
-        public UserSubscriptionRepository(ApplicationContext context) : base(context)
-        {
-        }
+        public UserSubscriptionRepository(ApplicationContext context)
+            : base(context) { }
     }
 }

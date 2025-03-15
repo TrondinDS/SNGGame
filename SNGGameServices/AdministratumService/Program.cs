@@ -1,4 +1,3 @@
-
 using AdministratumService.DB.Context;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,12 +16,14 @@ namespace AdministratumService
             builder.Services.AddOpenApi();
 
             builder.Services.AddDbContext<ApplicationContext>(opt =>
-                opt.UseNpgsql(builder.Configuration.GetConnectionString("AdministratumServiceConnection"))
-                );
+                opt.UseNpgsql(
+                    builder.Configuration.GetConnectionString("AdministratumServiceConnection")
+                )
+            );
 
             var app = builder.Build();
 
-            // Применение миграций
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             using (var scope = app.Services.CreateScope())
             {
                 var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationContext>();
@@ -38,7 +39,6 @@ namespace AdministratumService
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 

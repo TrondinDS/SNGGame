@@ -13,7 +13,10 @@ namespace StudioGameService.Controllers
         private readonly IGameSelectedTagService gameSelectedTagService;
         private readonly IMapper mapper;
 
-        public GameSelectedTagController(IGameSelectedTagService gameSelectedTagService, IMapper mapper)
+        public GameSelectedTagController(
+            IGameSelectedTagService gameSelectedTagService,
+            IMapper mapper
+        )
         {
             this.gameSelectedTagService = gameSelectedTagService;
             this.mapper = mapper;
@@ -54,12 +57,18 @@ namespace StudioGameService.Controllers
         /// <param name="gameSelectedTagCreateDTO">Данные для создания связи</param>
         /// <returns>Созданная связь</returns>
         [HttpPost]
-        public async Task<ActionResult> CreateGameSelectedTag(GameSelectedTagDTO gameSelectedTagCreateDTO)
+        public async Task<ActionResult> CreateGameSelectedTag(
+            GameSelectedTagDTO gameSelectedTagCreateDTO
+        )
         {
             var gameSelectedTag = mapper.Map<GameSelectedTag>(gameSelectedTagCreateDTO);
             await gameSelectedTagService.AddAsync(gameSelectedTag);
             var gameSelectedTagResultDTO = mapper.Map<GameSelectedTagDTO>(gameSelectedTag);
-            return CreatedAtAction(nameof(GetGameSelectedTagById), new { id = gameSelectedTag.Id }, gameSelectedTagResultDTO);
+            return CreatedAtAction(
+                nameof(GetGameSelectedTagById),
+                new { id = gameSelectedTag.Id },
+                gameSelectedTagResultDTO
+            );
         }
 
         /// <summary>
@@ -69,7 +78,10 @@ namespace StudioGameService.Controllers
         /// <param name="gameSelectedTagDTO">Обновленные данные связи</param>
         /// <returns>Результат обновления</returns>
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateGameSelectedTag(int id, GameSelectedTagDTO gameSelectedTagDTO)
+        public async Task<ActionResult> UpdateGameSelectedTag(
+            int id,
+            GameSelectedTagDTO gameSelectedTagDTO
+        )
         {
             if (id != gameSelectedTagDTO.Id)
             {

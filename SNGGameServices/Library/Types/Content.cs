@@ -1,5 +1,5 @@
-﻿using MongoDB.Bson;
-using System.Net.Mime;
+﻿using System.Net.Mime;
+using MongoDB.Bson;
 
 namespace Library.Types
 {
@@ -10,11 +10,7 @@ namespace Library.Types
 
         public BsonDocument AsBsonDocument()
         {
-            return new BsonDocument
-            {
-                { "id", Id.ToString() },
-                { "value", Value }
-            };
+            return new BsonDocument { { "id", Id.ToString() }, { "value", Value } };
         }
     }
 }

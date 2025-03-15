@@ -13,7 +13,10 @@ namespace UserService.Controllers
         private readonly IUserSubscriptionService userSubscriptionService;
         private readonly IMapper mapper;
 
-        public UserSubscriptionController(IUserSubscriptionService userSubscriptionService, IMapper mapper)
+        public UserSubscriptionController(
+            IUserSubscriptionService userSubscriptionService,
+            IMapper mapper
+        )
         {
             this.userSubscriptionService = userSubscriptionService;
             this.mapper = mapper;
@@ -27,7 +30,9 @@ namespace UserService.Controllers
         public async Task<ActionResult<IEnumerable<UserSubscriptionDTO>>> GetAllUserSubscription()
         {
             var usersSubscriptions = await userSubscriptionService.GetAllAsync();
-            var usersSubscriptionsDTO = mapper.Map<IEnumerable<UserSubscriptionDTO>>(usersSubscriptions);
+            var usersSubscriptionsDTO = mapper.Map<IEnumerable<UserSubscriptionDTO>>(
+                usersSubscriptions
+            );
             return Ok(usersSubscriptionsDTO);
         }
 
@@ -52,12 +57,18 @@ namespace UserService.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> CreateUserSubscription(UserSubscriptionDTO userSubscriptionDTO)
+        public async Task<ActionResult> CreateUserSubscription(
+            UserSubscriptionDTO userSubscriptionDTO
+        )
         {
             var userSub = mapper.Map<UserSubscription>(userSubscriptionDTO);
             await userSubscriptionService.AddAsync(userSub);
             var userResultDTO = mapper.Map<UserSubscriptionDTO>(userSubscriptionDTO);
-            return CreatedAtAction(nameof(GetUserSubscriptionById), new { id = userSub.Id }, userResultDTO);
+            return CreatedAtAction(
+                nameof(GetUserSubscriptionById),
+                new { id = userSub.Id },
+                userResultDTO
+            );
         }
 
         /// <summary>
@@ -65,7 +76,10 @@ namespace UserService.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateUserSubscription(int id, UserSubscriptionDTO userSubscriptionDTO)
+        public async Task<ActionResult> UpdateUserSubscription(
+            int id,
+            UserSubscriptionDTO userSubscriptionDTO
+        )
         {
             if (id != userSubscriptionDTO.Id)
             {

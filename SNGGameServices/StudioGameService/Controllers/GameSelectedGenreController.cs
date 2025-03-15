@@ -13,7 +13,10 @@ namespace StudioGameService.Controllers
         private readonly IGameSelectedGenreService gameSelectedGenreService;
         private readonly IMapper mapper;
 
-        public GameSelectedGenreController(IGameSelectedGenreService gameSelectedGenreService, IMapper mapper)
+        public GameSelectedGenreController(
+            IGameSelectedGenreService gameSelectedGenreService,
+            IMapper mapper
+        )
         {
             this.gameSelectedGenreService = gameSelectedGenreService;
             this.mapper = mapper;
@@ -24,10 +27,14 @@ namespace StudioGameService.Controllers
         /// </summary>
         /// <returns>Список всех связей "Игра-Жанр"</returns>
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<GameSelectedGenreDTO>>> GetAllGameSelectedGenres()
+        public async Task<
+            ActionResult<IEnumerable<GameSelectedGenreDTO>>
+        > GetAllGameSelectedGenres()
         {
             var gameSelectedGenres = await gameSelectedGenreService.GetAllAsync();
-            var gameSelectedGenreDTOs = mapper.Map<IEnumerable<GameSelectedGenreDTO>>(gameSelectedGenres);
+            var gameSelectedGenreDTOs = mapper.Map<IEnumerable<GameSelectedGenreDTO>>(
+                gameSelectedGenres
+            );
             return Ok(gameSelectedGenreDTOs);
         }
 
@@ -54,12 +61,18 @@ namespace StudioGameService.Controllers
         /// <param name="gameSelectedGenreCreateDTO">Данные для создания связи</param>
         /// <returns>Созданная связь</returns>
         [HttpPost]
-        public async Task<ActionResult> CreateGameSelectedGenre(GameSelectedGenreDTO gameSelectedGenreCreateDTO)
+        public async Task<ActionResult> CreateGameSelectedGenre(
+            GameSelectedGenreDTO gameSelectedGenreCreateDTO
+        )
         {
             var gameSelectedGenre = mapper.Map<GameSelectedGenre>(gameSelectedGenreCreateDTO);
             await gameSelectedGenreService.AddAsync(gameSelectedGenre);
             var gameSelectedGenreResultDTO = mapper.Map<GameSelectedGenreDTO>(gameSelectedGenre);
-            return CreatedAtAction(nameof(GetGameSelectedGenreById), new { id = gameSelectedGenre.Id }, gameSelectedGenreResultDTO);
+            return CreatedAtAction(
+                nameof(GetGameSelectedGenreById),
+                new { id = gameSelectedGenre.Id },
+                gameSelectedGenreResultDTO
+            );
         }
 
         /// <summary>
@@ -69,7 +82,10 @@ namespace StudioGameService.Controllers
         /// <param name="gameSelectedGenreDTO">Обновленные данные связи</param>
         /// <returns>Результат обновления</returns>
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateGameSelectedGenre(int id, GameSelectedGenreDTO gameSelectedGenreDTO)
+        public async Task<ActionResult> UpdateGameSelectedGenre(
+            int id,
+            GameSelectedGenreDTO gameSelectedGenreDTO
+        )
         {
             if (id != gameSelectedGenreDTO.Id)
             {

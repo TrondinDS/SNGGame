@@ -6,10 +6,11 @@ using StudioGameService.Repository.Interfaces;
 
 namespace StudioGameService.Repository
 {
-    public class GameSelectedTagRepository : GenericRepository<GameSelectedTag, int>, IGameSelectedTagRepository
+    public class GameSelectedTagRepository
+        : GenericRepository<GameSelectedTag, int>,
+            IGameSelectedTagRepository
     {
-        public GameSelectedTagRepository(ApplicationContext context) : base(context)
-        {
-        }
+        public GameSelectedTagRepository(ApplicationContext context)
+            : base(context) { }
     }
 }

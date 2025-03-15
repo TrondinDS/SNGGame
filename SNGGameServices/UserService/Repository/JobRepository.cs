@@ -7,8 +7,7 @@ namespace UserService.Repository
 {
     public class JobRepository : GenericRepository<Job, int>, IJobRepository
     {
-        public JobRepository(ApplicationContext context) : base(context)
-        { 
-        }
+        public JobRepository(ApplicationContext context)
+            : base(context) { }
     }
 }

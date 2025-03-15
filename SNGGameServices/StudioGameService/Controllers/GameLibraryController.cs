@@ -59,7 +59,11 @@ namespace StudioGameService.Controllers
             var gameLibrary = mapper.Map<GameLibrary>(gameLibraryCreateDTO);
             await gameLibraryService.AddAsync(gameLibrary);
             var gameLibraryResultDTO = mapper.Map<GameLibraryDTO>(gameLibrary);
-            return CreatedAtAction(nameof(GetGameLibraryById), new { id = gameLibrary.Id }, gameLibraryResultDTO);
+            return CreatedAtAction(
+                nameof(GetGameLibraryById),
+                new { id = gameLibrary.Id },
+                gameLibraryResultDTO
+            );
         }
 
         /// <summary>

@@ -1,6 +1,6 @@
-﻿using Library;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Library;
 using UserService.DB.Models;
 
 namespace BannedService.DB.Models
@@ -20,11 +20,13 @@ namespace BannedService.DB.Models
 
         // Внешний ключ для модератора
         public Guid UserIdModerator { get; set; }
+
         [ForeignKey("UserIdModerator")]
         public User UserModerator { get; set; } // Навигационное свойство для модератора
 
         // Внешний ключ для забаненного пользователя
         public Guid UserIdBanned { get; set; }
+
         [ForeignKey("UserIdBanned")]
         public User UserBanned { get; set; } // Навигационное свойство для забаненного пользователя
     }

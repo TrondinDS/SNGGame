@@ -5,7 +5,10 @@ namespace UserService.DB.DTO.User
 {
     public class UserDTO
     {
-        [RegularExpression("^[a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12}$", ErrorMessage = "UserId должен быть корректным GUID")]
+        [RegularExpression(
+            "^[a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12}$",
+            ErrorMessage = "UserId должен быть корректным GUID"
+        )]
         public Guid Id { get; set; }
 
         [Required(ErrorMessage = "Поле Name является обязательным")]
@@ -17,13 +20,14 @@ namespace UserService.DB.DTO.User
         [DataType(DataType.Date)]
         [MinimumAge(18)]
         public DateTime? DateBirth { get; set; }
-        
+
         [EmailAddress(ErrorMessage = "Поле Email имеет неверный формат")]
         [MaxLength(255, ErrorMessage = "Email должно иметь длинну до 255 символов")]
         public string? Email { get; set; }
 
         [Display(Name = "Является администратором")]
         public bool? IsAdmin { get; set; }
+
         [Display(Name = "Является глобальным модератором")]
         public bool? IsGlobalModerator { get; set; }
     }

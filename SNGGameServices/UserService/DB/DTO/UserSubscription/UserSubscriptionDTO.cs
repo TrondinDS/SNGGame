@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.InteropServices;
 
 namespace UserService.DB.DTO.UserSubscription
@@ -24,7 +24,10 @@ namespace UserService.DB.DTO.UserSubscription
         [DataType(DataType.Date, ErrorMessage = "DateFinish должен иметь формат даты")]
         public DateTime? DateFinish { get; set; }
 
-        [RegularExpression("^[a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12}$", ErrorMessage = "UserId должен быть корректным GUID")]
+        [RegularExpression(
+            "^[a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12}$",
+            ErrorMessage = "UserId должен быть корректным GUID"
+        )]
         [Required(ErrorMessage = "Поле UserId является обязательным")]
         public Guid UserId { get; set; }
     }

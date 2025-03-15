@@ -20,6 +20,7 @@ namespace UserService.DB.DTO.User
 
         [Display(Name = "Является администратором")]
         public bool? IsAdmin { get; set; }
+
         [Display(Name = "Является глобальным модератором")]
         public bool? IsGlobalModerator { get; set; }
     }

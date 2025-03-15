@@ -2,7 +2,6 @@
 using StudioGameService.Repository.Interfaces;
 using StudioGameService.Services.Interfaces;
 
-
 namespace TagGameService.Services
 {
     public class TagService : ITagService

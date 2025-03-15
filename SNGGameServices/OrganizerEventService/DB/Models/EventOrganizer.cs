@@ -1,9 +1,8 @@
-﻿using Library;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using Library;
 
 namespace OrganizerEventService.DB.Models
 {
-
     public class EventOrganizer : IIsDeleted
     {
         [Key]
@@ -18,7 +17,10 @@ namespace OrganizerEventService.DB.Models
         [MaxLength(255, ErrorMessage = "Mail cannot be longer than 255 characters")]
         public string Mail { get; set; }
 
-        [MaxLength(255, ErrorMessage = "FilepathToDescription cannot be longer than 1024 characters")]
+        [MaxLength(
+            255,
+            ErrorMessage = "FilepathToDescription cannot be longer than 1024 characters"
+        )]
         public string FilepathToDescription { get; set; }
 
         [MaxLength(255, ErrorMessage = "FilepathToPhotoIcon cannot be longer than 1024 characters")]

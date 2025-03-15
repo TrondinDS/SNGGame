@@ -7,9 +7,8 @@ namespace UserService.DB.Context
 {
     public class ApplicationContext : DbContext
     {
-        public ApplicationContext(DbContextOptions<ApplicationContext> dbContext) : base (dbContext) 
-        {
-        }
+        public ApplicationContext(DbContextOptions<ApplicationContext> dbContext)
+            : base(dbContext) { }
 
         DbSet<User> Users { get; set; }
         DbSet<UserSubscription> Subscriptions { get; set; }
@@ -20,26 +19,29 @@ namespace UserService.DB.Context
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Job>()
+            modelBuilder
+                .Entity<Job>()
                 .HasOne(job => job.User)
                 .WithMany(user => user.Jobs)
                 .HasForeignKey(job => job.UserId);
 
-            modelBuilder.Entity<UserSubscription>()
+            modelBuilder
+                .Entity<UserSubscription>()
                 .HasOne(us => us.User)
                 .WithMany(user => user.Subscriptions)
                 .HasForeignKey(us => us.UserId);
 
-            modelBuilder.Entity<Banned>()
+            modelBuilder
+                .Entity<Banned>()
                 .HasOne(ban => ban.UserModerator)
                 .WithMany(user => user.ModeratedBans)
-                .HasForeignKey(ban => ban.UserIdModerator);            
+                .HasForeignKey(ban => ban.UserIdModerator);
 
-            modelBuilder.Entity<Banned>()
+            modelBuilder
+                .Entity<Banned>()
                 .HasOne(ban => ban.UserBanned)
                 .WithMany(user => user.BannedRecords)
                 .HasForeignKey(ban => ban.UserIdBanned);
         }
-
     }
 }

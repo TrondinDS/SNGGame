@@ -1,6 +1,6 @@
-﻿using Library;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Library;
 
 namespace OrganizerEventService.DB.Models
 {
@@ -34,7 +34,10 @@ namespace OrganizerEventService.DB.Models
         [MaxLength(1024, ErrorMessage = "GeoUrl cannot be longer than 1024 characters")]
         public string GeoUrl { get; set; }
 
-        [MaxLength(255, ErrorMessage = "FilepathToDescription cannot be longer than 1024 characters")]
+        [MaxLength(
+            255,
+            ErrorMessage = "FilepathToDescription cannot be longer than 1024 characters"
+        )]
         public string FilepathToDescription { get; set; }
 
         [MaxLength(255, ErrorMessage = "FilepathToPhotoIcon cannot be longer than 1024 characters")]

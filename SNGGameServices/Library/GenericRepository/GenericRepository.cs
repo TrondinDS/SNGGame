@@ -3,7 +3,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Library.GenericRepository
 {
-    public class GenericRepository<TEntity, TId> : IGenericRepository<TEntity, TId> where TEntity : class
+    public class GenericRepository<TEntity, TId> : IGenericRepository<TEntity, TId>
+        where TEntity : class
     {
         private readonly DbContext _context;
         private readonly DbSet<TEntity> _dbSet;
@@ -28,7 +29,6 @@ namespace Library.GenericRepository
         {
             await _dbSet.AddRangeAsync(entity);
         }
-
 
         public virtual async void UpdateAsync(params TEntity[] entities)
         {
@@ -55,9 +55,7 @@ namespace Library.GenericRepository
             var entityType = _context.Model.FindEntityType(typeof(TEntity));
             var keyProperties = entityType.FindPrimaryKey().Properties;
 
-            return keyProperties
-                .Select(p => p.PropertyInfo.GetValue(entity))
-                .ToArray();
+            return keyProperties.Select(p => p.PropertyInfo.GetValue(entity)).ToArray();
         }
 
         public virtual void DeleteAsync(params TEntity[] entity)

@@ -31,7 +31,10 @@ namespace StudioGameService.DB.DTO.Game
         [MaxLength(255, ErrorMessage = "Страна разработки не должна превышать 255 символов")]
         public string CountryDevelopment { get; set; }
 
-        [MaxLength(255, ErrorMessage = "Ссылка на страницу в магазине не должна превышать 255 символов")]
+        [MaxLength(
+            255,
+            ErrorMessage = "Ссылка на страницу в магазине не должна превышать 255 символов"
+        )]
         public string LinkPageStore { get; set; }
 
         [MaxLength(255, ErrorMessage = "Platform не должна превышать 255 символов")]

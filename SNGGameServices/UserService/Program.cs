@@ -1,11 +1,10 @@
-
+using Library;
 using Microsoft.EntityFrameworkCore;
 using UserService.DB.Context;
-using UserService.Repository.Interfaces;
 using UserService.Repository;
-using UserService.Services.Interfaces;
-using Library;
+using UserService.Repository.Interfaces;
 using UserService.Services;
+using UserService.Services.Interfaces;
 
 namespace UserService
 {
@@ -18,14 +17,16 @@ namespace UserService
             builder.Services.AddSingleton<Library.Services.Mongo>(provider =>
             {
                 var config = provider.GetRequiredService<IConfiguration>();
-                return new Library.Services.Mongo(config.GetConnectionString("UserServiceMongoConnection"));
+                return new Library.Services.Mongo(
+                    config.GetConnectionString("UserServiceMongoConnection")
+                );
             });
 
             // Add services to the container.
             builder.Services.AddAutoMapper(typeof(Program));
             builder.Services.AddControllers();
 
-            // Добавляем Swagger
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Swagger
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
@@ -35,9 +36,12 @@ namespace UserService
             builder.Services.AddTransient<IUserRepository, UserRepository>();
             builder.Services.AddTransient<IUserService, UserServiceS>();
 
-            builder.Services.AddTransient<IUserSubscriptionRepository, UserSubscriptionRepository>();
+            builder.Services.AddTransient<
+                IUserSubscriptionRepository,
+                UserSubscriptionRepository
+            >();
             builder.Services.AddTransient<IUserSubscriptionService, UserSubscriptionService>();
-            
+
             builder.Services.AddTransient<IJobRepository, JobRepository>();
             builder.Services.AddTransient<IJobService, JobService>();
 
@@ -46,11 +50,11 @@ namespace UserService
 
             builder.Services.AddDbContext<ApplicationContext>(opt =>
                 opt.UseNpgsql(builder.Configuration.GetConnectionString("UserServiceConnection"))
-                );
+            );
 
             var app = builder.Build();
 
-            // Применение миграций
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             using (var scope = app.Services.CreateScope())
             {
                 var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationContext>();
@@ -66,22 +70,20 @@ namespace UserService
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
-                // Добавляем Swagger UI
+                // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Swagger UI
                 app.UseSwagger();
                 app.UseSwaggerUI(c =>
                 {
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-                    c.RoutePrefix = string.Empty; // Опционально: делает Swagger доступным по корневому URL
+                    c.RoutePrefix = string.Empty; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: пїЅпїЅпїЅпїЅпїЅпїЅ Swagger пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ URL
                 });
 
                 app.MapOpenApi();
             }
 
-
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 

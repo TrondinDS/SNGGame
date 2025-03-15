@@ -1,4 +1,3 @@
-
 namespace SNGGameServices
 {
     public class Program
@@ -24,7 +23,6 @@ namespace SNGGameServices
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 

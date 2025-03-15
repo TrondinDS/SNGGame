@@ -7,12 +7,16 @@ namespace StudioGameService.DB.Model
     {
         [Key]
         public int Id { get; set; }
+
         [Required]
         public int GameId { get; set; }
+
         [Required]
         public int TagId { get; set; }
+
         [ForeignKey("GameId")]
         public Game Game { get; set; }
+
         [ForeignKey("TagId")]
         public Tag Tag { get; set; }
     }

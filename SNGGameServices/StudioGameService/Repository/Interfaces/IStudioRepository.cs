@@ -3,7 +3,5 @@ using StudioGameService.DB.Model;
 
 namespace StudioGameService.Repository.Interfaces
 {
-    public interface IStudioRepository : IGenericRepository<Studio, int>
-    {
-    }
+    public interface IStudioRepository : IGenericRepository<Studio, int> { }
 }

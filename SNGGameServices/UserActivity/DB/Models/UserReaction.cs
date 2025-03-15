@@ -7,12 +7,16 @@ namespace UserActivityService.DB.Models
     {
         [Key]
         public int Id { get; set; }
+
         [Required]
         public int UserId { get; set; }
+
         [Required]
         public int ReactionType { get; set; }
+
         [Required]
         public int CommentId { get; set; }
+
         [ForeignKey("CommentId")]
         public Comment Comment { get; set; }
     }

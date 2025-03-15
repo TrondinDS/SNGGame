@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace UserService.DB.DTO.Job
 {
@@ -35,7 +35,10 @@ namespace UserService.DB.DTO.Job
         [DataType(DataType.Date, ErrorMessage = "DateDeleted должно иметь формат даты")]
         public DateTime? DateDeleted { get; set; }
 
-        [RegularExpression("^[a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12}$", ErrorMessage = "UserId должен быть корректным GUID")]
+        [RegularExpression(
+            "^[a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12}$",
+            ErrorMessage = "UserId должен быть корректным GUID"
+        )]
         [Required(ErrorMessage = "UserId является обязательным")]
         public Guid UserId { get; set; }
     }

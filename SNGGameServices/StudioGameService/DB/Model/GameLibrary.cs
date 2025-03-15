@@ -7,17 +7,21 @@ namespace StudioGameService.DB.Model
     {
         [Key]
         public int Id { get; set; }
+
         [Required]
         public Guid UserId { get; set; }
+
         [Required]
         [DataType(DataType.Date)]
         public DateTime Date { get; set; }
+
         [Required]
         public int Status { get; set; }
         public int Rating { get; set; }
         public bool IsBought { get; set; }
 
         public int GameId { get; set; }
+
         [ForeignKey("GameId")]
         public Game Game { get; set; }
     }

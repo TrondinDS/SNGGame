@@ -7,10 +7,11 @@ using StudioGameService.Repository.Interfaces;
 
 namespace StudioGameService.Repository
 {
-    public class GameSelectedGenreRepository : GenericRepository<GameSelectedGenre, int>, IGameSelectedGenreRepository
+    public class GameSelectedGenreRepository
+        : GenericRepository<GameSelectedGenre, int>,
+            IGameSelectedGenreRepository
     {
-        public GameSelectedGenreRepository(ApplicationContext context) : base(context)
-        {
-        }
+        public GameSelectedGenreRepository(ApplicationContext context)
+            : base(context) { }
     }
 }

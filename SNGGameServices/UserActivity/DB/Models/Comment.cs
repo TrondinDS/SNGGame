@@ -1,6 +1,6 @@
-﻿using Library;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Library;
 
 namespace UserActivityService.DB.Models
 {
@@ -15,6 +15,7 @@ namespace UserActivityService.DB.Models
         public DateTime? DateDeleted { get; set; }
 
         public int TopicId { get; set; }
+
         [ForeignKey("TopicId")]
         public Topic Topic { get; set; }
 

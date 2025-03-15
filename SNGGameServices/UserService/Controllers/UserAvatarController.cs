@@ -52,10 +52,7 @@ namespace UserService.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            await mongoService
-                .Database(imgsDatabase)
-                .Collection(avasCollection)
-                .Delete(id);
+            await mongoService.Database(imgsDatabase).Collection(avasCollection).Delete(id);
             return Ok("Avatar deleted successfully.");
         }
     }

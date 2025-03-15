@@ -1,6 +1,6 @@
-﻿using Library;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using Library;
 
 namespace AdministratumService.DB.Models
 {
@@ -13,8 +13,10 @@ namespace AdministratumService.DB.Models
         public DateTime Date { get; set; }
         public bool IsDeleted { get; set; }
         public DateTime? DateDeleted { get; set; }
+
         // Навигационные свойства
         public int ChatFeedbackId { get; set; }
+
         [ForeignKey("ChatFeedbackId")]
         public ChatFeedback ChatFeedback { get; set; }
     }

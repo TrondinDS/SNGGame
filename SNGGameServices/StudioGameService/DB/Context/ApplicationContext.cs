@@ -5,9 +5,9 @@ namespace StudioGameService.DB.Context
 {
     public class ApplicationContext : DbContext
     {
-        public ApplicationContext(DbContextOptions<ApplicationContext> dbContext) : base(dbContext)
-        {
-        }
+        public ApplicationContext(DbContextOptions<ApplicationContext> dbContext)
+            : base(dbContext) { }
+
         DbSet<Game> Games { get; set; }
         DbSet<GameLibrary> GameLibraries { get; set; }
         DbSet<GameSelectedGenre> GameSelectedGenres { get; set; }
@@ -21,35 +21,41 @@ namespace StudioGameService.DB.Context
             base.OnModelCreating(modelBuilder);
 
             // Game GST Tag
-            modelBuilder.Entity<GameSelectedTag>()
+            modelBuilder
+                .Entity<GameSelectedTag>()
                 .HasOne(gst => gst.Game)
                 .WithMany(g => g.Tags)
                 .HasForeignKey(gst => gst.GameId);
 
-            modelBuilder.Entity<GameSelectedTag>()
+            modelBuilder
+                .Entity<GameSelectedTag>()
                 .HasOne(gst => gst.Tag)
                 .WithMany(t => t.Games)
                 .HasForeignKey(gst => gst.TagId);
 
             // Game GST Genre
-            modelBuilder.Entity<GameSelectedGenre>()
+            modelBuilder
+                .Entity<GameSelectedGenre>()
                 .HasOne(gsg => gsg.Game)
                 .WithMany(g => g.Genres)
                 .HasForeignKey(gsg => gsg.GameId);
 
-            modelBuilder.Entity<GameSelectedGenre>()
+            modelBuilder
+                .Entity<GameSelectedGenre>()
                 .HasOne(gsg => gsg.Genre)
                 .WithMany(genre => genre.Games)
                 .HasForeignKey(gsg => gsg.GenreId);
 
             // GameLib -> Game
-            modelBuilder.Entity<GameLibrary>()
+            modelBuilder
+                .Entity<GameLibrary>()
                 .HasOne(gl => gl.Game)
                 .WithMany(g => g.GameLibrarys)
                 .HasForeignKey(gl => gl.GameId);
 
             // Game -> Studio
-            modelBuilder.Entity<Game>()
+            modelBuilder
+                .Entity<Game>()
                 .HasOne(g => g.Studio)
                 .WithMany(s => s.Games)
                 .HasForeignKey(g => g.StudioId);

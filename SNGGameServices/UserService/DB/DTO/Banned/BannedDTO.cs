@@ -37,11 +37,17 @@ namespace UserService.DB.DTO.Banned
         [DataType(DataType.Date, ErrorMessage = "DateDeleted должно иметь формат даты")]
         public DateTime? DateDeleted { get; set; }
 
-        [RegularExpression("^[a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12}$", ErrorMessage = "UserId должен быть корректным GUID")]
+        [RegularExpression(
+            "^[a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12}$",
+            ErrorMessage = "UserId должен быть корректным GUID"
+        )]
         [Required(ErrorMessage = "UserIdModerator является обязательным")]
         public Guid UserIdModerator { get; set; }
 
-        [RegularExpression("^[a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12}$", ErrorMessage = "UserId должен быть корректным GUID")]
+        [RegularExpression(
+            "^[a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12}$",
+            ErrorMessage = "UserId должен быть корректным GUID"
+        )]
         [Required(ErrorMessage = "UserIdBanned является обязательным")]
         public Guid UserIdBanned { get; set; }
     }
