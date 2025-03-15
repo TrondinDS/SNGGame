@@ -4,11 +4,11 @@ using UserService.Services.Interfaces;
 
 namespace UserService.Services
 {
-    public class BannedService : IBannedService
+    public class BannedServiceS : IBannedService
     {
         protected readonly IBannedRepository bannedRepository;
 
-        public BannedService(IBannedRepository bannedRepository)
+        public BannedServiceS(IBannedRepository bannedRepository)
         {
             this.bannedRepository = bannedRepository;
         }

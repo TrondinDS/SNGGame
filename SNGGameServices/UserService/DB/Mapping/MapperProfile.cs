@@ -14,6 +14,7 @@ namespace UserService.DB.Mapping
         public MapperProfile()
         {
             CreateMap<User, UserDTO>().ReverseMap();
+            CreateMap<User, UserCreateDTO>().ReverseMap();
             CreateMap<UserSubscription, UserSubscriptionDTO>().ReverseMap();
             CreateMap<Job, JobDTO>().ReverseMap();
             CreateMap<Banned, BannedDTO>().ReverseMap();

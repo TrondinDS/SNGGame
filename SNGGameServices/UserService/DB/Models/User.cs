@@ -24,7 +24,6 @@ namespace UserService.DB.Models
         private DateTime? _dateBirth;
         [MaxLength(255, ErrorMessage = "Email cannot exceed 255 characters")]
         public string? Email { get; set; }
-        public required int KeyIdPhotoAvatar { get; set; }
         public bool IsAdmin { get; set; } = false;
         public bool IsGlobalModerator { get; set; } = false;
         public bool IsDeleted { get; set; } = false;

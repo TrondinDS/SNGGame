@@ -12,7 +12,7 @@ using UserService.DB.Context;
 namespace UserService.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20250311174310_Create")]
+    [Migration("20250314103950_Create")]
     partial class Create
     {
         /// <inheritdoc />
@@ -141,9 +141,6 @@ namespace UserService.Migrations
 
                     b.Property<bool>("IsGlobalModerator")
                         .HasColumnType("boolean");
-
-                    b.Property<int>("KeyIdPhotoAvatar")
-                        .HasColumnType("integer");
 
                     b.Property<string>("Name")
                         .IsRequired()

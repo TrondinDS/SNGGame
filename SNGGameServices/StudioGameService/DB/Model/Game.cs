@@ -17,10 +17,6 @@ namespace StudioGameService.DB.Model
         [MaxLength(255)]
         public string ShortDescription { get; set; }
         [MaxLength(255)]
-        public string FilepathToDescription { get; set; }
-        [MaxLength(255)]
-        public string FilepathToPhotoIcon { get; set; }
-        [MaxLength(255)]
         public string LinkSite { get; set; }
         [MaxLength(255)]
         public string? Publisher { get; set; }

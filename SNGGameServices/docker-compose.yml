@@ -8,7 +8,8 @@
         volumes:
           - .:/app
         ports:
-          - "8322:8080"
+          - "5285:8080"
+          - "7134:8081"
         depends_on:
           - user-service-db
           - user-service-mongo
@@ -55,10 +56,13 @@
           context: ./StudioGameService
           dockerfile: Dockerfile
         image: mystudiogameimage:latest
+        environment:
+          ASPNETCORE_ENVIRONMENT: Development
         volumes:
           - .:/app
         ports:
-          - "5287:8080"
+          - "5114:8080"
+          - "7053:8081"
         depends_on:
           - studio-game-db
 

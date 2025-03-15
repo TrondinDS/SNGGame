@@ -52,7 +52,7 @@ namespace UserService.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> CreateUser(UserDTO userDTO)
+        public async Task<ActionResult> CreateUser(UserCreateDTO userDTO)
         {
             var user = mapper.Map<User>(userDTO);
             await userService.AddAsync(user);

@@ -139,9 +139,6 @@ namespace UserService.Migrations
                     b.Property<bool>("IsGlobalModerator")
                         .HasColumnType("boolean");
 
-                    b.Property<int>("KeyIdPhotoAvatar")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(255)

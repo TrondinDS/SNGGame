@@ -1,6 +1,13 @@
 
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using StudioGameService.DB.Context;
+using StudioGameService.Repository;
+using StudioGameService.Repository.Interfaces;
+using StudioGameService.Services;
+using StudioGameService.Services.Interfaces;
+using StudioGenreService.Services;
+using TagGameService.Services;
 
 namespace StudioGameService
 {
@@ -11,10 +18,38 @@ namespace StudioGameService
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-
+            builder.Services.AddAutoMapper(typeof(Program));
             builder.Services.AddControllers();
+
+            // Добавляем Swagger
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
+
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
+
+
+            builder.Services.AddTransient<IGameRepository, GameRepository>();
+            builder.Services.AddTransient<IGameService, GameService>();
+
+            builder.Services.AddTransient<IGameLibraryRepository, GameLibraryRepository>();
+            builder.Services.AddTransient<IGameLibraryService, GameLibraryService>();
+
+            builder.Services.AddTransient<IGameSelectedGenreRepository, GameSelectedGenreRepository>();
+            builder.Services.AddTransient<IGameSelectedGenreService, GameSelectedGenreService>();
+
+            builder.Services.AddTransient<IGameSelectedTagRepository, GameSelectedTagRepository>();
+            builder.Services.AddTransient<IGameSelectedTagService, GameSelectedTagService>();
+
+            builder.Services.AddTransient<IGenreRepository, GenreRepository>();
+            builder.Services.AddTransient<IGenreService, GenreService>();
+
+            builder.Services.AddTransient<IStudioRepository, StudioRepository>();
+            builder.Services.AddTransient<IStudioService, StudioService>();
+
+            builder.Services.AddTransient<ITagRepository, TagRepository>();
+            builder.Services.AddTransient<ITagService, TagService>();
+
 
             builder.Services.AddDbContext<ApplicationContext>(opt =>
                 opt.UseNpgsql(builder.Configuration.GetConnectionString("StudioGameServiceConnection"))
@@ -32,6 +67,20 @@ namespace StudioGameService
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
+                app.MapOpenApi();
+            }
+
+            // Configure the HTTP request pipeline.
+            if (app.Environment.IsDevelopment())
+            {
+                // Добавляем Swagger UI
+                app.UseSwagger();
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V2");
+                    c.RoutePrefix = string.Empty; // Опционально: делает Swagger доступным по корневому URL
+                });
+
                 app.MapOpenApi();
             }
 

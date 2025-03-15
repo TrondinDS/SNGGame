@@ -12,7 +12,7 @@ using StudioGameService.DB.Context;
 namespace StudioGameService.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20250310122910_Create")]
+    [Migration("20250314221240_Create")]
     partial class Create
     {
         /// <inheritdoc />
@@ -47,16 +47,6 @@ namespace StudioGameService.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("EnglishTitle")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
-
-                    b.Property<string>("FilepathToDescription")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
-
-                    b.Property<string>("FilepathToPhotoIcon")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
@@ -129,8 +119,8 @@ namespace StudioGameService.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("integer");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -219,23 +209,13 @@ namespace StudioGameService.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CreatorId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("CreatorId")
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime?>("DateDeleted")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
-
-                    b.Property<string>("FilepathToDescription")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
-
-                    b.Property<string>("FilepathToPhotoIcon")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
@@ -246,8 +226,8 @@ namespace StudioGameService.Migrations
                     b.Property<bool>("IsResolutionPublication")
                         .HasColumnType("boolean");
 
-                    b.Property<int>("OwnerId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("OwnerId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Title")
                         .IsRequired()

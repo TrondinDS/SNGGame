@@ -7,7 +7,7 @@ namespace UserService.Repository
 {
     public class UserSubscriptionRepository : GenericRepository<UserSubscription, int>,IUserSubscriptionRepository
     {
-        UserSubscriptionRepository(ApplicationContext context) : base(context)
+        public UserSubscriptionRepository(ApplicationContext context) : base(context)
         {
         }
     }

@@ -1,10 +1,5 @@
 ﻿using Library.GenericRepository.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Library.GenericRepository
 {
@@ -35,7 +30,6 @@ namespace Library.GenericRepository
         }
 
 
-        ///ПРОЧЕКАТЬ КАК БУДЕТ РАБОТАТЬ !!!!!
         public virtual async void UpdateAsync(params TEntity[] entities)
         {
             foreach (var entity in entities)
@@ -56,7 +50,6 @@ namespace Library.GenericRepository
             }
         }
 
-        ///ПРОЧЕКАТЬ КАК БУДЕТ РАБОТАТЬ !!!!!
         private object[] GetEntityKeys(TEntity entity)
         {
             var entityType = _context.Model.FindEntityType(typeof(TEntity));

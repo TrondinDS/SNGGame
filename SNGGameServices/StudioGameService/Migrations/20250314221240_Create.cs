@@ -34,11 +34,9 @@ namespace StudioGameService.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Title = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
                     Email = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
-                    FilepathToDescription = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
-                    FilepathToPhotoIcon = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
                     IsResolutionPublication = table.Column<bool>(type: "boolean", nullable: false),
-                    CreatorId = table.Column<int>(type: "integer", nullable: false),
-                    OwnerId = table.Column<int>(type: "integer", nullable: false),
+                    CreatorId = table.Column<Guid>(type: "uuid", nullable: false),
+                    OwnerId = table.Column<Guid>(type: "uuid", nullable: false),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
                     DateDeleted = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
@@ -70,8 +68,6 @@ namespace StudioGameService.Migrations
                     EnglishTitle = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
                     AlternativeTitle = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
                     ShortDescription = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
-                    FilepathToDescription = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
-                    FilepathToPhotoIcon = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
                     LinkSite = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
                     Publisher = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
                     ReleaseDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
@@ -99,7 +95,7 @@ namespace StudioGameService.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    UserId = table.Column<int>(type: "integer", nullable: false),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
                     Date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Status = table.Column<int>(type: "integer", nullable: false),
                     Rating = table.Column<int>(type: "integer", nullable: false),

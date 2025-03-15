@@ -15,17 +15,11 @@ namespace StudioGameService.DB.Model
         [MaxLength(255)]
         public required string Email { get; set; }
         [Required]
-        [MaxLength(255)]
-        public required string FilepathToDescription { get; set; }
-        [Required]
-        [MaxLength(255)]
-        public required string FilepathToPhotoIcon { get; set; }
-        [Required]
         public bool IsResolutionPublication { get; set; }
         [Required]
-        public int CreatorId { get; set; }
+        public Guid CreatorId { get; set; }
         [Required]
-        public int OwnerId { get; set; }
+        public Guid OwnerId { get; set; }
         public bool IsDeleted { get; set; }
         public DateTime? DateDeleted { get; set; }
 

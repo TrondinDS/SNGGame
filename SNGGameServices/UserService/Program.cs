@@ -28,8 +28,16 @@ namespace UserService
             builder.Services.AddOpenApi();
 
             builder.Services.AddTransient<IUserRepository, UserRepository>();
-
             builder.Services.AddTransient<IUserService, UserServiceS>();
+
+            builder.Services.AddTransient<IUserSubscriptionRepository, UserSubscriptionRepository>();
+            builder.Services.AddTransient<IUserSubscriptionService, UserSubscriptionService>();
+            
+            builder.Services.AddTransient<IJobRepository, JobRepository>();
+            builder.Services.AddTransient<IJobService, JobService>();
+
+            builder.Services.AddTransient<IBannedRepository, BannedRepository>();
+            builder.Services.AddTransient<IBannedService, BannedServiceS>();
 
             builder.Services.AddDbContext<ApplicationContext>(opt =>
                 opt.UseNpgsql(builder.Configuration.GetConnectionString("UserServiceConnection"))

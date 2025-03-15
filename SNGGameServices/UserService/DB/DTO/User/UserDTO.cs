@@ -22,8 +22,6 @@ namespace UserService.DB.DTO.User
         [MaxLength(255, ErrorMessage = "Email должно иметь длинну до 255 символов")]
         public string? Email { get; set; }
 
-        [Range(1, int.MaxValue, ErrorMessage = "KeyIdPhotoAvatar должен быть положительным числом")]
-        public int? KeyIdPhotoAvatar { get; set; }
         [Display(Name = "Является администратором")]
         public bool? IsAdmin { get; set; }
         [Display(Name = "Является глобальным модератором")]
