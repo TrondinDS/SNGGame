@@ -1,22 +1,20 @@
 ﻿using MongoDB.Bson;
+using System.Net.Mime;
 
 namespace Library.Types
 {
     public class Content
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; }
         public string Value { get; set; }
 
-        public BsonDocument Document
+        public BsonDocument AsBsonDocument()
         {
-            get
+            return new BsonDocument
             {
-                return new BsonDocument
-                {
-                    { "contentId", Id },
-                    { "value", Value }
-                };
-            }
+                { "id", Id.ToString() },
+                { "value", Value }
+            };
         }
     }
 }

@@ -14,7 +14,12 @@ namespace UserService
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            var mongo = new Library.Services.Mongo(builder.Configuration.GetConnectionString("UserServiceMongoConnection"));
+
+            builder.Services.AddSingleton<Library.Services.Mongo>(provider =>
+            {
+                var config = provider.GetRequiredService<IConfiguration>();
+                return new Library.Services.Mongo(config.GetConnectionString("UserServiceMongoConnection"));
+            });
 
             // Add services to the container.
             builder.Services.AddAutoMapper(typeof(Program));

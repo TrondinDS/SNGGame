@@ -4,21 +4,18 @@ namespace Library.Types
 {
     public class Img
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; }
         public byte[] Bytes { get; set; }
         public string ContentType { get; set; }
 
-        public BsonDocument Document
+        public BsonDocument AsBsonDocument()
         {
-            get
+            return new BsonDocument
             {
-                return new BsonDocument
-                {
-                    { "imageId", Id },
-                    { "imageData", new BsonBinaryData(Bytes) },
-                    { "contentType", ContentType },
-                };
-            }
+                { "id", Id.ToString() },
+                { "data", new BsonBinaryData(Bytes) },
+                { "contentType", ContentType },
+            };
         }
     }
 }

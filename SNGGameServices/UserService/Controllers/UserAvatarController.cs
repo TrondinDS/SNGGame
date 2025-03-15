@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
 using Library.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using UserService.DB.DTO.User;
-using UserService.DB.Models;
 
 namespace UserService.Controllers
 {
@@ -12,32 +10,53 @@ namespace UserService.Controllers
     public class UserAvatarController : Controller
     {
         private readonly Mongo mongoService;
-        private readonly IMapper mapper;
 
-        public UserAvatarController(Mongo mongoService, IMapper mapper)
+        const string imgsDatabase = "ImagesDatabase";
+        const string avasCollection = "AvatarsCollection";
+
+        public UserAvatarController(Mongo mongoService)
         {
             this.mongoService = mongoService;
-            this.mapper = mapper;
         }
 
         [HttpPost]
-        public async Task Create(UserCreateDTO userDTO)
+        public async Task<IActionResult> Create(UserAvatarDTO userAvatarDTO)
         {
+            await mongoService
+                .Database(imgsDatabase)
+                .Collection(avasCollection)
+                .Insert(userAvatarDTO.Id, userAvatarDTO.ImageFile);
+            return Ok("Avatar uploaded successfully.");
         }
 
-        [HttpGet]
-        public async Task Read(UserCreateDTO userDTO)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetByUserId(Guid id)
         {
+            var avatar = await mongoService
+                .Database(imgsDatabase)
+                .Collection(avasCollection)
+                .GetImgById(id);
+            return Ok(File(avatar.Bytes, avatar.ContentType));
         }
 
-        [HttpPut("{id}")]
-        public async Task Update(UserCreateDTO userDTO)
+        [HttpPut]
+        public async Task<IActionResult> Update(UserAvatarDTO userAvatarDTO)
         {
+            await mongoService
+                .Database(imgsDatabase)
+                .Collection(avasCollection)
+                .Insert(userAvatarDTO.Id, userAvatarDTO.ImageFile);
+            return Ok("Avatar updated successfully.");
         }
 
         [HttpDelete("{id}")]
-        public async Task Delete(UserCreateDTO userDTO)
+        public async Task<IActionResult> Delete(Guid id)
         {
+            await mongoService
+                .Database(imgsDatabase)
+                .Collection(avasCollection)
+                .Delete(id);
+            return Ok("Avatar deleted successfully.");
         }
     }
 }
