@@ -1,97 +1,1 @@
-﻿using MongoDB.Bson;
-using MongoDB.Driver;
-
-using Library.Types;
-
-namespace Library.Services
-{
-    public class Mongo
-    {
-        private MongoClient _client;
-        private IMongoCollection<BsonDocument>? _imgCollection;
-        private IMongoCollection<BsonDocument>? _contentCollection;
-
-        public Mongo(string host, string port)
-        {
-            _client = new MongoClient($"mongodb://{host}:{port}");
-            InitCollections();
-        }
-
-        public Mongo(string? connectionString)
-        {
-            if (connectionString == null)
-            {
-                Console.WriteLine("Fatal error must be throwed"); // TODO(kra53n): use logger
-            }
-            _client = new MongoClient(connectionString);
-            InitCollections();
-        }
-
-        private void InitCollections()
-        {
-            // NOTE(kra53n): сейчас базы данных инстанциируются, когда
-            // конструктор класса Mongo вызывается, но в дальнейшем данное
-            // действие можно сделать более модульным, так чтобы
-            // каждый микросервис использовал только необходимые ему БД.
-            //
-            // NOTE(kra53n): также можно рассмотреть использование GridFS
-            // вместо Collection
-            var imgDB = _client.GetDatabase("images");
-            _imgCollection = imgDB.GetCollection<BsonDocument>("ImageCollection");
-
-            var contentDB = _client.GetDatabase("content");
-            _contentCollection = contentDB.GetCollection<BsonDocument>("ContentCollection");
-        }
-
-        public async Task Insert(Types.Img img)
-        {
-            if (_imgCollection == null)
-            {
-                Console.WriteLine(""); // TODO(kra53n): use logger
-                return;
-            }
-            await _imgCollection.InsertOneAsync(img.Document);
-        }
-
-        public async Task<Img> GetImgById(string id)
-        {
-            var filter = Builders<BsonDocument>.Filter.Eq("imageId", id);
-            var document = await _imgCollection.Find(filter).FirstOrDefaultAsync();
-            if (document == null)
-            {
-                Console.WriteLine("Image was not found"); // TODO(kra53n): use here some logger kek:)
-            }
-            return new Types.Img
-            {
-                Id = document["imageId"].AsString,
-                Bytes = document["imageData"].AsBsonBinaryData.Bytes,
-                ContentType = document["contentType"].AsString,
-            };
-        }
-
-        public async Task Insert(Content content)
-        {
-            if (_contentCollection == null)
-            {
-                Console.WriteLine(""); // TODO(kra53n): use logger
-                return;
-            }
-            await _contentCollection.InsertOneAsync(content.Document);
-        }
-
-        public async Task<Content> GetContentById(string id)
-        {
-            var filter = Builders<BsonDocument>.Filter.Eq("contentId", id);
-            var document = await _contentCollection.Find(filter).FirstOrDefaultAsync();
-            if (document == null)
-            {
-                Console.WriteLine("Content was not found"); // TODO(kra53n): use here some logger kek:)
-            }
-            return new Content
-            {
-                Id = document["contentId"].AsString,
-                Value = document["value"].AsString,
-            };
-        }
-    }
-}
+﻿using MongoDB.Bson; using MongoDB.Driver;  using Library.Types;  namespace Library.Services {     public class Mongo     {         private MongoClient _client;         private IMongoCollection<BsonDocument>? _imgCollection;         private IMongoCollection<BsonDocument>? _contentCollection;          public Mongo(string host, string port)         {             _client = new MongoClient($"mongodb://{host}:{port}");             InitCollections();         }          public Mongo(string? connectionString)         {             if (connectionString == null)             {                 Console.WriteLine("Fatal error must be throwed"); // TODO(kra53n): use logger             }             _client = new MongoClient(connectionString);             InitCollections();         }          private void InitCollections()         {             // NOTE(kra53n): сейчас базы данных инстанциируются, когда             // конструктор класса Mongo вызывается, но в дальнейшем данное             // действие можно сделать более модульным, так чтобы             // каждый микросервис использовал только необходимые ему БД.             //             // NOTE(kra53n): также можно рассмотреть использование GridFS             // вместо Collection             var imgDB = _client.GetDatabase("images");             _imgCollection = imgDB.GetCollection<BsonDocument>("ImageCollection");              var contentDB = _client.GetDatabase("content");             _contentCollection = contentDB.GetCollection<BsonDocument>("ContentCollection");         }          public async Task Insert(Types.Img img)         {             if (_imgCollection == null)             {                 Console.WriteLine(""); // TODO(kra53n): use logger                 return;             }             await _imgCollection.InsertOneAsync(img.Document);         }          public async Task<Img> GetImgById(string id)         {             var filter = Builders<BsonDocument>.Filter.Eq("imageId", id);             var document = await _imgCollection.Find(filter).FirstOrDefaultAsync();             if (document == null)             {                 Console.WriteLine("Image was not found"); // TODO(kra53n): use here some logger kek:)             }             return new Types.Img             {                 Id = document["imageId"].AsString,                 Bytes = document["imageData"].AsBsonBinaryData.Bytes,                 ContentType = document["contentType"].AsString,             };         }          public async Task Insert(Content content)         {             if (_contentCollection == null)             {                 Console.WriteLine(""); // TODO(kra53n): use logger                 return;             }             await _contentCollection.InsertOneAsync(content.Document);         }          public async Task<Content> GetContentById(string id)         {             var filter = Builders<BsonDocument>.Filter.Eq("contentId", id);             var document = await _contentCollection.Find(filter).FirstOrDefaultAsync();             if (document == null)             {                 Console.WriteLine("Content was not found"); // TODO(kra53n): use here some logger kek:)             }             return new Content             {                 Id = document["contentId"].AsString,                 Value = document["value"].AsString,             };         }     } } 

@@ -49,7 +49,7 @@ namespace UserService
             using (var scope = app.Services.CreateScope())
             {
                 var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationContext>();
-                dbContext.Database.Migrate();
+                //dbContext.Database.Migrate();
             }
 
             // Configure the HTTP request pipeline.

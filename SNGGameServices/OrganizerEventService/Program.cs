@@ -11,10 +11,16 @@ namespace OrganizerEventService
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-
             builder.Services.AddControllers();
+
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
+
+            builder.Services.AddSingleton<Library.Services.Mongo>(provider =>
+            {
+                var config = provider.GetRequiredService<IConfiguration>();
+                return new Library.Services.Mongo(config.GetConnectionString("UserServiceMongoConnection"));
+            });
 
             builder.Services.AddDbContext<ApplicationContext>(opt =>
                 opt.UseNpgsql(builder.Configuration.GetConnectionString("OrganizerEventServiceConnection"))
