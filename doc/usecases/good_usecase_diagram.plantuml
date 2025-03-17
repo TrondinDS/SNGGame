@@ -1,0 +1,36 @@
+@startuml
+
+title "Диаграмма варианта использования"
+
+skinparam actorStyle hollow
+:Пользователь: as user
+:Студия: as studio
+:Организатор: as organizer
+:Админ: as admin
+
+user <|-down- studio
+user <|-down- organizer
+
+usecase "Обсуждение\nстудии/игры/\nорганизатора/события" as topics_discuss
+usecase "Создание обсуждения\nстудии/игры/\nорганизатора/события" as create_topic
+usecase "Модерация обсуждения\nстудии/игры/\nорганизатора/события" as moderate_topic
+usecase "Добавление комментария" as comment
+usecase "Добавление/\nУдаление\n реакции" as react
+usecase "Добавление/\nРедактирование/\nУдаление\n страницы студии" as create_studio_page
+usecase "Добавление/\nРедактирование/\nУдаление\n страницы организатора" as create_organizer_page
+usecase "Модерация пользователя" as moderate_user
+
+user --> create_topic
+user -right-> topics_discuss
+react .> topics_discuss : дополняет
+comment ..> topics_discuss : дополняет
+
+studio -down-> create_studio_page
+organizer -down-> create_organizer_page
+studio -down-> moderate_topic
+organizer -down-> moderate_topic
+
+admin -left-> moderate_user
+admin -up-> moderate_topic
+
+@enduml
