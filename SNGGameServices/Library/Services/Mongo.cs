@@ -9,8 +9,6 @@ namespace Library.Services
     public class Mongo
     {
         private MongoClient client;
-        private IMongoCollection<BsonDocument>? _imgCollection;
-        private IMongoCollection<BsonDocument>? _contentCollection;
 
         public Mongo(string host, string port)
         {

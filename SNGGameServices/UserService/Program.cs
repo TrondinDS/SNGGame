@@ -26,7 +26,7 @@ namespace UserService
             builder.Services.AddAutoMapper(typeof(Program));
             builder.Services.AddControllers();
 
-            // ��������� Swagger
+            // Swagger
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
@@ -36,10 +36,7 @@ namespace UserService
             builder.Services.AddTransient<IUserRepository, UserRepository>();
             builder.Services.AddTransient<IUserService, UserServiceS>();
 
-            builder.Services.AddTransient<
-                IUserSubscriptionRepository,
-                UserSubscriptionRepository
-            >();
+            builder.Services.AddTransient<IUserSubscriptionRepository,UserSubscriptionRepository>();
             builder.Services.AddTransient<IUserSubscriptionService, UserSubscriptionService>();
 
             builder.Services.AddTransient<IJobRepository, JobRepository>();
@@ -69,12 +66,12 @@ namespace UserService
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
-                // ��������� Swagger UI
+                // Swagger UI
                 app.UseSwagger();
                 app.UseSwaggerUI(c =>
                 {
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-                    c.RoutePrefix = string.Empty; // �����������: ������ Swagger ��������� �� ��������� URL
+                    c.RoutePrefix = string.Empty; // Swagger URL
                 });
                 app.MapOpenApi();
             }
