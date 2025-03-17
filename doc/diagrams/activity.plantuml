@@ -1,0 +1,23 @@
+@startuml
+
+title "Диаграмма деятельности участия пользователя в обсуждениях"
+
+start
+
+repeat
+    :Выбрать тему;
+
+    repeat
+        split
+            :Комментировать;
+        split again
+            :Реагировать;
+        end split
+    repeat while (Продолжить деятельность) is (да) not (нет)
+
+repeat while (Выйти) is (нет) not (да)
+
+stop
+
+@enduml
+
