@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StudioGameService.DB.Model;
 
 namespace StudioGameService.DB.Context
@@ -18,6 +19,22 @@ namespace StudioGameService.DB.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            var dateTimeUtcConverter = new ValueConverter<DateTime, DateTime>(
+                v => v.ToUniversalTime(),
+                v => DateTime.SpecifyKind(v, DateTimeKind.Utc)
+            );
+
+            foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+            {
+                foreach (var property in entityType.GetProperties())
+                {
+                    if (property.ClrType == typeof(DateTime) || property.ClrType == typeof(DateTime?))
+                    {
+                        property.SetValueConverter(dateTimeUtcConverter);
+                    }
+                }
+            }
+
             base.OnModelCreating(modelBuilder);
 
             // Game GST Tag

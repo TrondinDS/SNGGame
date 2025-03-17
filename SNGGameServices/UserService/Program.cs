@@ -54,11 +54,10 @@ namespace UserService
 
             var app = builder.Build();
 
-            // ���������� ��������
             using (var scope = app.Services.CreateScope())
             {
                 var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationContext>();
-                //dbContext.Database.Migrate();
+                dbContext.Database.Migrate();
             }
 
             // Configure the HTTP request pipeline.
@@ -77,7 +76,6 @@ namespace UserService
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
                     c.RoutePrefix = string.Empty; // �����������: ������ Swagger ��������� �� ��������� URL
                 });
-
                 app.MapOpenApi();
             }
 

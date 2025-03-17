@@ -20,7 +20,7 @@ namespace StudioGameService
             builder.Services.AddAutoMapper(typeof(Program));
             builder.Services.AddControllers();
 
-            // ��������� Swagger
+            // Swagger
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
@@ -33,10 +33,7 @@ namespace StudioGameService
             builder.Services.AddTransient<IGameLibraryRepository, GameLibraryRepository>();
             builder.Services.AddTransient<IGameLibraryService, GameLibraryService>();
 
-            builder.Services.AddTransient<
-                IGameSelectedGenreRepository,
-                GameSelectedGenreRepository
-            >();
+            builder.Services.AddTransient<IGameSelectedGenreRepository,GameSelectedGenreRepository>();
             builder.Services.AddTransient<IGameSelectedGenreService, GameSelectedGenreService>();
 
             builder.Services.AddTransient<IGameSelectedTagRepository, GameSelectedTagRepository>();
@@ -59,11 +56,10 @@ namespace StudioGameService
 
             var app = builder.Build();
 
-            // ���������� ��������
             using (var scope = app.Services.CreateScope())
             {
                 var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationContext>();
-                //dbContext.Database.Migrate();
+                dbContext.Database.Migrate();
             }
 
             // Configure the HTTP request pipeline.
@@ -75,14 +71,12 @@ namespace StudioGameService
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
-                // ��������� Swagger UI
                 app.UseSwagger();
                 app.UseSwaggerUI(c =>
                 {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V2");
-                    c.RoutePrefix = string.Empty; // �����������: ������ Swagger ��������� �� ��������� URL
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                    c.RoutePrefix = string.Empty; 
                 });
-
                 app.MapOpenApi();
             }
 

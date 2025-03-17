@@ -4,7 +4,7 @@ namespace StudioGameService.DB.DTO.Game
 {
     public class GameDTO
     {
-        [Range(1, int.MaxValue, ErrorMessage = "Id должен быть положительным числом")]
+        [Range(0, int.MaxValue, ErrorMessage = "Id должен быть положительным числом")]
         public int Id { get; set; }
 
         [MaxLength(255, ErrorMessage = "Русское название не должно превышать 255 символов")]

@@ -12,7 +12,7 @@ namespace UserActivityService.DB.Models
         public required string Title { get; set; }
         public string Description { get; set; }
         public DateTime DateCreated { get; set; }
-        public int UserCreatorId { get; set; }
+        public Guid UserCreatorId { get; set; }
         public bool IsDeleted { get; set; }
         public DateTime? DateDeleted { get; set; }
 

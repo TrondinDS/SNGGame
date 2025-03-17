@@ -12,7 +12,7 @@ using UserActivityService.DB.Context;
 namespace UserActivityService.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20250310122837_Create")]
+    [Migration("20250317112935_Create")]
     partial class Create
     {
         /// <inheritdoc />
@@ -49,8 +49,8 @@ namespace UserActivityService.Migrations
                     b.Property<int>("TopicId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -90,8 +90,8 @@ namespace UserActivityService.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("UserCreatorId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("UserCreatorId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -112,8 +112,8 @@ namespace UserActivityService.Migrations
                     b.Property<int>("ReactionType")
                         .HasColumnType("integer");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
