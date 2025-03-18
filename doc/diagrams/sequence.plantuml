@@ -1,0 +1,36 @@
+@startuml
+
+skinparam actorStyle hollow
+Actor "Клиентская\nчасть приложения" as user
+Control "Серверная\nчасть приложения" as backend
+Database "Веб-кэш" as web_cache
+Database "SQL БД" as sql
+Database "Документо-\nориентированная\nNoSQL" as docdb
+
+activate backend
+activate web_cache
+activate sql
+activate docdb
+
+user -> backend : Запрос на получение страницы А
+activate user
+backend -> sql : Запрос на получение данных
+sql --> backend
+backend -> docdb : Запрос на получение данных
+docdb --> backend
+backend --> user
+' backend -> user : Отправка запрашиваемой страницы
+deactivate user
+backend -> web_cache : Сохранение кэша
+
+== Повторный запрос ==
+
+user -> backend : Запрос на получение страницы А
+activate user
+backend -> web_cache : Запрос на получение данных
+web_cache --> backend
+backend --> user
+' backend -> user : Отправка запрашиваемой страницы
+deactivate user
+
+@enduml
