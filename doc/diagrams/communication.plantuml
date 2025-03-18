@@ -1,0 +1,15 @@
+@startuml
+
+rectangle ":Клиентская\nчасть приложения" as user
+rectangle ":Серверная\nчасть приложения" as backend
+rectangle ":Веб-кэш" as web_cache
+rectangle ":SQL БД" as sql
+rectangle ":Документо-\nориентированная\nNoSQL" as docdb
+
+user -> backend : 1.
+backend <-down-> sql : 2.
+backend <-down-> docdb : 3.
+backend <-down-> web_cache : 4.
+backend -> user : 5.
+
+@enduml
