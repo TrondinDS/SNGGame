@@ -1,12 +1,9 @@
 ﻿using AdministratumService.DB.DTO.ChatFeedback;
 using AdministratumService.DB.Models;
 using AdministratumService.Repository;
-using AdministratumService.Repository.Interfaces;
 using AutoMapper;
 using Library.GenericService;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Npgsql.PostgresTypes;
 
 namespace AdministratumService.Controllers
 {

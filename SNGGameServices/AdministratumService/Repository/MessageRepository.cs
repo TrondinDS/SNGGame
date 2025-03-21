@@ -1,0 +1,13 @@
+﻿using AdministratumService.DB.Context;
+using AdministratumService.DB.Models;
+using AdministratumService.Repository.Interfaces;
+using Library.GenericRepository;
+
+namespace AdministratumService.Repository
+{
+    public class MessageRepository : GenericRepository<Message, int>, IMessageRepository
+    {
+        public MessageRepository(ApplicationContext context) : base(context) { }
+
+    }
+}

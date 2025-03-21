@@ -24,10 +24,17 @@ namespace AdministratumService
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
 
-            builder.Services.AddScoped<Repository.ChatFeedbackRepository>();
-            builder.Services.AddScoped<CrudGenericService<ChatFeedback, int, ChatFeedbackRepository>>();
-            builder.Services.AddScoped<Repository.ComplainTicketRepository>();
-            builder.Services.AddScoped<CrudGenericService<ComplainTicket, int, ComplainTicketRepository>>();
+            {
+                builder.Services.AddScoped<Repository.ChatFeedbackRepository>();
+                builder.Services.AddScoped<CrudGenericService<ChatFeedback, int, ChatFeedbackRepository>>();
+               
+                builder.Services.AddScoped<Repository.ComplainTicketRepository>();
+                builder.Services.AddScoped<CrudGenericService<ComplainTicket, int, ComplainTicketRepository>>();
+
+                builder.Services.AddScoped<Repository.MessageRepository>();
+                builder.Services.AddScoped<CrudGenericService<Message, int, MessageRepository>>();
+            }
+
 
             builder.Services.AddDbContext<ApplicationContext>(opt =>
                 opt.UseNpgsql(
