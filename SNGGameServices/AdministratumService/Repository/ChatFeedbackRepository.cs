@@ -1,0 +1,12 @@
+﻿using AdministratumService.DB.Context;
+using AdministratumService.DB.Models;
+using AdministratumService.Repository.Interfaces;
+using Library.GenericRepository;
+
+namespace AdministratumService.Repository
+{
+    public class ChatFeedbackRepository : GenericRepository<ChatFeedback, int>, IChatFeedbackRepository
+    {
+        public ChatFeedbackRepository(ApplicationContext context) : base(context) { }
+    }
+}
