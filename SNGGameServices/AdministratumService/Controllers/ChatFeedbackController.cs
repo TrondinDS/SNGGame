@@ -56,5 +56,11 @@ namespace AdministratumService.Controllers
             var res = mapper.Map<ChatFeedbackIdDTO>(model);
             return Ok();
         }
+
+        [HttpDelete]
+        public async Task<ActionResult> Delete(DeleteChatFeedbackDTO DTO)
+        {
+            return BadRequest("операции удаления для чата недоступна");
+        }
     }
 }
