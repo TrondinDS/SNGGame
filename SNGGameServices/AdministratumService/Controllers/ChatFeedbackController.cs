@@ -24,10 +24,22 @@ namespace AdministratumService.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<GetByIdChatFeedbackDTO>> Create(CreateChatFeedbackDTO DTO)
+        public async Task<ActionResult<ChatFeedbackIdDTO>> Create(CreateChatFeedbackDTO DTO)
         {
             var model = mapper.Map<ChatFeedback>(DTO);
             await service.AddAsync(model);
+            var res = mapper.Map<ChatFeedbackIdDTO>(model);
+            return Ok(res);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<GetByIdChatFeedbackDTO>> GetById(int id)
+        {
+            var model = await service.GetByIdAsync(id);
+            if (model == null)
+            {
+                return NotFound();
+            }
             var res = mapper.Map<GetByIdChatFeedbackDTO>(model);
             return Ok(res);
         }

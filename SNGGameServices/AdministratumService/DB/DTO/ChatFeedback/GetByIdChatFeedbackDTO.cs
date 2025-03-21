@@ -1,10 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using AdministratumService.DB.Models;
 
 namespace AdministratumService.DB.DTO.ChatFeedback
 {
     public class GetByIdChatFeedbackDTO
     {
-        [Required(ErrorMessage = "id чата не был отправлен")]
         public int Id { get; set; }
+        public string Title { get; set; }
+        public DateTime Date { get; set; }
+        public int UserId { get; set; }
+
+        public ICollection<Message> Messages { get; set; } = new List<Message>();
     }
 }

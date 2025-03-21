@@ -8,11 +8,14 @@ namespace AdministratumService.DB.Mapping
     {
         public MapperProfile()
         {
-            CreateMap<ChatFeedback, CreateChatFeedbackDTO>().ReverseMap();
-            CreateMap<ChatFeedback, GetByIdChatFeedbackDTO>().ReverseMap();
-            CreateMap<ChatFeedback, UpdateChatFeedbackDTO>().ReverseMap();
-            CreateMap<ChatFeedback, DeleteChatFeedbackDTO>().ReverseMap();
-
+            {
+                CreateMap<ChatFeedback, CreateChatFeedbackDTO>().ReverseMap();
+                CreateMap<ChatFeedback, ChatFeedbackIdDTO>().ReverseMap();
+                CreateMap<ChatFeedback, UpdateChatFeedbackDTO>().ReverseMap();
+                CreateMap<ChatFeedback, DeleteChatFeedbackDTO>().ReverseMap();
+                
+                CreateMap<ChatFeedback, GetByIdChatFeedbackDTO>().ReverseMap();
+            }
         }
     }
 }

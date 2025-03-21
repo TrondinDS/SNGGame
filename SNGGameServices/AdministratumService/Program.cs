@@ -27,7 +27,6 @@ namespace AdministratumService
             builder.Services.AddScoped<Repository.ChatFeedbackRepository>();
             builder.Services.AddScoped<CrudGenericService<ChatFeedback, int, ChatFeedbackRepository>>();
 
-
             builder.Services.AddDbContext<ApplicationContext>(opt =>
                 opt.UseNpgsql(
                     builder.Configuration.GetConnectionString("AdministratumServiceConnection")
