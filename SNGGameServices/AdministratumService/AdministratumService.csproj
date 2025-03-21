@@ -22,7 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DB\DTO\ComplainTicket\" />
     <Folder Include="DB\DTO\Message\" />
     <Folder Include="DB\DTO\UserComplains\" />
     <Folder Include="Migrations\" />

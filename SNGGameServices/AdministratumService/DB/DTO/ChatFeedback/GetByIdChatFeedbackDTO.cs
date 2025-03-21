@@ -9,6 +9,5 @@ namespace AdministratumService.DB.DTO.ChatFeedback
         public DateTime Date { get; set; }
         public int UserId { get; set; }
 
-        public ICollection<Message> Messages { get; set; } = new List<Message>();
     }
 }

@@ -17,9 +17,9 @@ namespace AdministratumService.Controllers
         private readonly CrudGenericService<ChatFeedback, int, ChatFeedbackRepository> service;
         private readonly IMapper mapper;
 
-        public ChatFeedbackController(CrudGenericService<ChatFeedback, int, ChatFeedbackRepository> chatFeedbackService, IMapper mapper)
+        public ChatFeedbackController(CrudGenericService<ChatFeedback, int, ChatFeedbackRepository> service, IMapper mapper)
         {
-            this.service = chatFeedbackService;
+            this.service = service;
             this.mapper = mapper;
         }
 
@@ -53,7 +53,6 @@ namespace AdministratumService.Controllers
                 return NotFound();
             }
             await service.UpdateAsync(model);
-            var res = mapper.Map<ChatFeedbackIdDTO>(model);
             return Ok();
         }
 
