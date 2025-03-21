@@ -43,5 +43,18 @@ namespace AdministratumService.Controllers
             var res = mapper.Map<GetByIdChatFeedbackDTO>(model);
             return Ok(res);
         }
+
+        [HttpPut]
+        public async Task<ActionResult> Update(UpdateChatFeedbackDTO DTO)
+        {
+            var model = await service.GetByIdAsync(DTO.Id);
+            if (model == null)
+            {
+                return NotFound();
+            }
+            await service.UpdateAsync(model);
+            var res = mapper.Map<ChatFeedbackIdDTO>(model);
+            return Ok();
+        }
     }
 }

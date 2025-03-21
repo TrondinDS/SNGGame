@@ -40,9 +40,9 @@ namespace Library.GenericService
             return await repository.GetByIdAsync(id);
         }
 
-        public async Task UpdateAsync(TEntity banned)
+        public async Task UpdateAsync(TEntity entity)
         {
-            repository.UpdateAsync(banned);
+            repository.UpdateAsync(entity);
             await repository.SaveChangesAsync();
         }
     }
