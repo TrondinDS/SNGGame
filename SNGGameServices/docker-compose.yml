@@ -130,6 +130,8 @@
           context: ./AdministratumService
           dockerfile: Dockerfile
         image: myadministratumimage:latest
+        environment:
+          ASPNETCORE_ENVIRONMENT: Development
         volumes:
           - .:/app
         ports:

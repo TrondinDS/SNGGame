@@ -2,7 +2,7 @@
 
 namespace AdministratumService.DB.DTO.ChatFeedback
 {
-    public class ReadChatFeedbackDTO
+    public class GetByIdChatFeedbackDTO
     {
         [Required(ErrorMessage = "id чата не был отправлен")]
         public int Id { get; set; }
