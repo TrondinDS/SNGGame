@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using OrganizerEventService.DB.Context;
+using Swashbuckle.AspNetCore.SwaggerUI;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace OrganizerEventService
 {
@@ -8,6 +10,18 @@ namespace OrganizerEventService
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.Services.AddSingleton<Library.Services.Mongo>(provider =>
+            {
+                var config = provider.GetRequiredService<IConfiguration>();
+                return new Library.Services.Mongo(
+                    config.GetConnectionString("MongoConnection")
+                );
+            });
+
+            // Swagger
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
 
             // Add services to the container.
             builder.Services.AddControllers();
@@ -29,9 +43,18 @@ namespace OrganizerEventService
                 )
             );
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllOrigins", policy =>
+                {
+                    policy.AllowAnyOrigin()
+                          .AllowAnyMethod()
+                          .AllowAnyHeader();
+                });
+            });
+
             var app = builder.Build();
 
-            // ���������� ��������
             using (var scope = app.Services.CreateScope())
             {
                 var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationContext>();
@@ -41,6 +64,15 @@ namespace OrganizerEventService
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
+                app.UseCors("AllowAllOrigins");
+
+                app.UseSwagger();
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                    c.RoutePrefix = string.Empty; 
+                });
+
                 app.MapOpenApi();
             }
 

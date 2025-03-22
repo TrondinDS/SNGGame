@@ -5,7 +5,7 @@ using Swashbuckle.AspNetCore.SwaggerUI;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using AdministratumService.DB.Models;
 using AdministratumService.Repository;
-using Library.GenericService;
+using Library.Generics.GenericService;
 
 namespace AdministratumService
 {

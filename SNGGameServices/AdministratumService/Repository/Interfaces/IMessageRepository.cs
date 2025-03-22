@@ -1,5 +1,5 @@
 ﻿using AdministratumService.DB.Models;
-using Library.GenericRepository.Interfaces;
+using Library.Generics.GenericRepository.Interfaces;
 
 namespace AdministratumService.Repository.Interfaces
 {

@@ -1,4 +1,4 @@
-﻿using Library.GenericRepository;
+﻿using Library.Generics.GenericRepository;
 using StudioGameService.DB.Context;
 using StudioGameService.DB.Model;
 using StudioGameService.Repository.Interfaces;

@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using StudioGameService.DB.Context;
 using StudioGameService.Repository;
@@ -15,6 +14,14 @@ namespace StudioGameService
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.Services.AddSingleton<Library.Services.Mongo>(provider =>
+            {
+                var config = provider.GetRequiredService<IConfiguration>();
+                return new Library.Services.Mongo(
+                    config.GetConnectionString("UserServiceMongoConnection")
+                );
+            });
 
             // Add services to the container.
             builder.Services.AddAutoMapper(typeof(Program));
@@ -54,6 +61,16 @@ namespace StudioGameService
                 )
             );
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllOrigins", policy =>
+                {
+                    policy.AllowAnyOrigin()
+                          .AllowAnyMethod()
+                          .AllowAnyHeader();
+                });
+            });
+
             var app = builder.Build();
 
             using (var scope = app.Services.CreateScope())
@@ -65,18 +82,15 @@ namespace StudioGameService
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
-                app.MapOpenApi();
-            }
+                app.UseCors("AllowAllOrigins");
 
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
-            {
                 app.UseSwagger();
                 app.UseSwaggerUI(c =>
                 {
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
                     c.RoutePrefix = string.Empty; 
                 });
+
                 app.MapOpenApi();
             }
 

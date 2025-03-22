@@ -1,4 +1,4 @@
-﻿using Library.GenericRepository.Interfaces;
+﻿using Library.Generics.GenericRepository.Interfaces;
 using UserActivityService.DB.Models;
 
 namespace UserActivityService.Repository.Interfaces
