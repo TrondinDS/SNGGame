@@ -13,6 +13,7 @@
         depends_on:
           - user-service-db
           - user-service-mongo
+          - rabbitmq-service
 
       user-service-db:
         image: postgres:latest
@@ -157,7 +158,6 @@
         depends_on:
           - administratum-db
       
-
       administratum-db:
         image: postgres:latest
         environment:
@@ -245,6 +245,7 @@
           - "7060:8081"
         depends_on:
           - get-await-db
+          - rabbitmq-service
     
       get-await-db:
         image: postgres:latest
@@ -266,6 +267,24 @@
           start_period: 30s
 
 
+      rabbitmq-service:
+        image: rabbitmq:4.0.7-management
+        environment:
+         RABBITMQ_DEFAULT_USER: guest
+         RABBITMQ_DEFAULT_PASS: guest
+        ports:
+          - "5672:5672"
+          - "15672:15672"
+        volumes:
+          - rabbitmq_data:/var/lib/rabbitmq
+        restart: unless-stopped
+        healthcheck:
+          test: ["CMD", "rabbitmq-diagnostics", "status"]
+          interval: 30s
+          timeout: 10s
+          retries: 3
+          start_period: 30s
+
       pgadmin:
         image: dpage/pgadmin4:latest
         environment:
@@ -280,7 +299,6 @@
     volumes:
       user_service_db_data:
       user_service_mongo_data:
-
       studio_game_db_data:
       studio_game_mongo_data:
 
@@ -290,6 +308,6 @@
       user_activity_db_data:
       administratum_db_data:
       get_await_db_data:
-      # mongodb_data:
+      rabbitmq_data:
 
 
