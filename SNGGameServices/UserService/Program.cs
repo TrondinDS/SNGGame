@@ -5,6 +5,8 @@ using UserService.Repository;
 using UserService.Repository.Interfaces;
 using UserService.Services;
 using UserService.Services.Interfaces;
+using Swashbuckle.AspNetCore.SwaggerUI;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace UserService
 {
@@ -49,7 +51,18 @@ namespace UserService
                 opt.UseNpgsql(builder.Configuration.GetConnectionString("UserServiceConnection"))
             );
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllOrigins", policy =>
+                {
+                    policy.AllowAnyOrigin() // Allow requests from any origin
+                          .AllowAnyMethod()  // Allow any HTTP method (GET, POST, etc.)
+                          .AllowAnyHeader(); // Allow any headers
+                });
+            });
+
             var app = builder.Build();
+
 
             using (var scope = app.Services.CreateScope())
             {
@@ -60,6 +73,7 @@ namespace UserService
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
+                app.UseCors("AllowAllOrigins");
                 app.MapOpenApi();
             }
 
