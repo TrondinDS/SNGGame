@@ -2,7 +2,7 @@
 using AdministratumService.DB.Models;
 using AdministratumService.Repository;
 using AutoMapper;
-using Library.GenericService;
+using Library.Generics.GenericService;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdministratumService.Controllers

@@ -1,7 +1,7 @@
 ﻿using AdministratumService.DB.Context;
 using AdministratumService.DB.Models;
 using AdministratumService.Repository.Interfaces;
-using Library.GenericRepository;
+using Library.Generics.GenericRepository;
 
 namespace AdministratumService.Repository
 {

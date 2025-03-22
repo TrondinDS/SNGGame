@@ -1,7 +1,7 @@
-﻿using Library.GenericRepository.Interfaces;
+﻿using Library.Generics.GenericRepository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace Library.GenericRepository
+namespace Library.Generics.GenericRepository
 {
     public class GenericRepository<TEntity, TId> : IGenericRepository<TEntity, TId>
         where TEntity : class

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Library.GenericService.Interfaces
+namespace Library.Generics.GenericService.Interfaces
 {
     public interface ICrudGenericService<TEntity>
         where TEntity : class

@@ -1,5 +1,4 @@
-﻿using Library.GenericRepository;
-using Library.GenericRepository.Interfaces;
+﻿using Library.Generics.GenericRepository;
 using Microsoft.EntityFrameworkCore;
 using StudioGameService.DB.Context;
 using StudioGameService.DB.Model;

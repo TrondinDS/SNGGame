@@ -58,8 +58,8 @@
         image: mystudiogameimage:latest
         environment:
           ASPNETCORE_ENVIRONMENT: Development
-          ASPNETCORE_URLS: "http://*:8080;https://*:8081"
-          ASPNETCORE_HTTPS_PORT: "8081"
+          # ASPNETCORE_URLS: "http://*:8080;https://*:8081"
+          # ASPNETCORE_HTTPS_PORT: "8081"
         volumes:
           - .:/app
         ports:
@@ -67,6 +67,7 @@
           - "7053:8081"
         depends_on:
           - studio-game-db
+          - studio-game-mongo
 
       studio-game-db:
         image: postgres:latest
@@ -87,6 +88,23 @@
           retries: 3
           start_period: 30s
 
+      studio-game-mongo:
+        image: mongo:latest
+        environment:
+          MONGO_INITDB_ROOT_USERNAME: admin
+          MONGO_INITDB_ROOT_PASSWORD: admin
+        ports:
+          - "27020:27017"
+        volumes:
+          - studio_game_mongo_data:/data/db
+        restart: unless-stopped
+        healthcheck:
+          test: ["CMD-SHELL", "mongo --eval 'db.runCommand({ ping: 1 })' && exit 0 || exit 1"]
+          interval: 30s
+          timeout: 10s
+          retries: 3
+          start_period: 30s
+
 
       user-activity-service:
         build:
@@ -100,7 +118,7 @@
         volumes:
           - .:/app
         ports:
-          - "5193:8080"
+          - "5283:8080"
           - "7211:8081"
         depends_on:
           - user-activity-db
@@ -135,7 +153,7 @@
         volumes:
           - .:/app
         ports:
-          - "5283:8080"
+          - "5302:8080"
         depends_on:
           - administratum-db
       
@@ -160,18 +178,19 @@
           start_period: 30s
 
   
-      organizer-event-service:
+      organizer-event-service: # add mongo
         build:
           context: ./OrganizerEventService
           dockerfile: Dockerfile
         image: myorganizereventimage:latest
+        environment:
+          ASPNETCORE_ENVIRONMENT: Development
         volumes:
           - .:/app
         ports:
           - "5286:8080"
         depends_on:
           - event-db
-
 
       event-db:
         image: postgres:latest
@@ -188,8 +207,25 @@
         healthcheck:
           test: ["CMD-SHELL", "pg_isready -U admin -d eventdb"]
           interval: 30s 
-          timeout: 10s  
+          timeout: 10s
           retries: 3    
+          start_period: 30s
+
+      organizer-event-mongo:
+        image: mongo:latest
+        environment:
+          MONGO_INITDB_ROOT_USERNAME: admin
+          MONGO_INITDB_ROOT_PASSWORD: admin
+        ports:
+          - "27021:27017"
+        volumes:
+          - organizer_event_mongo_data:/data/db
+        restart: unless-stopped
+        healthcheck:
+          test: ["CMD-SHELL", "mongo --eval 'db.runCommand({ ping: 1 })' && exit 0 || exit 1"]
+          interval: 30s
+          timeout: 10s
+          retries: 3
           start_period: 30s
 
 
@@ -246,9 +282,13 @@
       user_service_mongo_data:
 
       studio_game_db_data:
+      studio_game_mongo_data:
+
+      event_db_data:
+      organizer_event_mongo_data:
+
       user_activity_db_data:
       administratum_db_data:
-      event_db_data:
       get_await_db_data:
       # mongodb_data:
 

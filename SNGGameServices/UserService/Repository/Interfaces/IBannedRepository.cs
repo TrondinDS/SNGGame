@@ -1,5 +1,5 @@
 ﻿using BannedService.DB.Models;
-using Library.GenericRepository.Interfaces;
+using Library.Generics.GenericRepository.Interfaces;
 using UserService.DB.Models;
 
 namespace UserService.Repository.Interfaces

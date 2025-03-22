@@ -1,7 +1,7 @@
-﻿using Library.GenericRepository.Interfaces;
-using Library.GenericService.Interfaces;
+﻿using Library.Generics.GenericRepository.Interfaces;
+using Library.Generics.GenericService.Interfaces;
 
-namespace Library.GenericService
+namespace Library.Generics.GenericService
 {
     public class CrudGenericService<TEntity, Tid, TRepository> : ICrudGenericService<TEntity>
         where TEntity : class
