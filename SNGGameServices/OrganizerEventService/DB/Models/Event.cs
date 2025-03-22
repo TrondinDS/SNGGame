@@ -34,17 +34,8 @@ namespace OrganizerEventService.DB.Models
         [MaxLength(1024, ErrorMessage = "GeoUrl cannot be longer than 1024 characters")]
         public string GeoUrl { get; set; }
 
-        [MaxLength(
-            255,
-            ErrorMessage = "FilepathToDescription cannot be longer than 1024 characters"
-        )]
-        public string FilepathToDescription { get; set; }
-
-        [MaxLength(255, ErrorMessage = "FilepathToPhotoIcon cannot be longer than 1024 characters")]
-        public string FilepathToPhotoIcon { get; set; }
-
-        [Required(ErrorMessage = "PublishingStatus is required")]
-        public int PublishingStatus { get; set; }
+        [Required(ErrorMessage = "Status is required")]
+        public string Status { get; set; }
 
         public decimal? PriceMin { get; set; }
         public decimal? PriceMax { get; set; }
@@ -56,6 +47,6 @@ namespace OrganizerEventService.DB.Models
         public int OrganizerEventId { get; set; }
 
         [ForeignKey("OrganizerEventId")]
-        public virtual EventOrganizer Organizer { get; set; }
+        public virtual Organizer Organizer { get; set; }
     }
 }

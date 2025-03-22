@@ -9,7 +9,7 @@ namespace OrganizerEventService.DB.Context
             : base(dbContext) { }
 
         DbSet<Event> Events { get; set; }
-        DbSet<EventOrganizer> EventOrganizers { get; set; }
+        DbSet<Organizer> EventOrganizers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
