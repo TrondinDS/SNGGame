@@ -178,7 +178,7 @@
           start_period: 30s
 
   
-      organizer-event-service: # add mongo
+      organizer-event-service:
         build:
           context: ./OrganizerEventService
           dockerfile: Dockerfile
@@ -190,9 +190,10 @@
         ports:
           - "5286:8080"
         depends_on:
-          - event-db
+          - organizer-event-db
+          - organizer-event-mongo
 
-      event-db:
+      organizer-event-db:
         image: postgres:latest
         environment:
           POSTGRES_USER: admin
@@ -201,7 +202,7 @@
         ports:
           - "5438:5432"
         volumes:
-          - event_db_data:/var/lib/postgresql/data
+          - organizer_event_db_data:/var/lib/postgresql/data
           - ./eventdbinit.sql:/docker-entrypoint-initdb.d/init.sql 
         restart: unless-stopped
         healthcheck:
@@ -284,7 +285,7 @@
       studio_game_db_data:
       studio_game_mongo_data:
 
-      event_db_data:
+      organizer_event_db_data:
       organizer_event_mongo_data:
 
       user_activity_db_data:

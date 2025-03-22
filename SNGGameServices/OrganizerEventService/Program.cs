@@ -2,6 +2,9 @@ using Microsoft.EntityFrameworkCore;
 using OrganizerEventService.DB.Context;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using Library.Generics.GenericService;
+using OrganizerEventService.DB.Models;
+using OrganizerEventService.Repository;
 
 namespace OrganizerEventService
 {
@@ -10,7 +13,7 @@ namespace OrganizerEventService
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
+            
             builder.Services.AddSingleton<Library.Services.Mongo>(provider =>
             {
                 var config = provider.GetRequiredService<IConfiguration>();
@@ -19,23 +22,22 @@ namespace OrganizerEventService
                 );
             });
 
-            // Swagger
+            builder.Services.AddAutoMapper(typeof(Program));
+            builder.Services.AddControllers();
+
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-
-            // Add services to the container.
-            builder.Services.AddControllers();
 
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
 
-            builder.Services.AddSingleton<Library.Services.Mongo>(provider =>
             {
-                var config = provider.GetRequiredService<IConfiguration>();
-                return new Library.Services.Mongo(
-                    config.GetConnectionString("UserServiceMongoConnection")
-                );
-            });
+                builder.Services.AddScoped<EventRepository>();
+                builder.Services.AddScoped<CrudGenericService<Event, int, EventRepository>>();
+ 
+                builder.Services.AddScoped<OrganizerRepository>();
+                builder.Services.AddScoped<CrudGenericService<Organizer, int, OrganizerRepository>>();
+            }
 
             builder.Services.AddDbContext<ApplicationContext>(opt =>
                 opt.UseNpgsql(
