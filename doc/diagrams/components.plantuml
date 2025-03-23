@@ -1,0 +1,51 @@
+@startuml
+
+component "Серверная часть веб-приложения" {
+    component GetAwaitAndAAService {
+        queue ОчередьЗапросов {
+
+            component OrganizatorEventService {
+                database MongoDB {
+                }
+                database PostgreSQL {
+                }
+            }
+
+            component UserActivityService {
+                database MongoDB {
+                }
+                database PostgreSQL {
+                }
+            }
+
+            component UserService {
+                database MongoDB {
+                }
+                database PostgreSQL {
+                }
+            }
+
+            component StudioGameService {
+                database MongoDB {
+                }
+                database PostgreSQL {
+                }
+            }
+
+            component AdministratumService {
+                database MongoDB {
+                }
+                database PostgreSQL {
+                }
+            }
+
+        }
+    }
+}
+
+OrganizatorEventService -[hidden]-> UserActivityService
+UserActivityService -[hidden]-> UserService
+UserService -[hidden]-> StudioGameService
+StudioGameService -[hidden]-> AdministratumService
+
+@enduml
