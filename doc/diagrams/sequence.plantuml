@@ -1,36 +1,37 @@
 @startuml
 
+title Отправление запроса на создание обсуждения студии/игры/оргнанизатора/события
+
 skinparam actorStyle hollow
 Actor "Клиентская\nчасть приложения" as user
 Control "Серверная\nчасть приложения" as backend
-Database "Веб-кэш" as web_cache
 Database "SQL БД" as sql
 Database "Документо-\nориентированная\nNoSQL" as docdb
 
-activate backend
-activate web_cache
-activate sql
-activate docdb
 
-user -> backend : Запрос на получение страницы А
-activate user
-backend -> sql : Запрос на получение данных
-sql --> backend
-backend -> docdb : Запрос на получение данных
-docdb --> backend
-backend --> user
-' backend -> user : Отправка запрашиваемой страницы
-deactivate user
-backend -> web_cache : Сохранение кэша
+user -> backend : Запрос
 
-== Повторный запрос ==
+alt данные не прошли проверку
+    backend --> user : Запрос отклонён
+else данные прошли проверку
+    backend -> sql : Запрос на добавление данных
+    alt ошибка при добавлении данных
+        sql --> backend
+        backend --> user : Запрос отклонён
+    else данные были успешно добавлены
+        sql --> backend
+    end
+else
+    backend -> docdb : Запрос на добавление данных
+    alt ошибка при добавлении данных
+        docdb --> backend
+        backend --> user : Запрос отклонён
+    else данные были успешно добавлены
+        docdb --> backend
+    end
+else
+    backend --> user : Ответ об успешном добавлении страницы
+end
 
-user -> backend : Запрос на получение страницы А
-activate user
-backend -> web_cache : Запрос на получение данных
-web_cache --> backend
-backend --> user
-' backend -> user : Отправка запрашиваемой страницы
-deactivate user
 
 @enduml
