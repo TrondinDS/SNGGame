@@ -1,0 +1,96 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:136.0) Gecko/20100101 Firefox/136.0" version="26.1.1">
+  <diagram name="communication_diagram" id="mHJVQhGz7D6HPnPug4N1">
+    <mxGraphModel dx="1130" dy="612" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="m2_vUKE8pVUSr2_AqMxz-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;startFill=0;" parent="1" source="m2_vUKE8pVUSr2_AqMxz-1" target="m2_vUKE8pVUSr2_AqMxz-2" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="m2_vUKE8pVUSr2_AqMxz-1" value=":Клиентская часть приложения" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Alegreya;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DAlegreya;" parent="1" vertex="1">
+          <mxGeometry x="80" y="510" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="m2_vUKE8pVUSr2_AqMxz-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;startFill=0;" parent="1" source="m2_vUKE8pVUSr2_AqMxz-2" target="m2_vUKE8pVUSr2_AqMxz-3" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="420" y="410" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m2_vUKE8pVUSr2_AqMxz-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;startFill=0;" parent="1" source="m2_vUKE8pVUSr2_AqMxz-2" target="m2_vUKE8pVUSr2_AqMxz-4" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="420" y="650" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m2_vUKE8pVUSr2_AqMxz-2" value=":Серверная часть приложения" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Alegreya;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DAlegreya;" parent="1" vertex="1">
+          <mxGeometry x="360" y="510" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="m2_vUKE8pVUSr2_AqMxz-3" value=":SQL БД" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Alegreya;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DAlegreya;" parent="1" vertex="1">
+          <mxGeometry x="680" y="380" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="m2_vUKE8pVUSr2_AqMxz-4" value=":Документо-ориентированная NoSQL" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Alegreya;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DAlegreya;" parent="1" vertex="1">
+          <mxGeometry x="680" y="620" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="m2_vUKE8pVUSr2_AqMxz-9" value="" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="220" y="520" as="sourcePoint" />
+            <mxPoint x="340" y="520" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m2_vUKE8pVUSr2_AqMxz-10" value="" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="340" y="560" as="sourcePoint" />
+            <mxPoint x="220" y="560" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m2_vUKE8pVUSr2_AqMxz-11" value="" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="440" y="390" as="sourcePoint" />
+            <mxPoint x="660" y="390" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m2_vUKE8pVUSr2_AqMxz-12" value="" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="440" y="630" as="sourcePoint" />
+            <mxPoint x="660" y="630" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m2_vUKE8pVUSr2_AqMxz-13" value="" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="660" y="670" as="sourcePoint" />
+            <mxPoint x="440" y="670" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m2_vUKE8pVUSr2_AqMxz-14" value="" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="660" y="430" as="sourcePoint" />
+            <mxPoint x="440" y="430" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="m2_vUKE8pVUSr2_AqMxz-15" value="&lt;div style=&quot;font-weight: normal; font-size: 14px; line-height: 19px; white-space: pre;&quot;&gt;&lt;div&gt;&lt;span style=&quot;&quot;&gt;Отправление запроса на добавление/редактирование/уделение страницы студии&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;" style="text;whiteSpace=wrap;html=1;fontColor=default;textShadow=0;labelBackgroundColor=default;fontFamily=Alegreya;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DAlegreya;" parent="1" vertex="1">
+          <mxGeometry x="190" y="290" width="500" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="m2_vUKE8pVUSr2_AqMxz-16" value="1. Запрос" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=JetBrains Mono;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DJetBrains%2BMono;fontSize=10;" parent="1" vertex="1">
+          <mxGeometry x="230" y="490" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="m2_vUKE8pVUSr2_AqMxz-17" value="&lt;div align=&quot;left&quot;&gt;&lt;font style=&quot;font-size: 10px;&quot; data-font-src=&quot;https://fonts.googleapis.com/css?family=JetBrains+Mono&quot; face=&quot;JetBrains Mono&quot;&gt;2.&amp;nbsp; Ответ об отклонении запроса&lt;/font&gt;&lt;/div&gt;&lt;div align=&quot;left&quot;&gt;&lt;font style=&quot;font-size: 10px;&quot; data-font-src=&quot;https://fonts.googleapis.com/css?family=JetBrains+Mono&quot; face=&quot;JetBrains Mono&quot;&gt;5.&amp;nbsp; Ответ об отклонении запроса&lt;/font&gt;&lt;/div&gt;&lt;div align=&quot;left&quot;&gt;&lt;font style=&quot;font-size: 10px;&quot; data-font-src=&quot;https://fonts.googleapis.com/css?family=JetBrains+Mono&quot; face=&quot;JetBrains Mono&quot;&gt;9.&amp;nbsp; Ответ об отклонении запроса&lt;/font&gt;&lt;/div&gt;&lt;div align=&quot;left&quot;&gt;&lt;font style=&quot;font-size: 10px;&quot; data-font-src=&quot;https://fonts.googleapis.com/css?family=JetBrains+Mono&quot; face=&quot;JetBrains Mono&quot;&gt;11. Ответ об успешной операции&lt;/font&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="200" y="580" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="m2_vUKE8pVUSr2_AqMxz-18" value="3. Запрос на добавление данных" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=JetBrains Mono;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DJetBrains%2BMono;fontSize=10;" parent="1" vertex="1">
+          <mxGeometry x="455" y="360" width="190" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="m2_vUKE8pVUSr2_AqMxz-19" value="&lt;div align=&quot;left&quot;&gt;4. Ответ об ошибке добавления данных&lt;/div&gt;&lt;div align=&quot;left&quot;&gt;6. Ответ об успешной операции&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=JetBrains Mono;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DJetBrains%2BMono;fontSize=10;" parent="1" vertex="1">
+          <mxGeometry x="450" y="440" width="230" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="m2_vUKE8pVUSr2_AqMxz-20" value="7. Запрос на добавление данных" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=JetBrains Mono;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DJetBrains%2BMono;fontSize=10;" parent="1" vertex="1">
+          <mxGeometry x="450" y="595" width="200" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="m2_vUKE8pVUSr2_AqMxz-21" value="&lt;div align=&quot;left&quot;&gt;8.&amp;nbsp; Ответ об ошибке добавления данных&lt;/div&gt;&lt;div align=&quot;left&quot;&gt;10. Ответ об успешной операции&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=JetBrains Mono;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DJetBrains%2BMono;fontSize=10;" parent="1" vertex="1">
+          <mxGeometry x="450" y="680" width="240" height="40" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
