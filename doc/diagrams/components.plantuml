@@ -1,51 +1,81 @@
 @startuml
 
-component "Серверная часть веб-приложения" {
+component "Клиентская часть веб-приложения" as front {
+}
+
+component "Серверная часть веб-приложения" as back {
     component GetAwaitAndAAService {
-        queue ОчередьЗапросов {
+    }
+    () HTTPS as back_http
+    back_http - GetAwaitAndAAService
 
-            component OrganizatorEventService {
-                database MongoDB {
-                }
-                database PostgreSQL {
-                }
-            }
+    queue ОчередьЗапросов as queue_request {
+    }
+    () HTTPS as queue_http
+    queue_http - queue_request
 
-            component UserActivityService {
-                database MongoDB {
-                }
-                database PostgreSQL {
-                }
-            }
-
-            component UserService {
-                database MongoDB {
-                }
-                database PostgreSQL {
-                }
-            }
-
-            component StudioGameService {
-                database MongoDB {
-                }
-                database PostgreSQL {
-                }
-            }
-
-            component AdministratumService {
-                database MongoDB {
-                }
-                database PostgreSQL {
-                }
-            }
-
+    component OrganizatorEventService {
+        database MongoDB as m1 {
         }
+        database PostgreSQL as p1 {
+        }
+        port p1 as pp1
+    }
+
+    component UserActivityService {
+        database MongoDB as m2 {
+        }
+        database PostgreSQL as p2 {
+        }
+        port p2 as pp2
+    }
+
+    component UserService {
+        database MongoDB as m3 {
+        }
+        database PostgreSQL as p3 {
+        }
+        port p3 as pp3
+    }
+
+    component StudioGameService {
+        database MongoDB as m4 {
+        }
+        database PostgreSQL as p4 {
+        }
+        port p4 as pp4
+    }
+
+    component AdministratumService {
+        database MongoDB as m5 {
+        }
+        database PostgreSQL as p5 {
+        }
+        port p5 as pp5
     }
 }
 
-OrganizatorEventService -[hidden]-> UserActivityService
-UserActivityService -[hidden]-> UserService
-UserService -[hidden]-> StudioGameService
-StudioGameService -[hidden]-> AdministratumService
+' OrganizatorEventService -[hidden]-> UserActivityService
+' UserActivityService -[hidden]-> UserService
+' UserService -[hidden]-> StudioGameService
+' StudioGameService -[hidden]-> AdministratumService
+
+' organizer_event_http -[hidden]-> user_activity_http
+' user_activity_http -[hidden]-> user_service_http
+' user_service_http -[hidden]-> studio_game_http
+' studio_game_http -[hidden]-> administratum_http
+
+' pp1 -[hidden]-> pp2
+' pp2 -[hidden]-> pp3
+' pp3 -[hidden]-> pp4
+' pp4 -[hidden]-> pp5
+
+front ..> back_http
+GetAwaitAndAAService ...> queue_http
+queue_request .> pp1
+queue_request ..> pp2
+queue_request ..> pp3
+queue_request ...> pp4
+queue_request ...> pp5
 
 @enduml
