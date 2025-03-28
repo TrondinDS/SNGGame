@@ -1,10 +1,3 @@
-
-using GetAwaitService.RabbitMQ.Client;
-using GetAwaitService.RabbitMQ.Services.Interfaces;
-using Microsoft.EntityFrameworkCore.Metadata;
-using RabbitMQ.Client;
-using System.Threading.Tasks;
-
 namespace GetAwaitService
 {
     public class Program
@@ -26,13 +19,19 @@ namespace GetAwaitService
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
 
-            var factory = new ConnectionFactory() { HostName = "rabbitmq-service", UserName = "guest", Password = "guest", Port = 5672 };
-            var connection = await factory.CreateConnectionAsync();
-            var channel = await connection.CreateChannelAsync();
 
-            builder.Services.AddSingleton<IConnection>(connection);
-            builder.Services.AddSingleton<IChannel>(channel);
-            builder.Services.AddSingleton<IRabbitMqService, RabbitMqRpcClient>();
+            builder.Services.AddHttpClient("UserServiceClient", client =>
+            {
+                client.BaseAddress = new Uri("https://userservices:8081");
+            })
+            .ConfigurePrimaryHttpMessageHandler(() =>
+            {
+                var handler = new HttpClientHandler();
+                handler.ServerCertificateCustomValidationCallback =
+                    HttpClientHandler.DangerousAcceptAnyServerCertificateValidator; // Отключает проверку [[9]]
+                return handler;
+            });
+
 
             var app = builder.Build();
 

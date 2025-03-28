@@ -1,16 +1,9 @@
-using GetAwaitService.RabbitMQ.Client;
-using GetAwaitService.RabbitMQ.Services.Interfaces;
-using Library;
 using Microsoft.EntityFrameworkCore;
-using RabbitMQ.Client;
 using UserService.DB.Context;
 using UserService.Repository;
 using UserService.Repository.Interfaces;
 using UserService.Services;
 using UserService.Services.Interfaces;
-using Swashbuckle.AspNetCore.SwaggerUI;
-using Swashbuckle.AspNetCore.SwaggerGen;
-using GetAwaitService.RabbitMQ.Extensions;
 
 namespace UserService
 {
@@ -38,12 +31,6 @@ namespace UserService
 
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
-
-            // Настройка параметров RabbitMQ из appsettings.json
-            builder.Services.Configure<RabbitMqOptions>(builder.Configuration.GetSection("RabbitMq"));
-
-            // Добавление RabbitMQ клиента и консьюмера в DI
-            await builder.Services.AddRabbitMqClient(builder.Configuration.GetSection("RabbitMq").Get<RabbitMqOptions>());
 
             builder.Services.AddTransient<IUserRepository, UserRepository>();
             builder.Services.AddTransient<IUserService, UserServiceS>();
