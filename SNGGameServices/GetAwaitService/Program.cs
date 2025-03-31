@@ -20,17 +20,7 @@ namespace GetAwaitService
             builder.Services.AddOpenApi();
 
 
-            builder.Services.AddHttpClient("UserServiceClient", client =>
-            {
-                client.BaseAddress = new Uri("https://userservices:8081");
-            })
-            .ConfigurePrimaryHttpMessageHandler(() =>
-            {
-                var handler = new HttpClientHandler();
-                handler.ServerCertificateCustomValidationCallback =
-                    HttpClientHandler.DangerousAcceptAnyServerCertificateValidator; // Отключает проверку [[9]]
-                return handler;
-            });
+            AddNamedHttpClient(builder.Services, "UserServiceClient", "https://userservices:8081");
 
 
             var app = builder.Build();
@@ -64,5 +54,21 @@ namespace GetAwaitService
 
             app.Run();
         }
+
+        static void AddNamedHttpClient(IServiceCollection services, string name, string baseAddress)
+        {
+            services.AddHttpClient(name, client =>
+            {
+                client.BaseAddress = new Uri(baseAddress);
+            })
+            .ConfigurePrimaryHttpMessageHandler(() =>
+            {
+                var handler = new HttpClientHandler();
+                handler.ServerCertificateCustomValidationCallback =
+                    HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+                return handler;
+            });
+        }
+
     }
 }

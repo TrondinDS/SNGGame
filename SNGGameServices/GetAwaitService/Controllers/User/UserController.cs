@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using System.Text.Json;
 
-namespace GetAwaitService.Controllers
+namespace GetAwaitService.Controllers.User
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
