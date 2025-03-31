@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace UserActivityService.DB.DTO.UserReaction
+namespace GetAwaitService.DB.DTO.UserActivityService.UserReaction
 {
     public class UserReactionDTO
     {
@@ -16,8 +16,10 @@ namespace UserActivityService.DB.DTO.UserReaction
         [Required(ErrorMessage = "UserId является обязательным")]
         public Guid UserId { get; set; }
 
+
         [Range(1, int.MaxValue, ErrorMessage = "CommentId должен быть положительным числом")]
         public int ReactionType { get; set; }
+
         // Идентификатор комментария, на который дана реакция
         [Range(1, int.MaxValue, ErrorMessage = "CommentId должен быть положительным числом")]
         [Required(ErrorMessage = "CommentId является обязательным")]
