@@ -22,6 +22,7 @@ namespace GetAwaitService
 
             AddNamedHttpClient(builder.Services, "UserServiceClient", "https://userservices:8081");
             AddNamedHttpClient(builder.Services, "UserActivityServiceClient", "https://user-activity-service:8081");
+            AddNamedHttpClient(builder.Services, "StudioGameServiceClient", "https://studio-game-service:8081");
 
 
             var app = builder.Build();
