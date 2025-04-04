@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
+using Library.Generics.DB.DTO.DTOModelServices.UserService.Job;
 using Microsoft.AspNetCore.Mvc;
 using StudioGameService.DB.Model;
-using UserService.DB.DTO.Job;
 using UserService.Services.Interfaces;
 
 namespace UserService.Controllers

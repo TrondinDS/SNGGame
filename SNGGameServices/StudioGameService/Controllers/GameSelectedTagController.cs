@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.GameSelectedTag;
 using Microsoft.AspNetCore.Mvc;
-using StudioGameService.DB.DTO.GameSelectedTag;
 using StudioGameService.DB.Model;
 using StudioGameService.Services.Interfaces;
 

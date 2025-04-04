@@ -1,8 +1,7 @@
-﻿using GetAwaitService.DB.DTO.UserService.UserSubscription;
-using GetAwaitService.DB.DTO.UserService.User;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using System.Text.Json;
+using Library.Generics.DB.DTO.DTOModelServices.UserService.UserSubscription;
 
 namespace GetAwaitService.Controllers.User
 {

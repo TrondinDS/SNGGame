@@ -1,4 +1,4 @@
-﻿using GetAwaitService.DB.DTO.StudioGameService.Tag;
+﻿using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Tag;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using System.Text.Json;

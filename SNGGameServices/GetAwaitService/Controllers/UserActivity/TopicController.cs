@@ -1,4 +1,4 @@
-﻿using GetAwaitService.DB.DTO.UserActivityService.Topic;
+﻿using Library.Generics.DB.DTO.DTOModelServices.UserActivityService.Topic;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using System.Text.Json;

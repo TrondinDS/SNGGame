@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using UserActivityService.DB.DTO.Comment;
-using UserActivityService.DB.DTO.Topic;
-using UserActivityService.DB.DTO.UserReaction;
+using Library.Generics.DB.DTO.DTOModelServices.UserActivityService.Comment;
+using Library.Generics.DB.DTO.DTOModelServices.UserActivityService.Topic;
+using Library.Generics.DB.DTO.DTOModelServices.UserActivityService.UserReaction;
 using UserActivityService.DB.Models;
 
 namespace UserActivityService.DB.Mapping

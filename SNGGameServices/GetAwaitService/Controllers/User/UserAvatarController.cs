@@ -1,4 +1,4 @@
-﻿using GetAwaitService.DB.DTO.UserService.User;
+﻿using Library.Generics.DB.DTO.DTOModelServices.UserService.User;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using System.Text.Json;

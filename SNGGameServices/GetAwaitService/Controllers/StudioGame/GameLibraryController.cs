@@ -1,4 +1,4 @@
-﻿using GetAwaitService.DB.DTO.StudioGameService.GameLibrary;
+﻿using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.GameLibrary;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using System.Text.Json;

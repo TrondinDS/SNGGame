@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using StudioGameService.DB.DTO.Game;
-using StudioGameService.DB.DTO.GameLibrary;
-using StudioGameService.DB.DTO.GameSelectedGenre;
-using StudioGameService.DB.DTO.GameSelectedTag;
-using StudioGameService.DB.DTO.Genre;
-using StudioGameService.DB.DTO.Studio;
-using StudioGameService.DB.DTO.Tag;
+using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Game;
+using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.GameLibrary;
+using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.GameSelectedGenre;
+using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.GameSelectedTag;
+using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Genre;
+using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Studio;
+using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Tag;
 using StudioGameService.DB.Model;
 
 namespace StudioGameService.DB.Mapping

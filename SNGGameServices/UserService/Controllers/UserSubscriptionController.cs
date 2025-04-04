@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using Library.Generics.DB.DTO.DTOModelServices.UserService.UserSubscription;
 using Microsoft.AspNetCore.Mvc;
-using UserService.DB.DTO.UserSubscription;
 using UserService.DB.Models;
 using UserService.Services.Interfaces;
 

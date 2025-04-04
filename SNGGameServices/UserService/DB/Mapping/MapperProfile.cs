@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
 using BannedService.DB.Models;
+using Library.Generics.DB.DTO.DTOModelServices.UserService.Banned;
+using Library.Generics.DB.DTO.DTOModelServices.UserService.Job;
+using Library.Generics.DB.DTO.DTOModelServices.UserService.User;
+using Library.Generics.DB.DTO.DTOModelServices.UserService.UserSubscription;
 using StudioGameService.DB.Model;
-using UserService.DB.DTO.Banned;
-using UserService.DB.DTO.Job;
-using UserService.DB.DTO.User;
-using UserService.DB.DTO.UserSubscription;
+
 using UserService.DB.Models;
 
 namespace UserService.DB.Mapping

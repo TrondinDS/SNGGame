@@ -1,4 +1,4 @@
-﻿using GetAwaitService.DB.DTO.UserService.Banned;
+﻿using Library.Generics.DB.DTO.DTOModelServices.UserService.Banned;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using System.Text.Json;

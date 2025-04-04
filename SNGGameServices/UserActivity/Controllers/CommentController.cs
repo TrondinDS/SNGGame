@@ -1,11 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using AutoMapper;
 using UserActivityService.DB.Models;
 using UserActivityService.Services.Interfaces;
-using UserActivityService.DB.DTO.Comment;
-using UserActivityService.Services;
+using Library.Generics.DB.DTO.DTOModelServices.UserActivityService.Comment;
 
 namespace UserActivityService.Controllers
 {

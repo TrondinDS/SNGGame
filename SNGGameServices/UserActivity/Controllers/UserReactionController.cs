@@ -2,7 +2,7 @@
 using AutoMapper;
 using UserActivityService.DB.Models;
 using UserActivityService.Services.Interfaces;
-using UserActivityService.DB.DTO.UserReaction;
+using Library.Generics.DB.DTO.DTOModelServices.UserActivityService.UserReaction;
 
 namespace UserActivityService.Controllers
 {

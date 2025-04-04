@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using BannedService.DB.Models;
+using Library.Generics.DB.DTO.DTOModelServices.UserService.Banned;
 using Microsoft.AspNetCore.Mvc;
-using UserService.DB.DTO.Banned;
 using UserService.Services.Interfaces;
 
 namespace UserService.Controllers

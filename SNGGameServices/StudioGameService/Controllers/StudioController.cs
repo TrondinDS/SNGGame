@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Studio;
 using Microsoft.AspNetCore.Mvc;
-using StudioGameService.DB.DTO.Studio;
 using StudioGameService.DB.Model;
 using StudioGameService.Services.Interfaces;
 

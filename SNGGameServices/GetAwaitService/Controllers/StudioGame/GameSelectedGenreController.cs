@@ -1,4 +1,4 @@
-﻿using GetAwaitService.DB.DTO.StudioGameService.GameLibrary;
+﻿using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.GameSelectedGenre;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using System.Text.Json;
@@ -29,7 +29,7 @@ namespace GetAwaitService.Controllers.StudioGame
             if (response.IsSuccessStatusCode)
             {
                 var responseBody = await response.Content.ReadAsStringAsync();
-                var gameSelectedGenres = JsonSerializer.Deserialize<IEnumerable<GameLibraryDTO>>(responseBody, _jsonOptions);
+                var gameSelectedGenres = JsonSerializer.Deserialize<IEnumerable<GameSelectedGenreDTO>>(responseBody, _jsonOptions);
                 return Ok(gameSelectedGenres);
             }
 
@@ -44,7 +44,7 @@ namespace GetAwaitService.Controllers.StudioGame
             if (response.IsSuccessStatusCode)
             {
                 var responseBody = await response.Content.ReadAsStringAsync();
-                var gameSelectedGenre = JsonSerializer.Deserialize<GameLibraryDTO>(responseBody, _jsonOptions);
+                var gameSelectedGenre = JsonSerializer.Deserialize<GameSelectedGenreDTO>(responseBody, _jsonOptions);
                 return Ok(gameSelectedGenre);
             }
 
@@ -55,7 +55,7 @@ namespace GetAwaitService.Controllers.StudioGame
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateGameSelectedGenre([FromBody] GameLibraryDTO gameSelectedGenreDto)
+        public async Task<IActionResult> CreateGameSelectedGenre([FromBody] GameSelectedGenreDTO gameSelectedGenreDto)
         {
             var jsonContent = JsonSerializer.Serialize(gameSelectedGenreDto);
             var httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
@@ -65,7 +65,7 @@ namespace GetAwaitService.Controllers.StudioGame
             if (response.IsSuccessStatusCode)
             {
                 var responseBody = await response.Content.ReadAsStringAsync();
-                var createdGameSelectedGenre = JsonSerializer.Deserialize<GameLibraryDTO>(responseBody, _jsonOptions);
+                var createdGameSelectedGenre = JsonSerializer.Deserialize<GameSelectedGenreDTO>(responseBody, _jsonOptions);
                 return CreatedAtAction(nameof(GetGameSelectedGenreById), new { id = createdGameSelectedGenre.Id }, createdGameSelectedGenre);
             }
 
@@ -73,7 +73,7 @@ namespace GetAwaitService.Controllers.StudioGame
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateGameSelectedGenre(int id, [FromBody] GameLibraryDTO gameSelectedGenreDto)
+        public async Task<IActionResult> UpdateGameSelectedGenre(int id, [FromBody] GameSelectedGenreDTO gameSelectedGenreDto)
         {
             if (id != gameSelectedGenreDto.Id)
                 return BadRequest("ID в запросе не совпадает с ID в данных.");

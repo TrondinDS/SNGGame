@@ -1,4 +1,4 @@
-﻿using GetAwaitService.DB.DTO.StudioGameService.GameSelectedTag;
+﻿using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.GameSelectedTag;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using System.Text.Json;

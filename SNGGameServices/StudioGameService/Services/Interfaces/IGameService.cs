@@ -1,4 +1,5 @@
-﻿using StudioGameService.DB.Model;
+﻿using Library.Generics.Query.QueryModels.StudioGame;
+using StudioGameService.DB.Model;
 
 namespace StudioGameService.Services.Interfaces
 {
@@ -9,5 +10,7 @@ namespace StudioGameService.Services.Interfaces
         Task<IEnumerable<Game>> GetAllAsync();
         Task<Game> GetByIdAsync(int id);
         Task UpdateAsync(Game game);
+
+        Task<IEnumerable<Game>> FilterGame(ParamQuerySG paramQuerySG);
     }
 }

@@ -1,4 +1,4 @@
-﻿using GetAwaitService.DB.DTO.UserActivityService.Comment;
+﻿using Library.Generics.DB.DTO.DTOModelServices.UserActivityService.Comment;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using System.Text.Json;

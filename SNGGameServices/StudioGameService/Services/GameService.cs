@@ -1,4 +1,5 @@
-﻿using StudioGameService.DB.Model;
+﻿using Library.Generics.Query.QueryModels.StudioGame;
+using StudioGameService.DB.Model;
 using StudioGameService.Repository.Interfaces;
 using StudioGameService.Services.Interfaces;
 
@@ -44,5 +45,11 @@ namespace StudioGameService.Services
             gameRepository.UpdateAsync(game);
             await gameRepository.SaveChangesAsync();
         }
+
+        public Task<IEnumerable<Game>> FilterGame(ParamQuerySG paramQuerySG)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }
