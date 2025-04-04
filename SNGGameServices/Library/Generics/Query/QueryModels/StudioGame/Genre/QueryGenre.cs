@@ -8,6 +8,6 @@ namespace Library.Generics.Query.QueryModels.StudioGame.Genre
 {
     public class QueryGenre
     {
-        public List<string>? ListTitleGenre { get; set; }
+        public List<int>? ListGenreId { get; set; }
     }
 }

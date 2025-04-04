@@ -46,9 +46,9 @@ namespace StudioGameService.Services
             await gameRepository.SaveChangesAsync();
         }
 
-        public Task<IEnumerable<Game>> FilterGame(ParamQuerySG paramQuerySG)
+        public async Task<IEnumerable<Game>> FilterGame(ParamQuerySG paramQuerySG)
         {
-            throw new NotImplementedException();
+            return await gameRepository.GetFilterGame(paramQuerySG);
         }
 
     }

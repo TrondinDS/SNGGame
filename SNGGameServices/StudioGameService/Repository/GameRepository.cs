@@ -3,7 +3,9 @@ using Library.Generics.Query.QueryModels.StudioGame;
 using Microsoft.EntityFrameworkCore;
 using StudioGameService.DB.Context;
 using StudioGameService.DB.Model;
+using StudioGameService.Filter;
 using StudioGameService.Repository.Interfaces;
+using System.Threading.Tasks;
 
 namespace StudioGameService.Repository
 {
@@ -16,10 +18,14 @@ namespace StudioGameService.Repository
             dbSet = context.Set<Game>();
         }
 
-        public IEnumerable<Game> GetFilterGame(ParamQuerySG paramQuerySG)
+        public async Task<IEnumerable<Game>> GetFilterGame(ParamQuerySG paramQuerySG)
         {
             var query = dbSet.AsQueryable();
 
+            query = FilterQuery.CreateQueryble(paramQuerySG, query);
+            var result = await query.ToListAsync();
+
+            return result;
         }
     }
 }

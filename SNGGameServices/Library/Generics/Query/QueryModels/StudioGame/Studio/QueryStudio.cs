@@ -8,5 +8,5 @@ namespace Library.Generics.Query.QueryModels.StudioGame.Studio;
 
 public class QueryStudio
 {
-    public string? TitleStudio { get; set; }
+    public int? StudioId { get; set; }
 }

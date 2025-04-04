@@ -8,5 +8,5 @@ namespace Library.Generics.Query.QueryModels.StudioGame.Tag;
 
 public class QueryTag
 {
-    public List<string>? ListTitleTag { get; set; }
+    public List<int>? ListTagId { get; set; }
 }

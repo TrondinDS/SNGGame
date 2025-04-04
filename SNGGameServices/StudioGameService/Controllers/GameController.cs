@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Game;
+using Library.Generics.Query.QueryModels.StudioGame;
 using Microsoft.AspNetCore.Mvc;
 using StudioGameService.DB.Model;
 using StudioGameService.Services.Interfaces;
@@ -97,6 +98,17 @@ namespace StudioGameService.Controllers
         {
             await gameService.DeleteAsync(id);
             return NoContent();
+        }
+
+        /// <summary> Получение списка фильтрованных игр
+        /// </summary>
+        /// <param name="paramFilter">параметры фильтрации</param>
+        /// <returns>Список игр</returns>
+        [HttpPost]
+        public async Task<ActionResult> GetFilterGame([FromBody] ParamQuerySG paramFilter)
+        {
+            var games = await gameService.FilterGame(paramFilter);
+            return Ok(games);
         }
     }
 }
