@@ -7,7 +7,7 @@ namespace OrganizerEventService.DB.DTO.Event
     public class UpdateEventDTO
     {
         [Required(ErrorMessage = "Id is required")]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         [MaxLength(255, ErrorMessage = "Title cannot be longer than 255 characters")]
         public string Title { get; set; }

@@ -9,6 +9,6 @@ namespace AdministratumService.DB.DTO.ChatFeedback
         public string Title { get; set; }
 
         [Required(ErrorMessage = "Не был прикреплён пользователь к чату")]
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
     }
 }

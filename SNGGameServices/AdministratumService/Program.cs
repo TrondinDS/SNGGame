@@ -6,6 +6,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 using AdministratumService.DB.Models;
 using AdministratumService.Repository;
 using Library.Generics.GenericService;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace AdministratumService
 {
@@ -26,13 +27,13 @@ namespace AdministratumService
 
             {
                 builder.Services.AddScoped<Repository.ChatFeedbackRepository>();
-                builder.Services.AddScoped<CrudGenericService<ChatFeedback, int, ChatFeedbackRepository>>();
+                builder.Services.AddScoped<CrudGenericService<ChatFeedback, Guid, ChatFeedbackRepository>>();
                
                 builder.Services.AddScoped<Repository.ComplainTicketRepository>();
-                builder.Services.AddScoped<CrudGenericService<ComplainTicket, int, ComplainTicketRepository>>();
+                builder.Services.AddScoped<CrudGenericService<ComplainTicket, Guid, ComplainTicketRepository>>();
 
                 builder.Services.AddScoped<Repository.MessageRepository>();
-                builder.Services.AddScoped<CrudGenericService<Message, int, MessageRepository>>();
+                builder.Services.AddScoped<CrudGenericService<Message, Guid, MessageRepository>>();
             }
 
 
@@ -47,6 +48,7 @@ namespace AdministratumService
             using (var scope = app.Services.CreateScope())
             {
                 var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationContext>();
+                dbContext.Database.CreateExecutionStrategy();
                 //dbContext.Database.Migrate();
             }
 

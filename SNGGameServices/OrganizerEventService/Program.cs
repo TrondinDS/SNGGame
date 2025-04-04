@@ -33,10 +33,10 @@ namespace OrganizerEventService
 
             {
                 builder.Services.AddScoped<EventRepository>();
-                builder.Services.AddScoped<CrudGenericService<Event, int, EventRepository>>();
+                builder.Services.AddScoped<CrudGenericService<Event, Guid, EventRepository>>();
  
                 builder.Services.AddScoped<OrganizerRepository>();
-                builder.Services.AddScoped<CrudGenericService<Organizer, int, OrganizerRepository>>();
+                builder.Services.AddScoped<CrudGenericService<Organizer, Guid, OrganizerRepository>>();
             }
 
             builder.Services.AddDbContext<ApplicationContext>(opt =>

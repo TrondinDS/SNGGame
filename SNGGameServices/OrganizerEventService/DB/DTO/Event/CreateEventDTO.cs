@@ -37,6 +37,6 @@ namespace OrganizerEventService.DB.DTO.Event
         public decimal? PriceMax { get; set; }
 
         [Required(ErrorMessage = "OrganizerEventId is required")]
-        public int OrganizerEventId { get; set; }
+        public Guid OrganizerEventId { get; set; }
     }
 }

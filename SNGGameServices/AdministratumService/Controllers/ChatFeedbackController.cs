@@ -11,10 +11,10 @@ namespace AdministratumService.Controllers
     [ApiController]
     public class ChatFeedbackController : Controller
     {
-        private readonly CrudGenericService<ChatFeedback, int, ChatFeedbackRepository> service;
+        private readonly CrudGenericService<ChatFeedback, Guid, ChatFeedbackRepository> service;
         private readonly IMapper mapper;
 
-        public ChatFeedbackController(CrudGenericService<ChatFeedback, int, ChatFeedbackRepository> service, IMapper mapper)
+        public ChatFeedbackController(CrudGenericService<ChatFeedback, Guid, ChatFeedbackRepository> service, IMapper mapper)
         {
             this.service = service;
             this.mapper = mapper;
@@ -30,7 +30,7 @@ namespace AdministratumService.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<GetByIdChatFeedbackDTO>> GetById(int id)
+        public async Task<ActionResult<GetByIdChatFeedbackDTO>> GetById(Guid id)
         {
             var model = await service.GetByIdAsync(id);
             if (model == null)

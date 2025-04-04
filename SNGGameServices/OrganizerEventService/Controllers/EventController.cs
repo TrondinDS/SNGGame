@@ -12,10 +12,10 @@ namespace OrganizerEventService.Controllers
     [ApiController]
     public class EventController : Controller
     {
-        private readonly CrudGenericService<Event, int, EventRepository> service;
+        private readonly CrudGenericService<Event, Guid, EventRepository> service;
         private readonly IMapper mapper;
 
-        public EventController(CrudGenericService<Event, int, EventRepository> service, IMapper mapper)
+        public EventController(CrudGenericService<Event, Guid, EventRepository> service, IMapper mapper)
         {
             this.service = service;
             this.mapper = mapper;
@@ -31,7 +31,7 @@ namespace OrganizerEventService.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<GetByIdEventDTO>> GetById(int id)
+        public async Task<ActionResult<GetByIdEventDTO>> GetById(Guid id)
         {
             var model = await service.GetByIdAsync(id);
             if (model == null)

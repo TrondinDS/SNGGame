@@ -7,10 +7,10 @@ namespace AdministratumService.DB.Models
     public class UserComplains
     {
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public int UserId { get; set; }
 
-        public int TicketId { get; set; }
+        public Guid TicketId { get; set; }
 
         [ForeignKey("TicketId")]
         public ComplainTicket Ticket { get; set; }

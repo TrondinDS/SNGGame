@@ -12,8 +12,8 @@ using OrganizerEventService.DB.Context;
 namespace OrganizerEventService.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20250310123010_Create")]
-    partial class Create
+    [Migration("20250404120058_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,11 +27,9 @@ namespace OrganizerEventService.Migrations
 
             modelBuilder.Entity("OrganizerEventService.DB.Models.Event", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -51,16 +49,6 @@ namespace OrganizerEventService.Migrations
                     b.Property<DateTime?>("DateDeleted")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("FilepathToDescription")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
-
-                    b.Property<string>("FilepathToPhotoIcon")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
-
                     b.Property<string>("GeoUrl")
                         .IsRequired()
                         .HasMaxLength(1024)
@@ -69,8 +57,8 @@ namespace OrganizerEventService.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
-                    b.Property<int>("OrganizerEventId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("OrganizerEventId")
+                        .HasColumnType("uuid");
 
                     b.Property<decimal?>("PriceMax")
                         .HasColumnType("numeric");
@@ -78,13 +66,14 @@ namespace OrganizerEventService.Migrations
                     b.Property<decimal?>("PriceMin")
                         .HasColumnType("numeric");
 
-                    b.Property<int>("PublishingStatus")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Region")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -98,29 +87,17 @@ namespace OrganizerEventService.Migrations
                     b.ToTable("Events");
                 });
 
-            modelBuilder.Entity("OrganizerEventService.DB.Models.EventOrganizer", b =>
+            modelBuilder.Entity("OrganizerEventService.DB.Models.Organizer", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("uuid");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CreatorId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("CreatorId")
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime?>("DateDeleted")
                         .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("FilepathToDescription")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
-
-                    b.Property<string>("FilepathToPhotoIcon")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
@@ -133,8 +110,8 @@ namespace OrganizerEventService.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
 
-                    b.Property<int>("OwnerId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("OwnerId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -148,7 +125,7 @@ namespace OrganizerEventService.Migrations
 
             modelBuilder.Entity("OrganizerEventService.DB.Models.Event", b =>
                 {
-                    b.HasOne("OrganizerEventService.DB.Models.EventOrganizer", "Organizer")
+                    b.HasOne("OrganizerEventService.DB.Models.Organizer", "Organizer")
                         .WithMany("Events")
                         .HasForeignKey("OrganizerEventId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -157,7 +134,7 @@ namespace OrganizerEventService.Migrations
                     b.Navigation("Organizer");
                 });
 
-            modelBuilder.Entity("OrganizerEventService.DB.Models.EventOrganizer", b =>
+            modelBuilder.Entity("OrganizerEventService.DB.Models.Organizer", b =>
                 {
                     b.Navigation("Events");
                 });

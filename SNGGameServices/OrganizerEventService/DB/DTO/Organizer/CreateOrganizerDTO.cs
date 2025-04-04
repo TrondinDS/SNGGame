@@ -13,8 +13,8 @@ namespace OrganizerEventService.DB.DTO.Organizer
         [MaxLength(255, ErrorMessage = "Mail cannot be longer than 255 characters")]
         public string Mail { get; set; }
 
-        public int CreatorId { get; set; }
-        public int OwnerId { get; set; }
+        public Guid CreatorId { get; set; }
+        public Guid OwnerId { get; set; }
 
     }
 }

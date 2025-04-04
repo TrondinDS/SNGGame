@@ -24,11 +24,9 @@ namespace OrganizerEventService.Migrations
 
             modelBuilder.Entity("OrganizerEventService.DB.Models.Event", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -56,8 +54,8 @@ namespace OrganizerEventService.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
-                    b.Property<int>("OrganizerEventId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("OrganizerEventId")
+                        .HasColumnType("uuid");
 
                     b.Property<decimal?>("PriceMax")
                         .HasColumnType("numeric");
@@ -88,14 +86,12 @@ namespace OrganizerEventService.Migrations
 
             modelBuilder.Entity("OrganizerEventService.DB.Models.Organizer", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("uuid");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CreatorId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("CreatorId")
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime?>("DateDeleted")
                         .HasColumnType("timestamp with time zone");
@@ -111,8 +107,8 @@ namespace OrganizerEventService.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
 
-                    b.Property<int>("OwnerId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("OwnerId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Title")
                         .IsRequired()

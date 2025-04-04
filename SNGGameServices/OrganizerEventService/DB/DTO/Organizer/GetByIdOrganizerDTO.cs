@@ -7,7 +7,7 @@ namespace OrganizerEventService.DB.DTO.Organizer
         public string Title { get; set; }
         public string Mail { get; set; }
         public bool IsPublicationAllowed { get; set; }
-        public int CreatorId { get; set; }
-        public int OwnerId { get; set; }
+        public Guid CreatorId { get; set; }
+        public Guid OwnerId { get; set; }
     }
 }

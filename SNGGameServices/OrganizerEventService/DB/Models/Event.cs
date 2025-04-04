@@ -7,7 +7,7 @@ namespace OrganizerEventService.DB.Models
     public class Event : IIsDeleted
     {
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         [Required(ErrorMessage = "Title is required")]
         [MaxLength(255, ErrorMessage = "Title cannot be longer than 255 characters")]
@@ -44,7 +44,7 @@ namespace OrganizerEventService.DB.Models
         public DateTime? DateDeleted { get; set; }
 
         [Required(ErrorMessage = "OrganizerEventId is required")]
-        public int OrganizerEventId { get; set; }
+        public Guid OrganizerEventId { get; set; }
 
         [ForeignKey("OrganizerEventId")]
         public virtual Organizer Organizer { get; set; }

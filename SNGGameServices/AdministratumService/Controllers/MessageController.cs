@@ -12,10 +12,10 @@ namespace AdministratumService.Controllers
     [ApiController]
     public class MessageController : Controller
     {
-        private readonly CrudGenericService<Message, int, MessageRepository> service;
+        private readonly CrudGenericService<Message, Guid, MessageRepository> service;
         private readonly IMapper mapper;
 
-        public MessageController(CrudGenericService<Message, int, MessageRepository> service, IMapper mapper)
+        public MessageController(CrudGenericService<Message, Guid, MessageRepository> service, IMapper mapper)
         {
             this.service = service;
             this.mapper = mapper;
@@ -31,7 +31,7 @@ namespace AdministratumService.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<GetByIdMessageDTO>> GetById(int id)
+        public async Task<ActionResult<GetByIdMessageDTO>> GetById(Guid id)
         {
             var model = await service.GetByIdAsync(id);
             if (model == null)

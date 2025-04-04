@@ -5,7 +5,7 @@ using Library.Generics.GenericRepository;
 
 namespace AdministratumService.Repository
 {
-    public class MessageRepository : GenericRepository<Message, int>, IMessageRepository
+    public class MessageRepository : GenericRepository<Message, Guid>, IMessageRepository
     {
         public MessageRepository(ApplicationContext context) : base(context) { }
 

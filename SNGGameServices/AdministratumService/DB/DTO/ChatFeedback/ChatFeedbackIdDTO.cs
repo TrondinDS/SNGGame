@@ -5,6 +5,6 @@ namespace AdministratumService.DB.DTO.ChatFeedback
     public class ChatFeedbackIdDTO
     {
         [Required(ErrorMessage = "id чата не был отправлен")]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
     }
 }

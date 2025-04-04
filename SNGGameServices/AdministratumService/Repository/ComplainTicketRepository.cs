@@ -5,7 +5,7 @@ using Library.Generics.GenericRepository;
 
 namespace AdministratumService.Repository
 {
-    public class ComplainTicketRepository : GenericRepository<ComplainTicket, int>, IComplainTicketRepository
+    public class ComplainTicketRepository : GenericRepository<ComplainTicket, Guid>, IComplainTicketRepository
     {
         public ComplainTicketRepository(ApplicationContext context) : base(context) { }
 

@@ -1,10 +1,12 @@
 ﻿using Library;
+using System.ComponentModel.DataAnnotations;
 
 namespace AdministratumService.DB.Models
 {
     public class ComplainTicket : IIsDeleted, IEntity
     {
-        public int Id { get; set; }
+        [Key]
+        public Guid Id { get; set; }
         public int EntityId { get; set; }
         public int EntityType { get; set; }
         public required string ComplainType { get; set; }

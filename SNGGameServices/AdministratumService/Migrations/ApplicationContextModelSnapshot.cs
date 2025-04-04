@@ -24,11 +24,9 @@ namespace AdministratumService.Migrations
 
             modelBuilder.Entity("AdministratumService.DB.Models.ChatFeedback", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("timestamp with time zone");
@@ -37,8 +35,8 @@ namespace AdministratumService.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -47,11 +45,9 @@ namespace AdministratumService.Migrations
 
             modelBuilder.Entity("AdministratumService.DB.Models.ComplainTicket", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<string>("ComplainType")
                         .IsRequired()
@@ -86,14 +82,12 @@ namespace AdministratumService.Migrations
 
             modelBuilder.Entity("AdministratumService.DB.Models.Message", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("uuid");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ChatFeedbackId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("ChatFeedbackId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Content")
                         .IsRequired()
@@ -108,10 +102,10 @@ namespace AdministratumService.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
 
-                    b.HasKey("Id");
+                    b.HasKey("id");
 
                     b.HasIndex("ChatFeedbackId");
 
@@ -120,14 +114,12 @@ namespace AdministratumService.Migrations
 
             modelBuilder.Entity("AdministratumService.DB.Models.UserComplains", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("uuid");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("TicketId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("TicketId")
+                        .HasColumnType("uuid");
 
                     b.Property<int>("UserId")
                         .HasColumnType("integer");

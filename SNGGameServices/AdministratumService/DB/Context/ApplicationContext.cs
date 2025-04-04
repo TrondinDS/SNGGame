@@ -8,10 +8,10 @@ namespace AdministratumService.DB.Context
         public ApplicationContext(DbContextOptions<ApplicationContext> dbContext)
             : base(dbContext) { }
 
-        DbSet<ChatFeedback> ChatFeedbacks { get; set; }
-        DbSet<ComplainTicket> ComplainTickets { get; set; }
-        DbSet<Message> Messages { get; set; }
-        DbSet<UserComplains> UserComplains { get; set; }
+        public DbSet<ChatFeedback> ChatFeedbacks { get; set; }
+        public DbSet<ComplainTicket> ComplainTickets { get; set; }
+        public DbSet<Message> Messages { get; set; }
+        public DbSet<UserComplains> UserComplains { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

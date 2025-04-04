@@ -12,10 +12,10 @@ namespace AdministratumService.Controllers
     [ApiController]
     public class ComplainTicketController : Controller
     {
-        private readonly CrudGenericService<ComplainTicket, int, ComplainTicketRepository> service;
+        private readonly CrudGenericService<ComplainTicket, Guid, ComplainTicketRepository> service;
         private readonly IMapper mapper;
 
-        public ComplainTicketController(CrudGenericService<ComplainTicket, int, ComplainTicketRepository> service, IMapper mapper)
+        public ComplainTicketController(CrudGenericService<ComplainTicket, Guid, ComplainTicketRepository> service, IMapper mapper)
         {
             this.service = service;
             this.mapper = mapper;
@@ -32,7 +32,7 @@ namespace AdministratumService.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<GetByIdComplainTicketDTO>> GetById(int id)
+        public async Task<ActionResult<GetByIdComplainTicketDTO>> GetById(Guid id)
         {
             var model = await service.GetByIdAsync(id);
             if (model == null)

@@ -3,7 +3,7 @@ using Library.Generics.GenericRepository.Interfaces;
 
 namespace AdministratumService.Repository.Interfaces
 {
-    public interface IChatFeedbackRepository : IGenericRepository<ChatFeedback, int>
+    public interface IChatFeedbackRepository : IGenericRepository<ChatFeedback, Guid>
     {
     }
 }

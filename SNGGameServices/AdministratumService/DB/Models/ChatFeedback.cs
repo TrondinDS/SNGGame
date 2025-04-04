@@ -1,11 +1,14 @@
-﻿namespace AdministratumService.DB.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace AdministratumService.DB.Models
 {
     public class ChatFeedback
     {
-        public int Id { get; set; }
+        [Key]
+        public Guid Id { get; set; }
         public string Title { get; set; }
         public DateTime Date { get; set; }
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
 
         public ICollection<Message> Messages { get; set; } = new List<Message>();
     }
