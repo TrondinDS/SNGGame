@@ -11,23 +11,23 @@ namespace StudioGameService.Filter.GameFilter
             if (queryGame != null && BodyQuery != null)
             {
                 
-                if ( string.IsNullOrEmpty(queryGame.TitleGame) )
+                if ( !string.IsNullOrEmpty(queryGame.TitleGame) )
                 {
                     BodyQuery = BodyQuery.Where( g =>
-                        EF.Functions.Like(g.RussianTitle, $"%{queryGame.TitleGame}%") ||
-                        EF.Functions.Like(g.EnglishTitle, $"%{queryGame.TitleGame}%") ||
-                        EF.Functions.Like(g.AlternativeTitle, $"%{queryGame.TitleGame}%")
+                        EF.Functions.ILike(g.RussianTitle, $"%{queryGame.TitleGame}%") ||
+                        EF.Functions.ILike(g.EnglishTitle, $"%{queryGame.TitleGame}%") ||
+                        EF.Functions.ILike(g.AlternativeTitle, $"%{queryGame.TitleGame}%")
                     );
                 }
 
-                if ( string.IsNullOrEmpty(queryGame.CountryDevelopment) )
+                if ( !string.IsNullOrEmpty(queryGame.CountryDevelopment) )
                 {
                     BodyQuery = BodyQuery.Where( g=>
                         EF.Functions.Like(g.CountryDevelopment, $"%{queryGame.CountryDevelopment}%")
                     );
                 }
 
-                if ( string.IsNullOrEmpty(queryGame.Platform) )
+                if ( !string.IsNullOrEmpty(queryGame.Platform) )
                 {
                     BodyQuery = BodyQuery.Where(g =>
                         EF.Functions.Like(g.Platform, $"%{queryGame.Platform}%")

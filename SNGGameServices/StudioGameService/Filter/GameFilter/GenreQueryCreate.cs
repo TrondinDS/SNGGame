@@ -9,10 +9,12 @@ namespace StudioGameService.Filter.GameFilter
         {
             if (queryGenre != null && BodyQuery != null)
             {
-                if (queryGenre.ListGenreId != null && queryGenre.ListGenreId.Any())
+                if (queryGenre.ListGenreId?.Any() == true)
                 {
                     BodyQuery = BodyQuery.Where(g =>
-                        g.Genres.Any(gsg => queryGenre.ListGenreId.Contains(gsg.GenreId))
+                        queryGenre.ListGenreId.All(genreId =>
+                            g.Genres.Any(gsg => gsg.GenreId == genreId)
+                        )
                     );
                 }
             }
