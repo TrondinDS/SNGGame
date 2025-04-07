@@ -20,9 +20,10 @@ namespace StudioGameService.Repository
 
         public async Task<IEnumerable<Game>> GetFilterGame(ParamQuerySG paramQuerySG)
         {
+
             var query = dbSet.AsQueryable();
 
-            query = FilterQuery.CreateQueryble(paramQuerySG, query);
+            query = FilterQueryGame.CreateQueryble(paramQuerySG, query);
             var result = await query.ToListAsync();
 
             return result;
