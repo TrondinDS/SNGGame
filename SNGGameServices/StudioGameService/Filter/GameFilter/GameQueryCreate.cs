@@ -8,7 +8,7 @@ namespace StudioGameService.Filter.GameFilter
     {
         public static IQueryable<Game> Create(QueryGame queryGame, IQueryable<Game> BodyQuery)
         {
-            if (queryGame != null && BodyQuery != null)
+            if ( queryGame != null && BodyQuery != null )
             {
                 
                 if ( !string.IsNullOrEmpty(queryGame.TitleGame) )
@@ -34,7 +34,7 @@ namespace StudioGameService.Filter.GameFilter
                     );
                 }
 
-                if (queryGame.ReleaseYearBefore.HasValue || queryGame.ReleaseYearBefore.HasValue)
+                if ( queryGame.ReleaseYearBefore.HasValue || queryGame.ReleaseYearBefore.HasValue )
                 {
                     BodyQuery = BodyQuery.Where(g =>
                         (!queryGame.ReleaseYearFrom.HasValue || g.ReleaseDate >= queryGame.ReleaseYearFrom) &&

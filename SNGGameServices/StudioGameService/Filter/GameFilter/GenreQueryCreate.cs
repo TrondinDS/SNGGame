@@ -7,9 +7,9 @@ namespace StudioGameService.Filter.GameFilter
     {
         public static IQueryable<Game> Create(QueryGenre queryGenre, IQueryable<Game> BodyQuery)
         {
-            if (queryGenre != null && BodyQuery != null)
+            if ( queryGenre != null && BodyQuery != null )
             {
-                if (queryGenre.ListGenreId?.Any() == true)
+                if ( queryGenre.ListGenreId?.Any() == true )
                 {
                     BodyQuery = BodyQuery.Where(g =>
                         queryGenre.ListGenreId.All(genreId =>

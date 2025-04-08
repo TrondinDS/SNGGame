@@ -9,4 +9,5 @@ namespace Library.Generics.Query.QueryModels.StudioGame.Library;
 public class QueryLibrary
 {
     public int? Rating { get; set; }
+    public Guid? gameInLibraryUserId { get; set; }
 }

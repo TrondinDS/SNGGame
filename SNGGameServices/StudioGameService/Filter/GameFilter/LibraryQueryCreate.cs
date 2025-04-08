@@ -7,13 +7,22 @@ namespace StudioGameService.Filter.GameFilter
     {
         public static IQueryable<Game> Create(QueryLibrary queryLibrary, IQueryable<Game> BodyQuery)
         {
-            if (queryLibrary != null && BodyQuery != null)
+            if ( queryLibrary != null && BodyQuery != null )
             {
-                if (queryLibrary.Rating >= 0)
+                if ( queryLibrary.Rating >= 0 )
                 {
                     BodyQuery = BodyQuery.Where(g =>
-                            g.GameLibrarys.Any() &&
-                            g.GameLibrarys.Average(gl => gl.Rating) >= queryLibrary.Rating
+                        g.GameLibrarys.Any() &&
+                        g.GameLibrarys.Average(gl => gl.Rating) >= queryLibrary.Rating
+                    );
+                }
+
+                if (queryLibrary.gameInLibraryUserId != null && queryLibrary.gameInLibraryUserId != Guid.Empty)
+                {
+                    BodyQuery = BodyQuery.Where(g => 
+                        g.GameLibrarys.Any(gl => 
+                            gl.UserId == queryLibrary.gameInLibraryUserId
+                        )
                     );
                 }
             }

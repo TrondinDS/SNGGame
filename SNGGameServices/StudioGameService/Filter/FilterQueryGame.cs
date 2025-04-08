@@ -24,7 +24,6 @@ namespace StudioGameService.Filter
             BodyQuery = CreateQuerybleTag(paramQuerySG.QueryTag, BodyQuery);
             BodyQuery = CreateQuerybleLibrary(paramQuerySG.QueryLibrary, BodyQuery);
 
-
             return BodyQuery;
         }
 
