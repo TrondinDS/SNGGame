@@ -14,7 +14,7 @@ public class MinimumAgeAttribute : ValidationAttribute
     {
         if (value == null || !(value is DateTime))
         {
-            return new ValidationResult("Дата рождения должна быть указана.");
+            return ValidationResult.Success; // Пропускаем проверку, если значение null
         }
 
         DateTime dateOfBirth = (DateTime)value;

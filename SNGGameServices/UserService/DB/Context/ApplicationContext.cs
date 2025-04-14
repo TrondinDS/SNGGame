@@ -59,6 +59,11 @@ namespace UserService.DB.Context
                 .HasOne(ban => ban.UserBanned)
                 .WithMany(user => user.BannedRecords)
                 .HasForeignKey(ban => ban.UserIdBanned);
+
+            modelBuilder
+                .Entity<User>()
+                .HasIndex(e => e.Login)
+                .IsUnique();
         }
     }
 }

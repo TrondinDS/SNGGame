@@ -21,8 +21,6 @@ namespace GetAwaitService.Controllers.User
             };
         }
 
-        // Добавляем все методы из UserService.Controllers.UserController
-
         [HttpGet]
         public async Task<IActionResult> GetAllUser()
         {

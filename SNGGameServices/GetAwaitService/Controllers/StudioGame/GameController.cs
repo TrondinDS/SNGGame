@@ -1,4 +1,6 @@
 ﻿using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Game;
+using Library.Generics.Query.QueryModels.StudioGame;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using System.Text.Json;
@@ -21,6 +23,7 @@ namespace GetAwaitService.Controllers.StudioGame
             };
         }
 
+        [Authorize(Roles = "user")]
         [HttpGet]
         public async Task<IActionResult> GetAllGames()
         {
@@ -104,6 +107,26 @@ namespace GetAwaitService.Controllers.StudioGame
                 return NotFound();
 
             return StatusCode((int)response.StatusCode, "Ошибка при удалении игры.");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> GetFilterGame([FromBody] ParamQuerySG paramFilter)
+        {
+            // Сериализация параметров фильтрации в JSON
+            var jsonContent = JsonSerializer.Serialize(paramFilter);
+            var httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+
+            // Вызов метода фильтрации через HTTP POST-запрос
+            var response = await _httpClient.PostAsync("api/Game/GetFilterGame", httpContent);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var responseBody = await response.Content.ReadAsStringAsync();
+                var filteredGames = JsonSerializer.Deserialize<IEnumerable<GameDTO>>(responseBody, _jsonOptions);
+                return Ok(filteredGames);
+            }
+
+            return StatusCode((int)response.StatusCode, "Ошибка при получении фильтрованных игр.");
         }
     }
 }

@@ -4,6 +4,7 @@ using Library.Generics.Query.QueryModels.StudioGame.Genre;
 using Library.Generics.Query.QueryModels.StudioGame.Library;
 using Library.Generics.Query.QueryModels.StudioGame.Studio;
 using Library.Generics.Query.QueryModels.StudioGame.Tag;
+using Microsoft.EntityFrameworkCore;
 using StudioGameService.DB.Model;
 using StudioGameService.Filter.GameFilter;
 
@@ -11,8 +12,18 @@ namespace StudioGameService.Filter
 {
     public static class FilterQueryGame
     {
+        public static IQueryable<Game> CreateQuerybleAsNoTraking(ParamQuerySG paramQuerySG, IQueryable<Game> BodyQuery)
+        {
+            BodyQuery = BodyQuery.AsNoTracking();
+
+            BodyQuery = CreateQueryble(paramQuerySG, BodyQuery);
+
+            return BodyQuery;
+        }
+
         public static IQueryable<Game> CreateQueryble(ParamQuerySG paramQuerySG, IQueryable<Game> BodyQuery)
         {
+
             // I`m not testing!!!!!!!
             BodyQuery = CreateQueryableStudio(paramQuerySG.QueryStudio, BodyQuery);
 

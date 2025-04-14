@@ -1,3 +1,14 @@
+using GetAwaitService.Auth.JWT.Service;
+using GetAwaitService.DB.Context;
+using GetAwaitService.Repository;
+using GetAwaitService.Services;
+using GetAwaitService.Services.Interfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using System.Text;
+
 namespace GetAwaitService
 {
     public class Program
@@ -7,50 +18,102 @@ namespace GetAwaitService
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-
             builder.Services.AddControllers();
-
 
             // Swagger
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
 
+                // Добавляем определение безопасности (Bearer JWT)
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Description = "Enter 'Bearer' [space] and then your token in the text input below."
+                });
 
-            // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-            builder.Services.AddOpenApi();
+                // Добавляем требование безопасности (глобальное)
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        Array.Empty<string>()
+                    }
+                });
+            });
 
+            // Настройка аутентификации (JWT)
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(o =>
+            {
+                o.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                    ValidAudience = builder.Configuration["Jwt:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"] ?? string.Empty)),
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ClockSkew = TimeSpan.Zero
+                };
+            });
 
+            // Регистрация сервисов
+            builder.Services.AddTransient<IAuthServiceJWT, AuthServiceJWT>();
+
+            builder.Services.AddTransient<IUserTelegramInformationRepository, UserTelegramInformationRepository>();
+            builder.Services.AddTransient<IUserTelegramInformationService, UserTelegramInformationService>();
+
+            // Настройка HTTP-клиентов
             AddNamedHttpClient(builder.Services, "UserServiceClient", "https://userservices:8081");
             AddNamedHttpClient(builder.Services, "UserActivityServiceClient", "https://user-activity-service:8081");
             AddNamedHttpClient(builder.Services, "StudioGameServiceClient", "https://studio-game-service:8081");
 
+            builder.Services.AddDbContext<ApplicationContext>(opt =>
+                opt.UseNpgsql(builder.Configuration.GetConnectionString("UserTelegramInformationServiceConnection"))
+            );
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
+            using (var scope = app.Services.CreateScope())
             {
-                app.MapOpenApi();
+                var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationContext>();
+                dbContext.Database.Migrate();
             }
 
-
-            // Configure the HTTP request pipeline.
+            // Настройка конвейера запросов
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI(c =>
                 {
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-                    c.RoutePrefix = string.Empty;
+                    c.RoutePrefix = string.Empty; // Отключаем префикс "/swagger"
                 });
-                app.MapOpenApi();
             }
-
 
             app.UseHttpsRedirection();
 
+            app.UseAuthentication();
             app.UseAuthorization();
-
 
             app.MapControllers();
 
@@ -71,6 +134,5 @@ namespace GetAwaitService
                 return handler;
             });
         }
-
     }
 }

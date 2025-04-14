@@ -23,7 +23,7 @@ namespace StudioGameService.Repository
 
             var query = dbSet.AsQueryable();
 
-            query = FilterQueryGame.CreateQueryble(paramQuerySG, query);
+            query = FilterQueryGame.CreateQuerybleAsNoTraking(paramQuerySG, query);
             var result = await query.ToListAsync();
 
             return result;

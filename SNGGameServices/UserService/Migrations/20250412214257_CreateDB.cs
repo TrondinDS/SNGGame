@@ -19,7 +19,7 @@ namespace UserService.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
                     DateBirth = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    Email = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
+                    Login = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
                     IsAdmin = table.Column<bool>(type: "boolean", nullable: false),
                     IsGlobalModerator = table.Column<bool>(type: "boolean", nullable: false),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
@@ -133,6 +133,12 @@ namespace UserService.Migrations
                 name: "IX_Subscriptions_UserId",
                 table: "Subscriptions",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Login",
+                table: "Users",
+                column: "Login",
+                unique: true);
         }
 
         /// <inheritdoc />

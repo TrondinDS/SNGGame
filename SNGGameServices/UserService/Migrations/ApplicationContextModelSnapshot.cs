@@ -126,10 +126,6 @@ namespace UserService.Migrations
                     b.Property<DateTime?>("DateDeleted")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Email")
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
-
                     b.Property<bool>("IsAdmin")
                         .HasColumnType("boolean");
 
@@ -139,12 +135,20 @@ namespace UserService.Migrations
                     b.Property<bool>("IsGlobalModerator")
                         .HasColumnType("boolean");
 
+                    b.Property<string>("Login")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Login")
+                        .IsUnique();
 
                     b.ToTable("Users");
                 });
