@@ -11,10 +11,12 @@ namespace Library.Generics.DB.DTO.DTOModelObjects.Game
 {
     public class CardGameDTO
     {
-        public GameDTO Game { get; set; }
-        public StudioDTO Studio { get; set; }
-        public List<GenreDTO> Genres { get; set; }
+        public int GameId { get; set; }
+        public string GameName { get; set; }
+        public int ImageId { get; set; }
 
-        // public ImgDTO Image { get; set; }
+        public string StudioName { get; set; }
+
+        public List<GenreDTO> Genres { get; set; }
     }
 }

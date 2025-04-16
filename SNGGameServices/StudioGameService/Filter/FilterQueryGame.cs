@@ -23,15 +23,11 @@ namespace StudioGameService.Filter
 
         public static IQueryable<Game> CreateQueryble(ParamQuerySG paramQuerySG, IQueryable<Game> BodyQuery)
         {
-
-            // I`m not testing!!!!!!!
             BodyQuery = CreateQueryableStudio(paramQuerySG.QueryStudio, BodyQuery);
 
-            // I`m testing (OK)
             BodyQuery = CreateQuerybleGame(paramQuerySG.QueryGame, BodyQuery);
             BodyQuery = CreateQuerybleGenre(paramQuerySG.QueryGenre, BodyQuery);
 
-            // I`m not testing!!!!!!!
             BodyQuery = CreateQuerybleTag(paramQuerySG.QueryTag, BodyQuery);
             BodyQuery = CreateQuerybleLibrary(paramQuerySG.QueryLibrary, BodyQuery);
 

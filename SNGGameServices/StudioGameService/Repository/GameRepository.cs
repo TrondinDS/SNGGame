@@ -1,4 +1,5 @@
-﻿using Library.Generics.GenericRepository;
+﻿using Library.Generics.DB.DTO.DTOModelObjects.Game;
+using Library.Generics.GenericRepository;
 using Library.Generics.Query.QueryModels.StudioGame;
 using Microsoft.EntityFrameworkCore;
 using StudioGameService.DB.Context;
@@ -6,6 +7,7 @@ using StudioGameService.DB.Model;
 using StudioGameService.Filter;
 using StudioGameService.Repository.Interfaces;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace StudioGameService.Repository
 {
@@ -20,10 +22,49 @@ namespace StudioGameService.Repository
 
         public async Task<IEnumerable<Game>> GetFilterGame(ParamQuerySG paramQuerySG)
         {
-
             var query = dbSet.AsQueryable();
 
             query = FilterQueryGame.CreateQuerybleAsNoTraking(paramQuerySG, query);
+            var result = await query.ToListAsync();
+
+            return result;
+        }
+
+        public async Task<IEnumerable<Game>> GetAllCardGameAsync()
+        {
+            var result =await dbSet
+                .Include(game => game.Studio)
+                .Include(game => game.Genres)
+                .ThenInclude(gsg => gsg.Genre)
+                .AsNoTracking()
+                .ToListAsync();
+
+            return result;
+        }
+
+        public async Task<IEnumerable<Game>> GetSelectCardGameAsync(IEnumerable<int> idGames)
+        {
+            var result = await dbSet
+                .Include(game => game.Studio)
+                .Include(game => game.Genres)
+                .ThenInclude(gsg => gsg.Genre)
+                .Where(game => idGames.Contains(game.Id)) 
+                .AsNoTracking()
+                .ToListAsync();
+
+            return result;
+        }
+        
+        public async Task<IEnumerable<Game>> GetFiltreCardGameAsync(ParamQuerySG paramQuerySG)
+        {
+            var query = dbSet
+                .Include(game => game.Studio)
+                .Include(game => game.Genres)
+                .ThenInclude(gsg => gsg.Genre)
+                .AsQueryable();
+
+            query = FilterQueryGame.CreateQuerybleAsNoTraking(paramQuerySG, query);
+
             var result = await query.ToListAsync();
 
             return result;

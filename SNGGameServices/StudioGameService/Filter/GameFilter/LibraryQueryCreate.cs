@@ -9,7 +9,7 @@ namespace StudioGameService.Filter.GameFilter
         {
             if ( queryLibrary != null && BodyQuery != null )
             {
-                if ( queryLibrary.Rating >= 0 )
+                if ( queryLibrary.Rating > 0 )
                 {
                     BodyQuery = BodyQuery.Where(g =>
                         g.GameLibrarys.Any() &&

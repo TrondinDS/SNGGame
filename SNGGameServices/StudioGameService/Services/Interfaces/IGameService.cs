@@ -1,4 +1,5 @@
-﻿using Library.Generics.Query.QueryModels.StudioGame;
+﻿using Library.Generics.DB.DTO.DTOModelObjects.Game;
+using Library.Generics.Query.QueryModels.StudioGame;
 using StudioGameService.DB.Model;
 
 namespace StudioGameService.Services.Interfaces
@@ -12,5 +13,9 @@ namespace StudioGameService.Services.Interfaces
         Task UpdateAsync(Game game);
 
         Task<IEnumerable<Game>> FilterGame(ParamQuerySG paramQuerySG);
+
+        public Task<IEnumerable<Game>> GetAllCardGameAsync();
+        public Task<IEnumerable<Game>> GetSelectCardGameAsync(IEnumerable<int> idGames);
+        public Task<IEnumerable<Game>> GetFiltreCardGameAsync(ParamQuerySG paramQuerySG);
     }
 }

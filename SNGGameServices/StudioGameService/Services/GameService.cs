@@ -1,4 +1,5 @@
-﻿using Library.Generics.Query.QueryModels.StudioGame;
+﻿using Library.Generics.DB.DTO.DTOModelObjects.Game;
+using Library.Generics.Query.QueryModels.StudioGame;
 using StudioGameService.DB.Model;
 using StudioGameService.Repository.Interfaces;
 using StudioGameService.Services.Interfaces;
@@ -51,5 +52,19 @@ namespace StudioGameService.Services
             return await gameRepository.GetFilterGame(paramQuerySG);
         }
 
+        public async Task<IEnumerable<Game>> GetAllCardGameAsync()
+        {
+            return await gameRepository.GetAllCardGameAsync();
+        }
+
+        public async Task<IEnumerable<Game>> GetSelectCardGameAsync(IEnumerable<int> idGames)
+        {
+            return await gameRepository.GetSelectCardGameAsync(idGames);
+        }
+
+        public async Task<IEnumerable<Game>> GetFiltreCardGameAsync(ParamQuerySG paramQuerySG)
+        {
+            return await gameRepository.GetFiltreCardGameAsync(paramQuerySG);
+        }
     }
 }
