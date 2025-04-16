@@ -12,7 +12,7 @@ using UserService.DB.Context;
 namespace UserService.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20250412214257_CreateDB")]
+    [Migration("20250416230540_CreateDB")]
     partial class CreateDB
     {
         /// <inheritdoc />

@@ -12,7 +12,7 @@ using OrganizerEventService.DB.Context;
 namespace OrganizerEventService.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20250404161439_CreateDB")]
+    [Migration("20250416230935_CreateDB")]
     partial class CreateDB
     {
         /// <inheritdoc />

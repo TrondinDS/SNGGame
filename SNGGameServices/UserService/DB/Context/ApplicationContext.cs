@@ -1,4 +1,5 @@
 ﻿using BannedService.DB.Models;
+using Library.Generics.Interceptors;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StudioGameService.DB.Model;
@@ -16,8 +17,18 @@ namespace UserService.DB.Context
         DbSet<Banned> Banneds { get; set; }
         DbSet<Job> Jobs { get; set; }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.AddInterceptors(new InterceptorOverrideDelete());
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<User>().HasQueryFilter(x => x.IsDeleted == false);
+            modelBuilder.Entity<Banned>().HasQueryFilter(x => x.IsDeleted == false);
+
             var dateTimeUtcConverter = new ValueConverter<DateTime, DateTime>(
                 v => v.ToUniversalTime(), 
                 v => DateTime.SpecifyKind(v, DateTimeKind.Utc) 
@@ -33,8 +44,6 @@ namespace UserService.DB.Context
                     }
                 }
             }
-
-            base.OnModelCreating(modelBuilder);
 
             modelBuilder
                 .Entity<Job>()

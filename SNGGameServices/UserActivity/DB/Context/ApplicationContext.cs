@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Library.Generics.Interceptors;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UserActivityService.DB.Models;
 
@@ -13,8 +14,18 @@ namespace UserActivityService.DB.Context
         DbSet<Topic> Topics { get; set; }
         DbSet<UserReaction> UserReactions { get; set; }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.AddInterceptors(new InterceptorOverrideDelete());
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Comment>().HasQueryFilter(x => x.IsDeleted == false);
+            modelBuilder.Entity<Topic>().HasQueryFilter(x => x.IsDeleted == false);
+
             var dateTimeUtcConverter = new ValueConverter<DateTime, DateTime>(
                 v => v.ToUniversalTime(),
                 v => DateTime.SpecifyKind(v, DateTimeKind.Utc)
@@ -30,8 +41,6 @@ namespace UserActivityService.DB.Context
                     }
                 }
             }
-
-            base.OnModelCreating(modelBuilder);
 
             modelBuilder
                 .Entity<UserReaction>()

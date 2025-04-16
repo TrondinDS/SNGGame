@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace GetAwaitService.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20250414012330_CreateDB")]
+    [Migration("20250416231013_CreateDB")]
     partial class CreateDB
     {
         /// <inheritdoc />

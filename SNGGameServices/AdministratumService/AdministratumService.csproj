@@ -26,7 +26,6 @@
 
   <ItemGroup>
     <Folder Include="DB\DTO\UserComplains\" />
-    <Folder Include="Migrations\" />
   </ItemGroup>
 
   <ItemGroup>

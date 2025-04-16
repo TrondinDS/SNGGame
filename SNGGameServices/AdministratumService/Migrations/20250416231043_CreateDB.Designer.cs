@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AdministratumService.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20250404161412_CreateDB")]
+    [Migration("20250416231043_CreateDB")]
     partial class CreateDB
     {
         /// <inheritdoc />

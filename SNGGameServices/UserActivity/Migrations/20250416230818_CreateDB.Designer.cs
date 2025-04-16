@@ -12,8 +12,8 @@ using UserActivityService.DB.Context;
 namespace UserActivityService.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20250317112935_Create")]
-    partial class Create
+    [Migration("20250416230818_CreateDB")]
+    partial class CreateDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

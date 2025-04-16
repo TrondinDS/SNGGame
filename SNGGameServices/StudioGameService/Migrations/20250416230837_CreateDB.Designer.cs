@@ -12,8 +12,8 @@ using StudioGameService.DB.Context;
 namespace StudioGameService.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20250314221240_Create")]
-    partial class Create
+    [Migration("20250416230837_CreateDB")]
+    partial class CreateDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -1,4 +1,5 @@
 ﻿using GetAwaitService.DB.Models;
+using Library.Generics.Interceptors;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
@@ -12,8 +13,17 @@ namespace GetAwaitService.DB.Context
 
         DbSet<UserTelegramInformation> UserTelegramInformations { get; set; }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.AddInterceptors(new InterceptorOverrideDelete());
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<UserTelegramInformation>().HasQueryFilter(x => x.IsDeleted == false);
+
             var dateTimeUtcConverter = new ValueConverter<DateTime, DateTime>(
                 v => v.ToUniversalTime(),
                 v => DateTime.SpecifyKind(v, DateTimeKind.Utc)
@@ -29,8 +39,6 @@ namespace GetAwaitService.DB.Context
                     }
                 }
             }
-
-            base.OnModelCreating(modelBuilder);
         }
     }
 }

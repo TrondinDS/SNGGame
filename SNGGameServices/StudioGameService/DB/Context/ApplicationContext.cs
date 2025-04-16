@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Library.Generics.Interceptors;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StudioGameService.DB.Model;
 
@@ -17,8 +18,18 @@ namespace StudioGameService.DB.Context
         DbSet<Tag> Tags { get; set; }
         DbSet<Studio> Studios { get; set; }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.AddInterceptors(new InterceptorOverrideDelete());
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Game>().HasQueryFilter(x => x.IsDeleted == false);
+            modelBuilder.Entity<Studio>().HasQueryFilter(x => x.IsDeleted == false);
+
             var dateTimeUtcConverter = new ValueConverter<DateTime, DateTime>(
                 v => v.ToUniversalTime(),
                 v => DateTime.SpecifyKind(v, DateTimeKind.Utc)
@@ -34,8 +45,6 @@ namespace StudioGameService.DB.Context
                     }
                 }
             }
-
-            base.OnModelCreating(modelBuilder);
 
             // Game GST Tag
             modelBuilder

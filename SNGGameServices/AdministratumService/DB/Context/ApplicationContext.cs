@@ -1,4 +1,5 @@
 ﻿using AdministratumService.DB.Models;
+using Library.Generics.Interceptors;
 using Microsoft.EntityFrameworkCore;
 
 namespace AdministratumService.DB.Context
@@ -13,9 +14,17 @@ namespace AdministratumService.DB.Context
         public DbSet<Message> Messages { get; set; }
         public DbSet<UserComplains> UserComplains { get; set; }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.AddInterceptors(new InterceptorOverrideDelete());
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<ComplainTicket>().HasQueryFilter(x => x.IsDeleted == false);
+            modelBuilder.Entity<Message>().HasQueryFilter(x => x.IsDeleted == false);
 
             modelBuilder
                 .Entity<Message>()
