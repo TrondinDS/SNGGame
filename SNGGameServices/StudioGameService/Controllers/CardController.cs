@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Library.Generics.DB.DTO.DTOModelObjects.Game;
+using Library.Generics.DB.DTO.DTOModelObjects.Studio;
 using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Game;
 using Library.Generics.Query.QueryModels.StudioGame;
+using Library.Generics.Query.QueryModels.StudioGame.Studio;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StudioGameService.Services.Interfaces;
@@ -57,6 +59,18 @@ namespace StudioGameService.Controllers
             var games = await gameService.GetFiltreCardGameAsync(paramQuery);
             var gameCards = mapper.Map<IEnumerable<CardGameDTO>>(games);
             return Ok(gameCards);
+        }
+
+        /// <summary>
+        /// Получение карточек студий по списку id
+        /// </summary>
+        /// <returns>Список карточек студий по списку id</returns>
+        [HttpPost]
+        public async Task<ActionResult<IEnumerable<CardStudioDTO>>> GetSearchCardStudio(QueryListStudio paramQueryListStudio)
+        {
+            var studio = await studioService.GetFiltreCardStudioAsync(paramQueryListStudio);
+            var studioCards = mapper.Map<IEnumerable<CardStudioDTO>>(studio);
+            return Ok(studioCards);
         }
     }
 }

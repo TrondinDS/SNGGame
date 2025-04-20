@@ -1,4 +1,6 @@
-﻿using StudioGameService.DB.Model;
+﻿using Library.Generics.Query.QueryModels.StudioGame;
+using Library.Generics.Query.QueryModels.StudioGame.Studio;
+using StudioGameService.DB.Model;
 using StudioGameService.Repository;
 using StudioGameService.Repository.Interfaces;
 using StudioGameService.Services.Interfaces;
@@ -44,6 +46,16 @@ namespace StudioGameService.Services
         {
             studioRepository.UpdateAsync(studio);
             await studioRepository.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<Studio>> GetFiltreCardStudioAsync(ParamQuerySG paramQuerySG)
+        {
+            return await studioRepository.GetFiltreCardStudioAsync(paramQuerySG);
+        }
+
+        public async Task<IEnumerable<Studio>> GetFiltreCardStudioAsync(QueryListStudio paramQueryListStudio)
+        {
+            return await studioRepository.GetFiltreCardStudioAsync(paramQueryListStudio);
         }
     }
 }

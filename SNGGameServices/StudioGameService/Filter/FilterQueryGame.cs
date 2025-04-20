@@ -6,6 +6,7 @@ using Library.Generics.Query.QueryModels.StudioGame.Studio;
 using Library.Generics.Query.QueryModels.StudioGame.Tag;
 using Microsoft.EntityFrameworkCore;
 using StudioGameService.DB.Model;
+using StudioGameService.Filter.Filter;
 using StudioGameService.Filter.GameFilter;
 
 namespace StudioGameService.Filter
