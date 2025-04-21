@@ -11,6 +11,6 @@ namespace StudioGameService.Services.Interfaces
         Task<IEnumerable<Studio>> GetAllAsync();
         Task<Studio> GetByIdAsync(int id);
         Task UpdateAsync(Studio studio);
-        public Task<IEnumerable<Studio>> GetFiltreCardStudioAsync(QueryListStudio paramQueryListStudio);
+        public Task<IEnumerable<Studio>> GetFiltreCardStudioAsync(ParamQueryStudio paramQueryListStudio);
     }
 }
