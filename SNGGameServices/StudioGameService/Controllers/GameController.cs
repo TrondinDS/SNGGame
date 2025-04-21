@@ -105,7 +105,7 @@ namespace StudioGameService.Controllers
         /// <param name="paramFilter">параметры фильтрации</param>
         /// <returns>Список игр</returns>
         [HttpPost]
-        public async Task<ActionResult> GetFilterGame([FromBody] ParamQuerySG paramFilter)
+        public async Task<ActionResult> GetFilterGame([FromBody] ParamQueryGame paramFilter)
         {
             var games = await gameService.FilterGame(paramFilter);
             return Ok(games);

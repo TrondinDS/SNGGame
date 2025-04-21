@@ -1,7 +1,7 @@
 ﻿using Library.Generics.Query.QueryModels.StudioGame.Genre;
 using StudioGameService.DB.Model;
 
-namespace StudioGameService.Filter.GameFilter
+namespace StudioGameService.Filter.FilterGame
 {
     public static class GenreQueryCreate
     {

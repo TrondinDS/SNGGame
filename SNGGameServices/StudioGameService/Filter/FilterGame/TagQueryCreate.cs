@@ -2,7 +2,7 @@
 using Library.Generics.Query.QueryModels.StudioGame.Tag;
 using StudioGameService.DB.Model;
 
-namespace StudioGameService.Filter.GameFilter
+namespace StudioGameService.Filter.FilterGame
 {
     public static class TagQueryCreate
     {

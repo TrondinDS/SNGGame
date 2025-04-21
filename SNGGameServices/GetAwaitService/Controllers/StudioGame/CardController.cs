@@ -74,7 +74,7 @@ namespace GetAwaitService.Controllers.StudioGame
         /// <param name="paramQuery">Параметры фильтрации</param>
         /// <returns>Список карточек игр с помощью фильтра</returns>
         [HttpPost]
-        public async Task<IActionResult> GetFiltreCardGames([FromBody] ParamQuerySG paramQuery)
+        public async Task<IActionResult> GetFiltreCardGames([FromBody] ParamQueryGame paramQuery)
         {
             var jsonContent = JsonSerializer.Serialize(paramQuery);
             var httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
@@ -92,12 +92,12 @@ namespace GetAwaitService.Controllers.StudioGame
         }
 
         /// <summary>
-        /// Получение карточек студий с помощью поиска по id
+        /// Получение карточек студий с помощью фильтрации (поиска по id)
         /// </summary>
-        /// <param name="QueryListStudio">Параметры фильтрации</param>
+        /// <param name="ParamQueryStudio">Параметры фильтрации</param>
         /// <returns>Список карточек игр с помощью фильтра</returns>
         [HttpPost]
-        public async Task<IActionResult> GetSearchCardStudio([FromBody] QueryListStudio paramQueryList)
+        public async Task<IActionResult> GetSearchCardStudio([FromBody] ParamQueryStudio paramQueryList)
         {
             var jsonContent = JsonSerializer.Serialize(paramQueryList);
             var httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");

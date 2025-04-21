@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using StudioGameService.DB.Model;
 
-namespace StudioGameService.Filter.GameFilter
+namespace StudioGameService.Filter.FilterGame
 {
     public static class GameQueryCreate
     {

@@ -20,7 +20,7 @@ namespace StudioGameService.Repository
             dbSet = context.Set<Game>();
         }
 
-        public async Task<IEnumerable<Game>> GetFilterGame(ParamQuerySG paramQuerySG)
+        public async Task<IEnumerable<Game>> GetFilterGame(ParamQueryGame paramQuerySG)
         {
             var query = dbSet.AsQueryable();
 
@@ -55,7 +55,7 @@ namespace StudioGameService.Repository
             return result;
         }
         
-        public async Task<IEnumerable<Game>> GetFiltreCardGameAsync(ParamQuerySG paramQuerySG)
+        public async Task<IEnumerable<Game>> GetFiltreCardGameAsync(ParamQueryGame paramQuerySG)
         {
             var query = dbSet
                 .Include(game => game.Studio)

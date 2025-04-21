@@ -110,7 +110,7 @@ namespace GetAwaitService.Controllers.StudioGame
         }
 
         [HttpPost]
-        public async Task<IActionResult> GetFilterGame([FromBody] ParamQuerySG paramFilter)
+        public async Task<IActionResult> GetFilterGame([FromBody] ParamQueryGame paramFilter)
         {
             // Сериализация параметров фильтрации в JSON
             var jsonContent = JsonSerializer.Serialize(paramFilter);

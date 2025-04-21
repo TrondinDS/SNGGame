@@ -1,19 +1,13 @@
 ﻿using Library.Generics.Query.QueryModels.StudioGame;
-using Library.Generics.Query.QueryModels.StudioGame.Game;
-using Library.Generics.Query.QueryModels.StudioGame.Genre;
-using Library.Generics.Query.QueryModels.StudioGame.Library;
-using Library.Generics.Query.QueryModels.StudioGame.Studio;
-using Library.Generics.Query.QueryModels.StudioGame.Tag;
 using Microsoft.EntityFrameworkCore;
 using StudioGameService.DB.Model;
-using StudioGameService.Filter.Filter;
-using StudioGameService.Filter.GameFilter;
+using StudioGameService.Filter.FilterGame;
 
 namespace StudioGameService.Filter
 {
     public static class FilterQueryGame
     {
-        public static IQueryable<Game> CreateQuerybleAsNoTraking(ParamQuerySG paramQuerySG, IQueryable<Game> BodyQuery)
+        public static IQueryable<Game> CreateQuerybleAsNoTraking(ParamQueryGame paramQuerySG, IQueryable<Game> BodyQuery)
         {
             BodyQuery = BodyQuery.AsNoTracking();
 
@@ -22,47 +16,19 @@ namespace StudioGameService.Filter
             return BodyQuery;
         }
 
-        public static IQueryable<Game> CreateQueryble(ParamQuerySG paramQuerySG, IQueryable<Game> BodyQuery)
+        public static IQueryable<Game> CreateQueryble(ParamQueryGame paramQuerySG, IQueryable<Game> BodyQuery)
         {
-            BodyQuery = CreateQueryableStudio(paramQuerySG.QueryStudio, BodyQuery);
+            BodyQuery = StudioQueryCreate.Create(paramQuerySG.QueryStudio, BodyQuery);
 
-            BodyQuery = CreateQuerybleGame(paramQuerySG.QueryGame, BodyQuery);
-            BodyQuery = CreateQuerybleGenre(paramQuerySG.QueryGenre, BodyQuery);
+            BodyQuery = GameQueryCreate.Create(paramQuerySG.QueryGame, BodyQuery);
 
-            BodyQuery = CreateQuerybleTag(paramQuerySG.QueryTag, BodyQuery);
-            BodyQuery = CreateQuerybleLibrary(paramQuerySG.QueryLibrary, BodyQuery);
+            BodyQuery = GenreQueryCreate.Create(paramQuerySG.QueryGenre, BodyQuery);
+            BodyQuery = TagQueryCreate.Create(paramQuerySG.QueryTag, BodyQuery);
+
+            BodyQuery = LibraryQueryCreate.Create(paramQuerySG.QueryLibrary, BodyQuery);
 
             return BodyQuery;
         }
 
-        static IQueryable<Game> CreateQuerybleGame(QueryGame queryGame, IQueryable<Game> BodyQuery)
-        {
-            BodyQuery = GameQueryCreate.Create(queryGame, BodyQuery);
-            return BodyQuery;
-        }
-        
-        static IQueryable<Game> CreateQuerybleGenre(QueryGenre queryGenre, IQueryable<Game> BodyQuery)
-        {
-            BodyQuery = GenreQueryCreate.Create(queryGenre, BodyQuery);
-            return BodyQuery;
-        }
-
-        static IQueryable<Game> CreateQuerybleTag(QueryTag queryTag, IQueryable<Game> BodyQuery)
-        {
-            BodyQuery = TagQueryCreate.Create(queryTag, BodyQuery);
-            return BodyQuery;
-        }
-
-        static IQueryable<Game> CreateQuerybleLibrary(QueryLibrary queryLibrary, IQueryable<Game> BodyQuery)
-        {
-            BodyQuery = LibraryQueryCreate.Create(queryLibrary, BodyQuery);
-            return BodyQuery;
-        }
-
-        static IQueryable<Game> CreateQueryableStudio(QueryStudio queryStudio, IQueryable<Game> BodyQuery)
-        {
-            BodyQuery = StudioQueryCreate.Create(queryStudio, BodyQuery);
-            return BodyQuery;
-        }
     }
 }

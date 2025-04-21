@@ -47,7 +47,7 @@ namespace StudioGameService.Services
             await gameRepository.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Game>> FilterGame(ParamQuerySG paramQuerySG)
+        public async Task<IEnumerable<Game>> FilterGame(ParamQueryGame paramQuerySG)
         {
             return await gameRepository.GetFilterGame(paramQuerySG);
         }
@@ -62,7 +62,7 @@ namespace StudioGameService.Services
             return await gameRepository.GetSelectCardGameAsync(idGames);
         }
 
-        public async Task<IEnumerable<Game>> GetFiltreCardGameAsync(ParamQuerySG paramQuerySG)
+        public async Task<IEnumerable<Game>> GetFiltreCardGameAsync(ParamQueryGame paramQuerySG)
         {
             return await gameRepository.GetFiltreCardGameAsync(paramQuerySG);
         }

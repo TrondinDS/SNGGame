@@ -1,6 +1,5 @@
 ﻿using Library.Generics.GenericRepository;
 using Library.Generics.Query.QueryModels.StudioGame;
-using Library.Generics.Query.QueryModels.StudioGame.Studio;
 using Microsoft.EntityFrameworkCore;
 using StudioGameService.DB.Context;
 using StudioGameService.DB.Model;
@@ -18,24 +17,12 @@ namespace StudioGameService.Repository
             dbSet = context.Set<Studio>();
         }
 
-        public async Task<IEnumerable<Studio>> GetFiltreCardStudioAsync(ParamQuerySG paramQuerySG)
+        public async Task<IEnumerable<Studio>> GetFiltreCardStudioAsync(ParamQueryStudio paramQueryListStudio)
         {
             var query = dbSet
                 .AsQueryable();
 
-            query = FilterQueryStudio.CreateQuerybleAsNoTraking(paramQuerySG, query);
-
-            var result = await query.ToListAsync();
-
-            return result;
-        }
-
-        public async Task<IEnumerable<Studio>> GetFiltreCardStudioAsync(QueryListStudio paramQueryListStudio)
-        {
-            var query = dbSet
-                .AsQueryable();
-
-            query = FilterQueryStudio.CreateQueryableStudioListAsNoTraking(paramQueryListStudio, query);
+            query = FilterQueryStudio.CreateQuerybleAsNoTraking(paramQueryListStudio, query);
 
             var result = await query.ToListAsync();
 

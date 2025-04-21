@@ -7,10 +7,10 @@ namespace StudioGameService.Repository.Interfaces
 {
     public interface IGameRepository : IGenericRepository<Game, int> 
     {
-        public Task<IEnumerable<Game>> GetFilterGame(ParamQuerySG paramQuerySG);
+        public Task<IEnumerable<Game>> GetFilterGame(ParamQueryGame paramQuerySG);
 
         public Task<IEnumerable<Game>> GetAllCardGameAsync();
         public Task<IEnumerable<Game>> GetSelectCardGameAsync(IEnumerable<int> idGames);
-        public Task<IEnumerable<Game>> GetFiltreCardGameAsync(ParamQuerySG paramQuerySG);
+        public Task<IEnumerable<Game>> GetFiltreCardGameAsync(ParamQueryGame paramQuerySG);
     }
 }

@@ -48,12 +48,7 @@ namespace StudioGameService.Services
             await studioRepository.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Studio>> GetFiltreCardStudioAsync(ParamQuerySG paramQuerySG)
-        {
-            return await studioRepository.GetFiltreCardStudioAsync(paramQuerySG);
-        }
-
-        public async Task<IEnumerable<Studio>> GetFiltreCardStudioAsync(QueryListStudio paramQueryListStudio)
+        public async Task<IEnumerable<Studio>> GetFiltreCardStudioAsync(ParamQueryStudio paramQueryListStudio)
         {
             return await studioRepository.GetFiltreCardStudioAsync(paramQueryListStudio);
         }

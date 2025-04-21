@@ -6,7 +6,7 @@ using Library.Generics.Query.QueryModels.StudioGame.Tag;
 
 namespace Library.Generics.Query.QueryModels.StudioGame;
 
-public class ParamQuerySG
+public class ParamQueryGame
 {
     //Studio
     public QueryStudio? QueryStudio { get; set; }

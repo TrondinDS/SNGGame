@@ -54,7 +54,7 @@ namespace StudioGameService.Controllers
         /// </summary>
         /// <returns>Список карточек игр с помощью фильтра</returns>
         [HttpPost]
-        public async Task<ActionResult<IEnumerable<CardGameDTO>>> GetFiltreCardGames(ParamQuerySG paramQuery)
+        public async Task<ActionResult<IEnumerable<CardGameDTO>>> GetFiltreCardGames(ParamQueryGame paramQuery)
         {
             var games = await gameService.GetFiltreCardGameAsync(paramQuery);
             var gameCards = mapper.Map<IEnumerable<CardGameDTO>>(games);
@@ -66,7 +66,7 @@ namespace StudioGameService.Controllers
         /// </summary>
         /// <returns>Список карточек студий по списку id</returns>
         [HttpPost]
-        public async Task<ActionResult<IEnumerable<CardStudioDTO>>> GetSearchCardStudio(QueryListStudio paramQueryListStudio)
+        public async Task<ActionResult<IEnumerable<CardStudioDTO>>> GetSearchCardStudio(ParamQueryStudio paramQueryListStudio)
         {
             var studio = await studioService.GetFiltreCardStudioAsync(paramQueryListStudio);
             var studioCards = mapper.Map<IEnumerable<CardStudioDTO>>(studio);
