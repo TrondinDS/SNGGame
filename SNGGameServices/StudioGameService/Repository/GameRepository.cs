@@ -13,16 +13,18 @@ namespace StudioGameService.Repository
 {
     public class GameRepository : GenericRepository<Game, int>, IGameRepository
     {
-        private readonly DbSet<Game> dbSet;
+        private readonly DbSet<Game> dbSetGame;
+        private readonly DbSet<StatisticGame> dbSetStatisticGame;
         public GameRepository(ApplicationContext context)
-            : base(context) 
+            : base(context)
         {
-            dbSet = context.Set<Game>();
+            dbSetGame = context.Set<Game>();
+            dbSetStatisticGame = context.Set<StatisticGame>();
         }
 
         public async Task<IEnumerable<Game>> GetFilterGame(ParamQueryGame paramQuerySG)
         {
-            var query = dbSet.AsQueryable();
+            var query = dbSetGame.AsQueryable();
 
             query = FilterQueryGame.CreateQuerybleAsNoTraking(paramQuerySG, query);
             var result = await query.ToListAsync();
@@ -32,7 +34,7 @@ namespace StudioGameService.Repository
 
         public async Task<IEnumerable<Game>> GetAllCardGameAsync()
         {
-            var result =await dbSet
+            var result = await dbSetGame
                 .Include(game => game.Studio)
                 .Include(game => game.Genres)
                 .ThenInclude(gsg => gsg.Genre)
@@ -44,7 +46,7 @@ namespace StudioGameService.Repository
 
         public async Task<IEnumerable<Game>> GetSelectCardGameAsync(IEnumerable<int> idGames)
         {
-            var result = await dbSet
+            var result = await dbSetGame
                 .Include(game => game.Studio)
                 .Include(game => game.Genres)
                 .ThenInclude(gsg => gsg.Genre)
@@ -57,7 +59,7 @@ namespace StudioGameService.Repository
         
         public async Task<IEnumerable<Game>> GetFiltreCardGameAsync(ParamQueryGame paramQuerySG)
         {
-            var query = dbSet
+            var query = dbSetGame
                 .Include(game => game.Studio)
                 .Include(game => game.Genres)
                 .ThenInclude(gsg => gsg.Genre)
@@ -68,6 +70,12 @@ namespace StudioGameService.Repository
             var result = await query.ToListAsync();
 
             return result;
+        }
+
+        public async Task<IEnumerable<StatisticGame>> GetStatisticGames(IEnumerable<int> listGameId)
+        {
+            var listStatistic = await dbSetStatisticGame.Where(sg => listGameId.Contains(sg.GameId)).ToListAsync();
+            return listStatistic;
         }
     }
 }

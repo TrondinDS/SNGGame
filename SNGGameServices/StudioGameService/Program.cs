@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using StudioGameService.DB.Context;
+using StudioGameService.DB.Model;
 using StudioGameService.Repository;
 using StudioGameService.Repository.Interfaces;
 using StudioGameService.Services;
@@ -54,6 +55,9 @@ namespace StudioGameService
 
             builder.Services.AddTransient<ITagRepository, TagRepository>();
             builder.Services.AddTransient<ITagService, TagService>();
+
+            builder.Services.AddTransient<IStatisticGameRepository, StatisticGameRepository>();
+            builder.Services.AddTransient<IStatisticGameService, StatisticGameService>();
 
             builder.Services.AddDbContext<ApplicationContext>(opt =>
                 opt.UseNpgsql(

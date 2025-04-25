@@ -12,8 +12,8 @@ namespace Library.Generics.GenericRepository.Interfaces
         Task<IEnumerable<TEntity>> GetAllAsync();
         Task<TEntity?> GetByIdAsync(object id);
         Task AddAsync(params TEntity[] entity);
-        void UpdateAsync(params TEntity[] entity);
-        void DeleteAsync(params TEntity[] entity);
+        Task UpdateAsync(params TEntity[] entity);
+        Task DeleteAsync(params TEntity[] entity);
         Task SaveChangesAsync();
     }
 }

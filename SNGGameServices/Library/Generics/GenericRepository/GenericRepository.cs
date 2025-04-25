@@ -30,7 +30,7 @@ namespace Library.Generics.GenericRepository
             await _dbSet.AddRangeAsync(entity);
         }
 
-        public virtual async void UpdateAsync(params TEntity[] entities)
+        public virtual async Task UpdateAsync(params TEntity[] entities)
         {
             foreach (var entity in entities)
             {
@@ -58,7 +58,7 @@ namespace Library.Generics.GenericRepository
             return keyProperties.Select(p => p.PropertyInfo.GetValue(entity)).ToArray();
         }
 
-        public virtual void DeleteAsync(params TEntity[] entity)
+        public virtual async Task DeleteAsync(params TEntity[] entity)
         {
             _dbSet.RemoveRange(entity);
         }

@@ -12,5 +12,7 @@ namespace StudioGameService.Repository.Interfaces
         public Task<IEnumerable<Game>> GetAllCardGameAsync();
         public Task<IEnumerable<Game>> GetSelectCardGameAsync(IEnumerable<int> idGames);
         public Task<IEnumerable<Game>> GetFiltreCardGameAsync(ParamQueryGame paramQuerySG);
+        
+        public Task<IEnumerable<StatisticGame>> GetStatisticGames(IEnumerable<int> listGameId);
     }
 }

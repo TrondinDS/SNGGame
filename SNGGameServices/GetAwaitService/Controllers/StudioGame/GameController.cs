@@ -1,4 +1,5 @@
 ﻿using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Game;
+using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.StatisticGame;
 using Library.Generics.Query.QueryModels.StudioGame;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -127,6 +128,26 @@ namespace GetAwaitService.Controllers.StudioGame
             }
 
             return StatusCode((int)response.StatusCode, "Ошибка при получении фильтрованных игр.");
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> GetStatisticGames([FromBody] List<int> listGameId)
+        {
+            // Сериализация параметров фильтрации в JSON
+            var jsonContent = JsonSerializer.Serialize(listGameId);
+            var httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+
+            // Вызов метода фильтрации через HTTP POST-запрос
+            var response = await _httpClient.PostAsync("api/Game/GetStatisticGames", httpContent);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var responseBody = await response.Content.ReadAsStringAsync();
+                var result = JsonSerializer.Deserialize<IEnumerable<StatisticGameDTO>>(responseBody, _jsonOptions);
+                return Ok(result);
+            }
+
+            return StatusCode((int)response.StatusCode, "Ошибка при получении статистики игр.");
         }
     }
 }

@@ -17,6 +17,7 @@ namespace StudioGameService.DB.Context
         DbSet<Genre> Genres { get; set; }
         DbSet<Tag> Tags { get; set; }
         DbSet<Studio> Studios { get; set; }
+        DbSet<StatisticGame> statisticGames { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

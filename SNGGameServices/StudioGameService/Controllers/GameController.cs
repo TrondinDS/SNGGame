@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Game;
+using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.StatisticGame;
 using Library.Generics.Query.QueryModels.StudioGame;
 using Microsoft.AspNetCore.Mvc;
 using StudioGameService.DB.Model;
@@ -109,6 +110,20 @@ namespace StudioGameService.Controllers
         {
             var games = await gameService.FilterGame(paramFilter);
             return Ok(games);
+        }
+
+        /// <summary> Получение списка статистики игр
+        /// </summary>
+        /// <param name="listGameId">параметры получения статистики игр</param>
+        /// <returns>Список статистики игр</returns>
+        [HttpPost]
+        public async Task<ActionResult> GetStatisticGames([FromBody] List<int> listGameId)
+        {
+            var games = await gameService.GetStatisticGames(listGameId);
+
+            var resultListStatistic = mapper.Map<IEnumerable<StatisticGameDTO>>(games);
+
+            return Ok(resultListStatistic);
         }
     }
 }

@@ -12,7 +12,7 @@ using StudioGameService.DB.Context;
 namespace StudioGameService.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20250416230837_CreateDB")]
+    [Migration("20250424010812_CreateDB")]
     partial class CreateDB
     {
         /// <inheritdoc />
@@ -86,10 +86,15 @@ namespace StudioGameService.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
 
+                    b.Property<int?>("StatisticGameId")
+                        .HasColumnType("integer");
+
                     b.Property<int>("StudioId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("StatisticGameId");
 
                     b.HasIndex("StudioId");
 
@@ -201,6 +206,30 @@ namespace StudioGameService.Migrations
                     b.ToTable("Genres");
                 });
 
+            modelBuilder.Entity("StudioGameService.DB.Model.StatisticGame", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("GameId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PeopleCount")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("RatingSum")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GameId");
+
+                    b.ToTable("statisticGames");
+                });
+
             modelBuilder.Entity("StudioGameService.DB.Model.Studio", b =>
                 {
                     b.Property<int>("Id")
@@ -259,11 +288,17 @@ namespace StudioGameService.Migrations
 
             modelBuilder.Entity("StudioGameService.DB.Model.Game", b =>
                 {
+                    b.HasOne("StudioGameService.DB.Model.StatisticGame", "StatisticGame")
+                        .WithMany()
+                        .HasForeignKey("StatisticGameId");
+
                     b.HasOne("StudioGameService.DB.Model.Studio", "Studio")
                         .WithMany("Games")
                         .HasForeignKey("StudioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("StatisticGame");
 
                     b.Navigation("Studio");
                 });
@@ -315,6 +350,17 @@ namespace StudioGameService.Migrations
                     b.Navigation("Game");
 
                     b.Navigation("Tag");
+                });
+
+            modelBuilder.Entity("StudioGameService.DB.Model.StatisticGame", b =>
+                {
+                    b.HasOne("StudioGameService.DB.Model.Game", "Game")
+                        .WithMany()
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Game");
                 });
 
             modelBuilder.Entity("StudioGameService.DB.Model.Game", b =>

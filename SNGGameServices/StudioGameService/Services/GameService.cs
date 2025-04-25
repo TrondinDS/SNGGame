@@ -66,5 +66,10 @@ namespace StudioGameService.Services
         {
             return await gameRepository.GetFiltreCardGameAsync(paramQuerySG);
         }
+
+        public async Task<IEnumerable<StatisticGame>> GetStatisticGames(IEnumerable<int> listGameId)
+        {
+            return await gameRepository.GetStatisticGames(listGameId);
+        }
     }
 }

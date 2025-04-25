@@ -43,9 +43,13 @@ namespace StudioGameService.DB.Model
 
         [Required]
         public int StudioId { get; set; }
-
         [ForeignKey("StudioId")]
         public Studio Studio { get; set; }
+
+        public int? StatisticGameId { get; set; }
+        [ForeignKey("StatisticGameId")]
+        public StatisticGame? StatisticGame { get; set; }
+
         public ICollection<GameSelectedGenre> Genres { get; set; } = new List<GameSelectedGenre>();
         public ICollection<GameSelectedTag> Tags { get; set; } = new List<GameSelectedTag>();
         public ICollection<GameLibrary> GameLibrarys { get; set; } = new List<GameLibrary>();
