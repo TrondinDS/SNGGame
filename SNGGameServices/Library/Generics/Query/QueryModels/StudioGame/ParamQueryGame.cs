@@ -1,6 +1,7 @@
 ﻿using Library.Generics.Query.QueryModels.StudioGame.Game;
 using Library.Generics.Query.QueryModels.StudioGame.Genre;
 using Library.Generics.Query.QueryModels.StudioGame.Library;
+using Library.Generics.Query.QueryModels.StudioGame.Pagination;
 using Library.Generics.Query.QueryModels.StudioGame.Studio;
 using Library.Generics.Query.QueryModels.StudioGame.Tag;
 
@@ -22,4 +23,11 @@ public class ParamQueryGame
 
     //Librari
     public QueryLibrary? QueryLibrary { get; set; }
+
+    //Pagination
+    public QueryPagination? QueryPagination { get; set; }
+
+    //Top
+    public QueryTop? QueryTop { get; set; }
+
 }

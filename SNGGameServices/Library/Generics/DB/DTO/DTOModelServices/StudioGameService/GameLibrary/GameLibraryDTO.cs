@@ -18,7 +18,7 @@ namespace Library.Generics.DB.DTO.DTOModelServices.StudioGameService.GameLibrary
         [Range(1, int.MaxValue, ErrorMessage = "Статус должен быть положительным числом")]
         public int Status { get; set; }
 
-        [Range(1, 5, ErrorMessage = "Рейтинг должен быть от 1 до 10")]
+        [Range(1, 10, ErrorMessage = "Рейтинг должен быть от 1 до 10")]
         public int Rating { get; set; }
 
         public bool IsBought { get; set; }

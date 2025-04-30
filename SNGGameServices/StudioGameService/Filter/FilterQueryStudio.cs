@@ -1,6 +1,7 @@
 ﻿using Library.Generics.Query.QueryModels.StudioGame;
 using Microsoft.EntityFrameworkCore;
 using StudioGameService.DB.Model;
+using StudioGameService.Filter.AllFilter;
 using StudioGameService.Filter.FilterStudio;
 
 namespace StudioGameService.Filter
@@ -20,6 +21,10 @@ namespace StudioGameService.Filter
         public static IQueryable<Studio> CreateQueryble(ParamQueryStudio paramQuerySG, IQueryable<Studio> BodyQuery)
         {
             BodyQuery = StudioQueryCreate.Create(paramQuerySG.QueryListStudio, BodyQuery);
+
+            BodyQuery = TopQueryCreate.Create(paramQuerySG.QueryTop, BodyQuery);
+
+            BodyQuery = PaginationQueryCreate.Create(paramQuerySG.QueryPagination, BodyQuery);
 
             return BodyQuery;
         }

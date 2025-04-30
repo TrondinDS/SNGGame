@@ -12,17 +12,9 @@ namespace StudioGameService.Filter.FilterGame
                 if ( queryLibrary.Rating > 0 )
                 {
                     BodyQuery = BodyQuery.Where(g =>
-                        g.GameLibrarys.Any() &&
-                        g.GameLibrarys.Average(gl => gl.Rating) >= queryLibrary.Rating
-                    );
-                }
-
-                if (queryLibrary.gameInLibraryUserId != null && queryLibrary.gameInLibraryUserId != Guid.Empty)
-                {
-                    BodyQuery = BodyQuery.Where(g => 
-                        g.GameLibrarys.Any(gl => 
-                            gl.UserId == queryLibrary.gameInLibraryUserId
-                        )
+                        g.StatisticGame != null &&
+                        g.StatisticGame.PeopleCount > 0 &&
+                        (double)g.StatisticGame.RatingSum / g.StatisticGame.PeopleCount >= queryLibrary.Rating
                     );
                 }
             }
