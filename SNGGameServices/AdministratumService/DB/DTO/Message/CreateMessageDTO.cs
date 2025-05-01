@@ -4,8 +4,8 @@ namespace AdministratumService.DB.DTO.Message
 {
     public class CreateMessageDTO
     {
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
         public string Content { get; set; }
-        public int ChatFeedbackId { get; set; }
+        public Guid ChatFeedbackId { get; set; }
     }
 }
