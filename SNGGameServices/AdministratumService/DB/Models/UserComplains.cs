@@ -8,7 +8,7 @@ namespace AdministratumService.DB.Models
     {
         [Key]
         public Guid Id { get; set; }
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
 
         public Guid TicketId { get; set; }
 

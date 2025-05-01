@@ -19,7 +19,7 @@ namespace UserService.Services
             await jobRepository.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(Guid id)
         {
             var user = await jobRepository.GetByIdAsync(id);
             if (user != null)
@@ -34,7 +34,7 @@ namespace UserService.Services
             return jobRepository.GetAllAsync();
         }
 
-        public async Task<Job> GetByIdAsync(int id)
+        public async Task<Job> GetByIdAsync(Guid id)
         {
             return await jobRepository.GetByIdAsync(id);
         }

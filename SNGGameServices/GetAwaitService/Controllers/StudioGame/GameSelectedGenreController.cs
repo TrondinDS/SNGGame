@@ -37,7 +37,7 @@ namespace GetAwaitService.Controllers.StudioGame
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetGameSelectedGenreById(int id)
+        public async Task<IActionResult> GetGameSelectedGenreById(Guid id)
         {
             var response = await _httpClient.GetAsync($"api/GameSelectedGenre/GetGameSelectedGenreById/{id}");
 
@@ -73,7 +73,7 @@ namespace GetAwaitService.Controllers.StudioGame
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateGameSelectedGenre(int id, [FromBody] GameSelectedGenreDTO gameSelectedGenreDto)
+        public async Task<IActionResult> UpdateGameSelectedGenre(Guid id, [FromBody] GameSelectedGenreDTO gameSelectedGenreDto)
         {
             if (id != gameSelectedGenreDto.Id)
                 return BadRequest("ID в запросе не совпадает с ID в данных.");
@@ -93,7 +93,7 @@ namespace GetAwaitService.Controllers.StudioGame
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteGameSelectedGenre(int id)
+        public async Task<IActionResult> DeleteGameSelectedGenre(Guid id)
         {
             var response = await _httpClient.DeleteAsync($"api/GameSelectedGenre/DeleteGameSelectedGenre/{id}");
 

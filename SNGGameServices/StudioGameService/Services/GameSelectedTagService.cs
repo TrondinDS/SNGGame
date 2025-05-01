@@ -20,7 +20,7 @@ namespace StudioGameService.Services
             await gameSelectedTagRepository.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(Guid id)
         {
             var gameSelectedTag = await gameSelectedTagRepository.GetByIdAsync(id);
             if (gameSelectedTag != null)
@@ -35,7 +35,7 @@ namespace StudioGameService.Services
             return gameSelectedTagRepository.GetAllAsync();
         }
 
-        public async Task<GameSelectedTag> GetByIdAsync(int id)
+        public async Task<GameSelectedTag> GetByIdAsync(Guid id)
         {
             return await gameSelectedTagRepository.GetByIdAsync(id);
         }

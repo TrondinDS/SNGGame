@@ -19,7 +19,7 @@ namespace UserService.Services
             await bannedRepository.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(Guid id)
         {
             var user = await bannedRepository.GetByIdAsync(id);
             if (user != null)
@@ -34,7 +34,7 @@ namespace UserService.Services
             return bannedRepository.GetAllAsync();
         }
 
-        public async Task<Banned> GetByIdAsync(int id)
+        public async Task<Banned> GetByIdAsync(Guid id)
         {
             return await bannedRepository.GetByIdAsync(id);
         }

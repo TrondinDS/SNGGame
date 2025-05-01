@@ -19,7 +19,7 @@ namespace GetAwaitService.Services
             await userTelegramInformationRepository.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(Guid id)
         {
             var user = await userTelegramInformationRepository.GetByIdAsync(id);
             if (user != null)
@@ -34,7 +34,7 @@ namespace GetAwaitService.Services
             return userTelegramInformationRepository.GetAllAsync();
         }
 
-        public async Task<UserTelegramInformation> GetByIdAsync(int id)
+        public async Task<UserTelegramInformation> GetByIdAsync(Guid id)
         {
             return await userTelegramInformationRepository.GetByIdAsync(id);
         }

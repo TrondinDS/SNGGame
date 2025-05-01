@@ -5,6 +5,6 @@ namespace AdministratumService.DB.DTO.ComplainTicket
     public class DeleteComplainTicketDTO
     {
         [Required(ErrorMessage = "id не был отправлен")]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
     }
 }

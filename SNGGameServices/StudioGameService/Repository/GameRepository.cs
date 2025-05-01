@@ -11,7 +11,7 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace StudioGameService.Repository
 {
-    public class GameRepository : GenericRepository<Game, int>, IGameRepository
+    public class GameRepository : GenericRepository<Game, Guid>, IGameRepository
     {
         private readonly DbSet<Game> dbSetGame;
         private readonly DbSet<StatisticGame> dbSetStatisticGame;
@@ -44,7 +44,7 @@ namespace StudioGameService.Repository
             return result;
         }
 
-        public async Task<IEnumerable<Game>> GetSelectCardGameAsync(IEnumerable<int> idGames)
+        public async Task<IEnumerable<Game>> GetSelectCardGameAsync(IEnumerable<Guid> idGames)
         {
             var result = await dbSetGame
                 .Include(game => game.Studio)
@@ -72,7 +72,7 @@ namespace StudioGameService.Repository
             return result;
         }
 
-        public async Task<IEnumerable<StatisticGame>> GetStatisticGames(IEnumerable<int> listGameId)
+        public async Task<IEnumerable<StatisticGame>> GetStatisticGames(IEnumerable<Guid> listGameId)
         {
             var listStatistic = await dbSetStatisticGame.Where(sg => listGameId.Contains(sg.GameId)).ToListAsync();
             return listStatistic;

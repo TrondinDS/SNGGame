@@ -51,7 +51,7 @@ namespace GetAwaitService.Controllers.StudioGame
         /// <param name="idGames">Список ID игр</param>
         /// <returns>Список выбранных карточек игр</returns>
         [HttpPost]
-        public async Task<IActionResult> GetSelectCardGames([FromBody] List<int> idGames)
+        public async Task<IActionResult> GetSelectCardGames([FromBody] List<Guid> idGames)
         {
             var jsonContent = JsonSerializer.Serialize(idGames);
             var httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");

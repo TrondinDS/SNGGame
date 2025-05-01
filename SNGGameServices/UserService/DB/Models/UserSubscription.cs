@@ -7,8 +7,8 @@ namespace UserService.DB.Models
     public class UserSubscription : IEntity
     {
         [Key]
-        public int Id { get; set; }
-        public int EntityId { get; set; }
+        public Guid Id { get; set; }
+        public Guid EntityId { get; set; }
         public int EntityType { get; set; }
         public DateTime DateStart { get; set; }
         public DateTime? DateFinish { get; set; }

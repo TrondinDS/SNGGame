@@ -19,7 +19,7 @@ namespace UserActivityService.Services
             await topicRepository.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(Guid id)
         {
             var topic = await topicRepository.GetByIdAsync(id);
             if (topic != null)
@@ -34,7 +34,7 @@ namespace UserActivityService.Services
             return topicRepository.GetAllAsync();
         }
 
-        public async Task<Topic> GetByIdAsync(int id)
+        public async Task<Topic> GetByIdAsync(Guid id)
         {
             return await topicRepository.GetByIdAsync(id);
         }

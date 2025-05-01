@@ -6,7 +6,7 @@ namespace Library.Generics.DB.DTO.DTOModelServices.UserActivityService.Comment
     {
         // Уникальный идентификатор комментария
         [Range(0, int.MaxValue, ErrorMessage = "Id должен быть положительным числом")]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         // Идентификатор пользователя, оставившего комментарий
         [RegularExpression(
@@ -37,7 +37,7 @@ namespace Library.Generics.DB.DTO.DTOModelServices.UserActivityService.Comment
         // Идентификатор темы, к которой относится комментарий
         [Required(ErrorMessage = "TopicId является обязательным")]
         [Range(1, int.MaxValue, ErrorMessage = "TopicId должен быть положительным числом")]
-        public int TopicId { get; set; }
+        public Guid TopicId { get; set; }
 
     }
 }

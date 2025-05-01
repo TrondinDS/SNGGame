@@ -11,9 +11,9 @@ namespace Library.Generics.DB.DTO.DTOModelObjects.Game
 {
     public class CardGameDTO
     {
-        public int GameId { get; set; }
+        public Guid GameId { get; set; }
         public string GameTitle { get; set; }
-        public int ImageId { get; set; }
+        //public Guid ImageId { get; set; }
 
         public string StudioTitle { get; set; }
 

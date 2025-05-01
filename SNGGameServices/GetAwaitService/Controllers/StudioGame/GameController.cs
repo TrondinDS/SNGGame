@@ -41,7 +41,7 @@ namespace GetAwaitService.Controllers.StudioGame
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetGameById(int id)
+        public async Task<IActionResult> GetGameById(Guid id)
         {
             var response = await _httpClient.GetAsync($"api/Game/GetGameById/{id}");
 
@@ -77,7 +77,7 @@ namespace GetAwaitService.Controllers.StudioGame
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateGame(int id, [FromBody] GameDTO gameDto)
+        public async Task<IActionResult> UpdateGame(Guid id, [FromBody] GameDTO gameDto)
         {
             if (id != gameDto.Id)
                 return BadRequest("ID в запросе не совпадает с ID в данных.");
@@ -97,7 +97,7 @@ namespace GetAwaitService.Controllers.StudioGame
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteGame(int id)
+        public async Task<IActionResult> DeleteGame(Guid id)
         {
             var response = await _httpClient.DeleteAsync($"api/Game/DeleteGame/{id}");
 
@@ -131,7 +131,7 @@ namespace GetAwaitService.Controllers.StudioGame
         }
 
         [HttpPost]
-        public async Task<ActionResult> GetStatisticGames([FromBody] List<int> listGameId)
+        public async Task<ActionResult> GetStatisticGames([FromBody] List<Guid> listGameId)
         {
             // Сериализация параметров фильтрации в JSON
             var jsonContent = JsonSerializer.Serialize(listGameId);

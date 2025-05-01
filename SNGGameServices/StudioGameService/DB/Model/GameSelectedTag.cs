@@ -6,13 +6,13 @@ namespace StudioGameService.DB.Model
     public class GameSelectedTag
     {
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         [Required]
-        public int GameId { get; set; }
+        public Guid GameId { get; set; }
 
         [Required]
-        public int TagId { get; set; }
+        public Guid TagId { get; set; }
 
         [ForeignKey("GameId")]
         public Game Game { get; set; }

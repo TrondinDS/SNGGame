@@ -40,7 +40,7 @@ namespace StudioGameService.Controllers
         /// <param name="id">Идентификатор связи</param>
         /// <returns>Связь "Игра-Тег" с указанным ID</returns>
         [HttpGet("{id}")]
-        public async Task<ActionResult<GameSelectedTagDTO>> GetGameSelectedTagById(int id)
+        public async Task<ActionResult<GameSelectedTagDTO>> GetGameSelectedTagById(Guid id)
         {
             var gameSelectedTag = await gameSelectedTagService.GetByIdAsync(id);
             if (gameSelectedTag == null)
@@ -79,7 +79,7 @@ namespace StudioGameService.Controllers
         /// <returns>Результат обновления</returns>
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateGameSelectedTag(
-            int id,
+            Guid id,
             GameSelectedTagDTO gameSelectedTagDTO
         )
         {
@@ -105,7 +105,7 @@ namespace StudioGameService.Controllers
         /// <param name="id">Идентификатор связи</param>
         /// <returns>Результат удаления</returns>
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteGameSelectedTag(int id)
+        public async Task<ActionResult> DeleteGameSelectedTag(Guid id)
         {
             await gameSelectedTagService.DeleteAsync(id);
             return NoContent();

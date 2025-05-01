@@ -6,7 +6,7 @@ namespace Library.Generics.DB.DTO
 {
     public class ImgDTO
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         [Required(ErrorMessage = "Image file is required.")]
         [FileNotEmpty]

@@ -6,9 +6,9 @@ namespace StudioGameService.Services.Interfaces
     public interface IStatisticGameService 
     {
         Task AddAsync(StatisticGame statisticGame);
-        Task DeleteAsync(int id);
+        Task DeleteAsync(Guid id);
         Task<IEnumerable<StatisticGame>> GetAllAsync();
-        Task<StatisticGame> GetByIdAsync(int id);
+        Task<StatisticGame> GetByIdAsync(Guid id);
         Task UpdateAsync(StatisticGame statisticGame);
     }
 }

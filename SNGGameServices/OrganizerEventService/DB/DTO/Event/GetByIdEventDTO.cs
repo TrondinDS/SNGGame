@@ -15,6 +15,6 @@ namespace OrganizerEventService.DB.DTO.Event
         public string Status { get; set; }
         public decimal? PriceMin { get; set; }
         public decimal? PriceMax { get; set; }
-        public int OrganizerEventId { get; set; }
+        public Guid OrganizerEventId { get; set; }
     }
 }

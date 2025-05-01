@@ -4,7 +4,7 @@ namespace GetAwaitService.DB.Models
 {
     public class UserTelegramInformation : IIsDeleted
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         public Guid UserId { get; set; }
 

@@ -37,7 +37,7 @@ namespace GetAwaitService.Controllers.User
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetBannedById(int id)
+        public async Task<IActionResult> GetBannedById(Guid id)
         {
             var response = await _httpClient.GetAsync($"api/Banned/GetBannedById/{id}");
 
@@ -73,7 +73,7 @@ namespace GetAwaitService.Controllers.User
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateBanned(int id, [FromBody] BannedDTO bannedDto)
+        public async Task<IActionResult> UpdateBanned(Guid id, [FromBody] BannedDTO bannedDto)
         {
             if (id != bannedDto.Id)
                 return BadRequest("ID в запросе не совпадает с ID в данных");
@@ -93,7 +93,7 @@ namespace GetAwaitService.Controllers.User
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBanned(int id)
+        public async Task<IActionResult> DeleteBanned(Guid id)
         {
             var response = await _httpClient.DeleteAsync($"api/Banned/DeleteBanned/{id}");
 

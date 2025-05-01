@@ -37,7 +37,7 @@ namespace GetAwaitService.Controllers.User
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetJobById(int id)
+        public async Task<IActionResult> GetJobById(Guid id)
         {
             var response = await _httpClient.GetAsync($"api/Job/GetJobById/{id}");
 
@@ -73,7 +73,7 @@ namespace GetAwaitService.Controllers.User
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateJob(int id, [FromBody] JobDTO jobDto)
+        public async Task<IActionResult> UpdateJob(Guid id, [FromBody] JobDTO jobDto)
         {
             if (id != jobDto.Id)
                 return BadRequest("ID в запросе не совпадает с ID в данных");
@@ -93,7 +93,7 @@ namespace GetAwaitService.Controllers.User
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteJob(int id)
+        public async Task<IActionResult> DeleteJob(Guid id)
         {
             var response = await _httpClient.DeleteAsync($"api/Job/DeleteJob/{id}");
 

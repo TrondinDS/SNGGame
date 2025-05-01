@@ -5,9 +5,9 @@ namespace StudioGameService.Services.Interfaces
     public interface ITagService
     {
         Task AddAsync(Tag tag);
-        Task DeleteAsync(int id);
+        Task DeleteAsync(Guid id);
         Task<IEnumerable<Tag>> GetAllAsync();
-        Task<Tag> GetByIdAsync(int id);
+        Task<Tag> GetByIdAsync(Guid id);
         Task UpdateAsync(Tag tag);
     }
 }

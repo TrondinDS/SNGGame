@@ -20,7 +20,7 @@ namespace StudioGameService.Services
             await statisticGameRepository.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(Guid id)
         {
             var Library = await statisticGameRepository.GetByIdAsync(id);
             if (Library != null)
@@ -35,7 +35,7 @@ namespace StudioGameService.Services
             return statisticGameRepository.GetAllAsync();
         }
 
-        public async Task<StatisticGame> GetByIdAsync(int id)
+        public async Task<StatisticGame> GetByIdAsync(Guid id)
         {
             return await statisticGameRepository.GetByIdAsync(id);
         }

@@ -4,7 +4,7 @@ namespace AdministratumService.DB.DTO.ComplainTicket
 {
     public class GetByIdComplainTicketDTO
     {
-        public int EntityId { get; set; }
+        public Guid EntityId { get; set; }
         public int EntityType { get; set; }
         public required string ComplainType { get; set; }
         public required string Status { get; set; }

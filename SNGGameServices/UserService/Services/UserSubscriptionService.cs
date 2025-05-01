@@ -19,7 +19,7 @@ namespace UserService.Services
             await userSubscriptionRepository.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(Guid id)
         {
             var userSub = await userSubscriptionRepository.GetByIdAsync(id);
             if (userSub != null)
@@ -34,7 +34,7 @@ namespace UserService.Services
             return userSubscriptionRepository.GetAllAsync();
         }
 
-        public async Task<UserSubscription> GetByIdAsync(int id)
+        public async Task<UserSubscription> GetByIdAsync(Guid id)
         {
             return await userSubscriptionRepository.GetByIdAsync(id);
         }

@@ -5,9 +5,9 @@ namespace GetAwaitService.Services.Interfaces
     public interface IUserTelegramInformationService
     {
         Task AddAsync(UserTelegramInformation userInfo);
-        Task DeleteAsync(int id);
+        Task DeleteAsync(Guid id);
         Task<IEnumerable<UserTelegramInformation>> GetAllAsync();
-        Task<UserTelegramInformation> GetByIdAsync(int id);
+        Task<UserTelegramInformation> GetByIdAsync(Guid id);
         Task UpdateAsync(UserTelegramInformation userInfo);
         public Task<UserTelegramInformation> GetUserTgInfoFromTgId(int tgId);
     }

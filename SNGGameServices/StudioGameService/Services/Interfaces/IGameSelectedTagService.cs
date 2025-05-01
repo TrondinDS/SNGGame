@@ -5,9 +5,9 @@ namespace StudioGameService.Services.Interfaces
     public interface IGameSelectedTagService
     {
         Task AddAsync(GameSelectedTag gameSelectedTag);
-        Task DeleteAsync(int id);
+        Task DeleteAsync(Guid id);
         Task<IEnumerable<GameSelectedTag>> GetAllAsync();
-        Task<GameSelectedTag> GetByIdAsync(int id);
+        Task<GameSelectedTag> GetByIdAsync(Guid id);
         Task UpdateAsync(GameSelectedTag gameSelectedTag);
     }
 }

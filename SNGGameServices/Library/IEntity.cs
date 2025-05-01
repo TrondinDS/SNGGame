@@ -9,7 +9,7 @@ namespace Library
 {
     public interface IEntity
     {
-        public int EntityId { get; set; }
+        public Guid EntityId { get; set; }
         public int EntityType { get; set; }
     }
 }

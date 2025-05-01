@@ -6,7 +6,7 @@ namespace Library.Generics.DB.DTO.DTOModelServices.UserActivityService.UserReact
     {
         // Уникальный идентификатор реакции
         [Range(0, int.MaxValue, ErrorMessage = "Id должен быть положительным числом")]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         // Идентификатор пользователя, оставившего реакцию
         [RegularExpression(
@@ -23,6 +23,6 @@ namespace Library.Generics.DB.DTO.DTOModelServices.UserActivityService.UserReact
         // Идентификатор комментария, на который дана реакция
         [Range(1, int.MaxValue, ErrorMessage = "CommentId должен быть положительным числом")]
         [Required(ErrorMessage = "CommentId является обязательным")]
-        public int CommentId { get; set; }
+        public Guid CommentId { get; set; }
     }
 }

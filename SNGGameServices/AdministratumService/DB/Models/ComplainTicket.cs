@@ -7,7 +7,7 @@ namespace AdministratumService.DB.Models
     {
         [Key]
         public Guid Id { get; set; }
-        public int EntityId { get; set; }
+        public Guid EntityId { get; set; }
         public int EntityType { get; set; }
         public required string ComplainType { get; set; }
         public required string Status { get; set; }

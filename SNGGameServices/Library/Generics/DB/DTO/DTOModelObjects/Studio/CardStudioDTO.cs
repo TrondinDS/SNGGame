@@ -8,8 +8,8 @@ namespace Library.Generics.DB.DTO.DTOModelObjects.Studio
 {
     public class CardStudioDTO
     {
-        public int StudioId { get; set; }
+        public Guid StudioId { get; set; }
         public string StudioTitle { get; set; }
-        public int ImageId { get; set; }
+        // public Guid ImageId { get; set; }
     }
 }

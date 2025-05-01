@@ -6,8 +6,8 @@ namespace UserActivityService.DB.Models
     public class Topic : IIsDeleted, IEntity
     {
         [Key]
-        public int Id { get; set; }
-        public int EntityId { get; set; }
+        public Guid Id { get; set; }
+        public Guid EntityId { get; set; }
         public int EntityType { get; set; }
         public required string Title { get; set; }
         public string Description { get; set; }

@@ -41,7 +41,7 @@ namespace UserService.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("{id}")]
-        public async Task<ActionResult<UserSubscriptionDTO>> GetUserSubscriptionById(int id)
+        public async Task<ActionResult<UserSubscriptionDTO>> GetUserSubscriptionById(Guid id)
         {
             var userSub = await userSubscriptionService.GetByIdAsync(id);
             if (userSub == null)
@@ -77,7 +77,7 @@ namespace UserService.Controllers
         /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateUserSubscription(
-            int id,
+            Guid id,
             UserSubscriptionDTO userSubscriptionDTO
         )
         {
@@ -102,7 +102,7 @@ namespace UserService.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteUserSubscription(int id)
+        public async Task<ActionResult> DeleteUserSubscription(Guid id)
         {
             await userSubscriptionService.DeleteAsync(id);
             return NoContent();

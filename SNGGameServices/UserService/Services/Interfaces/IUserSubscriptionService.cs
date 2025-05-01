@@ -5,9 +5,9 @@ namespace UserService.Services.Interfaces
     public interface IUserSubscriptionService
     {
         Task AddAsync(UserSubscription userSubscription);
-        Task DeleteAsync(int id);
+        Task DeleteAsync(Guid id);
         Task<IEnumerable<UserSubscription>> GetAllAsync();
-        Task<UserSubscription> GetByIdAsync(int id);
+        Task<UserSubscription> GetByIdAsync(Guid id);
         Task UpdateAsync(UserSubscription userSubscription);
     }
 }

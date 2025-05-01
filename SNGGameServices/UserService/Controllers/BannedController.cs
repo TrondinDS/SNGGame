@@ -36,7 +36,7 @@ namespace UserService.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("{id}")]
-        public async Task<ActionResult<BannedDTO>> GetBannedById(int id)
+        public async Task<ActionResult<BannedDTO>> GetBannedById(Guid id)
         {
             var banned = await bannedService.GetByIdAsync(id);
             if (banned == null)
@@ -65,7 +65,7 @@ namespace UserService.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateBanned(int id, BannedDTO bannedDto)
+        public async Task<ActionResult> UpdateBanned(Guid id, BannedDTO bannedDto)
         {
             if (id != bannedDto.Id)
             {
@@ -88,7 +88,7 @@ namespace UserService.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteBanned(int id)
+        public async Task<ActionResult> DeleteBanned(Guid id)
         {
             await bannedService.DeleteAsync(id);
             return NoContent();

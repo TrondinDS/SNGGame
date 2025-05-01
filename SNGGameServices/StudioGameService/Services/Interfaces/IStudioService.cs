@@ -7,9 +7,9 @@ namespace StudioGameService.Services.Interfaces
     public interface IStudioService
     {
         Task AddAsync(Studio studio);
-        Task DeleteAsync(int id);
+        Task DeleteAsync(Guid id);
         Task<IEnumerable<Studio>> GetAllAsync();
-        Task<Studio> GetByIdAsync(int id);
+        Task<Studio> GetByIdAsync(Guid id);
         Task UpdateAsync(Studio studio);
         public Task<IEnumerable<Studio>> GetFiltreCardStudioAsync(ParamQueryStudio paramQueryListStudio);
     }

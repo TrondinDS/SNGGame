@@ -6,12 +6,12 @@ namespace Library.Generics.DB.DTO.DTOModelServices.UserActivityService.Topic
     {
         // Уникальный идентификатор сущности
         [Range(0, int.MaxValue, ErrorMessage = "Id должен быть положительным числом")]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         // Идентификатор связанной сущности
         [Required(ErrorMessage = "EntityId является обязательным")]
         [Range(1, int.MaxValue, ErrorMessage = "EntityId должен быть положительным числом")]
-        public int EntityId { get; set; }
+        public Guid EntityId { get; set; }
 
         // Тип связанной сущности
         [Required(ErrorMessage = "EntityType является обязательным")]

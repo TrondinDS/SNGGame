@@ -6,7 +6,7 @@ namespace UserActivityService.DB.Models
     public class UserReaction
     {
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         [Required]
         public Guid UserId { get; set; }
@@ -15,7 +15,7 @@ namespace UserActivityService.DB.Models
         public int ReactionType { get; set; }
 
         [Required]
-        public int CommentId { get; set; }
+        public Guid CommentId { get; set; }
 
         [ForeignKey("CommentId")]
         public Comment Comment { get; set; }

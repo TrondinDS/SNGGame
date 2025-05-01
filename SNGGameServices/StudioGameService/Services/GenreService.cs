@@ -19,7 +19,7 @@ namespace StudioGenreService.Services
             await genreRepository.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(Guid id)
         {
             var genre = await genreRepository.GetByIdAsync(id);
             if (genre != null)
@@ -34,7 +34,7 @@ namespace StudioGenreService.Services
             return genreRepository.GetAllAsync();
         }
 
-        public async Task<Genre> GetByIdAsync(int id)
+        public async Task<Genre> GetByIdAsync(Guid id)
         {
             return await genreRepository.GetByIdAsync(id);
         }

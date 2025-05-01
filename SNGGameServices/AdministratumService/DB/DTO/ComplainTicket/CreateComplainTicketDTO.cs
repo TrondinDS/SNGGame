@@ -5,7 +5,7 @@ namespace AdministratumService.DB.DTO.ComplainTicket
 {
     public class CreateComplainTicketDTO
     {
-        public int EntityId { get; set; }
+        public Guid EntityId { get; set; }
         public int EntityType { get; set; }
 
         [Required(ErrorMessage = "тип жалобы не был указан")]

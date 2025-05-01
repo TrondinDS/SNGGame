@@ -5,9 +5,9 @@ namespace StudioGameService.Services.Interfaces
     public interface IGenreService
     {
         Task AddAsync(Genre genre);
-        Task DeleteAsync(int id);
+        Task DeleteAsync(Guid id);
         Task<IEnumerable<Genre>> GetAllAsync();
-        Task<Genre> GetByIdAsync(int id);
+        Task<Genre> GetByIdAsync(Guid id);
         Task UpdateAsync(Genre genre);
     }
 }

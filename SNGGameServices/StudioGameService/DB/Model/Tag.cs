@@ -5,7 +5,7 @@ namespace StudioGameService.DB.Model
     public class Tag
     {
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         [Required]
         [MaxLength(255)]

@@ -7,7 +7,7 @@ namespace StudioGameService.DB.Model
     public class Game : IIsDeleted
     {
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         [MaxLength(255)]
         public string RussianTitle { get; set; }
@@ -42,7 +42,7 @@ namespace StudioGameService.DB.Model
         public DateTime? DateDeleted { get; set; }
 
         [Required]
-        public int StudioId { get; set; }
+        public Guid StudioId { get; set; }
         [ForeignKey("StudioId")]
         public Studio Studio { get; set; }
 

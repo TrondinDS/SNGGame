@@ -5,7 +5,7 @@ namespace Library.Generics.DB.DTO.DTOModelServices.StudioGameService.GameLibrary
     public class GameLibraryDTO
     {
         [Range(0, int.MaxValue, ErrorMessage = "Id должен быть положительным числом")]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         [Required(ErrorMessage = "UserId является обязательным")]
         public Guid UserId { get; set; }
@@ -25,6 +25,6 @@ namespace Library.Generics.DB.DTO.DTOModelServices.StudioGameService.GameLibrary
 
         [Required(ErrorMessage = "GameId является обязательным")]
         [Range(1, int.MaxValue, ErrorMessage = "GameId должен быть положительным числом")]
-        public int GameId { get; set; }
+        public Guid GameId { get; set; }
     }
 }

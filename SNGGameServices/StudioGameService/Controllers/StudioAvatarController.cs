@@ -29,7 +29,7 @@ namespace StudioGameService.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetByUserId(int id)
+        public async Task<IActionResult> GetByUserId(Guid id)
         {
             var avatar = await mongoService
                 .Database(imgsDatabase)
@@ -49,7 +49,7 @@ namespace StudioGameService.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(Guid id)
         {
             await mongoService.Database(imgsDatabase).Collection(avasCollection).Delete(id);
             return Ok("Avatar deleted successfully.");

@@ -19,7 +19,7 @@ namespace StudioGameService.Services
             await gameSelectedGenreRepository.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(Guid id)
         {
             var gameSelectedGenre = await gameSelectedGenreRepository.GetByIdAsync(id);
             if (gameSelectedGenre != null)
@@ -34,7 +34,7 @@ namespace StudioGameService.Services
             return gameSelectedGenreRepository.GetAllAsync();
         }
 
-        public async Task<GameSelectedGenre> GetByIdAsync(int id)
+        public async Task<GameSelectedGenre> GetByIdAsync(Guid id)
         {
             return await gameSelectedGenreRepository.GetByIdAsync(id);
         }

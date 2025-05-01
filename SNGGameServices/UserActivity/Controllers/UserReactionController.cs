@@ -37,7 +37,7 @@ namespace UserActivityService.Controllers
         /// <param name="id">Идентификатор реакции</param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        public async Task<ActionResult<UserReactionDTO>> GetReactionById(int id)
+        public async Task<ActionResult<UserReactionDTO>> GetReactionById(Guid id)
         {
             var reaction = await userReactionService.GetByIdAsync(id);
             if (reaction == null)
@@ -69,7 +69,7 @@ namespace UserActivityService.Controllers
         /// <param name="reactionDTO">Обновленные данные реакции</param>
         /// <returns></returns>
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateReaction(int id, UserReactionDTO reactionDTO)
+        public async Task<ActionResult> UpdateReaction(Guid id, UserReactionDTO reactionDTO)
         {
             if (id != reactionDTO.Id)
             {
@@ -93,7 +93,7 @@ namespace UserActivityService.Controllers
         /// <param name="id">Идентификатор реакции</param>
         /// <returns></returns>
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteReaction(int id)
+        public async Task<ActionResult> DeleteReaction(Guid id)
         {
             await userReactionService.DeleteAsync(id);
             return NoContent();

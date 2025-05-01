@@ -37,7 +37,7 @@ namespace GetAwaitService.Controllers.StudioGame
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetStudioById(int id)
+        public async Task<IActionResult> GetStudioById(Guid id)
         {
             var response = await _httpClient.GetAsync($"api/Studio/GetStudioById/{id}");
 
@@ -73,7 +73,7 @@ namespace GetAwaitService.Controllers.StudioGame
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateStudio(int id, [FromBody] StudioDTO studioDto)
+        public async Task<IActionResult> UpdateStudio(Guid id, [FromBody] StudioDTO studioDto)
         {
             if (id != studioDto.Id)
                 return BadRequest("ID в запросе не совпадает с ID в данных.");
@@ -93,7 +93,7 @@ namespace GetAwaitService.Controllers.StudioGame
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteStudio(int id)
+        public async Task<IActionResult> DeleteStudio(Guid id)
         {
             var response = await _httpClient.DeleteAsync($"api/Studio/DeleteStudio/{id}");
 

@@ -36,7 +36,7 @@ namespace UserService.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("{id}")]
-        public async Task<ActionResult<JobDTO>> GetJobById(int id)
+        public async Task<ActionResult<JobDTO>> GetJobById(Guid id)
         {
             var job = await jobService.GetByIdAsync(id);
             if (job == null)
@@ -65,7 +65,7 @@ namespace UserService.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateJob(int id, JobDTO jobDto)
+        public async Task<ActionResult> UpdateJob(Guid id, JobDTO jobDto)
         {
             if (id != jobDto.Id)
             {
@@ -88,7 +88,7 @@ namespace UserService.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteJob(int id)
+        public async Task<ActionResult> DeleteJob(Guid id)
         {
             await jobService.DeleteAsync(id);
             return NoContent();
