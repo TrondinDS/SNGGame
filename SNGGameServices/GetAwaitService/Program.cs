@@ -99,7 +99,6 @@ namespace GetAwaitService
                 dbContext.Database.Migrate();
             }
 
-            // Настройка конвейера запросов
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
@@ -108,6 +107,7 @@ namespace GetAwaitService
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
                     c.RoutePrefix = string.Empty; // Отключаем префикс "/swagger"
                 });
+                app.MapOpenApi();
             }
 
             app.UseHttpsRedirection();
