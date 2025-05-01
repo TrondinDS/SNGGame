@@ -59,8 +59,8 @@ namespace AdministratumService.Migrations
                     b.Property<DateTime?>("DateDeleted")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("EntityId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("EntityId")
+                        .HasColumnType("uuid");
 
                     b.Property<int>("EntityType")
                         .HasColumnType("integer");
@@ -121,8 +121,8 @@ namespace AdministratumService.Migrations
                     b.Property<Guid>("TicketId")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 

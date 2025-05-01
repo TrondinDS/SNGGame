@@ -46,7 +46,7 @@ namespace StudioGameService.DB.Model
         [ForeignKey("StudioId")]
         public Studio Studio { get; set; }
 
-        public int? StatisticGameId { get; set; }
+        public Guid? StatisticGameId { get; set; }
         [ForeignKey("StatisticGameId")]
         public StatisticGame? StatisticGame { get; set; }
 

@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace GetAwaitService.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20250501062829_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250501084330_InitCreate")]
+    partial class InitCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,11 +27,9 @@ namespace GetAwaitService.Migrations
 
             modelBuilder.Entity("GetAwaitService.DB.Models.UserTelegramInformation", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("DateCreate")
                         .HasColumnType("timestamp with time zone");

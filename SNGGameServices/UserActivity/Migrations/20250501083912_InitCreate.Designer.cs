@@ -12,8 +12,8 @@ using UserActivityService.DB.Context;
 namespace UserActivityService.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20250501061905_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250501083912_InitCreate")]
+    partial class InitCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,11 +27,9 @@ namespace UserActivityService.Migrations
 
             modelBuilder.Entity("UserActivityService.DB.Models.Comment", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Body")
                         .IsRequired()
@@ -46,8 +44,8 @@ namespace UserActivityService.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
-                    b.Property<int>("TopicId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("TopicId")
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
@@ -61,11 +59,9 @@ namespace UserActivityService.Migrations
 
             modelBuilder.Entity("UserActivityService.DB.Models.Topic", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("timestamp with time zone");
@@ -77,8 +73,8 @@ namespace UserActivityService.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("EntityId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("EntityId")
+                        .HasColumnType("uuid");
 
                     b.Property<int>("EntityType")
                         .HasColumnType("integer");
@@ -100,14 +96,12 @@ namespace UserActivityService.Migrations
 
             modelBuilder.Entity("UserActivityService.DB.Models.UserReaction", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("uuid");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CommentId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("CommentId")
+                        .HasColumnType("uuid");
 
                     b.Property<int>("ReactionType")
                         .HasColumnType("integer");

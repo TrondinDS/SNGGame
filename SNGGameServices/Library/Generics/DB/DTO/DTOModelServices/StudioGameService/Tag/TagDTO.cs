@@ -4,7 +4,6 @@ namespace Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Tag
 {
     public class TagDTO
     {
-        [Range(0, int.MaxValue, ErrorMessage = "Id должен быть положительным числом")]
         public Guid Id { get; set; }
 
         [Required(ErrorMessage = "Title является обязательным")]

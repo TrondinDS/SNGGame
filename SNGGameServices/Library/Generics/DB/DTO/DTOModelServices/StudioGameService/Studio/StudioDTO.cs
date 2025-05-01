@@ -4,7 +4,6 @@ namespace Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Studio
 {
     public class StudioDTO
     {
-        [Range(0, int.MaxValue, ErrorMessage = "Id должен быть положительным числом")]
         public Guid Id { get; set; }
 
         [Required(ErrorMessage = "Название является обязательным")]
