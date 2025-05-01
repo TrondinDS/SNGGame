@@ -22,7 +22,7 @@ namespace StudioGameService.Services
             await studioRepository.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(Guid id)
         {
             var studio = await studioRepository.GetByIdAsync(id);
             if (studio != null)
@@ -37,7 +37,7 @@ namespace StudioGameService.Services
             return studioRepository.GetAllAsync();
         }
 
-        public async Task<Studio> GetByIdAsync(int id)
+        public async Task<Studio> GetByIdAsync(Guid id)
         {
             return await studioRepository.GetByIdAsync(id);
         }

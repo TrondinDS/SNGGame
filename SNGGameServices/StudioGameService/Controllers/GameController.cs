@@ -39,7 +39,7 @@ namespace StudioGameService.Controllers
         /// <param name="id">Идентификатор игры</param>
         /// <returns>Игра с указанным ID</returns>
         [HttpGet("{id}")]
-        public async Task<ActionResult<GameDTO>> GetGameById(int id)
+        public async Task<ActionResult<GameDTO>> GetGameById(Guid id)
         {
             var game = await gameService.GetByIdAsync(id);
             if (game == null)
@@ -71,7 +71,7 @@ namespace StudioGameService.Controllers
         /// <param name="gameDTO">Обновленные данные игры</param>
         /// <returns>Результат обновления</returns>
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateGame(int id, GameDTO gameDTO)
+        public async Task<ActionResult> UpdateGame(Guid id, GameDTO gameDTO)
         {
             if (id != gameDTO.Id)
             {
@@ -95,7 +95,7 @@ namespace StudioGameService.Controllers
         /// <param name="id">Идентификатор игры</param>
         /// <returns>Результат удаления</returns>
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteGame(int id)
+        public async Task<ActionResult> DeleteGame(Guid id)
         {
             await gameService.DeleteAsync(id);
             return NoContent();
@@ -117,7 +117,7 @@ namespace StudioGameService.Controllers
         /// <param name="listGameId">параметры получения статистики игр</param>
         /// <returns>Список статистики игр</returns>
         [HttpPost]
-        public async Task<ActionResult> GetStatisticGames([FromBody] List<int> listGameId)
+        public async Task<ActionResult> GetStatisticGames([FromBody] List<Guid> listGameId)
         {
             var games = await gameService.GetStatisticGames(listGameId);
 

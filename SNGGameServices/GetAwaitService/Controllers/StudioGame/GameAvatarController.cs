@@ -38,7 +38,7 @@ namespace GetAwaitService.Controllers.StudioGame
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetByUserId(int id)
+        public async Task<IActionResult> GetByUserId(Guid id)
         {
             var response = await _httpClient.GetAsync($"api/GameAvatar/GetByUserId/{id}");
 
@@ -72,7 +72,7 @@ namespace GetAwaitService.Controllers.StudioGame
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(Guid id)
         {
             var response = await _httpClient.DeleteAsync($"api/GameAvatar/Delete/{id}");
 

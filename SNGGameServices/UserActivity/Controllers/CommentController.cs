@@ -37,7 +37,7 @@ namespace UserActivityService.Controllers
         /// <param name="id">Идентификатор комментария</param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        public async Task<ActionResult<CommentDTO>> GetCommentById(int id)
+        public async Task<ActionResult<CommentDTO>> GetCommentById(Guid id)
         {
             var comment = await commentService.GetByIdAsync(id);
             if (comment == null)
@@ -69,7 +69,7 @@ namespace UserActivityService.Controllers
         /// <param name="commentDTO">Обновленные данные комментария</param>
         /// <returns></returns>
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateComment(int id, CommentDTO commentDTO)
+        public async Task<ActionResult> UpdateComment(Guid id, CommentDTO commentDTO)
         {
             if (id != commentDTO.Id)
             {
@@ -93,7 +93,7 @@ namespace UserActivityService.Controllers
         /// <param name="id">Идентификатор комментария</param>
         /// <returns></returns>
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteComment(int id)
+        public async Task<ActionResult> DeleteComment(Guid id)
         {
             await commentService.DeleteAsync(id);
             return NoContent();

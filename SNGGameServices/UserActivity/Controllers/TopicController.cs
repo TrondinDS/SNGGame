@@ -37,7 +37,7 @@ namespace UserActivityService.Controllers
         /// <param name="id">Идентификатор темы</param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        public async Task<ActionResult<TopicDTO>> GetTopicById(int id)
+        public async Task<ActionResult<TopicDTO>> GetTopicById(Guid id)
         {
             var topic = await topicService.GetByIdAsync(id);
             if (topic == null)
@@ -69,7 +69,7 @@ namespace UserActivityService.Controllers
         /// <param name="topicDTO">Обновленные данные темы</param>
         /// <returns></returns>
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateTopic(int id, TopicDTO topicDTO)
+        public async Task<ActionResult> UpdateTopic(Guid id, TopicDTO topicDTO)
         {
             if (id != topicDTO.Id)
             {
@@ -93,7 +93,7 @@ namespace UserActivityService.Controllers
         /// <param name="id">Идентификатор темы</param>
         /// <returns></returns>
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteTopic(int id)
+        public async Task<ActionResult> DeleteTopic(Guid id)
         {
             await topicService.DeleteAsync(id);
             return NoContent();

@@ -37,7 +37,7 @@ namespace GetAwaitService.Controllers.User
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetUserSubscriptionById(int id)
+        public async Task<IActionResult> GetUserSubscriptionById(Guid id)
         {
             var response = await _httpClient.GetAsync($"api/UserSubscription/GetUserSubscriptionById/{id}");
 
@@ -73,7 +73,7 @@ namespace GetAwaitService.Controllers.User
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUserSubscription(int id, [FromBody] UserSubscriptionDTO subscriptionDto)
+        public async Task<IActionResult> UpdateUserSubscription(Guid id, [FromBody] UserSubscriptionDTO subscriptionDto)
         {
             if (id != subscriptionDto.Id)
                 return BadRequest("ID в запросе не совпадает с ID в данных");
@@ -93,7 +93,7 @@ namespace GetAwaitService.Controllers.User
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUserSubscription(int id)
+        public async Task<IActionResult> DeleteUserSubscription(Guid id)
         {
             var response = await _httpClient.DeleteAsync($"api/UserSubscription/DeleteUserSubscription/{id}");
 

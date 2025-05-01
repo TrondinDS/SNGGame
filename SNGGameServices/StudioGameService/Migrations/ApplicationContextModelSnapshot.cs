@@ -24,11 +24,9 @@ namespace StudioGameService.Migrations
 
             modelBuilder.Entity("StudioGameService.DB.Model.Game", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<string>("AlternativeTitle")
                         .IsRequired()
@@ -83,11 +81,11 @@ namespace StudioGameService.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
 
-                    b.Property<int?>("StatisticGameId")
-                        .HasColumnType("integer");
+                    b.Property<Guid?>("StatisticGameId")
+                        .HasColumnType("uuid");
 
-                    b.Property<int>("StudioId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("StudioId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -100,17 +98,15 @@ namespace StudioGameService.Migrations
 
             modelBuilder.Entity("StudioGameService.DB.Model.GameLibrary", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("GameId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("GameId")
+                        .HasColumnType("uuid");
 
                     b.Property<bool>("IsBought")
                         .HasColumnType("boolean");
@@ -133,17 +129,15 @@ namespace StudioGameService.Migrations
 
             modelBuilder.Entity("StudioGameService.DB.Model.GameSelectedGenre", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("uuid");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    b.Property<Guid>("GameId")
+                        .HasColumnType("uuid");
 
-                    b.Property<int>("GameId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("GenreId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("GenreId")
+                        .HasColumnType("uuid");
 
                     b.Property<int>("NumberOrder")
                         .HasColumnType("integer");
@@ -159,17 +153,15 @@ namespace StudioGameService.Migrations
 
             modelBuilder.Entity("StudioGameService.DB.Model.GameSelectedTag", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("uuid");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    b.Property<Guid>("GameId")
+                        .HasColumnType("uuid");
 
-                    b.Property<int>("GameId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("TagId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("TagId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -182,11 +174,9 @@ namespace StudioGameService.Migrations
 
             modelBuilder.Entity("StudioGameService.DB.Model.Genre", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -205,14 +195,12 @@ namespace StudioGameService.Migrations
 
             modelBuilder.Entity("StudioGameService.DB.Model.StatisticGame", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("uuid");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("GameId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("GameId")
+                        .HasColumnType("uuid");
 
                     b.Property<int>("PeopleCount")
                         .HasColumnType("integer");
@@ -229,11 +217,9 @@ namespace StudioGameService.Migrations
 
             modelBuilder.Entity("StudioGameService.DB.Model.Studio", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("CreatorId")
                         .HasColumnType("uuid");
@@ -267,11 +253,9 @@ namespace StudioGameService.Migrations
 
             modelBuilder.Entity("StudioGameService.DB.Model.Tag", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Title")
                         .IsRequired()

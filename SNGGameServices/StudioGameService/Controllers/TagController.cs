@@ -37,7 +37,7 @@ namespace StudioGameService.Controllers
         /// <param name="id">Идентификатор тега</param>
         /// <returns>Тег с указанным ID</returns>
         [HttpGet("{id}")]
-        public async Task<ActionResult<TagDTO>> GetTagById(int id)
+        public async Task<ActionResult<TagDTO>> GetTagById(Guid id)
         {
             var tag = await tagService.GetByIdAsync(id);
             if (tag == null)
@@ -69,7 +69,7 @@ namespace StudioGameService.Controllers
         /// <param name="tagDTO">Обновленные данные тега</param>
         /// <returns>Результат обновления</returns>
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateTag(int id, TagDTO tagDTO)
+        public async Task<ActionResult> UpdateTag(Guid id, TagDTO tagDTO)
         {
             if (id != tagDTO.Id)
             {
@@ -93,7 +93,7 @@ namespace StudioGameService.Controllers
         /// <param name="id">Идентификатор тега</param>
         /// <returns>Результат удаления</returns>
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteTag(int id)
+        public async Task<ActionResult> DeleteTag(Guid id)
         {
             await tagService.DeleteAsync(id);
             return NoContent();

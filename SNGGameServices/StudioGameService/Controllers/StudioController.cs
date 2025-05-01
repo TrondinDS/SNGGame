@@ -37,7 +37,7 @@ namespace StudioGameService.Controllers
         /// <param name="id">Идентификатор студии</param>
         /// <returns>Студия с указанным ID</returns>
         [HttpGet("{id}")]
-        public async Task<ActionResult<StudioDTO>> GetStudioById(int id)
+        public async Task<ActionResult<StudioDTO>> GetStudioById(Guid id)
         {
             var studio = await studioService.GetByIdAsync(id);
             if (studio == null)
@@ -69,7 +69,7 @@ namespace StudioGameService.Controllers
         /// <param name="studioDTO">Обновленные данные студии</param>
         /// <returns>Результат обновления</returns>
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateStudio(int id, StudioDTO studioDTO)
+        public async Task<ActionResult> UpdateStudio(Guid id, StudioDTO studioDTO)
         {
             if (id != studioDTO.Id)
             {
@@ -93,7 +93,7 @@ namespace StudioGameService.Controllers
         /// <param name="id">Идентификатор студии</param>
         /// <returns>Результат удаления</returns>
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteStudio(int id)
+        public async Task<ActionResult> DeleteStudio(Guid id)
         {
             await studioService.DeleteAsync(id);
             return NoContent();

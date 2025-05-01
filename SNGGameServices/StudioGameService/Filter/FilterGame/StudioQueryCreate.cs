@@ -11,12 +11,9 @@ namespace StudioGameService.Filter.FilterGame
         {
             if ( queryStudio != null && BodyQuery != null )
             {
-                if ( queryStudio.StudioId > 0 )
-                {
-                    BodyQuery = BodyQuery.Where(g =>
-                            g.StudioId == queryStudio.StudioId
-                        );
-                }
+                BodyQuery = BodyQuery.Where(g =>
+                        g.StudioId == queryStudio.StudioId
+                    );
             }
 
             return BodyQuery;

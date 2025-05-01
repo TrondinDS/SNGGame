@@ -9,8 +9,8 @@ namespace StudioGameService.DB.Model
     public class Job : IIsDeleted, IEntity
     {
         [Key]
-        public int Id { get; set; }
-        public int EntityId { get; set; }
+        public Guid Id { get; set; }
+        public Guid EntityId { get; set; }
         public required int EntityType { get; set; }
         public bool IsModerator { get; set; }
         public DateTime DateStart { get; set; }

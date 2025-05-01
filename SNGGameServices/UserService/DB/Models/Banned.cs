@@ -8,8 +8,8 @@ namespace BannedService.DB.Models
     public class Banned : IIsDeleted, IEntity
     {
         [Key]
-        public int Id { get; set; }
-        public int EntityId { get; set; }
+        public Guid Id { get; set; }
+        public Guid EntityId { get; set; }
         public required int EntityType { get; set; }
         public required string Reason { get; set; }
         public DateTime DateStart { get; set; }

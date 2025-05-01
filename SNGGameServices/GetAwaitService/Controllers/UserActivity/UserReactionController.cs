@@ -37,7 +37,7 @@ namespace GetAwaitService.Controllers.UserActivity
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetReactionById(int id)
+        public async Task<IActionResult> GetReactionById(Guid id)
         {
             var response = await _httpClient.GetAsync($"api/UserReaction/GetReactionById/{id}");
 
@@ -73,7 +73,7 @@ namespace GetAwaitService.Controllers.UserActivity
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateReaction(int id, [FromBody] UserReactionDTO reactionDto)
+        public async Task<IActionResult> UpdateReaction(Guid id, [FromBody] UserReactionDTO reactionDto)
         {
             if (id != reactionDto.Id)
                 return BadRequest("ID в запросе не совпадает с ID в данных.");
@@ -93,7 +93,7 @@ namespace GetAwaitService.Controllers.UserActivity
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteReaction(int id)
+        public async Task<IActionResult> DeleteReaction(Guid id)
         {
             var response = await _httpClient.DeleteAsync($"api/UserReaction/DeleteReaction/{id}");
 

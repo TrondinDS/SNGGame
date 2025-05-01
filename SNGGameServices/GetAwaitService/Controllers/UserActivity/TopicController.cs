@@ -37,7 +37,7 @@ namespace GetAwaitService.Controllers.UserActivity
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetTopicById(int id)
+        public async Task<IActionResult> GetTopicById(Guid id)
         {
             var response = await _httpClient.GetAsync($"api/Topic/GetTopicById/{id}");
 
@@ -73,7 +73,7 @@ namespace GetAwaitService.Controllers.UserActivity
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateTopic(int id, [FromBody] TopicDTO topicDto)
+        public async Task<IActionResult> UpdateTopic(Guid id, [FromBody] TopicDTO topicDto)
         {
             if (id != topicDto.Id)
                 return BadRequest("ID в запросе не совпадает с ID в данных.");
@@ -93,7 +93,7 @@ namespace GetAwaitService.Controllers.UserActivity
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTopic(int id)
+        public async Task<IActionResult> DeleteTopic(Guid id)
         {
             var response = await _httpClient.DeleteAsync($"api/Topic/DeleteTopic/{id}");
 

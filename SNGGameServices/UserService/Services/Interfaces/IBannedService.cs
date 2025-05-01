@@ -6,9 +6,9 @@ namespace UserService.Services.Interfaces
     public interface IBannedService
     {
         Task AddAsync(Banned banned);
-        Task DeleteAsync(int id);
+        Task DeleteAsync(Guid id);
         Task<IEnumerable<Banned>> GetAllAsync();
-        Task<Banned> GetByIdAsync(int id);
+        Task<Banned> GetByIdAsync(Guid id);
         Task UpdateAsync(Banned banned);
     }
 }

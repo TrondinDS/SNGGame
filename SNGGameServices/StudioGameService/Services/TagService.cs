@@ -19,7 +19,7 @@ namespace TagGameService.Services
             await tagRepository.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(Guid id)
         {
             var tag = await tagRepository.GetByIdAsync(id);
             if (tag != null)
@@ -34,7 +34,7 @@ namespace TagGameService.Services
             return tagRepository.GetAllAsync();
         }
 
-        public async Task<Tag> GetByIdAsync(int id)
+        public async Task<Tag> GetByIdAsync(Guid id)
         {
             return await tagRepository.GetByIdAsync(id);
         }

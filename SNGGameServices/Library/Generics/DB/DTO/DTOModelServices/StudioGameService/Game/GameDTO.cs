@@ -4,8 +4,7 @@ namespace Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Game
 {
     public class GameDTO
     {
-        [Range(0, int.MaxValue, ErrorMessage = "Id должен быть положительным числом")]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         [MaxLength(255, ErrorMessage = "Русское название не должно превышать 255 символов")]
         public string RussianTitle { get; set; }
@@ -46,10 +45,8 @@ namespace Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Game
         public DateTime? DateDeleted { get; set; }
 
         [Required(ErrorMessage = "StudioId является обязательным")]
-        [Range(1, int.MaxValue, ErrorMessage = "StudioId должен быть положительным числом")]
-        public int StudioId { get; set; }
+        public Guid StudioId { get; set; }
 
-        [Range(1, int.MaxValue, ErrorMessage = "StatisticGameId должен быть положительным числом")]
         public int? StatisticGameId { get; set; }
     }
 }

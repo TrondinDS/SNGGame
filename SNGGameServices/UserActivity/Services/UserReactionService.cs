@@ -19,7 +19,7 @@ namespace UserActivityService.Services
             await userReactionRepository.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(Guid id)
         {
             var userReaction = await userReactionRepository.GetByIdAsync(id);
             if (userReaction != null)
@@ -34,7 +34,7 @@ namespace UserActivityService.Services
             return userReactionRepository.GetAllAsync();
         }
 
-        public async Task<UserReaction> GetByIdAsync(int id)
+        public async Task<UserReaction> GetByIdAsync(Guid id)
         {
             return await userReactionRepository.GetByIdAsync(id);
         }

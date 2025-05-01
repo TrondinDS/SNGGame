@@ -19,7 +19,7 @@ namespace UserActivityService.Services
             await commentRepository.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(Guid id)
         {
             var comment = await commentRepository.GetByIdAsync(id);
             if (comment != null)
@@ -34,7 +34,7 @@ namespace UserActivityService.Services
             return commentRepository.GetAllAsync();
         }
 
-        public async Task<Comment> GetByIdAsync(int id)
+        public async Task<Comment> GetByIdAsync(Guid id)
         {
             return await commentRepository.GetByIdAsync(id);
         }

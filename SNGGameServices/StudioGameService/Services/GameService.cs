@@ -21,7 +21,7 @@ namespace StudioGameService.Services
             await gameRepository.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task DeleteAsync(Guid id)
         {
             var game = await gameRepository.GetByIdAsync(id);
             if (game != null)
@@ -36,7 +36,7 @@ namespace StudioGameService.Services
             return gameRepository.GetAllAsync();
         }
 
-        public async Task<Game> GetByIdAsync(int id)
+        public async Task<Game> GetByIdAsync(Guid id)
         {
             return await gameRepository.GetByIdAsync(id);
         }
@@ -57,7 +57,7 @@ namespace StudioGameService.Services
             return await gameRepository.GetAllCardGameAsync();
         }
 
-        public async Task<IEnumerable<Game>> GetSelectCardGameAsync(IEnumerable<int> idGames)
+        public async Task<IEnumerable<Game>> GetSelectCardGameAsync(IEnumerable<Guid> idGames)
         {
             return await gameRepository.GetSelectCardGameAsync(idGames);
         }
@@ -67,7 +67,7 @@ namespace StudioGameService.Services
             return await gameRepository.GetFiltreCardGameAsync(paramQuerySG);
         }
 
-        public async Task<IEnumerable<StatisticGame>> GetStatisticGames(IEnumerable<int> listGameId)
+        public async Task<IEnumerable<StatisticGame>> GetStatisticGames(IEnumerable<Guid> listGameId)
         {
             return await gameRepository.GetStatisticGames(listGameId);
         }

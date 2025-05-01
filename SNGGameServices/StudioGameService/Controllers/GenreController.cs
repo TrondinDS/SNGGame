@@ -37,7 +37,7 @@ namespace StudioGameService.Controllers
         /// <param name="id">Идентификатор жанра</param>
         /// <returns>Жанр с указанным ID</returns>
         [HttpGet("{id}")]
-        public async Task<ActionResult<GenreDTO>> GetGenreById(int id)
+        public async Task<ActionResult<GenreDTO>> GetGenreById(Guid id)
         {
             var genre = await genreService.GetByIdAsync(id);
             if (genre == null)
@@ -69,7 +69,7 @@ namespace StudioGameService.Controllers
         /// <param name="genreDTO">Обновленные данные жанра</param>
         /// <returns>Результат обновления</returns>
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateGenre(int id, GenreDTO genreDTO)
+        public async Task<ActionResult> UpdateGenre(Guid id, GenreDTO genreDTO)
         {
             if (id != genreDTO.Id)
             {
@@ -93,7 +93,7 @@ namespace StudioGameService.Controllers
         /// <param name="id">Идентификатор жанра</param>
         /// <returns>Результат удаления</returns>
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteGenre(int id)
+        public async Task<ActionResult> DeleteGenre(Guid id)
         {
             await genreService.DeleteAsync(id);
             return NoContent();

@@ -37,7 +37,7 @@ namespace StudioGameService.Controllers
         /// <param name="id">Идентификатор записи</param>
         /// <returns>Запись библиотеки игр с указанным ID</returns>
         [HttpGet("{id}")]
-        public async Task<ActionResult<GameLibraryDTO>> GetGameLibraryById(int id)
+        public async Task<ActionResult<GameLibraryDTO>> GetGameLibraryById(Guid id)
         {
             var gameLibrary = await gameLibraryService.GetByIdAsync(id);
             if (gameLibrary == null)
@@ -73,7 +73,7 @@ namespace StudioGameService.Controllers
         /// <param name="gameLibraryDTO">Обновленные данные записи</param>
         /// <returns>Результат обновления</returns>
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateGameLibrary(int id, GameLibraryDTO gameLibraryDTO)
+        public async Task<ActionResult> UpdateGameLibrary(Guid id, GameLibraryDTO gameLibraryDTO)
         {
             if (id != gameLibraryDTO.Id)
             {
@@ -97,7 +97,7 @@ namespace StudioGameService.Controllers
         /// <param name="id">Идентификатор записи</param>
         /// <returns>Результат удаления</returns>
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteGameLibrary(int id)
+        public async Task<ActionResult> DeleteGameLibrary(Guid id)
         {
             await gameLibraryService.DeleteAsync(id);
             return NoContent();

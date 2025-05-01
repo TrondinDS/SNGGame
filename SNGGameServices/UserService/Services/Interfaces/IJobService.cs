@@ -6,9 +6,9 @@ namespace UserService.Services.Interfaces
     public interface IJobService
     {
         Task AddAsync(Job job);
-        Task DeleteAsync(int id);
+        Task DeleteAsync(Guid id);
         Task<IEnumerable<Job>> GetAllAsync();
-        Task<Job> GetByIdAsync(int id);
+        Task<Job> GetByIdAsync(Guid id);
         Task UpdateAsync(Job job);
     }
 }

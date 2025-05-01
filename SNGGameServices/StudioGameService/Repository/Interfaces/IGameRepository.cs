@@ -5,14 +5,14 @@ using StudioGameService.DB.Model;
 
 namespace StudioGameService.Repository.Interfaces
 {
-    public interface IGameRepository : IGenericRepository<Game, int> 
+    public interface IGameRepository : IGenericRepository<Game, Guid> 
     {
         public Task<IEnumerable<Game>> GetFilterGame(ParamQueryGame paramQuerySG);
 
         public Task<IEnumerable<Game>> GetAllCardGameAsync();
-        public Task<IEnumerable<Game>> GetSelectCardGameAsync(IEnumerable<int> idGames);
+        public Task<IEnumerable<Game>> GetSelectCardGameAsync(IEnumerable<Guid> idGames);
         public Task<IEnumerable<Game>> GetFiltreCardGameAsync(ParamQueryGame paramQuerySG);
         
-        public Task<IEnumerable<StatisticGame>> GetStatisticGames(IEnumerable<int> listGameId);
+        public Task<IEnumerable<StatisticGame>> GetStatisticGames(IEnumerable<Guid> listGameId);
     }
 }

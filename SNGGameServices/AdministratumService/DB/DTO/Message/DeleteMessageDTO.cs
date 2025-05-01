@@ -2,6 +2,6 @@
 {
     public class DeleteMessageDTO
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
     }
 }

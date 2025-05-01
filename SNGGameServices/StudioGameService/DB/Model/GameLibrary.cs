@@ -6,7 +6,7 @@ namespace StudioGameService.DB.Model
     public class GameLibrary
     {
         [Key]
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         [Required]
         public Guid UserId { get; set; }
@@ -20,7 +20,7 @@ namespace StudioGameService.DB.Model
         public int Rating { get; set; }
         public bool IsBought { get; set; }
 
-        public int GameId { get; set; }
+        public Guid GameId { get; set; }
 
         [ForeignKey("GameId")]
         public Game Game { get; set; }

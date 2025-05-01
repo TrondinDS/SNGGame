@@ -42,7 +42,7 @@ namespace StudioGameService.Controllers
         /// </summary>
         /// <returns>Список выбранных карточек игр</returns>
         [HttpPost]
-        public async Task<ActionResult<IEnumerable<CardGameDTO>>> GetSelectCardGames(List<int> IdGames)
+        public async Task<ActionResult<IEnumerable<CardGameDTO>>> GetSelectCardGames(List<Guid> IdGames)
         {
             var games = await gameService.GetSelectCardGameAsync(IdGames);
             var gameCards = mapper.Map<IEnumerable<CardGameDTO>>(games);
