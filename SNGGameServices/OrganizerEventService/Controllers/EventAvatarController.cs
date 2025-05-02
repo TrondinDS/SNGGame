@@ -35,7 +35,18 @@ namespace StudioGameService.Controllers
                 .Database(imgsDatabase)
                 .Collection(avasCollection)
                 .GetImgById(id);
-            return Ok(File(avatar.Bytes, avatar.ContentType));
+            return File(avatar.Bytes, avatar.ContentType);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> GetByUserIds([FromBody] List<Guid> ids)
+        {
+            var res = new List<object>();
+            var avatars = await mongoService
+                .Database(imgsDatabase)
+                .Collection(avasCollection)
+                .GetImgsByIds(ids);
+            return Ok(avatars);
         }
 
         [HttpPut]
