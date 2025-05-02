@@ -96,6 +96,19 @@ namespace Library.Services
             };
         }
 
+        public async Task<List<Img>> GetImgsByIds(List<Guid> ids)
+        {
+            var idStrings = ids.Select(id => id.ToString()).ToList();
+            var filter = Builders<BsonDocument>.Filter.In("id", idStrings);
+            var documents = await collection.Find(filter).ToListAsync();
+            return documents.Select(document => new Img
+            {
+                Id = new Guid(document["id"].AsString),
+                Bytes = document["data"].AsBsonBinaryData.Bytes,
+                ContentType = document["contentType"].AsString,
+            }).ToList();
+        }
+
         public async Task Insert(int id, IFormFile formFile)
         {
             if (collection == null)
@@ -157,6 +170,18 @@ namespace Library.Services
                 Id = new Guid(document["id"].AsString),
                 Value = document["value"].AsString,
             };
+        }
+
+        public async Task<List<Content>> GetContentsByIds(List<Guid> ids)
+        {
+            var idStrings = ids.Select(id => id.ToString()).ToList();
+            var filter = Builders<BsonDocument>.Filter.In("id", idStrings);
+            var documents = await collection.Find(filter).ToListAsync();
+            return documents.Select(document => new Content
+            {
+                Id = new Guid(document["id"].AsString),
+                Value = document["value"].AsString,
+            }).ToList();
         }
 
         public async Task Insert(int id, string content)
