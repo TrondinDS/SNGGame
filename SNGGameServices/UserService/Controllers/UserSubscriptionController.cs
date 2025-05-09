@@ -63,7 +63,7 @@ namespace UserService.Controllers
         {
             var userSub = mapper.Map<UserSubscription>(userSubscriptionDTO);
             await userSubscriptionService.AddAsync(userSub);
-            var userResultDTO = mapper.Map<UserSubscriptionDTO>(userSubscriptionDTO);
+            var userResultDTO = mapper.Map<UserSubscriptionDTO>(userSub);
             return CreatedAtAction(
                 nameof(GetUserSubscriptionById),
                 new { id = userSub.Id },
