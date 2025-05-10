@@ -24,7 +24,6 @@ namespace GetAwaitService.Controllers.StudioGame
             };
         }
 
-        [Authorize(Roles = "user")]
         [HttpGet]
         public async Task<IActionResult> GetAllGames()
         {
