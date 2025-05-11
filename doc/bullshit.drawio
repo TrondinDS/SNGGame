@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36" version="27.0.3" pages="3">
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/26.0.15 Chrome/132.0.6834.196 Electron/34.2.0 Safari/537.36" version="26.0.15" pages="3">
   <diagram name="DataBase" id="a_ra0T0KaJDf7tyuzf6U">
     <mxGraphModel dx="2345" dy="3078" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -983,7 +983,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="wRPUN_1BPq6XOgaD-tOQ" name="ShemMicroServices">
-    <mxGraphModel dx="4547" dy="2290" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="3981" dy="2068" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -1185,19 +1185,19 @@
         <mxCell id="tZLovt6BG2MXomlTsj2J-1" value="API GetAwaitAndAAService&amp;nbsp;&lt;div&gt;[Container: C#, ASP.NET Core, EF Core, JWT.]&lt;br&gt;Авторизация и аутентификация запросов пользователей, переадресация запросов на другие микросервисы.&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=18;fontStyle=1" parent="1" vertex="1">
           <mxGeometry x="514" y="-900" width="360" height="200" as="geometry" />
         </mxCell>
-        <mxCell id="tZLovt6BG2MXomlTsj2J-2" value="API OrganizatorEventService&amp;nbsp;&lt;div&gt;[Container: C#, ASP.NET Core, EF Core, MongoDB Client.]&lt;br&gt;CRUD-операции с организациями и мероприятиями.&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=18;fontStyle=1" parent="1" vertex="1">
+        <mxCell id="tZLovt6BG2MXomlTsj2J-2" value="API OrganizatorEventService&amp;nbsp;&lt;div&gt;[Подсистема: C#, ASP.NET Core, EF Core, MongoDB Client.]&lt;br&gt;CRUD-операции.&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=18;fontStyle=1" parent="1" vertex="1">
           <mxGeometry x="-280" y="-560" width="360" height="200" as="geometry" />
         </mxCell>
-        <mxCell id="tZLovt6BG2MXomlTsj2J-3" value="API UserActivityService&lt;div&gt;[Container: C#, ASP.NET Core, EF Core.]&lt;br&gt;CRUD-операции с комментариями пользователей, реакциями пользователей, темами игр/студий/организаций/событий.&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=18;fontStyle=1" parent="1" vertex="1">
+        <mxCell id="tZLovt6BG2MXomlTsj2J-3" value="API UserActivityService&lt;div&gt;[Подсистема: C#, ASP.NET Core, EF Core.]&lt;br&gt;CRUD-операции.&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=18;fontStyle=1" parent="1" vertex="1">
           <mxGeometry x="114" y="-560" width="360" height="200" as="geometry" />
         </mxCell>
-        <mxCell id="tZLovt6BG2MXomlTsj2J-4" value="API UserService&lt;div&gt;[Container: C#, ASP.NET Core, EF Core, MongoDB Client.]&lt;br&gt;&lt;div&gt;CRUD-операции с пользователем, подписки пользователей, баны, сотрудники студии и организаторы.&lt;/div&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=18;fontStyle=1" parent="1" vertex="1">
+        <mxCell id="tZLovt6BG2MXomlTsj2J-4" value="API UserService&lt;div&gt;[Подсистема: C#, ASP.NET Core, EF Core, MongoDB Client.]&lt;br&gt;&lt;div&gt;CRUD-операции.&lt;/div&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=18;fontStyle=1" parent="1" vertex="1">
           <mxGeometry x="514" y="-560" width="360" height="200" as="geometry" />
         </mxCell>
-        <mxCell id="tZLovt6BG2MXomlTsj2J-5" value="API StudioGameService&lt;div&gt;[Container: C#, ASP.NET Core, EF Core, MongoDB Client.]&lt;br&gt;&lt;div&gt;CRUD-операции со студией, библиотекой игр, играми, жанрами, тегами.&lt;/div&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=18;fontStyle=1" parent="1" vertex="1">
+        <mxCell id="tZLovt6BG2MXomlTsj2J-5" value="API StudioGameService&lt;div&gt;[Подсистема: C#, ASP.NET Core, EF Core, MongoDB Client.]&lt;br&gt;&lt;div&gt;CRUD-операции.&lt;/div&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=18;fontStyle=1" parent="1" vertex="1">
           <mxGeometry x="914" y="-560" width="360" height="200" as="geometry" />
         </mxCell>
-        <mxCell id="tZLovt6BG2MXomlTsj2J-6" value="API AdministratumService&lt;div&gt;[Container: C#, ASP.NET Core, EF Core.]&lt;br&gt;&lt;div&gt;CRUD-операции с жалобами.&lt;/div&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=18;fontStyle=1" parent="1" vertex="1">
+        <mxCell id="tZLovt6BG2MXomlTsj2J-6" value="API AdministratumService&lt;div&gt;[Подсистема: C#, ASP.NET Core, EF Core.]&lt;br&gt;&lt;div&gt;CRUD-операции.&lt;/div&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=18;fontStyle=1" parent="1" vertex="1">
           <mxGeometry x="1314" y="-560" width="360" height="200" as="geometry" />
         </mxCell>
         <mxCell id="tZLovt6BG2MXomlTsj2J-7" value="Database OrganizatorEvent&lt;br&gt;[Container: PostgreSQL, MongoDB]" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;fontSize=18;fontStyle=1" parent="1" vertex="1">
