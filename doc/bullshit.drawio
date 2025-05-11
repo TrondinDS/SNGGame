@@ -983,7 +983,6 @@
     </mxGraphModel>
   </diagram>
 <<<<<<< Updated upstream
-<<<<<<< Updated upstream
   <diagram name="ShemMicroServices" id="HWV6VDRRQbkpBCBKxrrQ">
     <mxGraphModel dx="4547" dy="2388" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -997,21 +996,11 @@
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-=======
-  <diagram id="wRPUN_1BPq6XOgaD-tOQ" name="ShemMicroServices">
-    <mxGraphModel dx="4631" dy="2217" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
-      <root>
-        <mxCell id="0" />
-        <mxCell id="1" parent="0" />
->>>>>>> Stashed changes
         <mxCell id="TLGPKTveWfKGgukuLFqh-3" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="-370" y="-980" width="2160" height="1100" as="geometry" />
         </mxCell>
         <mxCell id="TLGPKTveWfKGgukuLFqh-1" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="-1840" y="-1134" width="1420" height="1100" as="geometry" />
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
 >>>>>>> Stashed changes
         </mxCell>
         <mxCell id="CaLmf9GniL-LHFBPWZCT-20" value="" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;dashPattern=8 8;" parent="1" vertex="1">
