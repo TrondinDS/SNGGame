@@ -984,11 +984,7 @@
   </diagram>
   <diagram name="ShemMicroServices" id="HWV6VDRRQbkpBCBKxrrQ">
 <<<<<<< Updated upstream
-<<<<<<< Updated upstream
     <mxGraphModel dx="4797" dy="3942" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
-=======
-    <mxGraphModel dx="10247" dy="3736" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
->>>>>>> Stashed changes
 =======
     <mxGraphModel dx="10247" dy="3736" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
 >>>>>>> Stashed changes
@@ -996,7 +992,6 @@
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="tNpduODq6Nlia91FoB3D-1" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-<<<<<<< Updated upstream
 <<<<<<< Updated upstream
           <mxGeometry x="-2310" y="-2060" width="4600" height="2890" as="geometry" />
         </mxCell>
@@ -1052,28 +1047,12 @@
         <mxCell id="9oBj4jcbDHE9DlO29P4B-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="tZLovt6BG2MXomlTsj2J-1" target="tZLovt6BG2MXomlTsj2J-4">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-=======
-          <mxGeometry x="-1790" y="-1180" width="4600" height="2640" as="geometry" />
-        </mxCell>
-        <mxCell id="cx-hy2BCsI41yQWdVwEG-9" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;strokeWidth=1;absoluteArcSize=1;arcSize=44;dashed=1;dashPattern=8 8;fontSize=26;" parent="1" vertex="1">
-          <mxGeometry x="1830" y="400" width="860" height="770" as="geometry" />
-        </mxCell>
-        <mxCell id="CaLmf9GniL-LHFBPWZCT-20" value="" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;dashPattern=8 8;fontSize=24;" parent="1" vertex="1">
-          <mxGeometry x="-300" y="-920" width="2010" height="960" as="geometry" />
-        </mxCell>
-        <mxCell id="9oBj4jcbDHE9DlO29P4B-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="tZLovt6BG2MXomlTsj2J-1" target="tZLovt6BG2MXomlTsj2J-4">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
->>>>>>> Stashed changes
         <mxCell id="9oBj4jcbDHE9DlO29P4B-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="tZLovt6BG2MXomlTsj2J-1" target="tZLovt6BG2MXomlTsj2J-2">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="726" y="-600" />
               <mxPoint x="-107" y="-600" />
             </Array>
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
 >>>>>>> Stashed changes
           </mxGeometry>
         </mxCell>
@@ -1116,13 +1095,8 @@
             <mxPoint x="310" y="-1540" as="targetPoint" />
             <Array as="points">
 <<<<<<< Updated upstream
-<<<<<<< Updated upstream
               <mxPoint x="174" y="-1480" />
               <mxPoint x="574" y="-1480" />
-=======
-              <mxPoint x="726" y="-600" />
-              <mxPoint x="1139" y="-600" />
->>>>>>> Stashed changes
 =======
               <mxPoint x="726" y="-600" />
               <mxPoint x="1139" y="-600" />
@@ -1136,13 +1110,8 @@
             <mxPoint x="584" y="-1430" as="targetPoint" />
             <Array as="points">
 <<<<<<< Updated upstream
-<<<<<<< Updated upstream
               <mxPoint x="174" y="-1480" />
               <mxPoint x="974" y="-1480" />
-=======
-              <mxPoint x="726" y="-600" />
-              <mxPoint x="1520" y="-600" />
->>>>>>> Stashed changes
 =======
               <mxPoint x="726" y="-600" />
               <mxPoint x="1520" y="-600" />
@@ -1155,7 +1124,6 @@
             <mxPoint x="184" y="-1570" as="sourcePoint" />
             <mxPoint x="184" y="-1430" as="targetPoint" />
             <Array as="points">
-<<<<<<< Updated upstream
 <<<<<<< Updated upstream
               <mxPoint x="174" y="-1480" />
               <mxPoint x="-226" y="-1480" />
@@ -1253,27 +1221,6 @@
         <mxCell id="PiL31PUt_gtgF7jQxQlV-3" value="Пользователь&lt;div&gt;[Пользователь&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;]&lt;/span&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=18;fontStyle=1" parent="1" vertex="1">
           <mxGeometry x="-1830" y="-1850" width="360" height="200" as="geometry" />
 =======
-=======
-              <mxPoint x="726" y="-600" />
-              <mxPoint x="294" y="-600" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="CaLmf9GniL-LHFBPWZCT-21" value="Серверная часть веб-портала" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=41;fontStyle=1" parent="1" vertex="1">
-          <mxGeometry x="-280" y="-30" width="700" height="50" as="geometry" />
-        </mxCell>
-        <mxCell id="PiL31PUt_gtgF7jQxQlV-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=26;" parent="1" source="PiL31PUt_gtgF7jQxQlV-3" target="PiL31PUt_gtgF7jQxQlV-9" edge="1">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="PiL31PUt_gtgF7jQxQlV-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=26;" parent="1" source="PiL31PUt_gtgF7jQxQlV-3" target="PiL31PUt_gtgF7jQxQlV-6" edge="1">
-          <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="-1130" y="-720" />
-              <mxPoint x="-750" y="-720" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
->>>>>>> Stashed changes
         <mxCell id="PiL31PUt_gtgF7jQxQlV-3" value="Пользователь&lt;div&gt;[Пользователь&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;]&lt;/span&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=26;fontStyle=1" parent="1" vertex="1">
           <mxGeometry x="-1310" y="-970" width="360" height="200" as="geometry" />
 >>>>>>> Stashed changes
@@ -1290,12 +1237,9 @@
           </mxGeometry>
         </mxCell>
 <<<<<<< Updated upstream
-<<<<<<< Updated upstream
         <mxCell id="PiL31PUt_gtgF7jQxQlV-6" value="Telegram бот&lt;br&gt;&lt;div&gt;[ПО&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;]&lt;/span&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=18;fontStyle=1" parent="1" vertex="1">
           <mxGeometry x="-1450" y="-1550" width="360" height="200" as="geometry" />
 =======
-=======
->>>>>>> Stashed changes
         <mxCell id="PiL31PUt_gtgF7jQxQlV-6" value="Telegram бот&lt;br&gt;&lt;div&gt;[ПО&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;]&lt;/span&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=26;fontStyle=1" parent="1" vertex="1">
           <mxGeometry x="-930" y="-670" width="360" height="200" as="geometry" />
 >>>>>>> Stashed changes
@@ -1306,7 +1250,6 @@
         <mxCell id="PiL31PUt_gtgF7jQxQlV-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=26;" parent="1" source="PiL31PUt_gtgF7jQxQlV-9" target="PiL31PUt_gtgF7jQxQlV-10" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-<<<<<<< Updated upstream
 <<<<<<< Updated upstream
         <mxCell id="PiL31PUt_gtgF7jQxQlV-9" value="Клиентская часть веб-портала&lt;br&gt;&lt;div&gt;[ПО&lt;span style=&quot;color: rgba(0, 0, 0, 0); font-family: monospace; font-size: 0px; font-weight: 400; text-align: start; text-wrap-mode: nowrap; background-color: transparent;&quot;&gt;%3CmxGraphModel%3E%3Croot%3E%3CmxCell%20id%3D%220%22%2F%3E%3CmxCell%20id%3D%221%22%20parent%3D%220%22%2F%3E%3CmxCell%20id%3D%222%22%20value%3D%22%D0%9F%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D1%82%D0%B5%D0%BB%D1%8C%26lt%3Bdiv%26gt%3B%5BPerson%26lt%3Bspan%20style%3D%26quot%3Bbackground-color%3A%20transparent%3B%20color%3A%20light-dark(rgb(0%2C%200%2C%200)%2C%20rgb(255%2C%20255%2C%20255))%3B%26quot%3B%26gt%3B%5D%26lt%3B%2Fspan%26gt%3B%26lt%3B%2Fdiv%26gt%3B%22%20style%3D%22rounded%3D1%3BwhiteSpace%3Dwrap%3Bhtml%3D1%3BfontSize%3D18%3BfontStyle%3D1%22%20vertex%3D%221%22%20parent%3D%221%22%3E%3CmxGeometry%20x%3D%22-1510%22%20y%3D%22-950%22%20width%3D%22360%22%20height%3D%22200%22%20as%3D%22geometry%22%2F%3E%3C%2FmxCell%3E%3C%2Froot%3E%3C%2FmxGraphModel%3E&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;]&lt;/span&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=18;fontStyle=1;fillColor=#AAAAAA;" parent="1" vertex="1">
           <mxGeometry x="-2190" y="-1550" width="360" height="200" as="geometry" />
@@ -1556,65 +1499,6 @@
 >>>>>>> Stashed changes
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-=======
-        <mxCell id="PiL31PUt_gtgF7jQxQlV-9" value="Клиентская часть веб-портала&lt;br&gt;&lt;div&gt;[ПО&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;]&lt;/span&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=26;fontStyle=1;fillColor=#AAAAAA;" parent="1" vertex="1">
-          <mxGeometry x="-1710" y="-670" width="400" height="200" as="geometry" />
-        </mxCell>
-        <mxCell id="PiL31PUt_gtgF7jQxQlV-10" value="Серверная часть веб-портала&lt;div&gt;[ПО&lt;span style=&quot;color: rgba(0, 0, 0, 0); font-family: monospace; font-weight: 400; text-align: start; text-wrap-mode: nowrap; background-color: transparent;&quot;&gt;%3CmxGraphModel%3E%3Croot%3E%3CmxCell%20id%3D%220%22%2F%3E%3CmxCell%20id%3D%221%22%20parent%3D%220%22%2F%3E%3CmxCell%20id%3D%222%22%20value%3D%22%D0%9F%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D1%82%D0%B5%D0%BB%D1%8C%26lt%3Bdiv%26gt%3B%5BPerson%26lt%3Bspan%20style%3D%26quot%3Bbackground-color%3A%20transparent%3B%20color%3A%20light-dark(rgb(0%2C%200%2C%200)%2C%20rgb(255%2C%20255%2C%20255))%3B%26quot%3B%26gt%3B%5D%26lt%3B%2Fspan%26gt%3B%26lt%3B%2Fdiv%26gt%3B%22%20style%3D%22rounded%3D1%3BwhiteSpace%3Dwrap%3Bhtml%3D1%3BfontSize%3D18%3BfontStyle%3D1%22%20vertex%3D%221%22%20parent%3D%221%22%3E%3CmxGeometry%20x%3D%22-1510%22%20y%3D%22-950%22%20width%3D%22360%22%20height%3D%22200%22%20as%3D%22geometry%22%2F%3E%3C%2FmxCell%3E%3C%2Froot%3E%3C%2FmxGraphModel%3E&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;]&lt;/span&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=26;fontStyle=1" parent="1" vertex="1">
-          <mxGeometry x="-1330" y="-349" width="400" height="200" as="geometry" />
-        </mxCell>
-        <mxCell id="PiL31PUt_gtgF7jQxQlV-11" value="&lt;b&gt;Использование функционала&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=0;fontSize=26;" parent="1" vertex="1">
-          <mxGeometry x="-1237.5" y="-750" width="215" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="PiL31PUt_gtgF7jQxQlV-12" value="&lt;b&gt;Переход по ссылке&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=0;fontSize=26;" parent="1" vertex="1">
-          <mxGeometry x="-1227.5" y="-600" width="195" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="PiL31PUt_gtgF7jQxQlV-13" value="&lt;b&gt;API&lt;/b&gt;&lt;br&gt;[JSON/HTTPS]" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=0;fontSize=26;" parent="1" vertex="1">
-          <mxGeometry x="-1223" y="-439" width="186" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="cx-hy2BCsI41yQWdVwEG-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=26;" parent="1" source="cx-hy2BCsI41yQWdVwEG-2" target="cx-hy2BCsI41yQWdVwEG-5" edge="1">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="cx-hy2BCsI41yQWdVwEG-2" value="API GetAwaitAndAAService&amp;nbsp;&lt;div&gt;[Подсистема: C#, ASP.NET Core, EF Core, JWT]&lt;br&gt;Авторизация и аутентификация запросов пользователей, переадресация запросов на другие микросервисы.&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=26;fontStyle=1" parent="1" vertex="1">
-          <mxGeometry x="1890" y="140" width="760" height="200" as="geometry" />
-        </mxCell>
-        <mxCell id="cx-hy2BCsI41yQWdVwEG-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=26;" parent="1" source="cx-hy2BCsI41yQWdVwEG-3" target="cx-hy2BCsI41yQWdVwEG-6" edge="1">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="cx-hy2BCsI41yQWdVwEG-3" value="Сервис&lt;div&gt;[Компонент: C#, ASP.NET Core]&lt;br&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=26;fontStyle=1" parent="1" vertex="1">
-          <mxGeometry x="1890" y="660" width="360" height="200" as="geometry" />
-        </mxCell>
-        <mxCell id="cx-hy2BCsI41yQWdVwEG-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=26;" parent="1" source="cx-hy2BCsI41yQWdVwEG-5" target="cx-hy2BCsI41yQWdVwEG-3" edge="1">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="cx-hy2BCsI41yQWdVwEG-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=26;" parent="1" source="cx-hy2BCsI41yQWdVwEG-5" target="cx-hy2BCsI41yQWdVwEG-18" edge="1">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="cx-hy2BCsI41yQWdVwEG-5" value="Контроллер&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;[Компонент: C#, ASP.NET Core, JWT]&lt;/span&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=26;fontStyle=1" parent="1" vertex="1">
-          <mxGeometry x="1890" y="430" width="360" height="200" as="geometry" />
-        </mxCell>
-        <mxCell id="cx-hy2BCsI41yQWdVwEG-6" value="Репозиторий&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;[Компонент: C#, ASP.NET Core, EF Core]&lt;/span&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=26;fontStyle=1" parent="1" vertex="1">
-          <mxGeometry x="1890" y="900" width="360" height="200" as="geometry" />
-        </mxCell>
-        <mxCell id="cx-hy2BCsI41yQWdVwEG-7" value="&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;БД&lt;/div&gt;&lt;div&gt;[Подсистема: PostgreSQL]&lt;/div&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;fontSize=26;fontStyle=1" parent="1" vertex="1">
-          <mxGeometry x="1890" y="1210" width="360" height="170" as="geometry" />
-        </mxCell>
-        <mxCell id="cx-hy2BCsI41yQWdVwEG-10" value="Реализация сервиса" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=37;fontStyle=1" parent="1" vertex="1">
-          <mxGeometry x="1848" y="1123" width="430" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="cx-hy2BCsI41yQWdVwEG-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;fontSize=26;" parent="1" source="cx-hy2BCsI41yQWdVwEG-6" target="cx-hy2BCsI41yQWdVwEG-7" edge="1">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="cx-hy2BCsI41yQWdVwEG-18" value="MongoDB Сервис&lt;div&gt;[Компонент: C#, ASP.NET Core]&lt;br&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=26;fontStyle=1" parent="1" vertex="1">
-          <mxGeometry x="2290" y="660" width="360" height="200" as="geometry" />
-        </mxCell>
-        <mxCell id="cx-hy2BCsI41yQWdVwEG-20" value="&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;БД&lt;/div&gt;&lt;div&gt;[Подсистема: MongoDB]&lt;/div&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;fontSize=26;fontStyle=1" parent="1" vertex="1">
-          <mxGeometry x="2290" y="1210" width="360" height="170" as="geometry" />
-        </mxCell>
-        <mxCell id="cx-hy2BCsI41yQWdVwEG-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;fontSize=26;" parent="1" source="cx-hy2BCsI41yQWdVwEG-18" target="cx-hy2BCsI41yQWdVwEG-20" edge="1">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
->>>>>>> Stashed changes
         <mxCell id="CaLmf9GniL-LHFBPWZCT-19" value="&lt;b&gt;API Отправка запросов&lt;/b&gt;&lt;br&gt;JSON/HTTPS" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=0;fontSize=24;" parent="1" vertex="1">
           <mxGeometry x="535" y="-680" width="382" height="60" as="geometry" />
         </mxCell>
