@@ -1,0 +1,17 @@
+@startuml
+
+skinparam actorStyle hollow
+Actor "Пользователь" as usr
+Boundary "Клиентская часть приложения" as front
+Boundary "Telegram бот" as tg
+Boundary "Серверная часть приложения" as back
+
+usr -> front : Нажатие кнопки\nдля прохождения\nаутентификации
+front -> usr : Отправка ссылки\nдля перехода в Telegram бота
+usr -> tg : Подтверждение перехода по ссылке
+tg -> back : Отправка данных\nо пользователе
+back -> tg : Отправка JWT\nтокена
+tg -> usr : Отправка кнопки на переход на веб-портал
+usr -> front : Переход на веб-портал при\nнажатие кнопки в Telegram боте
+
+@enduml
