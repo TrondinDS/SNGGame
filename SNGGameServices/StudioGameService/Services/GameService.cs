@@ -1,5 +1,11 @@
-﻿using Library.Generics.DB.DTO.DTOModelObjects.Game;
+﻿using AutoMapper;
+using Library.Generics.DB.DTO.DTOModelObjects.Game;
+using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Game;
 using Library.Generics.Query.QueryModels.StudioGame;
+using Library.Services;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using MongoDB.Bson;
+using MongoDB.Driver;
 using StudioGameService.DB.Model;
 using StudioGameService.Repository.Interfaces;
 using StudioGameService.Services.Interfaces;
@@ -9,16 +15,67 @@ namespace StudioGameService.Services
     public class GameService : IGameService
     {
         protected readonly IGameRepository gameRepository;
+        private readonly Mongo mongoService;
+        private readonly IMapper mapper;
 
-        public GameService(IGameRepository gameRepository)
+        const string imgsDatabase = "ImagesDatabase";
+        const string avasCollection = "GameCollection";
+
+        const string contentDatabase = "ImagesDatabase";
+        const string contentCollection = "ContentCollection";
+
+        public GameService(IGameRepository gameRepository, Mongo mongoService)
         {
             this.gameRepository = gameRepository;
+            this.mongoService = mongoService;
         }
 
-        public async Task AddAsync(Game game)
+        public async Task AddAsync(GameDTO game)
         {
-            await gameRepository.AddAsync(game);
-            await gameRepository.SaveChangesAsync();
+            var gameModel = mapper.Map<Game>(game);
+            try
+            {
+                await gameRepository.AddAsync(gameModel);
+                await gameRepository.SaveChangesAsync();
+
+                await mongoService.Database(imgsDatabase)
+                    .Collection(avasCollection)
+                    .InsertOneAsync(gameModel.Id, game.Image);
+
+                await mongoService.Database(contentDatabase)
+                    .Collection(contentCollection)
+                    .InsertOneAsync(gameModel.Id, game.Content);
+            }
+            catch (Exception ex)
+            {
+                await CompensateAddAsync(gameModel.Id);
+                throw;
+            }
+        }
+        private async Task CompensateAddAsync(Guid gameId)
+        {
+            try
+            {
+                await mongoService.Database(imgsDatabase).Collection(avasCollection)
+                    .Delete(gameId);
+
+                await mongoService.Database(contentDatabase).Collection(contentCollection)
+                    .Delete(gameId);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ошибка при откате изменений: {ex.Message}");
+            }
+
+            try
+            {
+                // Удаляем из Postgres
+                await DeleteAsync(gameId);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ошибка удаления игры из БД: {ex.Message}");
+            }
         }
 
         public async Task DeleteAsync(Guid id)
@@ -46,6 +103,25 @@ namespace StudioGameService.Services
             gameRepository.UpdateAsync(game);
             await gameRepository.SaveChangesAsync();
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         public async Task<IEnumerable<Game>> FilterGame(ParamQueryGame paramQuerySG)
         {

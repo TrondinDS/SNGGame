@@ -48,5 +48,8 @@ namespace Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Game
         public Guid StudioId { get; set; }
 
         public int? StatisticGameId { get; set; }
+
+        public string? Image { get; set; }
+        public string? Content { get; set; }
     }
 }
