@@ -38,13 +38,15 @@ namespace StudioGameService.Services
                 await gameRepository.AddAsync(gameModel);
                 await gameRepository.SaveChangesAsync();
 
+                // TODO(kra53n): also send image contentType from game
+                string avaImgContentType = "png";
                 await mongoService.Database(imgsDatabase)
                     .Collection(avasCollection)
-                    .InsertOneAsync(gameModel.Id, game.Image);
+                    .InsertImg(gameModel.Id, game.Image, avaImgContentType);
 
                 await mongoService.Database(contentDatabase)
                     .Collection(contentCollection)
-                    .InsertOneAsync(gameModel.Id, game.Content);
+                    .InsertStrContent(gameModel.Id, game.Content);
             }
             catch (Exception ex)
             {
@@ -52,6 +54,7 @@ namespace StudioGameService.Services
                 throw;
             }
         }
+
         private async Task CompensateAddAsync(Guid gameId)
         {
             try

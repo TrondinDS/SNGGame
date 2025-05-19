@@ -1,4 +1,5 @@
 ﻿using Library.Generics.DB.DTO.DTOModelObjects.Game;
+using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Game;
 using Library.Generics.Query.QueryModels.StudioGame;
 using StudioGameService.DB.Model;
 
@@ -6,7 +7,7 @@ namespace StudioGameService.Services.Interfaces
 {
     public interface IGameService
     {
-        Task AddAsync(Game game);
+        Task AddAsync(GameDTO game);
         Task DeleteAsync(Guid id);
         Task<IEnumerable<Game>> GetAllAsync();
         Task<Game> GetByIdAsync(Guid id);

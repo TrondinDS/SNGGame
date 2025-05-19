@@ -24,7 +24,7 @@ namespace StudioGameService.Controllers
             await mongoService
                 .Database(contentDatabase)
                 .Collection(contentCollection)
-                .Insert(dto.Id, dto.Value);
+                .InsertStrContent(dto.Id, dto.Value);
             return Ok("Content uploaded successfully.");
         }
 
@@ -44,7 +44,7 @@ namespace StudioGameService.Controllers
             await mongoService
                 .Database(contentDatabase)
                 .Collection(contentCollection)
-                .Insert(dto.Id, dto.Value);
+                .InsertStrContent(dto.Id, dto.Value);
             return Ok("Content updated successfully.");
         }
 

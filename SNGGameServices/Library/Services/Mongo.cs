@@ -1,6 +1,7 @@
 ﻿using Amazon.Runtime.Internal.Util;
 using Library.Types;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
@@ -60,25 +61,6 @@ namespace Library.Services
             this.collection = db.GetCollection<BsonDocument>(name);
         }
 
-        public async Task Insert(Guid id, IFormFile formFile)
-        {
-            if (collection == null)
-            {
-                Console.WriteLine(""); // TODO(kra53n): use logger
-                return;
-            }
-            var memStream = new MemoryStream();
-            await formFile.CopyToAsync(memStream);
-            await collection.InsertOneAsync(
-                new Img
-                {
-                    Id = id,
-                    Bytes = memStream.ToArray(),
-                    ContentType = formFile.ContentType,
-                }.AsBsonDocument()
-            );
-        }
-
         public async Task<Img> GetImgById(Guid id)
         {
             var filter = Builders<BsonDocument>.Filter.Eq("id", id.ToString());
@@ -91,7 +73,7 @@ namespace Library.Services
             return new Img
             {
                 Id = new Guid(document["id"].AsString),
-                Bytes = document["data"].AsBsonBinaryData.Bytes,
+                Bytes = document["data"].AsString,
                 ContentType = document["contentType"].AsString,
             };
         }
@@ -104,13 +86,14 @@ namespace Library.Services
             return documents.Select(document => new Img
             {
                 Id = new Guid(document["id"].AsString),
-                Bytes = document["data"].AsBsonBinaryData.Bytes,
+                Bytes = document["data"].AsString,
                 ContentType = document["contentType"].AsString,
             }).ToList();
         }
 
-        public async Task Insert(int id, IFormFile formFile)
+        public async Task Insert(Guid id, IFormFile formFile)
         {
+            // TODO(kra53n): delete this method
             if (collection == null)
             {
                 Console.WriteLine(""); // TODO(kra53n): use logger
@@ -121,9 +104,27 @@ namespace Library.Services
             await collection.InsertOneAsync(
                 new Img
                 {
-                    Id = new Guid(),
-                    Bytes = memStream.ToArray(),
+                    Id = id,
+                    Bytes = "asd",
+                    //Bytes = memStream.ToArray(),
                     ContentType = formFile.ContentType,
+                }.AsBsonDocument()
+            );
+        }
+
+        public async Task InsertImg(Guid id, string bytes, string contentType)
+        {
+            if (collection == null)
+            {
+                Console.WriteLine(""); // TODO(kra53n): use logger
+                return;
+            }
+            await collection.InsertOneAsync(
+                new Img
+                {
+                    Id = id,
+                    Bytes = bytes,
+                    ContentType = contentType,
                 }.AsBsonDocument()
             );
         }
@@ -140,12 +141,12 @@ namespace Library.Services
             return new Img
             {
                 Id = new Guid(document["id"].AsString),
-                Bytes = document["data"].AsBsonBinaryData.Bytes,
+                Bytes = document["data"].AsString,
                 ContentType = document["contentType"].AsString,
             };
         }
 
-        public async Task Insert(Guid id, string content)
+        public async Task InsertStrContent(Guid id, string content)
         {
             if (collection == null)
             {
@@ -212,12 +213,6 @@ namespace Library.Services
         }
 
         public async Task Delete(Guid id)
-        {
-            var filter = Builders<BsonDocument>.Filter.Eq("id", id.ToString());
-            await collection.DeleteOneAsync(filter);
-        }
-
-        public async Task Delete(int id)
         {
             var filter = Builders<BsonDocument>.Filter.Eq("id", id.ToString());
             await collection.DeleteOneAsync(filter);

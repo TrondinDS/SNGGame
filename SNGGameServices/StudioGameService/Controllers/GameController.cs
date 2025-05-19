@@ -56,9 +56,9 @@ namespace StudioGameService.Controllers
         /// <param name="gameCreateDTO">Данные для создания игры</param>
         /// <returns>Созданная игра</returns>
         [HttpPost]
-        public async Task<ActionResult> CreateGame(GameDTO gameCreateDTO)
+        public async Task<ActionResult> CreateGame(GameDTO game)
         {
-            var game = mapper.Map<Game>(gameCreateDTO);
+            //var game = mapper.Map<Game>(gameCreateDTO);
             await gameService.AddAsync(game);
             var gameResultDTO = mapper.Map<GameDTO>(game);
             return CreatedAtAction(nameof(GetGameById), new { id = game.Id }, gameResultDTO);

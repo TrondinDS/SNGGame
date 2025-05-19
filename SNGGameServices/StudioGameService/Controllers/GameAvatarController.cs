@@ -35,6 +35,7 @@ namespace StudioGameService.Controllers
                 .Database(imgsDatabase)
                 .Collection(avasCollection)
                 .GetImgById(id);
+            return Ok(avatar.Bytes);
             return Ok(File(avatar.Bytes, avatar.ContentType));
         }
 
