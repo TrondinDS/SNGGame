@@ -49,7 +49,11 @@ namespace Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Game
 
         public int? StatisticGameId { get; set; }
 
-        public string? Image { get; set; }
-        public string? Content { get; set; }
+        [Required(ErrorMessage = "Image является обязательным")]
+        public string Image { get; set; }
+        [Required(ErrorMessage = "ImageType является обязательным")]
+        public string ImageType { get; set; }
+        [Required(ErrorMessage = "Content является обязательным")]
+        public string Content { get; set; }
     }
 }

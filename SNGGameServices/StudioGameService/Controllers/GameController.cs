@@ -14,11 +14,13 @@ namespace StudioGameService.Controllers
     {
         private readonly IGameService gameService;
         private readonly IMapper mapper;
+        private readonly ILogger<GameController> logger;
 
-        public GameController(IGameService gameService, IMapper mapper)
+        public GameController(IGameService gameService, IMapper mapper, ILogger<GameController> logger)
         {
             this.gameService = gameService;
             this.mapper = mapper;
+            this.logger = logger;
         }
 
         /// <summary>
@@ -28,9 +30,16 @@ namespace StudioGameService.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<GameDTO>>> GetAllGames()
         {
-            var games = await gameService.GetAllAsync();
-            var gameDTOs = mapper.Map<IEnumerable<GameDTO>>(games);
-            return Ok(gameDTOs);
+            try
+            {
+                var result = await gameService.GetAllAsync();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Ошибка при получении всех игр");
+                return StatusCode(StatusCodes.Status500InternalServerError, new { error = "Произошла внутренняя ошибка сервера", details = ex.Message });
+            }
         }
 
         /// <summary>
@@ -41,13 +50,20 @@ namespace StudioGameService.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<GameDTO>> GetGameById(Guid id)
         {
-            var game = await gameService.GetByIdAsync(id);
-            if (game == null)
+            try
             {
-                return NotFound();
+                var result = await gameService.GetByIdAsync(id);
+                if (result == null)
+                {
+                    return NotFound();
+                }
+                return Ok(result);
             }
-            var gameDTO = mapper.Map<GameDTO>(game);
-            return Ok(gameDTO);
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Ошибка при получении игры по ID: {Id}", id);
+                return StatusCode(StatusCodes.Status500InternalServerError, new { error = "Произошла внутренняя ошибка сервера", details = ex.Message });
+            }
         }
 
         /// <summary>
@@ -58,10 +74,16 @@ namespace StudioGameService.Controllers
         [HttpPost]
         public async Task<ActionResult> CreateGame(GameDTO game)
         {
-            //var game = mapper.Map<Game>(gameCreateDTO);
-            await gameService.AddAsync(game);
-            var gameResultDTO = mapper.Map<GameDTO>(game);
-            return CreatedAtAction(nameof(GetGameById), new { id = game.Id }, gameResultDTO);
+            try
+            {
+                await gameService.AddAsync(game);
+                return CreatedAtAction(nameof(GetGameById), new { id = game.Id }, game);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Ошибка при создании игры");
+                return StatusCode(StatusCodes.Status500InternalServerError, new { error = "Произошла внутренняя ошибка сервера", details = ex.Message });
+            }
         }
 
         /// <summary>
@@ -73,20 +95,27 @@ namespace StudioGameService.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateGame(Guid id, GameDTO gameDTO)
         {
-            if (id != gameDTO.Id)
+            try
             {
-                return BadRequest();
-            }
+                if (id != gameDTO.Id)
+                {
+                    return BadRequest();
+                }
 
-            var existingGame = await gameService.GetByIdAsync(id);
-            if (existingGame == null)
+                var existingGame = await gameService.GetByIdAsync(id);
+                if (existingGame == null)
+                {
+                    return NotFound();
+                }
+
+                await gameService.UpdateAsync(gameDTO);
+                return Ok(gameDTO);
+            }
+            catch (Exception ex)
             {
-                return NotFound();
+                logger.LogError(ex, "Ошибка при обновлении игры с ID: {Id}", id);
+                return StatusCode(StatusCodes.Status500InternalServerError, new { error = "Произошла внутренняя ошибка сервера", details = ex.Message });
             }
-
-            var game = mapper.Map<Game>(gameDTO);
-            await gameService.UpdateAsync(game);
-            return Ok(game);
         }
 
         /// <summary>
@@ -97,8 +126,16 @@ namespace StudioGameService.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteGame(Guid id)
         {
-            await gameService.DeleteAsync(id);
-            return NoContent();
+            try
+            {
+                await gameService.DeleteAsync(id);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Ошибка при удалении игры с ID: {Id}", id);
+                return StatusCode(StatusCodes.Status500InternalServerError, new { error = "Произошла внутренняя ошибка сервера", details = ex.Message });
+            }
         }
 
         /// <summary> Получение списка фильтрованных игр
@@ -108,8 +145,16 @@ namespace StudioGameService.Controllers
         [HttpPost]
         public async Task<ActionResult> GetFilterGame([FromBody] ParamQueryGame paramFilter)
         {
-            var games = await gameService.FilterGame(paramFilter);
-            return Ok(games);
+            try
+            {
+                var games = await gameService.FilterGame(paramFilter);
+                return Ok(games);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Ошибка при фильтрации игр");
+                return StatusCode(StatusCodes.Status500InternalServerError, new { error = "Произошла внутренняя ошибка сервера", details = ex.Message });
+            }
         }
 
         /// <summary> Получение списка статистики игр
@@ -119,11 +164,18 @@ namespace StudioGameService.Controllers
         [HttpPost]
         public async Task<ActionResult> GetStatisticGames([FromBody] List<Guid> listGameId)
         {
-            var games = await gameService.GetStatisticGames(listGameId);
+            try
+            {
+                var games = await gameService.GetStatisticGames(listGameId);
+                var resultListStatistic = mapper.Map<IEnumerable<StatisticGameDTO>>(games);
 
-            var resultListStatistic = mapper.Map<IEnumerable<StatisticGameDTO>>(games);
-
-            return Ok(resultListStatistic);
+                return Ok(resultListStatistic);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Ошибка при получении статистики игр");
+                return StatusCode(StatusCodes.Status500InternalServerError, new { error = "Произошла внутренняя ошибка сервера", details = ex.Message });
+            }
         }
     }
 }

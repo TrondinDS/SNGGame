@@ -1,5 +1,6 @@
 ﻿using Library.Generics.GenericRepository.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Library.Generics.GenericRepository
 {
@@ -8,6 +9,7 @@ namespace Library.Generics.GenericRepository
     {
         private readonly DbContext _context;
         private readonly DbSet<TEntity> _dbSet;
+        private IDbContextTransaction _currentTransaction;
 
         public GenericRepository(DbContext context)
         {
@@ -66,6 +68,31 @@ namespace Library.Generics.GenericRepository
         public async Task SaveChangesAsync()
         {
             await _context.SaveChangesAsync();
+        }
+
+        public async Task BeginTransactionAsync()
+        {
+            if (_currentTransaction != null) return;
+
+            _currentTransaction = await _context.Database.BeginTransactionAsync();
+        }
+
+        public async Task CommitTransactionAsync()
+        {
+            if (_currentTransaction == null) return;
+
+            await _currentTransaction.CommitAsync();
+            _currentTransaction.Dispose();
+            _currentTransaction = null;
+        }
+
+        public async Task RollbackTransactionAsync()
+        {
+            if (_currentTransaction == null) return;
+
+            await _currentTransaction.RollbackAsync();
+            _currentTransaction.Dispose();
+            _currentTransaction = null;
         }
     }
 }

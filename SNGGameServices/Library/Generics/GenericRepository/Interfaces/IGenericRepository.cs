@@ -15,5 +15,9 @@ namespace Library.Generics.GenericRepository.Interfaces
         Task UpdateAsync(params TEntity[] entity);
         Task DeleteAsync(params TEntity[] entity);
         Task SaveChangesAsync();
+
+        Task BeginTransactionAsync();
+        Task CommitTransactionAsync();
+        Task RollbackTransactionAsync();
     }
 }

@@ -9,11 +9,11 @@ namespace StudioGameService.Services.Interfaces
     {
         Task AddAsync(GameDTO game);
         Task DeleteAsync(Guid id);
-        Task<IEnumerable<Game>> GetAllAsync();
-        Task<Game> GetByIdAsync(Guid id);
-        Task UpdateAsync(Game game);
+        Task<IEnumerable<GameDTO>> GetAllAsync();
+        Task<GameDTO> GetByIdAsync(Guid id);
+        Task UpdateAsync(GameDTO game);
 
-        Task<IEnumerable<Game>> FilterGame(ParamQueryGame paramQuerySG);
+        Task<IEnumerable<GameDTO>> FilterGame(ParamQueryGame paramQuerySG);
 
         public Task<IEnumerable<Game>> GetAllCardGameAsync();
         public Task<IEnumerable<Game>> GetSelectCardGameAsync(IEnumerable<Guid> idGames);
