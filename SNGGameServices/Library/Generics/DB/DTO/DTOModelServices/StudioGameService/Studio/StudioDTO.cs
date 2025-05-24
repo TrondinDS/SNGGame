@@ -23,6 +23,13 @@ namespace Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Studio
         [Required(ErrorMessage = "Идентификатор владельца является обязательным")]
         public Guid OwnerId { get; set; }
 
+        [Required(ErrorMessage = "Image является обязательным")]
+        public string Image { get; set; }
+        [Required(ErrorMessage = "ImageType является обязательным")]
+        public string ImageType { get; set; }
+        [Required(ErrorMessage = "Content является обязательным")]
+        public string Content { get; set; }
+
         public bool IsDeleted { get; set; }
 
         public DateTime? DateDeleted { get; set; }

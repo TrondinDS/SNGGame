@@ -1,16 +1,16 @@
-﻿using Library.Generics.Query.QueryModels.StudioGame;
-using Library.Generics.Query.QueryModels.StudioGame.Studio;
+﻿using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Studio;
+using Library.Generics.Query.QueryModels.StudioGame;
 using StudioGameService.DB.Model;
 
 namespace StudioGameService.Services.Interfaces
 {
     public interface IStudioService
     {
-        Task AddAsync(Studio studio);
+        Task AddAsync(StudioDTO studio);
         Task DeleteAsync(Guid id);
-        Task<IEnumerable<Studio>> GetAllAsync();
-        Task<Studio> GetByIdAsync(Guid id);
-        Task UpdateAsync(Studio studio);
-        public Task<IEnumerable<Studio>> GetFiltreCardStudioAsync(ParamQueryStudio paramQueryListStudio);
+        Task<IEnumerable<StudioDTO>> GetAllAsync();
+        Task<StudioDTO> GetByIdAsync(Guid id);
+        Task UpdateAsync(StudioDTO studio);
+        public Task<IEnumerable<StudioDTO>> GetFiltreCardStudioAsync(ParamQueryStudio paramQueryListStudio);
     }
 }

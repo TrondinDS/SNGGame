@@ -1,8 +1,12 @@
 ﻿using AutoMapper;
 using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Studio;
+using Library.Generics.Query.QueryModels.StudioGame;
 using Microsoft.AspNetCore.Mvc;
 using StudioGameService.DB.Model;
 using StudioGameService.Services.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace StudioGameService.Controllers
 {
@@ -12,11 +16,13 @@ namespace StudioGameService.Controllers
     {
         private readonly IStudioService studioService;
         private readonly IMapper mapper;
+        private readonly ILogger<StudioController> logger;
 
-        public StudioController(IStudioService studioService, IMapper mapper)
+        public StudioController(IStudioService studioService, IMapper mapper, ILogger<StudioController> logger)
         {
             this.studioService = studioService;
             this.mapper = mapper;
+            this.logger = logger;
         }
 
         /// <summary>
@@ -26,9 +32,16 @@ namespace StudioGameService.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<StudioDTO>>> GetAllStudios()
         {
-            var studios = await studioService.GetAllAsync();
-            var studioDTOs = mapper.Map<IEnumerable<StudioDTO>>(studios);
-            return Ok(studioDTOs);
+            try
+            {
+                var result = await studioService.GetAllAsync();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Ошибка при получении всех студий");
+                return StatusCode(StatusCodes.Status500InternalServerError, new { error = "Произошла внутренняя ошибка сервера", details = ex.Message });
+            }
         }
 
         /// <summary>
@@ -39,13 +52,20 @@ namespace StudioGameService.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<StudioDTO>> GetStudioById(Guid id)
         {
-            var studio = await studioService.GetByIdAsync(id);
-            if (studio == null)
+            try
             {
-                return NotFound();
+                var result = await studioService.GetByIdAsync(id);
+                if (result == null)
+                {
+                    return NotFound();
+                }
+                return Ok(result);
             }
-            var studioDTO = mapper.Map<StudioDTO>(studio);
-            return Ok(studioDTO);
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Ошибка при получении студии по ID: {Id}", id);
+                return StatusCode(StatusCodes.Status500InternalServerError, new { error = "Произошла внутренняя ошибка сервера", details = ex.Message });
+            }
         }
 
         /// <summary>
@@ -54,12 +74,18 @@ namespace StudioGameService.Controllers
         /// <param name="studioCreateDTO">Данные для создания студии</param>
         /// <returns>Созданная студия</returns>
         [HttpPost]
-        public async Task<ActionResult> CreateStudio(StudioDTO studioCreateDTO)
+        public async Task<ActionResult> CreateStudio(StudioDTO studioDTO)
         {
-            var studio = mapper.Map<Studio>(studioCreateDTO);
-            await studioService.AddAsync(studio);
-            var studioResultDTO = mapper.Map<StudioDTO>(studio);
-            return CreatedAtAction(nameof(GetStudioById), new { id = studio.Id }, studioResultDTO);
+            try
+            {
+                await studioService.AddAsync(studioDTO);
+                return CreatedAtAction(nameof(GetStudioById), new { id = studioDTO.Id }, studioDTO);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Ошибка при создании студии");
+                return StatusCode(StatusCodes.Status500InternalServerError, new { error = "Произошла внутренняя ошибка сервера", details = ex.Message });
+            }
         }
 
         /// <summary>
@@ -71,20 +97,27 @@ namespace StudioGameService.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateStudio(Guid id, StudioDTO studioDTO)
         {
-            if (id != studioDTO.Id)
+            try
             {
-                return BadRequest();
-            }
+                if (id != studioDTO.Id)
+                {
+                    return BadRequest();
+                }
 
-            var existingStudio = await studioService.GetByIdAsync(id);
-            if (existingStudio == null)
+                var existingStudio = await studioService.GetByIdAsync(id);
+                if (existingStudio == null)
+                {
+                    return NotFound();
+                }
+
+                await studioService.UpdateAsync(studioDTO);
+                return Ok(studioDTO);
+            }
+            catch (Exception ex)
             {
-                return NotFound();
+                logger.LogError(ex, "Ошибка при обновлении студии с ID: {Id}", id);
+                return StatusCode(StatusCodes.Status500InternalServerError, new { error = "Произошла внутренняя ошибка сервера", details = ex.Message });
             }
-
-            var studio = mapper.Map<Studio>(studioDTO);
-            await studioService.UpdateAsync(studio);
-            return Ok(studio);
         }
 
         /// <summary>
@@ -95,8 +128,16 @@ namespace StudioGameService.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteStudio(Guid id)
         {
-            await studioService.DeleteAsync(id);
-            return NoContent();
+            try
+            {
+                await studioService.DeleteAsync(id);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Ошибка при удалении студии с ID: {Id}", id);
+                return StatusCode(StatusCodes.Status500InternalServerError, new { error = "Произошла внутренняя ошибка сервера", details = ex.Message });
+            }
         }
     }
 }

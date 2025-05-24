@@ -30,19 +30,11 @@ namespace Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Game
         [MaxLength(255, ErrorMessage = "Страна разработки не должна превышать 255 символов")]
         public string CountryDevelopment { get; set; }
 
-        [MaxLength(
-            255,
-            ErrorMessage = "Ссылка на страницу в магазине не должна превышать 255 символов"
-        )]
+        [MaxLength(255, ErrorMessage = "Ссылка на страницу в магазине не должна превышать 255 символов")]
         public string LinkPageStore { get; set; }
 
         [MaxLength(255, ErrorMessage = "Platform не должна превышать 255 символов")]
         public string Platform { get; set; }
-
-        [Required(ErrorMessage = "IsDeleted является обязательным")]
-        public bool IsDeleted { get; set; }
-
-        public DateTime? DateDeleted { get; set; }
 
         [Required(ErrorMessage = "StudioId является обязательным")]
         public Guid StudioId { get; set; }
@@ -51,9 +43,16 @@ namespace Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Game
 
         [Required(ErrorMessage = "Image является обязательным")]
         public string Image { get; set; }
+
         [Required(ErrorMessage = "ImageType является обязательным")]
         public string ImageType { get; set; }
+
         [Required(ErrorMessage = "Content является обязательным")]
         public string Content { get; set; }
+
+        [Required(ErrorMessage = "IsDeleted является обязательным")]
+        public bool IsDeleted { get; set; }
+
+        public DateTime? DateDeleted { get; set; }
     }
 }
