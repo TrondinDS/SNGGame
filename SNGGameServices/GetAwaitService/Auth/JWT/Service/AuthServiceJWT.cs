@@ -58,8 +58,8 @@ namespace GetAwaitService.Auth.JWT.Service
                 IsAdmin = false,     
                 IsGlobalModerator = false,
                 ImageType = "jpg",
-                Image = DefoltImgAndCont.GetImg(),
-                Content = "Defolt"
+                Image = DefaultImgAndCont.GetImg(),
+                Content = "Default"
             };
             return userDTO;
         }

@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Library.Utils
+﻿namespace Library.Utils
 {
-    public static class DefoltImgAndCont
+    public static class DefaultImgAndCont
     {
         public static string GetImg()
         {
