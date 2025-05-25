@@ -29,5 +29,14 @@ namespace Library.Generics.DB.DTO.DTOModelServices.UserService.User
 
         [Display(Name = "Является глобальным модератором")]
         public bool? IsGlobalModerator { get; set; }
+
+        [Required(ErrorMessage = "Image является обязательным")]
+        public string Image { get; set; }
+
+        [Required(ErrorMessage = "ImageType является обязательным")]
+        public string ImageType { get; set; }
+
+        [Required(ErrorMessage = "Content является обязательным")]
+        public string Content { get; set; }
     }
 }

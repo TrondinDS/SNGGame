@@ -16,6 +16,7 @@ namespace UserService.DB.Mapping
         {
             CreateMap<User, UserDTO>().ReverseMap();
             CreateMap<User, UserCreateDTO>().ReverseMap();
+            CreateMap<UserDTO, UserCreateDTO>().ReverseMap();
             CreateMap<UserSubscription, UserSubscriptionDTO>().ReverseMap();
             CreateMap<Job, JobDTO>().ReverseMap();
             CreateMap<Banned, BannedDTO>().ReverseMap();

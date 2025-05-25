@@ -186,7 +186,7 @@ namespace StudioGameService.Services
                     throw new KeyNotFoundException($"Игра с ID {game.Id} не найдена.");
 
                 mapper.Map(game, existingGame);
-                gameRepository.UpdateAsync(existingGame);
+                await gameRepository.UpdateAsync(existingGame);
                 await gameRepository.SaveChangesAsync();
 
                 // Обновляем изображение в MongoDB: Delete + Insert

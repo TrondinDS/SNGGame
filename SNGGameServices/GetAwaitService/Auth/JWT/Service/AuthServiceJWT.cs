@@ -2,6 +2,7 @@
 using GetAwaitService.DB.Models;
 using GetAwaitService.Services.Interfaces;
 using Library.Generics.DB.DTO.DTOModelServices.UserService.User;
+using Library.Utils;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -55,7 +56,10 @@ namespace GetAwaitService.Auth.JWT.Service
                 DateBirth = null,   
                 Login = "UserDefaultLogin_" + userTelegramId.ToString() ,
                 IsAdmin = false,     
-                IsGlobalModerator = false 
+                IsGlobalModerator = false,
+                ImageType = "jpg",
+                Image = DefoltImgAndCont.GetImg(),
+                Content = "Defolt"
             };
             return userDTO;
         }

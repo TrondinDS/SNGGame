@@ -54,7 +54,7 @@ namespace UserService.Controllers
         [HttpPost]
         public async Task<ActionResult> CreateUser(UserCreateDTO userDTO)
         {
-            var user = mapper.Map<User>(userDTO);
+            var user = mapper.Map<UserDTO>(userDTO);
             await userService.AddAsync(user);
             var userResultDTO = mapper.Map<UserDTO>(user);
             return CreatedAtAction(nameof(GetUserById), new { id = user.Id }, userResultDTO);
@@ -77,10 +77,9 @@ namespace UserService.Controllers
             {
                 return NotFound();
             }
+            await userService.UpdateAsync(userDto);
 
-            var user = mapper.Map<User>(userDto);
-            await userService.UpdateAsync(user);
-            return Ok(user);
+            return Ok(userDto);
         }
 
         /// <summary>
