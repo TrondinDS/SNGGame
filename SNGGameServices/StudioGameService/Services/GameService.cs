@@ -134,8 +134,10 @@ namespace StudioGameService.Services
                     .Collection(contentCollection)
                     .GetContentById(game.Id);
 
-                var imageResult = await imageTask;
-                var contentResult = await contentTask;
+                await Task.WhenAll(imageTask, contentTask);
+
+                var imageResult = imageTask.Result;
+                var contentResult = contentTask.Result;
 
                 var dto = mapper.Map<GameDTO>(game);
 
