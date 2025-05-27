@@ -6,6 +6,9 @@ using OrganizerEventService.DB.DTO.Organizer;
 using OrganizerEventService.DB.Models;
 using OrganizerEventService.Enums;
 using OrganizerEventService.Repository;
+using Library.Generics.DB.DTO.DTOModelServices.OrganizerEventService.Organizer;
+using OrganizerEventService.Services.Interfaces;
+using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Game;
 
 namespace OrganizerEventService.Controllers
 {
@@ -13,23 +16,31 @@ namespace OrganizerEventService.Controllers
     [ApiController]
     public class OrganizerController : Controller
     {
-        private readonly CrudGenericService<Organizer, Guid, OrganizerRepository> service;
+        private readonly IOrganizerService service;
+        //private readonly CrudGenericService<Organizer, Guid, OrganizerRepository> service;
         private readonly IMapper mapper;
+        private readonly ILogger<OrganizerController> logger;
 
-        public OrganizerController(CrudGenericService<Organizer, Guid, OrganizerRepository> service, IMapper mapper)
+        public OrganizerController(IOrganizerService service, IMapper mapper, ILogger<OrganizerController> logger)
         {
             this.service = service;
             this.mapper = mapper;
+            this.logger = logger;
         }
 
         [HttpPost]
-        public async Task<ActionResult<OrganizerIdDTO>> Create(CreateOrganizerDTO dto)
+        public async Task<ActionResult<OrganizerIdDTO>> Create(OrganizerDTO dto)
         {
-            var model = mapper.Map<Organizer>(dto);
-            model.IsPublicationAllowed = true;
-            await service.AddAsync(model);
-            var res = mapper.Map<OrganizerIdDTO>(model);
-            return Ok(res);
+            try
+            {
+                await service.AddAsync(dto);
+                return CreatedAtAction(nameof(GetById), new { id = dto.Id }, dto);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Ошибка при создании игры");
+                return StatusCode(StatusCodes.Status500InternalServerError, new { error = "Произошла внутренняя ошибка сервера", details = ex.Message });
+            }
         }
 
         [HttpGet("{id}")]
@@ -48,16 +59,30 @@ namespace OrganizerEventService.Controllers
             return Ok(res);
         }
 
-        [HttpPut]
-        public async Task<ActionResult> Update(UpdateOrganizerDTO dto)
+        [HttpPut("{id}")]
+        public async Task<ActionResult> Update(Guid id, OrganizerDTO dto)
         {
-            var model = await service.GetByIdAsync(dto.Id);
-            if (model == null)
+            try
             {
-                return NotFound();
+                if (id != dto.Id)
+                {
+                    return BadRequest();
+                }
+
+                var existed = await service.GetByIdAsync(id);
+                if (existed == null)
+                {
+                    return NotFound();
+                }
+
+                await service.UpdateAsync(dto);
+                return Ok(dto);
             }
-            await service.UpdateAsync(model);
-            return Ok();
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Ошибка при обновлении игры с ID: {Id}", id);
+                return StatusCode(StatusCodes.Status500InternalServerError, new { error = "Произошла внутренняя ошибка сервера", details = ex.Message });
+            }
         }
 
         [HttpDelete]

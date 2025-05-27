@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Library.Generics.DB.DTO.OrganizerEventService.Organizer
+namespace Library.Generics.DB.DTO.DTOModelServices.OrganizerEventService.Organizer
 {
     public class OrganizerDTO
     {
