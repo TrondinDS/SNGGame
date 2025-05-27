@@ -33,9 +33,23 @@ namespace Library.Generics.DB.DTO.DTOModelServices.UserActivityService.Comment
         [DataType(DataType.DateTime, ErrorMessage = "DateDeleted должно иметь формат даты")]
         public DateTime? DateDeleted { get; set; }
 
+        [Range(0, int.MaxValue, ErrorMessage = "NumberOrder должено быть положительным числом")]
+        public int CountLike { get; set; }
+
         // Идентификатор темы, к которой относится комментарий
         [Required(ErrorMessage = "TopicId является обязательным")]
         public Guid TopicId { get; set; }
+
+        [RegularExpression(
+            "^[a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12}$",
+            ErrorMessage = "CommentIdReference должен быть корректным GUID"
+        )]
+        public Guid? CommentIdReference { get; set; }
+        [RegularExpression(
+            "^[a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12}$",
+            ErrorMessage = "CommentIdResponse должен быть корректным GUID"
+        )]
+        public Guid? CommentIdResponse { get; set; }
 
     }
 }

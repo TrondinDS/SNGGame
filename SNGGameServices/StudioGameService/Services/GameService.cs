@@ -1,10 +1,7 @@
 ﻿using AutoMapper;
-using Library.Generics.DB.DTO.DTOModelObjects.Game;
 using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Game;
 using Library.Generics.Query.QueryModels.StudioGame;
 using Library.Services;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using MongoDB.Bson;
 using MongoDB.Driver;
 using StudioGameService.DB.Model;
 using StudioGameService.Repository.Interfaces;

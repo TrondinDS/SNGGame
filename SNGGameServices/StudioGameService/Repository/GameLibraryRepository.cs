@@ -49,7 +49,7 @@ namespace StudioGameService.Repository
                         GameId = game.Id
                     };
 
-                    await dbSetStatisticGame.AddAsync(game.StatisticGame);
+                    await dbSetStatisticGame.AddRangeAsync(game.StatisticGame);
                 }
                 else
                 {
@@ -57,7 +57,7 @@ namespace StudioGameService.Repository
                     game.StatisticGame.PeopleCount++;
                 }
 
-                await dbSetGameLibrary.AddAsync(gameLibrary);
+                await dbSetGameLibrary.AddRangeAsync(gameLibrary);
             }
         }
 
@@ -122,7 +122,7 @@ namespace StudioGameService.Repository
                 }
 
                 // Удаляем запись из базы данных
-                dbSetGameLibrary.Remove(existingGameLibrary);
+                dbSetGameLibrary.RemoveRange(existingGameLibrary);
             }
         }
     }

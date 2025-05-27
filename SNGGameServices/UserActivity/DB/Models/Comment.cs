@@ -19,6 +19,19 @@ namespace UserActivityService.DB.Models
         [ForeignKey("TopicId")]
         public Topic Topic { get; set; }
 
+        public int CountLike { get; set; }
+
+        public Guid? CommentIdReference { get; set; }
+
+        [ForeignKey("CommentIdReference")]
+        public Comment? CommentReference { get; set; }
+
+        public Guid? CommentIdResponse { get; set; }
+
+        [ForeignKey("CommentIdResponse")]
+        public Comment? CommentResponse { get; set; }
+
+
         public ICollection<UserReaction> UserReactions { get; set; } = new List<UserReaction>();
     }
 }

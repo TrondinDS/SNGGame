@@ -24,7 +24,7 @@ namespace UserActivityService.Services
             var userReaction = await userReactionRepository.GetByIdAsync(id);
             if (userReaction != null)
             {
-                userReactionRepository.DeleteAsync(userReaction);
+                await userReactionRepository.DeleteAsync(userReaction);
                 await userReactionRepository.SaveChangesAsync();
             }
         }

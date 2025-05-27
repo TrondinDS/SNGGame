@@ -32,6 +32,15 @@ namespace UserActivityService.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<Guid?>("CommentIdReference")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("CommentIdResponse")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("CountLike")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("timestamp with time zone");
 
@@ -48,6 +57,10 @@ namespace UserActivityService.Migrations
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CommentIdReference");
+
+                    b.HasIndex("CommentIdResponse");
 
                     b.HasIndex("TopicId");
 
@@ -115,11 +128,23 @@ namespace UserActivityService.Migrations
 
             modelBuilder.Entity("UserActivityService.DB.Models.Comment", b =>
                 {
+                    b.HasOne("UserActivityService.DB.Models.Comment", "CommentReference")
+                        .WithMany()
+                        .HasForeignKey("CommentIdReference");
+
+                    b.HasOne("UserActivityService.DB.Models.Comment", "CommentResponse")
+                        .WithMany()
+                        .HasForeignKey("CommentIdResponse");
+
                     b.HasOne("UserActivityService.DB.Models.Topic", "Topic")
                         .WithMany("Comments")
                         .HasForeignKey("TopicId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("CommentReference");
+
+                    b.Navigation("CommentResponse");
 
                     b.Navigation("Topic");
                 });
