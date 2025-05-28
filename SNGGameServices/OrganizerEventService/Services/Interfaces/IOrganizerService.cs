@@ -9,7 +9,7 @@ namespace OrganizerEventService.Services.Interfaces
         Task AddAsync(OrganizerDTO dto);
         Task DeleteAsync(Guid id);
         Task<IEnumerable<OrganizerDTO>> GetAllAsync();
-        Task<GameDTO> GetByIdAsync(Guid id);
+        Task<OrganizerDTO> GetByIdAsync(Guid id);
         Task UpdateAsync(OrganizerDTO dto);
 
         //Task<IEnumerable<GameDTO>> FilterGame(ParamQueryGame paramQuerySG);

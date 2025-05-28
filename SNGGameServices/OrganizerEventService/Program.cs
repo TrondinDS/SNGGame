@@ -5,6 +5,9 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 using Library.Generics.GenericService;
 using OrganizerEventService.DB.Models;
 using OrganizerEventService.Repository;
+using OrganizerEventService.Services.Interfaces;
+using OrganizerEventService.Services;
+using OrganizerEventService.Repository.Interfaces;
 
 namespace OrganizerEventService
 {
@@ -27,6 +30,9 @@ namespace OrganizerEventService
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            builder.Services.AddTransient<IOrganizerRepository, OrganizerRepository>();
+            builder.Services.AddTransient<IOrganizerService, OrganizerService>();
 
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
