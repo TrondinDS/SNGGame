@@ -2,6 +2,7 @@
 using OrganizerEventService.DB.DTO.Organizer;
 using OrganizerEventService.DB.Models;
 using AutoMapper;
+using Library.Generics.DB.DTO.DTOModelServices.OrganizerEventService.Organizer;
 
 namespace AdministratumService.DB.Mapping
 {
@@ -18,6 +19,7 @@ namespace AdministratumService.DB.Mapping
             }
 
             {
+                CreateMap<Organizer, OrganizerDTO>().ReverseMap();
                 CreateMap<Organizer, CreateOrganizerDTO>().ReverseMap();
                 CreateMap<Organizer, DeleteOrganizerDTO>().ReverseMap();
                 CreateMap<Organizer, GetByIdOrganizerDTO>().ReverseMap();

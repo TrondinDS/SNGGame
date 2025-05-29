@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Library.Generics.DB.DTO.OrganizerEventService.Organizer
+namespace Library.Generics.DB.DTO.DTOModelServices.OrganizerEventService.Organizer
 {
     public class OrganizerDTO
     {
@@ -24,5 +24,13 @@ namespace Library.Generics.DB.DTO.OrganizerEventService.Organizer
         public bool IsDeleted { get; set; }
         public DateTime? DateDeleted { get; set; }
 
+        [Required(ErrorMessage = "Image является обязательным")]
+        public string Image { get; set; }
+
+        [Required(ErrorMessage = "ImageType является обязательным")]
+        public string ImageType { get; set; }
+
+        [Required(ErrorMessage = "Content является обязательным")]
+        public string Content { get; set; }
     }
 }
