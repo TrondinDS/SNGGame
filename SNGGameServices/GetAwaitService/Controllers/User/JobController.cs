@@ -1,4 +1,5 @@
-﻿using Library.Generics.DB.DTO.DTOModelServices.UserService.Job;
+﻿using GetAwaitService.Services.UserService.Interfaces;
+using Library.Generics.DB.DTO.DTOModelServices.UserService.Job;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using System.Text.Json;
@@ -9,67 +10,40 @@ namespace GetAwaitService.Controllers.User
     [ApiController]
     public class JobController : ControllerBase
     {
-        private readonly HttpClient _httpClient;
-        private readonly JsonSerializerOptions _jsonOptions;
+        private readonly IJobApiService _jobService;
 
-        public JobController(IHttpClientFactory httpClientFactory)
+        public JobController(IJobApiService jobService)
         {
-            _httpClient = httpClientFactory.CreateClient("UserServiceClient");
-            _jsonOptions = new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true // Игнорировать регистр
-            };
+            _jobService = jobService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllJob()
         {
-            var response = await _httpClient.GetAsync("api/Job/GetAllJob");
-
-            if (response.IsSuccessStatusCode)
-            {
-                var responseBody = await response.Content.ReadAsStringAsync();
-                var jobs = JsonSerializer.Deserialize<IEnumerable<JobDTO>>(responseBody, _jsonOptions);
-                return Ok(jobs);
-            }
-
-            return StatusCode((int)response.StatusCode, "Ошибка при получении списка должностей");
+            var jobs = await _jobService.GetAllJobAsync();
+            return jobs != null ? Ok(jobs) : StatusCode(500, "Ошибка при получении списка должностей");
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetJobById(Guid id)
         {
-            var response = await _httpClient.GetAsync($"api/Job/GetJobById/{id}");
-
-            if (response.IsSuccessStatusCode)
-            {
-                var responseBody = await response.Content.ReadAsStringAsync();
-                var job = JsonSerializer.Deserialize<JobDTO>(responseBody, _jsonOptions);
-                return Ok(job);
-            }
-
-            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
-                return NotFound();
-
-            return StatusCode((int)response.StatusCode, "Ошибка при получении должности по ID");
+            var job = await _jobService.GetJobByIdAsync(id);
+            return job != null ? Ok(job) : NotFound();
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateJob([FromBody] JobDTO jobDto)
+        public async Task<IActionResult> CreateJob([FromBody] JobCreateDTO jobDto)
         {
-            var jsonContent = JsonSerializer.Serialize(jobDto);
-            var httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-
-            var response = await _httpClient.PostAsync("api/Job/CreateJob", httpContent);
-
-            if (response.IsSuccessStatusCode)
+            var userIdClaim = User.FindFirst("userId")?.Value;
+            if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var userId))
             {
-                var responseBody = await response.Content.ReadAsStringAsync();
-                var createdJob = JsonSerializer.Deserialize<JobDTO>(responseBody, _jsonOptions);
-                return CreatedAtAction(nameof(GetJobById), new { id = createdJob.Id }, createdJob);
+                return BadRequest("User ID not found in claims.");
             }
 
-            return StatusCode((int)response.StatusCode, "Ошибка при создании должности");
+            var createdJob = await _jobService.CreateJobAsync(jobDto);
+            return createdJob != null
+                ? CreatedAtAction(nameof(GetJobById), new { id = createdJob.Id }, createdJob)
+                : StatusCode(500, "Ошибка при создании должности");
         }
 
         [HttpPut("{id}")]
@@ -78,32 +52,15 @@ namespace GetAwaitService.Controllers.User
             if (id != jobDto.Id)
                 return BadRequest("ID в запросе не совпадает с ID в данных");
 
-            var jsonContent = JsonSerializer.Serialize(jobDto);
-            var httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-
-            var response = await _httpClient.PutAsync($"api/Job/UpdateJob/{id}", httpContent);
-
-            if (response.IsSuccessStatusCode)
-                return Ok();
-
-            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
-                return NotFound();
-
-            return StatusCode((int)response.StatusCode, "Ошибка при обновлении должности");
+            var result = await _jobService.UpdateJobAsync(id, jobDto);
+            return result ? Ok() : NotFound();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteJob(Guid id)
         {
-            var response = await _httpClient.DeleteAsync($"api/Job/DeleteJob/{id}");
-
-            if (response.IsSuccessStatusCode)
-                return NoContent();
-
-            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
-                return NotFound();
-
-            return StatusCode((int)response.StatusCode, "Ошибка при удалении должности");
+            var result = await _jobService.DeleteJobAsync(id);
+            return result ? NoContent() : NotFound();
         }
     }
 }

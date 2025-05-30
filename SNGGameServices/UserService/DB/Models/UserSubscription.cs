@@ -17,5 +17,10 @@ namespace UserService.DB.Models
 
         [ForeignKey(nameof(UserId))]
         public User User { get; set; }
+
+        public UserSubscription()
+        {
+            DateStart = DateTime.UtcNow;
+        }
     }
 }

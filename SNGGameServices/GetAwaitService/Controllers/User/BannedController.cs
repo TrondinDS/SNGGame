@@ -1,7 +1,6 @@
-﻿using Library.Generics.DB.DTO.DTOModelServices.UserService.Banned;
+﻿using GetAwaitService.Services.UserService.Interfaces;
+using Library.Generics.DB.DTO.DTOModelServices.UserService.Banned;
 using Microsoft.AspNetCore.Mvc;
-using System.Text;
-using System.Text.Json;
 
 namespace GetAwaitService.Controllers.User
 {
@@ -9,67 +8,34 @@ namespace GetAwaitService.Controllers.User
     [ApiController]
     public class BannedController : ControllerBase
     {
-        private readonly HttpClient _httpClient;
-        private readonly JsonSerializerOptions _jsonOptions;
+        private readonly IBannedApiService _bannedService;
 
-        public BannedController(IHttpClientFactory httpClientFactory)
+        public BannedController(IBannedApiService bannedService)
         {
-            _httpClient = httpClientFactory.CreateClient("UserServiceClient");
-            _jsonOptions = new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true // Игнорировать регистр
-            };
+            _bannedService = bannedService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllBanned()
         {
-            var response = await _httpClient.GetAsync("api/Banned/GetAllBanned");
-
-            if (response.IsSuccessStatusCode)
-            {
-                var responseBody = await response.Content.ReadAsStringAsync();
-                var banneds = JsonSerializer.Deserialize<IEnumerable<BannedDTO>>(responseBody, _jsonOptions);
-                return Ok(banneds);
-            }
-
-            return StatusCode((int)response.StatusCode, "Ошибка при получении списка банов");
+            var result = await _bannedService.GetAllAsync();
+            return result != null ? Ok(result) : StatusCode(500, "Ошибка при получении списка банов");
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetBannedById(Guid id)
         {
-            var response = await _httpClient.GetAsync($"api/Banned/GetBannedById/{id}");
-
-            if (response.IsSuccessStatusCode)
-            {
-                var responseBody = await response.Content.ReadAsStringAsync();
-                var banned = JsonSerializer.Deserialize<BannedDTO>(responseBody, _jsonOptions);
-                return Ok(banned);
-            }
-
-            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
-                return NotFound();
-
-            return StatusCode((int)response.StatusCode, "Ошибка при получении бана по ID");
+            var result = await _bannedService.GetByIdAsync(id);
+            return result != null ? Ok(result) : NotFound();
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateBanned([FromBody] BannedDTO bannedDto)
         {
-            var jsonContent = JsonSerializer.Serialize(bannedDto);
-            var httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-
-            var response = await _httpClient.PostAsync("api/Banned/CreateBanned", httpContent);
-
-            if (response.IsSuccessStatusCode)
-            {
-                var responseBody = await response.Content.ReadAsStringAsync();
-                var createdBanned = JsonSerializer.Deserialize<BannedDTO>(responseBody, _jsonOptions);
-                return CreatedAtAction(nameof(GetBannedById), new { id = createdBanned.Id }, createdBanned);
-            }
-
-            return StatusCode((int)response.StatusCode, "Ошибка при создании бана");
+            var created = await _bannedService.CreateAsync(bannedDto);
+            return created != null
+                ? CreatedAtAction(nameof(GetBannedById), new { id = created.Id }, created)
+                : StatusCode(500, "Ошибка при создании бана");
         }
 
         [HttpPut("{id}")]
@@ -78,32 +44,15 @@ namespace GetAwaitService.Controllers.User
             if (id != bannedDto.Id)
                 return BadRequest("ID в запросе не совпадает с ID в данных");
 
-            var jsonContent = JsonSerializer.Serialize(bannedDto);
-            var httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-
-            var response = await _httpClient.PutAsync($"api/Banned/UpdateBanned/{id}", httpContent);
-
-            if (response.IsSuccessStatusCode)
-                return Ok();
-
-            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
-                return NotFound();
-
-            return StatusCode((int)response.StatusCode, "Ошибка при обновлении бана");
+            var updated = await _bannedService.UpdateAsync(id, bannedDto);
+            return updated ? Ok() : NotFound();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBanned(Guid id)
         {
-            var response = await _httpClient.DeleteAsync($"api/Banned/DeleteBanned/{id}");
-
-            if (response.IsSuccessStatusCode)
-                return NoContent();
-
-            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
-                return NotFound();
-
-            return StatusCode((int)response.StatusCode, "Ошибка при удалении бана");
+            var deleted = await _bannedService.DeleteAsync(id);
+            return deleted ? NoContent() : NotFound();
         }
     }
 }

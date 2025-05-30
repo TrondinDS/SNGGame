@@ -1,7 +1,6 @@
-﻿using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.GameSelectedGenre;
+﻿using GetAwaitService.Services.StudioGameService.Interfaces;
+using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.GameSelectedGenre;
 using Microsoft.AspNetCore.Mvc;
-using System.Text;
-using System.Text.Json;
 
 namespace GetAwaitService.Controllers.StudioGame
 {
@@ -9,101 +8,51 @@ namespace GetAwaitService.Controllers.StudioGame
     [ApiController]
     public class GameSelectedGenreController : ControllerBase
     {
-        private readonly HttpClient _httpClient;
-        private readonly JsonSerializerOptions _jsonOptions;
+        private readonly IGameSelectedGenreService _service;
 
-        public GameSelectedGenreController(IHttpClientFactory httpClientFactory)
+        public GameSelectedGenreController(IGameSelectedGenreService service)
         {
-            _httpClient = httpClientFactory.CreateClient("StudioGameServiceClient");
-            _jsonOptions = new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true // Игнорировать регистр
-            };
+            _service = service;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllGameSelectedGenres()
         {
-            var response = await _httpClient.GetAsync("api/GameSelectedGenre/GetAllGameSelectedGenres");
-
-            if (response.IsSuccessStatusCode)
-            {
-                var responseBody = await response.Content.ReadAsStringAsync();
-                var gameSelectedGenres = JsonSerializer.Deserialize<IEnumerable<GameSelectedGenreDTO>>(responseBody, _jsonOptions);
-                return Ok(gameSelectedGenres);
-            }
-
-            return StatusCode((int)response.StatusCode, "Ошибка при получении списка выбранных жанров игр.");
+            var genres = await _service.GetAllAsync();
+            return genres != null ? Ok(genres) : StatusCode(500, "Ошибка при получении списка выбранных жанров.");
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetGameSelectedGenreById(Guid id)
         {
-            var response = await _httpClient.GetAsync($"api/GameSelectedGenre/GetGameSelectedGenreById/{id}");
-
-            if (response.IsSuccessStatusCode)
-            {
-                var responseBody = await response.Content.ReadAsStringAsync();
-                var gameSelectedGenre = JsonSerializer.Deserialize<GameSelectedGenreDTO>(responseBody, _jsonOptions);
-                return Ok(gameSelectedGenre);
-            }
-
-            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
-                return NotFound();
-
-            return StatusCode((int)response.StatusCode, "Ошибка при получении выбранного жанра игры по ID.");
+            var genre = await _service.GetByIdAsync(id);
+            return genre != null ? Ok(genre) : NotFound();
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateGameSelectedGenre([FromBody] GameSelectedGenreDTO gameSelectedGenreDto)
+        public async Task<IActionResult> CreateGameSelectedGenre([FromBody] GameSelectedGenreDTO dto)
         {
-            var jsonContent = JsonSerializer.Serialize(gameSelectedGenreDto);
-            var httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-
-            var response = await _httpClient.PostAsync("api/GameSelectedGenre/CreateGameSelectedGenre", httpContent);
-
-            if (response.IsSuccessStatusCode)
-            {
-                var responseBody = await response.Content.ReadAsStringAsync();
-                var createdGameSelectedGenre = JsonSerializer.Deserialize<GameSelectedGenreDTO>(responseBody, _jsonOptions);
-                return CreatedAtAction(nameof(GetGameSelectedGenreById), new { id = createdGameSelectedGenre.Id }, createdGameSelectedGenre);
-            }
-
-            return StatusCode((int)response.StatusCode, "Ошибка при создании выбранного жанра игры.");
+            var created = await _service.CreateAsync(dto);
+            return created != null
+                ? CreatedAtAction(nameof(GetGameSelectedGenreById), new { id = created.Id }, created)
+                : StatusCode(500, "Ошибка при создании выбранного жанра.");
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateGameSelectedGenre(Guid id, [FromBody] GameSelectedGenreDTO gameSelectedGenreDto)
+        public async Task<IActionResult> UpdateGameSelectedGenre(Guid id, [FromBody] GameSelectedGenreDTO dto)
         {
-            if (id != gameSelectedGenreDto.Id)
-                return BadRequest("ID в запросе не совпадает с ID в данных.");
+            if (id != dto.Id)
+                return BadRequest("ID в пути не совпадает с ID в теле запроса.");
 
-            var jsonContent = JsonSerializer.Serialize(gameSelectedGenreDto);
-            var httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-
-            var response = await _httpClient.PutAsync($"api/GameSelectedGenre/UpdateGameSelectedGenre/{id}", httpContent);
-
-            if (response.IsSuccessStatusCode)
-                return Ok();
-
-            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
-                return NotFound();
-
-            return StatusCode((int)response.StatusCode, "Ошибка при обновлении выбранного жанра игры.");
+            var updated = await _service.UpdateAsync(dto);
+            return updated ? Ok() : NotFound();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteGameSelectedGenre(Guid id)
         {
-            var response = await _httpClient.DeleteAsync($"api/GameSelectedGenre/DeleteGameSelectedGenre/{id}");
-
-            if (response.IsSuccessStatusCode)
-                return NoContent();
-
-            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
-                return NotFound();
-
-            return StatusCode((int)response.StatusCode, "Ошибка при удалении выбранного жанра игры.");
+            var deleted = await _service.DeleteAsync(id);
+            return deleted ? NoContent() : NotFound();
         }
     }
 }

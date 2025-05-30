@@ -1,6 +1,6 @@
 ﻿using GetAwaitService.DB.Models;
 
-namespace GetAwaitService.Services.Interfaces
+namespace GetAwaitService.Services.GetAwaitService.Interfaces
 {
     public interface IUserTelegramInformationService
     {

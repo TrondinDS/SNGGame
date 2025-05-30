@@ -1,4 +1,5 @@
-﻿using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Genre;
+﻿using GetAwaitService.Services.StudioGameService.Interfaces;
+using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Genre;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using System.Text.Json;
@@ -9,101 +10,51 @@ namespace GetAwaitService.Controllers.StudioGame
     [ApiController]
     public class GenreController : ControllerBase
     {
-        private readonly HttpClient _httpClient;
-        private readonly JsonSerializerOptions _jsonOptions;
+        private readonly IGenreService _service;
 
-        public GenreController(IHttpClientFactory httpClientFactory)
+        public GenreController(IGenreService service)
         {
-            _httpClient = httpClientFactory.CreateClient("StudioGameServiceClient");
-            _jsonOptions = new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true // Игнорировать регистр
-            };
+            _service = service;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllGenres()
         {
-            var response = await _httpClient.GetAsync("api/Genre/GetAllGenres");
-
-            if (response.IsSuccessStatusCode)
-            {
-                var responseBody = await response.Content.ReadAsStringAsync();
-                var genres = JsonSerializer.Deserialize<IEnumerable<GenreDTO>>(responseBody, _jsonOptions);
-                return Ok(genres);
-            }
-
-            return StatusCode((int)response.StatusCode, "Ошибка при получении списка жанров.");
+            var result = await _service.GetAllAsync();
+            return result != null ? Ok(result) : StatusCode(500, "Ошибка при получении жанров.");
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetGenreById(Guid id)
         {
-            var response = await _httpClient.GetAsync($"api/Genre/GetGenreById/{id}");
-
-            if (response.IsSuccessStatusCode)
-            {
-                var responseBody = await response.Content.ReadAsStringAsync();
-                var genre = JsonSerializer.Deserialize<GenreDTO>(responseBody, _jsonOptions);
-                return Ok(genre);
-            }
-
-            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
-                return NotFound();
-
-            return StatusCode((int)response.StatusCode, "Ошибка при получении жанра по ID.");
+            var genre = await _service.GetByIdAsync(id);
+            return genre != null ? Ok(genre) : NotFound();
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateGenre([FromBody] GenreDTO genreDto)
+        public async Task<IActionResult> CreateGenre([FromBody] GenreDTO dto)
         {
-            var jsonContent = JsonSerializer.Serialize(genreDto);
-            var httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-
-            var response = await _httpClient.PostAsync("api/Genre/CreateGenre", httpContent);
-
-            if (response.IsSuccessStatusCode)
-            {
-                var responseBody = await response.Content.ReadAsStringAsync();
-                var createdGenre = JsonSerializer.Deserialize<GenreDTO>(responseBody, _jsonOptions);
-                return CreatedAtAction(nameof(GetGenreById), new { id = createdGenre.Id }, createdGenre);
-            }
-
-            return StatusCode((int)response.StatusCode, "Ошибка при создании жанра.");
+            var created = await _service.CreateAsync(dto);
+            return created != null
+                ? CreatedAtAction(nameof(GetGenreById), new { id = created.Id }, created)
+                : StatusCode(500, "Ошибка при создании жанра.");
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateGenre(Guid id, [FromBody] GenreDTO genreDto)
+        public async Task<IActionResult> UpdateGenre(Guid id, [FromBody] GenreDTO dto)
         {
-            if (id != genreDto.Id)
+            if (id != dto.Id)
                 return BadRequest("ID в запросе не совпадает с ID в данных.");
 
-            var jsonContent = JsonSerializer.Serialize(genreDto);
-            var httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-
-            var response = await _httpClient.PutAsync($"api/Genre/UpdateGenre/{id}", httpContent);
-
-            if (response.IsSuccessStatusCode)
-                return Ok();
-
-            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
-                return NotFound();
-
-            return StatusCode((int)response.StatusCode, "Ошибка при обновлении жанра.");
+            var updated = await _service.UpdateAsync(dto);
+            return updated ? Ok() : NotFound();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteGenre(Guid id)
         {
-            var response = await _httpClient.DeleteAsync($"api/Genre/DeleteGenre/{id}");
-
-            if (response.IsSuccessStatusCode)
-                return NoContent();
-
-            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
-                return NotFound();
-
-            return StatusCode((int)response.StatusCode, "Ошибка при удалении жанра.");
+            var deleted = await _service.DeleteAsync(id);
+            return deleted ? NoContent() : NotFound();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Library.Generics.DB.DTO.DTOModelServices.UserActivityService.UserReaction;
+﻿using GetAwaitService.Services.UserActivityService.Interfaces;
+using Library.Generics.DB.DTO.DTOModelServices.UserActivityService.UserReaction;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using System.Text.Json;
@@ -9,67 +10,34 @@ namespace GetAwaitService.Controllers.UserActivity
     [ApiController]
     public class UserReactionController : ControllerBase
     {
-        private readonly HttpClient _httpClient;
-        private readonly JsonSerializerOptions _jsonOptions;
+        private readonly IUserReactionApiService _reactionService;
 
-        public UserReactionController(IHttpClientFactory httpClientFactory)
+        public UserReactionController(IUserReactionApiService reactionService)
         {
-            _httpClient = httpClientFactory.CreateClient("UserActivityServiceClient");
-            _jsonOptions = new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true // Игнорировать регистр
-            };
+            _reactionService = reactionService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllReactions()
         {
-            var response = await _httpClient.GetAsync("api/UserReaction/GetAllReactions");
-
-            if (response.IsSuccessStatusCode)
-            {
-                var responseBody = await response.Content.ReadAsStringAsync();
-                var reactions = JsonSerializer.Deserialize<IEnumerable<UserReactionDTO>>(responseBody, _jsonOptions);
-                return Ok(reactions);
-            }
-
-            return StatusCode((int)response.StatusCode, "Ошибка при получении списка реакций.");
+            var reactions = await _reactionService.GetAllAsync();
+            return reactions != null ? Ok(reactions) : StatusCode(500, "Ошибка при получении списка реакций.");
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetReactionById(Guid id)
         {
-            var response = await _httpClient.GetAsync($"api/UserReaction/GetReactionById/{id}");
-
-            if (response.IsSuccessStatusCode)
-            {
-                var responseBody = await response.Content.ReadAsStringAsync();
-                var reaction = JsonSerializer.Deserialize<UserReactionDTO>(responseBody, _jsonOptions);
-                return Ok(reaction);
-            }
-
-            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
-                return NotFound();
-
-            return StatusCode((int)response.StatusCode, "Ошибка при получении реакции по ID.");
+            var reaction = await _reactionService.GetByIdAsync(id);
+            return reaction != null ? Ok(reaction) : NotFound();
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateReaction([FromBody] UserReactionDTO reactionDto)
         {
-            var jsonContent = JsonSerializer.Serialize(reactionDto);
-            var httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-
-            var response = await _httpClient.PostAsync("api/UserReaction/CreateReaction", httpContent);
-
-            if (response.IsSuccessStatusCode)
-            {
-                var responseBody = await response.Content.ReadAsStringAsync();
-                var createdReaction = JsonSerializer.Deserialize<UserReactionDTO>(responseBody, _jsonOptions);
-                return CreatedAtAction(nameof(GetReactionById), new { id = createdReaction.Id }, createdReaction);
-            }
-
-            return StatusCode((int)response.StatusCode, "Ошибка при создании реакции.");
+            var created = await _reactionService.CreateAsync(reactionDto);
+            return created != null
+                ? CreatedAtAction(nameof(GetReactionById), new { id = created.Id }, created)
+                : StatusCode(500, "Ошибка при создании реакции.");
         }
 
         [HttpPut("{id}")]
@@ -78,32 +46,15 @@ namespace GetAwaitService.Controllers.UserActivity
             if (id != reactionDto.Id)
                 return BadRequest("ID в запросе не совпадает с ID в данных.");
 
-            var jsonContent = JsonSerializer.Serialize(reactionDto);
-            var httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-
-            var response = await _httpClient.PutAsync($"api/UserReaction/UpdateReaction/{id}", httpContent);
-
-            if (response.IsSuccessStatusCode)
-                return Ok();
-
-            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
-                return NotFound();
-
-            return StatusCode((int)response.StatusCode, "Ошибка при обновлении реакции.");
+            var updated = await _reactionService.UpdateAsync(id, reactionDto);
+            return updated ? Ok() : NotFound();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteReaction(Guid id)
         {
-            var response = await _httpClient.DeleteAsync($"api/UserReaction/DeleteReaction/{id}");
-
-            if (response.IsSuccessStatusCode)
-                return NoContent();
-
-            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
-                return NotFound();
-
-            return StatusCode((int)response.StatusCode, "Ошибка при удалении реакции.");
+            var deleted = await _reactionService.DeleteAsync(id);
+            return deleted ? NoContent() : NotFound();
         }
     }
 }

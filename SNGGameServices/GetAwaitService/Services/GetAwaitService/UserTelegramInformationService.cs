@@ -1,8 +1,8 @@
 ﻿using GetAwaitService.DB.Models;
 using GetAwaitService.Repository;
-using GetAwaitService.Services.Interfaces;
+using GetAwaitService.Services.GetAwaitService.Interfaces;
 
-namespace GetAwaitService.Services
+namespace GetAwaitService.Services.GetAwaitService
 {
     public class UserTelegramInformationService : IUserTelegramInformationService
     {

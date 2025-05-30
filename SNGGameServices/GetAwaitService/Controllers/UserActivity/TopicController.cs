@@ -1,4 +1,5 @@
-﻿using Library.Generics.DB.DTO.DTOModelServices.UserActivityService.Topic;
+﻿using GetAwaitService.Services.UserActivityService.Interfaces;
+using Library.Generics.DB.DTO.DTOModelServices.UserActivityService.Topic;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using System.Text.Json;
@@ -9,67 +10,34 @@ namespace GetAwaitService.Controllers.UserActivity
     [ApiController]
     public class TopicController : ControllerBase
     {
-        private readonly HttpClient _httpClient;
-        private readonly JsonSerializerOptions _jsonOptions;
+        private readonly ITopicApiService _topicService;
 
-        public TopicController(IHttpClientFactory httpClientFactory)
+        public TopicController(ITopicApiService topicService)
         {
-            _httpClient = httpClientFactory.CreateClient("UserActivityServiceClient");
-            _jsonOptions = new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true // Игнорировать регистр
-            };
+            _topicService = topicService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllTopics()
         {
-            var response = await _httpClient.GetAsync("api/Topic/GetAllTopics");
-
-            if (response.IsSuccessStatusCode)
-            {
-                var responseBody = await response.Content.ReadAsStringAsync();
-                var topics = JsonSerializer.Deserialize<IEnumerable<TopicDTO>>(responseBody, _jsonOptions);
-                return Ok(topics);
-            }
-
-            return StatusCode((int)response.StatusCode, "Ошибка при получении списка тем.");
+            var topics = await _topicService.GetAllAsync();
+            return topics != null ? Ok(topics) : StatusCode(500, "Ошибка при получении списка тем.");
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetTopicById(Guid id)
         {
-            var response = await _httpClient.GetAsync($"api/Topic/GetTopicById/{id}");
-
-            if (response.IsSuccessStatusCode)
-            {
-                var responseBody = await response.Content.ReadAsStringAsync();
-                var topic = JsonSerializer.Deserialize<TopicDTO>(responseBody, _jsonOptions);
-                return Ok(topic);
-            }
-
-            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
-                return NotFound();
-
-            return StatusCode((int)response.StatusCode, "Ошибка при получении темы по ID.");
+            var topic = await _topicService.GetByIdAsync(id);
+            return topic != null ? Ok(topic) : NotFound();
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateTopic([FromBody] TopicDTO topicDto)
         {
-            var jsonContent = JsonSerializer.Serialize(topicDto);
-            var httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-
-            var response = await _httpClient.PostAsync("api/Topic/CreateTopic", httpContent);
-
-            if (response.IsSuccessStatusCode)
-            {
-                var responseBody = await response.Content.ReadAsStringAsync();
-                var createdTopic = JsonSerializer.Deserialize<TopicDTO>(responseBody, _jsonOptions);
-                return CreatedAtAction(nameof(GetTopicById), new { id = createdTopic.Id }, createdTopic);
-            }
-
-            return StatusCode((int)response.StatusCode, "Ошибка при создании темы.");
+            var created = await _topicService.CreateAsync(topicDto);
+            return created != null
+                ? CreatedAtAction(nameof(GetTopicById), new { id = created.Id }, created)
+                : StatusCode(500, "Ошибка при создании темы.");
         }
 
         [HttpPut("{id}")]
@@ -78,32 +46,15 @@ namespace GetAwaitService.Controllers.UserActivity
             if (id != topicDto.Id)
                 return BadRequest("ID в запросе не совпадает с ID в данных.");
 
-            var jsonContent = JsonSerializer.Serialize(topicDto);
-            var httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-
-            var response = await _httpClient.PutAsync($"api/Topic/UpdateTopic/{id}", httpContent);
-
-            if (response.IsSuccessStatusCode)
-                return Ok();
-
-            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
-                return NotFound();
-
-            return StatusCode((int)response.StatusCode, "Ошибка при обновлении темы.");
+            var updated = await _topicService.UpdateAsync(id, topicDto);
+            return updated ? Ok() : NotFound();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTopic(Guid id)
         {
-            var response = await _httpClient.DeleteAsync($"api/Topic/DeleteTopic/{id}");
-
-            if (response.IsSuccessStatusCode)
-                return NoContent();
-
-            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
-                return NotFound();
-
-            return StatusCode((int)response.StatusCode, "Ошибка при удалении темы.");
+            var deleted = await _topicService.DeleteAsync(id);
+            return deleted ? NoContent() : NotFound();
         }
     }
 }

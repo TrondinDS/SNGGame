@@ -50,6 +50,5 @@ namespace Library.Generics.DB.DTO.DTOModelServices.UserActivityService.Comment
             ErrorMessage = "CommentIdResponse должен быть корректным GUID"
         )]
         public Guid? CommentIdResponse { get; set; }
-
     }
 }

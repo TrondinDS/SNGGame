@@ -1,13 +1,19 @@
 using GetAwaitService.Auth.JWT.Service;
 using GetAwaitService.DB.Context;
 using GetAwaitService.Repository;
-using GetAwaitService.Services;
-using GetAwaitService.Services.Interfaces;
+using GetAwaitService.Services.GetAwaitService;
+using GetAwaitService.Services.GetAwaitService.Interfaces;
+using GetAwaitService.Services.UserService.Interfaces;
+using GetAwaitService.Services.UserService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using GetAwaitService.Services.UserActivityService.Interfaces;
+using GetAwaitService.Services.UserActivityService;
+using GetAwaitService.Services.StudioGameService.Interfaces;
+using GetAwaitService.Services.StudioGameService;
 
 namespace GetAwaitService
 {
@@ -86,6 +92,25 @@ namespace GetAwaitService
             AddNamedHttpClient(builder.Services, "UserServiceClient", "https://userservices:8081");
             AddNamedHttpClient(builder.Services, "UserActivityServiceClient", "https://user-activity-service:8081");
             AddNamedHttpClient(builder.Services, "StudioGameServiceClient", "https://studio-game-service:8081");
+
+            // Добавление сервисов для контроллеров
+            builder.Services.AddScoped<IUserApiService, UserApiService>();
+            builder.Services.AddScoped<IJobApiService, JobApiService>();
+            builder.Services.AddScoped<IUserSubscriptionApiService, UserSubscriptionApiService>();
+            builder.Services.AddScoped<IBannedApiService, BannedApiService>();
+
+            builder.Services.AddScoped<ICommentApiService, CommentApiService>();
+            builder.Services.AddScoped<ITopicApiService, TopicApiService>();
+            builder.Services.AddScoped<IUserReactionApiService, UserReactionApiService>();
+
+            builder.Services.AddScoped<IGameApiService, GameApiService>();
+            builder.Services.AddScoped<IGameLibraryService, GameLibraryApiService>();
+            builder.Services.AddScoped<IGameSelectedGenreService, GameSelectedGenreApiService>();
+            builder.Services.AddScoped<IGameSelectedTagService, GameSelectedTagApiService>();
+            builder.Services.AddScoped<IGenreService, GenreApiService>();
+            builder.Services.AddScoped<IStudioService, StudioApiService>();
+            builder.Services.AddScoped<ITagService, TagApiService>();
+
 
             builder.Services.AddDbContext<ApplicationContext>(opt =>
                 opt.UseNpgsql(builder.Configuration.GetConnectionString("UserTelegramInformationServiceConnection"))

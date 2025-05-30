@@ -1,4 +1,5 @@
-﻿using Library.Generics.DB.DTO.DTOModelServices.UserService.User;
+﻿using GetAwaitService.Services.UserService.Interfaces;
+using Library.Generics.DB.DTO.DTOModelServices.UserService.User;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using System.Text.Json;
@@ -9,67 +10,35 @@ namespace GetAwaitService.Controllers.User
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly HttpClient _httpClient;
-        private readonly JsonSerializerOptions _jsonOptions;
+        private readonly IUserApiService _userService;
 
-        public UserController(IHttpClientFactory httpClientFactory)
+        public UserController(IUserApiService userService)
         {
-            _httpClient = httpClientFactory.CreateClient("UserServiceClient");
-            _jsonOptions = new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true // Игнорировать регистр [[4]]
-            };
+            _userService = userService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllUser()
         {
-            var response = await _httpClient.GetAsync("api/User/GetAllUser");
-
-            if (response.IsSuccessStatusCode)
-            {
-                var responseBody = await response.Content.ReadAsStringAsync();
-                var users = JsonSerializer.Deserialize<IEnumerable<UserDTO>>(responseBody, _jsonOptions);
-                return Ok(users);
-            }
-
-            return StatusCode((int)response.StatusCode, "Ошибка при получении пользователей");
+            var users = await _userService.GetAllUsersAsync();
+            return users != null ? Ok(users) : StatusCode(500, "Ошибка при получении пользователей");
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUserById(Guid id)
         {
-            var response = await _httpClient.GetAsync($"api/User/GetUserById/{id}");
-
-            if (response.IsSuccessStatusCode)
-            {
-                var responseBody = await response.Content.ReadAsStringAsync();
-                var user = JsonSerializer.Deserialize<UserDTO>(responseBody, _jsonOptions);
-                return Ok(user);
-            }
-
-            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
-                return NotFound();
-
-            return StatusCode((int)response.StatusCode, "Ошибка при получении пользователя");
+            var user = await _userService.GetUserByIdAsync(id);
+            return user != null ? Ok(user) : NotFound();
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateUser([FromBody] UserCreateDTO userDto)
         {
-            var jsonContent = JsonSerializer.Serialize(userDto);
-            var httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+            var createdUser = await _userService.CreateUserAsync(userDto);
 
-            var response = await _httpClient.PostAsync("api/User/CreateUser", httpContent);
-
-            if (response.IsSuccessStatusCode)
-            {
-                var responseBody = await response.Content.ReadAsStringAsync();
-                var createdUser = JsonSerializer.Deserialize<UserDTO>(responseBody, _jsonOptions);
-                return CreatedAtAction(nameof(GetUserById), new { id = createdUser.Id }, createdUser);
-            }
-
-            return StatusCode((int)response.StatusCode, "Ошибка при создании пользователя");
+            return createdUser != null
+                ? CreatedAtAction(nameof(GetUserById), new { id = createdUser.Id }, createdUser)
+                : StatusCode(500, "Ошибка при создании пользователя");
         }
 
         [HttpPut("{id}")]
@@ -78,32 +47,15 @@ namespace GetAwaitService.Controllers.User
             if (id != userDto.Id)
                 return BadRequest("ID в запросе не совпадает с ID в данных");
 
-            var jsonContent = JsonSerializer.Serialize(userDto);
-            var httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-
-            var response = await _httpClient.PutAsync($"api/User/UpdateUser/{id}", httpContent);
-
-            if (response.IsSuccessStatusCode)
-                return Ok();
-
-            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
-                return NotFound();
-
-            return StatusCode((int)response.StatusCode, "Ошибка при обновлении пользователя");
+            var success = await _userService.UpdateUserAsync(id, userDto);
+            return success ? Ok() : NotFound();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(Guid id)
         {
-            var response = await _httpClient.DeleteAsync($"api/User/DeleteUser/{id}");
-
-            if (response.IsSuccessStatusCode)
-                return NoContent();
-
-            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
-                return NotFound();
-
-            return StatusCode((int)response.StatusCode, "Ошибка при удалении пользователя");
+            var success = await _userService.DeleteUserAsync(id);
+            return success ? NoContent() : NotFound();
         }
     }
 }

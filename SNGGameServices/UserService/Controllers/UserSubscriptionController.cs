@@ -58,10 +58,10 @@ namespace UserService.Controllers
         /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult> CreateUserSubscription(
-            UserSubscriptionDTO userSubscriptionDTO
+            UserSubscriptionCreateDTO userSubscriptionCreateDTO
         )
         {
-            var userSub = mapper.Map<UserSubscription>(userSubscriptionDTO);
+            var userSub = mapper.Map<UserSubscription>(userSubscriptionCreateDTO);
             await userSubscriptionService.AddAsync(userSub);
             var userResultDTO = mapper.Map<UserSubscriptionDTO>(userSub);
             return CreatedAtAction(

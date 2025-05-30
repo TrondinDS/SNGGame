@@ -1,4 +1,5 @@
-﻿using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Studio;
+﻿using GetAwaitService.Services.StudioGameService.Interfaces;
+using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Studio;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using System.Text.Json;
@@ -9,101 +10,51 @@ namespace GetAwaitService.Controllers.StudioGame
     [ApiController]
     public class StudioController : ControllerBase
     {
-        private readonly HttpClient _httpClient;
-        private readonly JsonSerializerOptions _jsonOptions;
+        private readonly IStudioService _service;
 
-        public StudioController(IHttpClientFactory httpClientFactory)
+        public StudioController(IStudioService service)
         {
-            _httpClient = httpClientFactory.CreateClient("StudioGameServiceClient");
-            _jsonOptions = new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true // Игнорировать регистр
-            };
+            _service = service;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllStudios()
         {
-            var response = await _httpClient.GetAsync("api/Studio/GetAllStudios");
-
-            if (response.IsSuccessStatusCode)
-            {
-                var responseBody = await response.Content.ReadAsStringAsync();
-                var studios = JsonSerializer.Deserialize<IEnumerable<StudioDTO>>(responseBody, _jsonOptions);
-                return Ok(studios);
-            }
-
-            return StatusCode((int)response.StatusCode, "Ошибка при получении списка студий.");
+            var studios = await _service.GetAllAsync();
+            return studios != null ? Ok(studios) : StatusCode(500, "Ошибка при получении списка студий.");
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetStudioById(Guid id)
         {
-            var response = await _httpClient.GetAsync($"api/Studio/GetStudioById/{id}");
-
-            if (response.IsSuccessStatusCode)
-            {
-                var responseBody = await response.Content.ReadAsStringAsync();
-                var studio = JsonSerializer.Deserialize<StudioDTO>(responseBody, _jsonOptions);
-                return Ok(studio);
-            }
-
-            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
-                return NotFound();
-
-            return StatusCode((int)response.StatusCode, "Ошибка при получении студии по ID.");
+            var studio = await _service.GetByIdAsync(id);
+            return studio != null ? Ok(studio) : NotFound();
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateStudio([FromBody] StudioDTO studioDto)
+        public async Task<IActionResult> CreateStudio([FromBody] StudioDTO dto)
         {
-            var jsonContent = JsonSerializer.Serialize(studioDto);
-            var httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-
-            var response = await _httpClient.PostAsync("api/Studio/CreateStudio", httpContent);
-
-            if (response.IsSuccessStatusCode)
-            {
-                var responseBody = await response.Content.ReadAsStringAsync();
-                var createdStudio = JsonSerializer.Deserialize<StudioDTO>(responseBody, _jsonOptions);
-                return CreatedAtAction(nameof(GetStudioById), new { id = createdStudio.Id }, createdStudio);
-            }
-
-            return StatusCode((int)response.StatusCode, "Ошибка при создании студии.");
+            var created = await _service.CreateAsync(dto);
+            return created != null
+                ? CreatedAtAction(nameof(GetStudioById), new { id = created.Id }, created)
+                : StatusCode(500, "Ошибка при создании студии.");
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateStudio(Guid id, [FromBody] StudioDTO studioDto)
+        public async Task<IActionResult> UpdateStudio(Guid id, [FromBody] StudioDTO dto)
         {
-            if (id != studioDto.Id)
-                return BadRequest("ID в запросе не совпадает с ID в данных.");
+            if (id != dto.Id)
+                return BadRequest("ID в запросе не совпадает с ID в теле запроса.");
 
-            var jsonContent = JsonSerializer.Serialize(studioDto);
-            var httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-
-            var response = await _httpClient.PutAsync($"api/Studio/UpdateStudio/{id}", httpContent);
-
-            if (response.IsSuccessStatusCode)
-                return Ok();
-
-            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
-                return NotFound();
-
-            return StatusCode((int)response.StatusCode, "Ошибка при обновлении студии.");
+            var updated = await _service.UpdateAsync(dto);
+            return updated ? Ok() : NotFound();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteStudio(Guid id)
         {
-            var response = await _httpClient.DeleteAsync($"api/Studio/DeleteStudio/{id}");
-
-            if (response.IsSuccessStatusCode)
-                return NoContent();
-
-            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
-                return NotFound();
-
-            return StatusCode((int)response.StatusCode, "Ошибка при удалении студии.");
+            var deleted = await _service.DeleteAsync(id);
+            return deleted ? NoContent() : NotFound();
         }
     }
 }

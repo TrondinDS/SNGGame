@@ -17,12 +17,6 @@ namespace Library.Generics.DB.DTO.DTOModelServices.UserService.User
         [MaxLength(255, ErrorMessage = "Login должно иметь длинну до 255 символов")]
         public required string Login { get; set; }
 
-        [Display(Name = "Является администратором")]
-        public bool? IsAdmin { get; set; }
-
-        [Display(Name = "Является глобальным модератором")]
-        public bool? IsGlobalModerator { get; set; }
-
         [Required(ErrorMessage = "Image является обязательным")]
         public string Image { get; set; }
 

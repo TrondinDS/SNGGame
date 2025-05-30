@@ -2,6 +2,7 @@
 using Library.Generics.DB.DTO.DTOModelServices.UserService.Job;
 using Microsoft.AspNetCore.Mvc;
 using StudioGameService.DB.Model;
+using System.Security.Claims;
 using UserService.Services.Interfaces;
 
 namespace UserService.Controllers
@@ -52,9 +53,9 @@ namespace UserService.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult> CreateJob(JobDTO jobDTO)
+        public async Task<ActionResult> CreateJob(JobCreateDTO jobCreateDTO)
         {
-            var job = mapper.Map<Job>(jobDTO);
+            var job = mapper.Map<Job>(jobCreateDTO);
             await jobService.AddAsync(job);
             var jobResultDTO = mapper.Map<JobDTO>(job);
             return CreatedAtAction(nameof(GetJobById), new { id = job.Id }, jobResultDTO);

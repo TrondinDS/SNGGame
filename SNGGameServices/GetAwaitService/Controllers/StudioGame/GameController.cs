@@ -1,4 +1,5 @@
-﻿using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Game;
+﻿using GetAwaitService.Services.StudioGameService.Interfaces;
+using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Game;
 using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.StatisticGame;
 using Library.Generics.Query.QueryModels.StudioGame;
 using Microsoft.AspNetCore.Authorization;
@@ -12,67 +13,34 @@ namespace GetAwaitService.Controllers.StudioGame
     [ApiController]
     public class GameController : ControllerBase
     {
-        private readonly HttpClient _httpClient;
-        private readonly JsonSerializerOptions _jsonOptions;
+        private readonly IGameApiService _gameService;
 
-        public GameController(IHttpClientFactory httpClientFactory)
+        public GameController(IGameApiService gameService)
         {
-            _httpClient = httpClientFactory.CreateClient("StudioGameServiceClient");
-            _jsonOptions = new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true // Игнорировать регистр
-            };
+            _gameService = gameService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllGames()
         {
-            var response = await _httpClient.GetAsync("api/Game/GetAllGames");
-
-            if (response.IsSuccessStatusCode)
-            {
-                var responseBody = await response.Content.ReadAsStringAsync();
-                var games = JsonSerializer.Deserialize<IEnumerable<GameDTO>>(responseBody, _jsonOptions);
-                return Ok(games);
-            }
-
-            return StatusCode((int)response.StatusCode, "Ошибка при получении списка игр.");
+            var games = await _gameService.GetAllAsync();
+            return games != null ? Ok(games) : StatusCode(500, "Ошибка при получении списка игр.");
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetGameById(Guid id)
         {
-            var response = await _httpClient.GetAsync($"api/Game/GetGameById/{id}");
-
-            if (response.IsSuccessStatusCode)
-            {
-                var responseBody = await response.Content.ReadAsStringAsync();
-                var game = JsonSerializer.Deserialize<GameDTO>(responseBody, _jsonOptions);
-                return Ok(game);
-            }
-
-            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
-                return NotFound();
-
-            return StatusCode((int)response.StatusCode, "Ошибка при получении игры по ID.");
+            var game = await _gameService.GetByIdAsync(id);
+            return game != null ? Ok(game) : NotFound();
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateGame([FromBody] GameDTO gameDto)
         {
-            var jsonContent = JsonSerializer.Serialize(gameDto);
-            var httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-
-            var response = await _httpClient.PostAsync("api/Game/CreateGame", httpContent);
-
-            if (response.IsSuccessStatusCode)
-            {
-                var responseBody = await response.Content.ReadAsStringAsync();
-                var createdGame = JsonSerializer.Deserialize<GameDTO>(responseBody, _jsonOptions);
-                return CreatedAtAction(nameof(GetGameById), new { id = createdGame.Id }, createdGame);
-            }
-
-            return StatusCode((int)response.StatusCode, "Ошибка при создании игры.");
+            var created = await _gameService.CreateAsync(gameDto);
+            return created != null
+                ? CreatedAtAction(nameof(GetGameById), new { id = created.Id }, created)
+                : StatusCode(500, "Ошибка при создании игры.");
         }
 
         [HttpPut("{id}")]
@@ -81,72 +49,29 @@ namespace GetAwaitService.Controllers.StudioGame
             if (id != gameDto.Id)
                 return BadRequest("ID в запросе не совпадает с ID в данных.");
 
-            var jsonContent = JsonSerializer.Serialize(gameDto);
-            var httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-
-            var response = await _httpClient.PutAsync($"api/Game/UpdateGame/{id}", httpContent);
-
-            if (response.IsSuccessStatusCode)
-                return Ok();
-
-            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
-                return NotFound();
-
-            return StatusCode((int)response.StatusCode, "Ошибка при обновлении игры.");
+            var updated = await _gameService.UpdateAsync(id, gameDto);
+            return updated ? Ok() : NotFound();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteGame(Guid id)
         {
-            var response = await _httpClient.DeleteAsync($"api/Game/DeleteGame/{id}");
-
-            if (response.IsSuccessStatusCode)
-                return NoContent();
-
-            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
-                return NotFound();
-
-            return StatusCode((int)response.StatusCode, "Ошибка при удалении игры.");
+            var deleted = await _gameService.DeleteAsync(id);
+            return deleted ? NoContent() : NotFound();
         }
 
         [HttpPost]
-        public async Task<IActionResult> GetFilterGame([FromBody] ParamQueryGame paramFilter)
+        public async Task<IActionResult> GetFilterGame([FromBody] ParamQueryGame query)
         {
-            // Сериализация параметров фильтрации в JSON
-            var jsonContent = JsonSerializer.Serialize(paramFilter);
-            var httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-
-            // Вызов метода фильтрации через HTTP POST-запрос
-            var response = await _httpClient.PostAsync("api/Game/GetFilterGame", httpContent);
-
-            if (response.IsSuccessStatusCode)
-            {
-                var responseBody = await response.Content.ReadAsStringAsync();
-                var filteredGames = JsonSerializer.Deserialize<IEnumerable<GameDTO>>(responseBody, _jsonOptions);
-                return Ok(filteredGames);
-            }
-
-            return StatusCode((int)response.StatusCode, "Ошибка при получении фильтрованных игр.");
+            var result = await _gameService.GetFilteredAsync(query);
+            return result != null ? Ok(result) : StatusCode(500, "Ошибка при фильтрации игр.");
         }
 
         [HttpPost]
-        public async Task<ActionResult> GetStatisticGames([FromBody] List<Guid> listGameId)
+        public async Task<IActionResult> GetStatisticGames([FromBody] List<Guid> ids)
         {
-            // Сериализация параметров фильтрации в JSON
-            var jsonContent = JsonSerializer.Serialize(listGameId);
-            var httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-
-            // Вызов метода фильтрации через HTTP POST-запрос
-            var response = await _httpClient.PostAsync("api/Game/GetStatisticGames", httpContent);
-
-            if (response.IsSuccessStatusCode)
-            {
-                var responseBody = await response.Content.ReadAsStringAsync();
-                var result = JsonSerializer.Deserialize<IEnumerable<StatisticGameDTO>>(responseBody, _jsonOptions);
-                return Ok(result);
-            }
-
-            return StatusCode((int)response.StatusCode, "Ошибка при получении статистики игр.");
+            var stats = await _gameService.GetStatisticsAsync(ids);
+            return stats != null ? Ok(stats) : StatusCode(500, "Ошибка при получении статистики.");
         }
     }
 }

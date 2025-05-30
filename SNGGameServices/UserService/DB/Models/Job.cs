@@ -25,5 +25,10 @@ namespace StudioGameService.DB.Model
 
         [ForeignKey("UserId")]
         public User User { get; set; } // Навигационное свойство для модератора
+
+        public Job()
+        {
+            DateStart = DateTime.UtcNow; 
+        }
     }
 }

@@ -1,7 +1,6 @@
-﻿using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.GameSelectedTag;
+﻿using GetAwaitService.Services.StudioGameService.Interfaces;
+using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.GameSelectedTag;
 using Microsoft.AspNetCore.Mvc;
-using System.Text;
-using System.Text.Json;
 
 namespace GetAwaitService.Controllers.StudioGame
 {
@@ -9,101 +8,51 @@ namespace GetAwaitService.Controllers.StudioGame
     [ApiController]
     public class GameSelectedTagController : ControllerBase
     {
-        private readonly HttpClient _httpClient;
-        private readonly JsonSerializerOptions _jsonOptions;
+        private readonly IGameSelectedTagService _service;
 
-        public GameSelectedTagController(IHttpClientFactory httpClientFactory)
+        public GameSelectedTagController(IGameSelectedTagService service)
         {
-            _httpClient = httpClientFactory.CreateClient("StudioGameServiceClient");
-            _jsonOptions = new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true // Игнорировать регистр
-            };
+            _service = service;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllGameSelectedTags()
         {
-            var response = await _httpClient.GetAsync("api/GameSelectedTag/GetAllGameSelectedTags");
-
-            if (response.IsSuccessStatusCode)
-            {
-                var responseBody = await response.Content.ReadAsStringAsync();
-                var gameSelectedTags = JsonSerializer.Deserialize<IEnumerable<GameSelectedTagDTO>>(responseBody, _jsonOptions);
-                return Ok(gameSelectedTags);
-            }
-
-            return StatusCode((int)response.StatusCode, "Ошибка при получении списка связей 'Игра-Тег'.");
+            var result = await _service.GetAllAsync();
+            return result != null ? Ok(result) : StatusCode(500, "Ошибка при получении связей 'Игра-Тег'.");
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetGameSelectedTagById(Guid id)
         {
-            var response = await _httpClient.GetAsync($"api/GameSelectedTag/GetGameSelectedTagById/{id}");
-
-            if (response.IsSuccessStatusCode)
-            {
-                var responseBody = await response.Content.ReadAsStringAsync();
-                var gameSelectedTag = JsonSerializer.Deserialize<GameSelectedTagDTO>(responseBody, _jsonOptions);
-                return Ok(gameSelectedTag);
-            }
-
-            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
-                return NotFound();
-
-            return StatusCode((int)response.StatusCode, "Ошибка при получении связи 'Игра-Тег' по ID.");
+            var result = await _service.GetByIdAsync(id);
+            return result != null ? Ok(result) : NotFound();
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateGameSelectedTag([FromBody] GameSelectedTagDTO gameSelectedTagDto)
+        public async Task<IActionResult> CreateGameSelectedTag([FromBody] GameSelectedTagDTO dto)
         {
-            var jsonContent = JsonSerializer.Serialize(gameSelectedTagDto);
-            var httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-
-            var response = await _httpClient.PostAsync("api/GameSelectedTag/CreateGameSelectedTag", httpContent);
-
-            if (response.IsSuccessStatusCode)
-            {
-                var responseBody = await response.Content.ReadAsStringAsync();
-                var createdGameSelectedTag = JsonSerializer.Deserialize<GameSelectedTagDTO>(responseBody, _jsonOptions);
-                return CreatedAtAction(nameof(GetGameSelectedTagById), new { id = createdGameSelectedTag.Id }, createdGameSelectedTag);
-            }
-
-            return StatusCode((int)response.StatusCode, "Ошибка при создании связи 'Игра-Тег'.");
+            var created = await _service.CreateAsync(dto);
+            return created != null
+                ? CreatedAtAction(nameof(GetGameSelectedTagById), new { id = created.Id }, created)
+                : StatusCode(500, "Ошибка при создании связи 'Игра-Тег'.");
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateGameSelectedTag(Guid id, [FromBody] GameSelectedTagDTO gameSelectedTagDto)
+        public async Task<IActionResult> UpdateGameSelectedTag(Guid id, [FromBody] GameSelectedTagDTO dto)
         {
-            if (id != gameSelectedTagDto.Id)
-                return BadRequest("ID в запросе не совпадает с ID в данных.");
+            if (id != dto.Id)
+                return BadRequest("ID в пути не совпадает с ID в теле запроса.");
 
-            var jsonContent = JsonSerializer.Serialize(gameSelectedTagDto);
-            var httpContent = new StringContent(jsonContent, Encoding.UTF8, "application/json");
-
-            var response = await _httpClient.PutAsync($"api/GameSelectedTag/UpdateGameSelectedTag/{id}", httpContent);
-
-            if (response.IsSuccessStatusCode)
-                return Ok();
-
-            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
-                return NotFound();
-
-            return StatusCode((int)response.StatusCode, "Ошибка при обновлении связи 'Игра-Тег'.");
+            var updated = await _service.UpdateAsync(dto);
+            return updated ? Ok() : NotFound();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteGameSelectedTag(Guid id)
         {
-            var response = await _httpClient.DeleteAsync($"api/GameSelectedTag/DeleteGameSelectedTag/{id}");
-
-            if (response.IsSuccessStatusCode)
-                return NoContent();
-
-            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
-                return NotFound();
-
-            return StatusCode((int)response.StatusCode, "Ошибка при удалении связи 'Игра-Тег'.");
+            var deleted = await _service.DeleteAsync(id);
+            return deleted ? NoContent() : NotFound();
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Library.Generics.DB.DTO.DTOModelServices.UserService.Job
 {

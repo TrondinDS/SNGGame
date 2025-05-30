@@ -39,6 +39,7 @@ namespace Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Game
         [Required(ErrorMessage = "StudioId является обязательным")]
         public Guid StudioId { get; set; }
 
+        [Range(1, int.MaxValue, ErrorMessage = "EntityType должен быть положительным числом")]
         public int? StatisticGameId { get; set; }
 
         [Required(ErrorMessage = "Image является обязательным")]

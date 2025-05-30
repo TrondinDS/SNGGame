@@ -1,6 +1,6 @@
 ﻿using Amazon.Runtime;
 using GetAwaitService.DB.Models;
-using GetAwaitService.Services.Interfaces;
+using GetAwaitService.Services.GetAwaitService.Interfaces;
 using Library.Generics.DB.DTO.DTOModelServices.UserService.User;
 using Library.Utils;
 using Microsoft.IdentityModel.Tokens;
@@ -55,8 +55,6 @@ namespace GetAwaitService.Auth.JWT.Service
                 Name = "UserDefaultName",
                 DateBirth = null,   
                 Login = "UserDefaultLogin_" + userTelegramId.ToString() ,
-                IsAdmin = false,     
-                IsGlobalModerator = false,
                 ImageType = "jpg",
                 Image = DefaultImgAndCont.GetImg(),
                 Content = "Default"
