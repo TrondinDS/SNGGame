@@ -8,5 +8,6 @@ namespace StudioGameService.Repository.Interfaces
     public interface IStudioRepository : IGenericRepository<Studio, int> 
     {
         public Task<IEnumerable<Studio>> GetFiltreCardStudioAsync(ParamQueryStudio paramQueryListStudio);
+        public Task<IEnumerable<Studio>> GetStudioByUserIdAsync(Guid id);
     }
 }

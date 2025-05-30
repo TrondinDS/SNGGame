@@ -4,7 +4,7 @@ using Library.Generics.Query.QueryModels.StudioGame;
 
 namespace GetAwaitService.Services.StudioGameService.Interfaces
 {
-    public interface IGameApiService
+    public interface IGameService
     {
         Task<IEnumerable<GameDTO>?> GetAllAsync();
         Task<GameDTO?> GetByIdAsync(Guid id);

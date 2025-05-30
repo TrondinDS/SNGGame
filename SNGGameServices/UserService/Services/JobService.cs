@@ -1,4 +1,5 @@
-﻿using StudioGameService.DB.Model;
+﻿using Microsoft.EntityFrameworkCore;
+using StudioGameService.DB.Model;
 using UserService.Repository.Interfaces;
 using UserService.Services.Interfaces;
 
@@ -24,14 +25,14 @@ namespace UserService.Services
             var user = await jobRepository.GetByIdAsync(id);
             if (user != null)
             {
-                jobRepository.DeleteAsync(user);
+                await jobRepository.DeleteAsync(user);
                 await jobRepository.SaveChangesAsync();
             }
         }
 
-        public Task<IEnumerable<Job>> GetAllAsync()
+        public async Task<IEnumerable<Job>> GetAllAsync()
         {
-            return jobRepository.GetAllAsync();
+            return await jobRepository.GetAllAsync();
         }
 
         public async Task<Job> GetByIdAsync(Guid id)
@@ -41,8 +42,13 @@ namespace UserService.Services
 
         public async Task UpdateAsync(Job job)
         {
-            jobRepository.UpdateAsync(job);
+            await jobRepository.UpdateAsync(job);
             await jobRepository.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<Job>> GetJobsByUserIdAsync(Guid id)
+        {
+            return await jobRepository.GetJobsByUserIdAsync(id);
         }
     }
 }

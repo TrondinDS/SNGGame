@@ -47,6 +47,22 @@ namespace UserService.Controllers
             var jobDTO = mapper.Map<JobDTO>(job);
             return Ok(jobDTO);
         }
+        
+        /// <summary>
+        /// Получение работ пользователя по его ID
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("{id}")]
+        public async Task<ActionResult<JobDTO>> GetJobsByUserId(Guid id)
+        {
+            var jobs = await jobService.GetJobsByUserIdAsync(id);
+            if (jobs == null || jobs.Any())
+            {
+                return NotFound();
+            }
+            var jobsDTO = mapper.Map<IEnumerable<JobDTO>>(jobs);
+            return Ok(jobsDTO);
+        }
 
         /// <summary>
         /// Создание нового работника

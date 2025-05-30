@@ -7,7 +7,7 @@ using System.Text;
 
 namespace GetAwaitService.Services.StudioGameService
 {
-    public class GameApiService : IGameApiService
+    public class GameApiService : IGameService
     {
         private readonly HttpClient _httpClient;
         private readonly JsonSerializerOptions _jsonOptions;

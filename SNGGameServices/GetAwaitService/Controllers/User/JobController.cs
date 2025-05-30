@@ -29,6 +29,13 @@ namespace GetAwaitService.Controllers.User
         {
             var job = await _jobService.GetJobByIdAsync(id);
             return job != null ? Ok(job) : NotFound();
+        } 
+        
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetJobsByUserId(Guid id)
+        {
+            var job = await _jobService.GetJobsByUserIdAsync(id);
+            return job != null ? Ok(job) : NotFound();
         }
 
         [HttpPost]

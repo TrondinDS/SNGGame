@@ -103,7 +103,7 @@ namespace GetAwaitService
             builder.Services.AddScoped<ITopicApiService, TopicApiService>();
             builder.Services.AddScoped<IUserReactionApiService, UserReactionApiService>();
 
-            builder.Services.AddScoped<IGameApiService, GameApiService>();
+            builder.Services.AddScoped<IGameService, GameApiService>();
             builder.Services.AddScoped<IGameLibraryService, GameLibraryApiService>();
             builder.Services.AddScoped<IGameSelectedGenreService, GameSelectedGenreApiService>();
             builder.Services.AddScoped<IGameSelectedTagService, GameSelectedTagApiService>();

@@ -9,5 +9,7 @@ namespace GetAwaitService.Services.UserService.Interfaces
         Task<JobDTO?> CreateJobAsync(JobCreateDTO jobDto);
         Task<bool> UpdateJobAsync(Guid id, JobDTO jobDto);
         Task<bool> DeleteJobAsync(Guid id);
+
+        Task<IEnumerable<JobDTO?>> GetJobsByUserIdAsync(Guid id);
     }
 }

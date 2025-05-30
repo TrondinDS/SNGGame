@@ -12,5 +12,6 @@ namespace StudioGameService.Services.Interfaces
         Task<StudioDTO> GetByIdAsync(Guid id);
         Task UpdateAsync(StudioDTO studio);
         public Task<IEnumerable<StudioDTO>> GetFiltreCardStudioAsync(ParamQueryStudio paramQueryListStudio);
+        public Task<IEnumerable<Studio>> GetStudioByUserIdAsync(Guid id);
     }
 }

@@ -37,6 +37,15 @@ namespace GetAwaitService.Services.StudioGameService
             return JsonSerializer.Deserialize<StudioDTO>(json, _jsonOptions);
         }
 
+        public async Task<IEnumerable<StudioDTO>?> GetStudioByUserIdAsync(Guid id)
+        {
+            var response = await _httpClient.GetAsync($"api/Studio/GetStudioByUserId/{id}");
+            if (!response.IsSuccessStatusCode) return null;
+
+            var json = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<IEnumerable<StudioDTO>>(json, _jsonOptions);
+        }
+
         public async Task<StudioDTO?> CreateAsync(StudioDTO dto)
         {
             var json = JsonSerializer.Serialize(dto);

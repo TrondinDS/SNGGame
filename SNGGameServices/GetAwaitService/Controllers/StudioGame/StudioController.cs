@@ -31,6 +31,13 @@ namespace GetAwaitService.Controllers.StudioGame
             return studio != null ? Ok(studio) : NotFound();
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetStudioByUserId(Guid id)
+        {
+            var studio = await _service.GetStudioByUserIdAsync(id);
+            return studio != null ? Ok(studio) : NotFound();
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateStudio([FromBody] StudioDTO dto)
         {

@@ -237,7 +237,12 @@ namespace StudioGameService.Services
             var tasks = result.Select(studio => MapToStudioDTOAsync(studio));
             var results = await Task.WhenAll(tasks);
 
-            return results.Where(dto => dto != null);               
+            return results.Where(dto => dto != null);
+        }
+
+        public async Task<IEnumerable<Studio>> GetStudioByUserIdAsync(Guid id)
+        {
+            return await studioRepository.GetStudioByUserIdAsync(id);
         }
     }
 }

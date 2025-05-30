@@ -10,5 +10,6 @@ namespace UserService.Services.Interfaces
         Task<IEnumerable<Job>> GetAllAsync();
         Task<Job> GetByIdAsync(Guid id);
         Task UpdateAsync(Job job);
+        public Task<IEnumerable<Job>> GetJobsByUserIdAsync(Guid id);
     }
 }

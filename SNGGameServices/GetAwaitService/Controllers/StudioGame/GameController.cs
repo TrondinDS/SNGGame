@@ -13,9 +13,9 @@ namespace GetAwaitService.Controllers.StudioGame
     [ApiController]
     public class GameController : ControllerBase
     {
-        private readonly IGameApiService _gameService;
+        private readonly IGameService _gameService;
 
-        public GameController(IGameApiService gameService)
+        public GameController(IGameService gameService)
         {
             _gameService = gameService;
         }

@@ -35,6 +35,15 @@ namespace GetAwaitService.Services.UserService
 
             var content = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<JobDTO>(content, _jsonOptions);
+        } 
+
+        public async Task<IEnumerable<JobDTO?>> GetJobsByUserIdAsync(Guid id)
+        {
+            var response = await _httpClient.GetAsync($"api/Job/GetJobsByUserId/{id}");
+            if (!response.IsSuccessStatusCode) return null;
+
+            var content = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<IEnumerable<JobDTO>>(content, _jsonOptions);
         }
 
         public async Task<JobDTO?> CreateJobAsync(JobCreateDTO jobDto)

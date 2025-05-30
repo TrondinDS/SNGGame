@@ -6,6 +6,6 @@ namespace UserService.Repository.Interfaces
 {
     public interface IJobRepository : IGenericRepository<Job, int>
     {
-        // TODO : Create abstract method IJRepository
+        public Task<IEnumerable<Job>> GetJobsByUserIdAsync(Guid id);
     }
 }

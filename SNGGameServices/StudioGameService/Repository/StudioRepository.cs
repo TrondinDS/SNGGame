@@ -12,7 +12,7 @@ namespace StudioGameService.Repository
     {
         private readonly DbSet<Studio> dbSet;
         public StudioRepository(ApplicationContext context)
-            : base(context) 
+            : base(context)
         {
             dbSet = context.Set<Studio>();
         }
@@ -25,6 +25,13 @@ namespace StudioGameService.Repository
             query = FilterQueryStudio.CreateQuerybleAsNoTraking(paramQueryListStudio, query);
 
             var result = await query.ToListAsync();
+
+            return result;
+        }
+
+        public async Task<IEnumerable<Studio>> GetStudioByUserIdAsync(Guid id)
+        {
+            var result = await dbSet.Where(s => s.OwnerId == id).ToListAsync();
 
             return result;
         }

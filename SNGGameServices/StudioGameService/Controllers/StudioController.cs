@@ -66,6 +66,32 @@ namespace StudioGameService.Controllers
                 logger.LogError(ex, "Ошибка при получении студии по ID: {Id}", id);
                 return StatusCode(StatusCodes.Status500InternalServerError, new { error = "Произошла внутренняя ошибка сервера", details = ex.Message });
             }
+        } 
+        
+        /// <summary>
+        /// Получение студий по ID администратора
+        /// </summary>
+        /// <param name="id">Идентификатор администратора (OwnerId)</param>
+        /// <returns>Студии</returns>
+        [HttpGet("{id}")]
+        public async Task<ActionResult<IEnumerable<StudioDTO>>> GetStudioByUserId(Guid id)
+        {
+            try
+            {
+                var result = await studioService.GetStudioByUserIdAsync(id);
+                if (result == null || result.Any())
+                {
+                    return NotFound();
+                }
+
+                var mapResult = mapper.Map<IEnumerable<StudioDTO>>(result);
+                return Ok(mapResult);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Ошибка при получении студии по ID: {Id}", id);
+                return StatusCode(StatusCodes.Status500InternalServerError, new { error = "Произошла внутренняя ошибка сервера", details = ex.Message });
+            }
         }
 
         /// <summary>

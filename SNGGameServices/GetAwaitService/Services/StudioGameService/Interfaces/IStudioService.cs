@@ -9,5 +9,7 @@ namespace GetAwaitService.Services.StudioGameService.Interfaces
         Task<StudioDTO?> CreateAsync(StudioDTO dto);
         Task<bool> UpdateAsync(StudioDTO dto);
         Task<bool> DeleteAsync(Guid id);
+
+        public Task<IEnumerable<StudioDTO>?> GetStudioByUserIdAsync(Guid id);
     }
 }
