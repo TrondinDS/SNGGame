@@ -9,5 +9,6 @@ namespace GetAwaitService.Services.UserService.Interfaces
         Task<BannedDTO?> CreateAsync(BannedDTO dto);
         Task<bool> UpdateAsync(Guid id, BannedDTO dto);
         Task<bool> DeleteAsync(Guid id);
+        public Task<IEnumerable<BannedDTO>?> GetBannedsByUserId(Guid id);
     }
 }

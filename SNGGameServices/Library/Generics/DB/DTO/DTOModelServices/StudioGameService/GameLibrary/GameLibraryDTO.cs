@@ -11,7 +11,7 @@ namespace Library.Generics.DB.DTO.DTOModelServices.StudioGameService.GameLibrary
 
         [Required(ErrorMessage = "Дата является обязательной")]
         [DataType(DataType.Date)]
-        public DateTime Date { get; set; }
+        public DateTime Date { get; set; } = DateTime.UtcNow;
 
         [Required(ErrorMessage = "Статус является обязательным")]
         public int Status { get; set; }

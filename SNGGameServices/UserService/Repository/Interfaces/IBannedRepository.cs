@@ -6,6 +6,6 @@ namespace UserService.Repository.Interfaces
 {
     public interface IBannedRepository : IGenericRepository<Banned, int>
     {
-        // TODO : Create abstract method IBRepository
+        public Task<IEnumerable<Banned>> GetBannedsByUserIdAsync(Guid userId);
     }
 }

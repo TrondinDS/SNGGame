@@ -28,6 +28,15 @@ namespace GetAwaitService.Services.UserService
             return JsonSerializer.Deserialize<IEnumerable<BannedDTO>>(content, _jsonOptions);
         }
 
+        public async Task<IEnumerable<BannedDTO>?> GetBannedsByUserId(Guid id)
+        {
+            var response = await _httpClient.GetAsync($"api/Banned/GetBannedsByUserId/{id}");
+            if (!response.IsSuccessStatusCode) return null;
+
+            var content = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<IEnumerable<BannedDTO>>(content, _jsonOptions);
+        }
+
         public async Task<BannedDTO?> GetByIdAsync(Guid id)
         {
             var response = await _httpClient.GetAsync($"api/Banned/GetBannedById/{id}");

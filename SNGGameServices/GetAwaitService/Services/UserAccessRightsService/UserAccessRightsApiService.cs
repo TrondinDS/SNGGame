@@ -1,7 +1,12 @@
-﻿using GetAwaitService.DB.DTO;
+﻿using AutoMapper;
+using GetAwaitService.DB.DTO;
 using GetAwaitService.Services.StudioGameService.Interfaces;
 using GetAwaitService.Services.UserAccessRightsService.Interfaces;
+using GetAwaitService.Services.UserActivityService.Interfaces;
 using GetAwaitService.Services.UserService.Interfaces;
+using Library.Generics.DB.DTO.DTOModelServices.UserActivityService.Comment;
+using Library.Generics.DB.DTO.DTOModelServices.UserActivityService.Topic;
+using Library.Generics.DB.DTO.DTOModelServices.UserService.Banned;
 using Library.Types;
 
 namespace GetAwaitService.Services.UserAccessRightsService
@@ -12,18 +17,28 @@ namespace GetAwaitService.Services.UserAccessRightsService
         private IJobApiService jobApiService;
         private IStudioService studioApiService;
         private IGameService gameApiService;
+        private IBannedApiService bannedApiService;
+        private ITopicApiService topicApiService;
+        private IMapper mapper;
 
         public UserAccessRightsApiService(
             IUserApiService userApiService, 
             IJobApiService jobApiService, 
             IStudioService studioApiService,
-            IGameService gameApiService
+            IGameService gameApiService,
+            IBannedApiService bannedApiService,
+            ITopicApiService topicApiService,
+            IMapper mapper
+
             )
         {
             this.userApiService = userApiService;
             this.jobApiService = jobApiService;
             this.studioApiService = studioApiService;
             this.gameApiService = gameApiService;
+            this.bannedApiService = bannedApiService;
+            this.topicApiService = topicApiService;
+            this.mapper = mapper;
         }
 
         public Task<bool> ChekUserRightsEventAsync(Guid userId, Guid entityId)
@@ -89,23 +104,116 @@ namespace GetAwaitService.Services.UserAccessRightsService
 
         }
 
+
+        //BANNED
+        public async Task<bool> ChekUserRightsModerAndAdminBanGlobalAndLocalAsync(Guid userId, BannedCreateDTO entity)
+        {
+            if (entity.TypePunishment < 11)
+            {
+                return await ChekUserRightsModerAndAdminGlobalAsync(userId);
+            }
+
+            if (entity.TypePunishment > 100)
+            {
+                switch (entity.EntityType)
+                {
+                    case (int)EntityType.Type.Studio:
+                        return await ChekUserRightsModerAndAdminStudioAsync(userId, entity.EntityId);
+                        break;
+
+                    case (int)EntityType.Type.Game:
+                        return await ChekUserRightsModerAndAdminGameAsync(userId, entity.EntityId);
+                        break;
+
+                    case (int)EntityType.Type.Event:
+                        throw new Exception("Отсутсвие реализации");
+                        break;
+
+                    case (int)EntityType.Type.Organizer:
+                        throw new Exception("Отсутсвие реализации");
+                        break;
+
+                    default:
+                        throw new NotSupportedException($"Entity type {entity.EntityType} is not supported for banning.");
+                }
+            }
+            return false;
+        }
+
+
+        //TOPIC COMMENT
+        public async Task<bool> ChekUserRightsBanned(Guid userId, TopicCreateDTO entity)
+        {
+            var userRightsBans = await bannedApiService.GetBannedsByUserId(userId);
+
+            switch (entity.EntityType)
+            {
+                case (int)EntityType.Type.Studio:
+                    {
+                        bool hasActiveBan = userRightsBans.Any(b =>
+                            b.EntityId == entity.EntityId &&
+                            b.TypePunishment == (int)PunishmentType.Type.BanWriting &&
+                            b.DateFinish > DateTime.UtcNow);
+
+                        return !hasActiveBan;
+                    }
+
+                case (int)EntityType.Type.Game:
+                    {
+                        var game = await gameApiService.GetByIdAsync(entity.EntityId);
+                        if (game == null)
+                            return false;
+
+                        bool hasActiveBan = userRightsBans.Any(b =>
+                            b.EntityId == game.StudioId &&
+                            b.TypePunishment == (int)PunishmentType.Type.BanWriting &&
+                            b.DateFinish > DateTime.UtcNow);
+
+                        return !hasActiveBan;
+                    }
+
+                case (int)EntityType.Type.Event:
+                    throw new Exception("Отсутсвие реализации");
+                    break;
+
+                case (int)EntityType.Type.Organizer:
+                    throw new Exception("Отсутсвие реализации");
+                    break;
+
+                default:
+                    throw new NotSupportedException($"Entity type {entity.EntityType} is not supported for banning.");
+            }
+
+            return false;
+
+        }
+
+        public async Task<bool> ChekUserRightsBanned(Guid userId, CommentCreateDTO entity)
+        {
+            var topic = await topicApiService.GetByIdAsync(entity.TopicId);
+            var topicC = mapper.Map<TopicCreateDTO>(topic);
+            return await ChekUserRightsBanned(userId, topicC);
+        }
+
+
         //GLOBAL
-        public async Task<bool> ChekUserRightsModerAndAdminGlobalAsync(Guid userId, Guid entityId)
+        public async Task<bool> ChekUserRightsModerAndAdminGlobalAsync(Guid userId)
         {
             var userRights = await GetUserRightsAsync(userId);
 
             return
-                userRights.IsAdmin == true ||
-                userRights.IsGlobalModerator == true;
+                userRights.IsAdmin == true || 
+                    userRights.IsGlobalModerator == true;
         }
 
-        public async Task<bool> ChekUserRightsAdminGlobalAsync(Guid userId, Guid entityId)
+        public async Task<bool> ChekUserRightsAdminGlobalAsync(Guid userId)
         {
             var userRights = await GetUserRightsAsync(userId);
 
             return
                 userRights.IsAdmin == true;
         }
+
 
 
         public async Task<UserAccessRightsDTO> GetUserRightsAsync(Guid userId)

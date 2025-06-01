@@ -17,7 +17,7 @@ namespace Library.Generics.DB.DTO.DTOModelServices.UserService.UserSubscription
 
         [Required(ErrorMessage = "Поле DateStart является обязательным")]
         [DataType(DataType.Date, ErrorMessage = "DateStart должен иметь формат даты")]
-        public DateTime DateStart { get; set; }
+        public DateTime DateStart { get; set; } = DateTime.UtcNow;
 
         [DataType(DataType.Date, ErrorMessage = "DateFinish должен иметь формат даты")]
         public DateTime? DateFinish { get; set; }

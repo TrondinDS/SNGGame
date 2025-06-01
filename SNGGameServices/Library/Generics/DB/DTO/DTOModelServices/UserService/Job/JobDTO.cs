@@ -18,7 +18,7 @@ namespace Library.Generics.DB.DTO.DTOModelServices.UserService.Job
 
         [Required(ErrorMessage = "DateStart является обязательным")]
         [DataType(DataType.Date, ErrorMessage = "DateStart должно иметь формат даты")]
-        public DateTime DateStart { get; set; }
+        public DateTime DateStart { get; set; } = DateTime.UtcNow;
 
         [DataType(DataType.Date, ErrorMessage = "DateFinish должно иметь формат даты")]
         public DateTime? DateFinish { get; set; }

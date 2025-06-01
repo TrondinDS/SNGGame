@@ -10,5 +10,6 @@ namespace UserService.Services.Interfaces
         Task<IEnumerable<Banned>> GetAllAsync();
         Task<Banned> GetByIdAsync(Guid id);
         Task UpdateAsync(Banned banned);
+        public Task<IEnumerable<Banned>> GetBannedsByUserIdAsync(Guid userId);
     }
 }

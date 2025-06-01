@@ -24,7 +24,7 @@ namespace Library.Generics.DB.DTO.DTOModelServices.UserActivityService.Comment
         // Дата создания комментария
         [Required(ErrorMessage = "DateCreated является обязательным")]
         [DataType(DataType.DateTime, ErrorMessage = "DateCreated должно иметь формат даты")]
-        public DateTime DateCreated { get; set; }
+        public DateTime DateCreated { get; set; } = DateTime.UtcNow;
 
         // Признак удаления комментария
         public bool IsDeleted { get; set; } = false;

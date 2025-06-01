@@ -29,7 +29,7 @@ namespace Library.Generics.DB.DTO.DTOModelServices.UserActivityService.Topic
         // Дата создания сущности
         [Required(ErrorMessage = "DateCreated является обязательным")]
         [DataType(DataType.DateTime, ErrorMessage = "DateCreated должно иметь формат даты")]
-        public DateTime DateCreated { get; set; }
+        public DateTime DateCreated { get; set; } = DateTime.UtcNow;
 
         // Идентификатор пользователя-создателя
         [RegularExpression(

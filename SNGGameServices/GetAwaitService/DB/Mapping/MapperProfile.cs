@@ -9,6 +9,7 @@ using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Tag;
 using Library.Generics.DB.DTO.DTOModelServices.UserActivityService.Comment;
 using Library.Generics.DB.DTO.DTOModelServices.UserActivityService.Topic;
 using Library.Generics.DB.DTO.DTOModelServices.UserActivityService.UserReaction;
+using Library.Generics.DB.DTO.DTOModelServices.UserService.Banned;
 using Library.Generics.DB.DTO.DTOModelServices.UserService.Job;
 using Library.Generics.DB.DTO.DTOModelServices.UserService.UserSubscription;
 
@@ -34,6 +35,7 @@ namespace GetAwaitService.DB.Mapping
             CreateMap<GenreDTO, GenreCreateDTO>().ReverseMap();
             CreateMap<StudioDTO, StudioCreateDTO>().ReverseMap();
             CreateMap<TagDTO, TagCreateDTO>().ReverseMap();
+            CreateMap<BannedDTO, BannedCreateDTO>().ReverseMap();
             
         }
     }

@@ -48,6 +48,22 @@ namespace UserService.Controllers
         }
 
         /// <summary>
+        /// Получение банов пользователя по его ID
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("{id}")]
+        public async Task<ActionResult<BannedDTO>> GetBannedsByUserId(Guid id)
+        {
+            var banneds = await bannedService.GetBannedsByUserIdAsync(id);
+            if (banneds == null)
+            {
+                return NotFound();
+            }
+            var bannedsDTO = mapper.Map<IEnumerable<BannedDTO>>(banneds);
+            return Ok(bannedsDTO);
+        }
+
+        /// <summary>
         /// Создание нового бана
         /// </summary>
         /// <returns></returns>

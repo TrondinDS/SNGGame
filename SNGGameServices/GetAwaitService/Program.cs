@@ -143,6 +143,7 @@ namespace GetAwaitService
             app.UseHttpsRedirection();
 
             app.UseAuthentication();
+            app.UseMiddleware<BannedUserMiddleware>();
             app.UseAuthorization();
 
             app.MapControllers();

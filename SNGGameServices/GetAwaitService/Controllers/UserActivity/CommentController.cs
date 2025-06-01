@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using GetAwaitService.Services.UserAccessRightsService.Interfaces;
 using GetAwaitService.Services.UserActivityService.Interfaces;
 using Library.Generics.DB.DTO.DTOModelServices.UserActivityService.Comment;
+using Library.Generics.DB.DTO.DTOModelServices.UserActivityService.Topic;
 using Library.Generics.DB.DTO.DTOModelServices.UserActivityService.UserReaction;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
@@ -13,12 +15,17 @@ namespace GetAwaitService.Controllers.UserActivity
     public class CommentController : ControllerBase
     {
         private readonly ICommentApiService _commentService;
+        private readonly IUserAccessRightsService _userAccessRightsService;
         private readonly IMapper _mapper;
 
-        public CommentController(ICommentApiService commentService, IMapper mapper)
+        public CommentController(
+            ICommentApiService commentService, 
+            IMapper mapper,
+            IUserAccessRightsService userAccessRightsService)
         {
             _commentService = commentService;
             _mapper = mapper;
+            _userAccessRightsService = userAccessRightsService;
         }
 
         [HttpGet]
@@ -42,14 +49,21 @@ namespace GetAwaitService.Controllers.UserActivity
             if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var userId))
                 return BadRequest("User ID not found in claims.");
 
-            var commentDto = _mapper.Map<CommentDTO>(commentDtoC);
-            commentDto.UserId = userId;
+
+            var checkUserRights = await _userAccessRightsService.ChekUserRightsBanned(userId, commentDtoC);
+
+            if (checkUserRights)
+            {
+                var commentDto = _mapper.Map<CommentDTO>(commentDtoC);
+                commentDto.UserId = userId;
 
 
-            var created = await _commentService.CreateAsync(commentDto);
-            return created != null
-                ? CreatedAtAction(nameof(GetCommentById), new { id = created.Id }, created)
-                : StatusCode(500, "Ошибка при создании комментария.");
+                var created = await _commentService.CreateAsync(commentDto);
+                return created != null
+                    ? CreatedAtAction(nameof(GetCommentById), new { id = created.Id }, created)
+                    : StatusCode(500, "Ошибка при создании комментария.");
+            }
+            return BadRequest("у вас недостаточно прав для выполения данного действия");
         }
 
         [HttpPut("{id}")]

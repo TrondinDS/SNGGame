@@ -20,7 +20,7 @@ namespace Library.Generics.DB.DTO.DTOModelServices.UserService.Banned
 
         [Required(ErrorMessage = "DateStart является обязательным")]
         [DataType(DataType.Date, ErrorMessage = "DateStart должно иметь формат даты")]
-        public DateTime DateStart { get; set; }
+        public DateTime DateStart { get; set; } = DateTime.UtcNow;
 
         [Required(ErrorMessage = "DateFinish является обязательным")]
         [DataType(DataType.Date, ErrorMessage = "DateFinish должно иметь формат даты")]

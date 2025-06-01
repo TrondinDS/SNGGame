@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using GetAwaitService.Services.UserAccessRightsService.Interfaces;
 using GetAwaitService.Services.UserActivityService.Interfaces;
+using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Game;
 using Library.Generics.DB.DTO.DTOModelServices.UserActivityService.Topic;
 using Library.Generics.DB.DTO.DTOModelServices.UserActivityService.UserReaction;
 using Microsoft.AspNetCore.Mvc;
@@ -13,12 +15,14 @@ namespace GetAwaitService.Controllers.UserActivity
     public class TopicController : ControllerBase
     {
         private readonly ITopicApiService _topicService;
+        private readonly IUserAccessRightsService _userAccessRightsService;
         private readonly IMapper _mapper;
 
-        public TopicController(ITopicApiService topicService, IMapper mapper)
+        public TopicController(ITopicApiService topicService, IMapper mapper, IUserAccessRightsService userAccessRightsService)
         {
             _topicService = topicService;
             _mapper = mapper;
+            _userAccessRightsService = userAccessRightsService
         }
 
         [HttpGet]
@@ -42,14 +46,24 @@ namespace GetAwaitService.Controllers.UserActivity
             if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var userId))
                 return BadRequest("User ID not found in claims.");
 
-            var topicDto = _mapper.Map<TopicDTO>(topicDtoC);
-            topicDto.UserCreatorId = userId;
 
-            var created = await _topicService.CreateAsync(topicDto);
-            return created != null ? 
-                CreatedAtAction(nameof(GetTopicById), new { id = created.Id }, created)
-                :
-                StatusCode(500, "Ошибка при создании темы.");
+
+            var checkUserRights = await _userAccessRightsService.ChekUserRightsBanned(userId, topicDtoC);
+
+            if (checkUserRights)
+            {
+                var topicDto = _mapper.Map<TopicDTO>(topicDtoC);
+                topicDto.UserCreatorId = userId;
+
+                var created = await _topicService.CreateAsync(topicDto);
+                return created != null ?
+                    CreatedAtAction(nameof(GetTopicById), new { id = created.Id }, created)
+                    :
+                    StatusCode(500, "Ошибка при создании темы.");
+            }
+
+            return BadRequest("у вас недостаточно прав для выполения данного действия");
+
         }
 
         [HttpPut("{id}")]
