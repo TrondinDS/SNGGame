@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Genre
 {
-    class GenreCreateDTO
+    public class GenreCreateDTO
     {
         [Required(ErrorMessage = "Title является обязательным")]
         [MaxLength(255, ErrorMessage = "Title не должно превышать 255 символов")]

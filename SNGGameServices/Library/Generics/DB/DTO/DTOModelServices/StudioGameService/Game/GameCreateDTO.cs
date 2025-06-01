@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Game
 {
-    class GameCreateDTO
+    public class GameCreateDTO
     {
         [MaxLength(255, ErrorMessage = "Русское название не должно превышать 255 символов")]
         public string RussianTitle { get; set; }
@@ -41,9 +41,6 @@ namespace Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Game
 
         [Required(ErrorMessage = "StudioId является обязательным")]
         public Guid StudioId { get; set; }
-
-        [Range(1, int.MaxValue, ErrorMessage = "StatisticGameId должен быть положительным числом")]
-        public int? StatisticGameId { get; set; }
 
         [Required(ErrorMessage = "Image является обязательным")]
         public string Image { get; set; }

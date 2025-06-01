@@ -79,7 +79,7 @@ namespace StudioGameService.Controllers
             try
             {
                 var result = await studioService.GetStudioByUserIdAsync(id);
-                if (result == null || result.Any())
+                if (result == null || !result.Any())
                 {
                     return NotFound();
                 }

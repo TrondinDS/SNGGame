@@ -1,4 +1,5 @@
-﻿using GetAwaitService.Services.UserService.Interfaces;
+﻿using AutoMapper;
+using GetAwaitService.Services.UserService.Interfaces;
 using Library.Generics.DB.DTO.DTOModelServices.UserService.Job;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
@@ -11,10 +12,12 @@ namespace GetAwaitService.Controllers.User
     public class JobController : ControllerBase
     {
         private readonly IJobApiService _jobService;
+        private readonly IMapper _mapper;
 
-        public JobController(IJobApiService jobService)
+        public JobController(IJobApiService jobService, IMapper mapperService)
         {
             _jobService = jobService;
+            _mapper = mapperService;
         }
 
         [HttpGet]
@@ -39,13 +42,16 @@ namespace GetAwaitService.Controllers.User
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateJob([FromBody] JobCreateDTO jobDto)
+        public async Task<IActionResult> CreateJob([FromBody] JobCreateDTOFront jobDtoF)
         {
             var userIdClaim = User.FindFirst("userId")?.Value;
             if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var userId))
             {
                 return BadRequest("User ID not found in claims.");
             }
+
+            var jobDto = _mapper.Map<JobCreateDTO>(jobDtoF);
+            jobDto.UserId = userId;
 
             var createdJob = await _jobService.CreateJobAsync(jobDto);
             return createdJob != null

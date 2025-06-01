@@ -1,4 +1,6 @@
-﻿using GetAwaitService.Services.StudioGameService.Interfaces;
+﻿using AutoMapper;
+using GetAwaitService.Services.StudioGameService.Interfaces;
+using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Game;
 using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.GameLibrary;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,10 +11,12 @@ namespace GetAwaitService.Controllers.StudioGame
     public class GameLibraryController : ControllerBase
     {
         private readonly IGameLibraryService _libraryService;
+        private readonly IMapper _mapper;
 
-        public GameLibraryController(IGameLibraryService libraryService)
+        public GameLibraryController(IGameLibraryService libraryService, IMapper mapper)
         {
             _libraryService = libraryService;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -30,8 +34,15 @@ namespace GetAwaitService.Controllers.StudioGame
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateGameLibrary([FromBody] GameLibraryDTO dto)
+        public async Task<IActionResult> CreateGameLibrary([FromBody] GameLibraryCreateDTO dtoC)
         {
+            var userIdClaim = User.FindFirst("userId")?.Value;
+            if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var userId))
+                return BadRequest("User ID not found in claims.");
+
+            var dto = _mapper.Map<GameLibraryDTO>(dtoC);
+            dto.UserId = userId;
+
             var created = await _libraryService.CreateAsync(dto);
             return created != null
                 ? CreatedAtAction(nameof(GetGameLibraryById), new { id = created.Id }, created)

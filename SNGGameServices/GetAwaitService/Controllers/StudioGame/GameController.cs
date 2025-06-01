@@ -1,6 +1,9 @@
-﻿using GetAwaitService.Services.StudioGameService.Interfaces;
+﻿using AutoMapper;
+using GetAwaitService.Services.StudioGameService.Interfaces;
+using GetAwaitService.Services.UserAccessRightsService.Interfaces;
 using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Game;
 using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.StatisticGame;
+using Library.Generics.DB.DTO.DTOModelServices.UserActivityService.Comment;
 using Library.Generics.Query.QueryModels.StudioGame;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -14,10 +17,17 @@ namespace GetAwaitService.Controllers.StudioGame
     public class GameController : ControllerBase
     {
         private readonly IGameService _gameService;
+        private readonly IUserAccessRightsService _userAccessRightsService;
+        private readonly IMapper _mapper;
 
-        public GameController(IGameService gameService)
+        public GameController(
+            IGameService gameService, 
+            IUserAccessRightsService userAccessRightsService, 
+            IMapper mapper)
         {
             _gameService = gameService;
+            _userAccessRightsService = userAccessRightsService;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -35,12 +45,25 @@ namespace GetAwaitService.Controllers.StudioGame
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateGame([FromBody] GameDTO gameDto)
+        public async Task<IActionResult> CreateGame([FromBody] GameCreateDTO gameDtoC)
         {
-            var created = await _gameService.CreateAsync(gameDto);
-            return created != null
-                ? CreatedAtAction(nameof(GetGameById), new { id = created.Id }, created)
-                : StatusCode(500, "Ошибка при создании игры.");
+            var userIdClaim = User.FindFirst("userId")?.Value;
+            if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var userId))
+                return BadRequest("User ID not found in claims.");
+
+            var checkUserRights = await _userAccessRightsService
+                .ChekUserRightsModerAndAdminStudioAsync(userId, gameDtoC.StudioId);
+            if (checkUserRights)
+            {
+                var gameDto = _mapper.Map<GameDTO>(gameDtoC);
+
+                var created = await _gameService.CreateAsync(gameDto);
+                return created != null
+                    ? CreatedAtAction(nameof(GetGameById), new { id = created.Id }, created)
+                    : StatusCode(500, "Ошибка при создании игры.");
+            }
+
+            return BadRequest("у вас недостаточно прав для выполения данного действия");
         }
 
         [HttpPut("{id}")]
@@ -49,8 +72,19 @@ namespace GetAwaitService.Controllers.StudioGame
             if (id != gameDto.Id)
                 return BadRequest("ID в запросе не совпадает с ID в данных.");
 
-            var updated = await _gameService.UpdateAsync(id, gameDto);
-            return updated ? Ok() : NotFound();
+            var userIdClaim = User.FindFirst("userId")?.Value;
+            if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var userId))
+                return BadRequest("User ID not found in claims.");
+
+            var checkUserRights = await _userAccessRightsService.ChekUserRightsModerAndAdminGameAsync(userId, id);
+
+            if (checkUserRights)
+            {
+                var updated = await _gameService.UpdateAsync(id, gameDto);
+                return updated ? Ok() : NotFound();
+            }
+
+            return BadRequest("у вас недостаточно прав для выполения данного действия");
         }
 
         [HttpDelete("{id}")]

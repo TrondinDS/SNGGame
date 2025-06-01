@@ -17,7 +17,7 @@ namespace UserService.Repository
 
         public async Task<IEnumerable<Job>> GetJobsByUserIdAsync(Guid id)
         {
-            var result = await dbSet.Where(j => j.UserId == id && j.DateFinish > DateTime.UtcNow).ToListAsync();
+            var result = await dbSet.Where(j => j.UserId == id).ToListAsync();
             return result;
         }
     }

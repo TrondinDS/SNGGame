@@ -1,5 +1,7 @@
-﻿using GetAwaitService.Services.UserActivityService.Interfaces;
+﻿using AutoMapper;
+using GetAwaitService.Services.UserActivityService.Interfaces;
 using Library.Generics.DB.DTO.DTOModelServices.UserActivityService.Topic;
+using Library.Generics.DB.DTO.DTOModelServices.UserActivityService.UserReaction;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using System.Text.Json;
@@ -11,10 +13,12 @@ namespace GetAwaitService.Controllers.UserActivity
     public class TopicController : ControllerBase
     {
         private readonly ITopicApiService _topicService;
+        private readonly IMapper _mapper;
 
-        public TopicController(ITopicApiService topicService)
+        public TopicController(ITopicApiService topicService, IMapper mapper)
         {
             _topicService = topicService;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -32,12 +36,20 @@ namespace GetAwaitService.Controllers.UserActivity
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateTopic([FromBody] TopicDTO topicDto)
+        public async Task<IActionResult> CreateTopic([FromBody] TopicCreateDTO topicDtoC)
         {
+            var userIdClaim = User.FindFirst("userId")?.Value;
+            if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var userId))
+                return BadRequest("User ID not found in claims.");
+
+            var topicDto = _mapper.Map<TopicDTO>(topicDtoC);
+            topicDto.UserCreatorId = userId;
+
             var created = await _topicService.CreateAsync(topicDto);
-            return created != null
-                ? CreatedAtAction(nameof(GetTopicById), new { id = created.Id }, created)
-                : StatusCode(500, "Ошибка при создании темы.");
+            return created != null ? 
+                CreatedAtAction(nameof(GetTopicById), new { id = created.Id }, created)
+                :
+                StatusCode(500, "Ошибка при создании темы.");
         }
 
         [HttpPut("{id}")]
@@ -47,7 +59,10 @@ namespace GetAwaitService.Controllers.UserActivity
                 return BadRequest("ID в запросе не совпадает с ID в данных.");
 
             var updated = await _topicService.UpdateAsync(id, topicDto);
-            return updated ? Ok() : NotFound();
+            return updated ? 
+                Ok() 
+                : 
+                NotFound();
         }
 
         [HttpDelete("{id}")]

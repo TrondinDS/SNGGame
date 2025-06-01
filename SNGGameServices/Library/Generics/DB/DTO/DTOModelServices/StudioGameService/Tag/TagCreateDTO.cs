@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Tag
 {
-    class TagCreateDTO
+    public class TagCreateDTO
     {
         [Required(ErrorMessage = "Title является обязательным")]
         [MaxLength(255, ErrorMessage = "Title не должен превышать 255 символов")]

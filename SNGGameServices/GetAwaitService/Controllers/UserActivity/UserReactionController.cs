@@ -1,4 +1,5 @@
-﻿using GetAwaitService.Services.UserActivityService.Interfaces;
+﻿using AutoMapper;
+using GetAwaitService.Services.UserActivityService.Interfaces;
 using Library.Generics.DB.DTO.DTOModelServices.UserActivityService.UserReaction;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
@@ -11,10 +12,12 @@ namespace GetAwaitService.Controllers.UserActivity
     public class UserReactionController : ControllerBase
     {
         private readonly IUserReactionApiService _reactionService;
+        private readonly IMapper _mapper;
 
-        public UserReactionController(IUserReactionApiService reactionService)
+        public UserReactionController(IUserReactionApiService reactionService, IMapper mapper)
         {
             _reactionService = reactionService;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -32,8 +35,15 @@ namespace GetAwaitService.Controllers.UserActivity
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateReaction([FromBody] UserReactionDTO reactionDto)
+        public async Task<IActionResult> CreateReaction([FromBody] UserReactionCreateDTO reactionDtoC)
         {
+            var userIdClaim = User.FindFirst("userId")?.Value;
+            if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var userId))
+                return BadRequest("User ID not found in claims.");
+
+            var reactionDto = _mapper.Map<UserReactionDTO>(reactionDtoC);
+            reactionDto.UserId = userId;
+
             var created = await _reactionService.CreateAsync(reactionDto);
             return created != null
                 ? CreatedAtAction(nameof(GetReactionById), new { id = created.Id }, created)

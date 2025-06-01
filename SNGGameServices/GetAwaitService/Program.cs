@@ -14,6 +14,8 @@ using GetAwaitService.Services.UserActivityService.Interfaces;
 using GetAwaitService.Services.UserActivityService;
 using GetAwaitService.Services.StudioGameService.Interfaces;
 using GetAwaitService.Services.StudioGameService;
+using GetAwaitService.Services.UserAccessRightsService.Interfaces;
+using GetAwaitService.Services.UserAccessRightsService;
 
 namespace GetAwaitService
 {
@@ -24,6 +26,7 @@ namespace GetAwaitService
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddAutoMapper(typeof(Program));
             builder.Services.AddControllers();
 
             // Swagger
@@ -110,6 +113,8 @@ namespace GetAwaitService
             builder.Services.AddScoped<IGenreService, GenreApiService>();
             builder.Services.AddScoped<IStudioService, StudioApiService>();
             builder.Services.AddScoped<ITagService, TagApiService>();
+
+            builder.Services.AddScoped<IUserAccessRightsService, UserAccessRightsApiService>();
 
 
             builder.Services.AddDbContext<ApplicationContext>(opt =>

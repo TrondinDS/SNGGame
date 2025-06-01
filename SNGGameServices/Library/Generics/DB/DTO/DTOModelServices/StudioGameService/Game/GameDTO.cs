@@ -39,8 +39,11 @@ namespace Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Game
         [Required(ErrorMessage = "StudioId является обязательным")]
         public Guid StudioId { get; set; }
 
-        [Range(1, int.MaxValue, ErrorMessage = "EntityType должен быть положительным числом")]
-        public int? StatisticGameId { get; set; }
+        [RegularExpression(
+           "^[a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12}$",
+           ErrorMessage = "UserId должен быть корректным GUID"
+        )]
+        public Guid? StatisticGameId { get; set; }
 
         [Required(ErrorMessage = "Image является обязательным")]
         public string Image { get; set; }

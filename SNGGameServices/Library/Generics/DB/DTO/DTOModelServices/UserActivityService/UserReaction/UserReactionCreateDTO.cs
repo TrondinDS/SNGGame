@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Library.Generics.DB.DTO.DTOModelServices.UserActivityService.UserReaction
 {
-    class UserReactionCreateDTO
+    public class UserReactionCreateDTO
     {
         public int ReactionType { get; set; }
 

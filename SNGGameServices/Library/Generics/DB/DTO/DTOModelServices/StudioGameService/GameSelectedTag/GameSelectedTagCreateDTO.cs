@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Library.Generics.DB.DTO.DTOModelServices.StudioGameService.GameSelectedTag
 {
-    class GameSelectedTagCreateDTO
+    public class GameSelectedTagCreateDTO
     {
         [Required(ErrorMessage = "GameId является обязательным")]
         public Guid GameId { get; set; }

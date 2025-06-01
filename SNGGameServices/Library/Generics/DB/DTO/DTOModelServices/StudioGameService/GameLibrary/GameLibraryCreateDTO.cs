@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Library.Generics.DB.DTO.DTOModelServices.StudioGameService.GameLibrary
 {
-    class GameLibraryCreateDTO
+    public class GameLibraryCreateDTO
     {
         [Required(ErrorMessage = "Статус является обязательным")]
         public int Status { get; set; }

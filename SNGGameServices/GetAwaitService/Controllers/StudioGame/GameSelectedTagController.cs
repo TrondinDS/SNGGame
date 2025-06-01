@@ -1,4 +1,7 @@
-﻿using GetAwaitService.Services.StudioGameService.Interfaces;
+﻿using AutoMapper;
+using GetAwaitService.Services.StudioGameService.Interfaces;
+using GetAwaitService.Services.UserAccessRightsService.Interfaces;
+using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.GameSelectedGenre;
 using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.GameSelectedTag;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,10 +12,17 @@ namespace GetAwaitService.Controllers.StudioGame
     public class GameSelectedTagController : ControllerBase
     {
         private readonly IGameSelectedTagService _service;
+        private readonly IUserAccessRightsService _serviceUserRight;
+        private readonly IMapper _mapper;
 
-        public GameSelectedTagController(IGameSelectedTagService service)
+        public GameSelectedTagController(
+            IGameSelectedTagService service,
+            IUserAccessRightsService serviceUserRight,
+            IMapper mapper)
         {
             _service = service;
+            _serviceUserRight = serviceUserRight;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -30,12 +40,25 @@ namespace GetAwaitService.Controllers.StudioGame
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateGameSelectedTag([FromBody] GameSelectedTagDTO dto)
+        public async Task<IActionResult> CreateGameSelectedTag([FromBody] GameSelectedTagCreateDTO dtoC)
         {
-            var created = await _service.CreateAsync(dto);
-            return created != null
-                ? CreatedAtAction(nameof(GetGameSelectedTagById), new { id = created.Id }, created)
-                : StatusCode(500, "Ошибка при создании связи 'Игра-Тег'.");
+
+            var userIdClaim = User.FindFirst("userId")?.Value;
+            if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var userId))
+                return BadRequest("User ID not found in claims.");
+
+            var checkUserRights = await _serviceUserRight.ChekUserRightsModerAndAdminGameAsync(userId, dtoC.GameId);
+
+            if (checkUserRights)
+            {
+                var dto = _mapper.Map<GameSelectedTagDTO>(dtoC);
+
+                var created = await _service.CreateAsync(dto);
+                return created != null
+                    ? CreatedAtAction(nameof(GetGameSelectedTagById), new { id = created.Id }, created)
+                    : StatusCode(500, "Ошибка при создании связи 'Игра-Тег'.");
+            }
+            return BadRequest("у вас недостаточно прав для выполения данного действия");
         }
 
         [HttpPut("{id}")]

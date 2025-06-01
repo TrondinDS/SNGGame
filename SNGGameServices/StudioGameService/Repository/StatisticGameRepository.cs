@@ -8,7 +8,7 @@ using StudioGameService.Repository.Interfaces;
 
 namespace StudioGameService.Repository
 {
-    public class StatisticGameRepository : GenericRepository<StatisticGame, int>, IStatisticGameRepository
+    public class StatisticGameRepository : GenericRepository<StatisticGame, Guid>, IStatisticGameRepository
     {
 
         public StatisticGameRepository(ApplicationContext context)

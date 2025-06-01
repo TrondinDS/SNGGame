@@ -1,4 +1,5 @@
-﻿using GetAwaitService.Services.StudioGameService.Interfaces;
+﻿using AutoMapper;
+using GetAwaitService.Services.StudioGameService.Interfaces;
 using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Genre;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
@@ -11,10 +12,12 @@ namespace GetAwaitService.Controllers.StudioGame
     public class GenreController : ControllerBase
     {
         private readonly IGenreService _service;
+        private readonly IMapper _mapper;
 
-        public GenreController(IGenreService service)
+        public GenreController(IGenreService service, IMapper mapper)
         {
             _service = service;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -32,8 +35,14 @@ namespace GetAwaitService.Controllers.StudioGame
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateGenre([FromBody] GenreDTO dto)
+        public async Task<IActionResult> CreateGenre([FromBody] GenreCreateDTO dtoC)
         {
+            var userIdClaim = User.FindFirst("userId")?.Value;
+            if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var userId))
+                return BadRequest("User ID not found in claims.");
+
+            var dto = _mapper.Map<GenreDTO>(dtoC);
+
             var created = await _service.CreateAsync(dto);
             return created != null
                 ? CreatedAtAction(nameof(GetGenreById), new { id = created.Id }, created)

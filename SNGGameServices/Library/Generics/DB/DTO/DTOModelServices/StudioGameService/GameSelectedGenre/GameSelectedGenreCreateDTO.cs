@@ -2,7 +2,7 @@
 
 namespace Library.Generics.DB.DTO.DTOModelServices.StudioGameService.GameSelectedGenre
 {
-    class GameSelectedGenreCreateDTO
+    public class GameSelectedGenreCreateDTO
     {
         [Range(1, int.MaxValue, ErrorMessage = "NumberOrder должено быть положительным числом")]
         public int NumberOrder { get; set; }

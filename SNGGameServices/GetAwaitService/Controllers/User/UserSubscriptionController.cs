@@ -4,6 +4,7 @@ using System.Text.Json;
 using Library.Generics.DB.DTO.DTOModelServices.UserService.UserSubscription;
 using GetAwaitService.Services.UserService.Interfaces;
 using System.Linq;
+using AutoMapper;
 
 namespace GetAwaitService.Controllers.User
 {
@@ -12,10 +13,12 @@ namespace GetAwaitService.Controllers.User
     public class UserSubscriptionController : ControllerBase
     {
         private readonly IUserSubscriptionApiService _subscriptionService;
+        private readonly IMapper _mapper;
 
-        public UserSubscriptionController(IUserSubscriptionApiService subscriptionService)
+        public UserSubscriptionController(IUserSubscriptionApiService subscriptionService, IMapper mapper)
         {
             _subscriptionService = subscriptionService;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -33,18 +36,14 @@ namespace GetAwaitService.Controllers.User
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateUserSubscription([FromBody] UserSubscriptionCreateFrontDTO dto)
+        public async Task<IActionResult> CreateUserSubscription([FromBody] UserSubscriptionCreateDTOFront dtoF)
         {
             var userIdClaim = User.FindFirst("userId")?.Value;
             if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var userId))
                 return BadRequest("User ID not found in claims.");
 
-            var createDto = new UserSubscriptionCreateDTO
-            {
-                EntityId = dto.EntityId,
-                EntityType = dto.EntityType,
-                UserId = userId
-            };
+            var createDto = _mapper.Map<UserSubscriptionCreateDTO>(dtoF);
+            createDto.UserId = userId;
 
             var created = await _subscriptionService.CreateAsync(createDto);
             return created != null
@@ -60,7 +59,7 @@ namespace GetAwaitService.Controllers.User
                 return BadRequest("User ID not found in claims.");
 
             if (userId != id)
-                return Forbid("У вас нет прав на редактирование этой подписки");
+                return BadRequest("ID в запросе не совпадает с ID в данных");
 
             var updated = await _subscriptionService.UpdateAsync(id, dto);
             return updated ? Ok() : NotFound();

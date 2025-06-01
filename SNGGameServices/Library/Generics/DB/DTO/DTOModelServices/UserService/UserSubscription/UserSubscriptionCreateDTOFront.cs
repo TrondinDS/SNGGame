@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Library.Generics.DB.DTO.DTOModelServices.UserService.UserSubscription
 {
-    public class UserSubscriptionCreateFrontDTO
+    public class UserSubscriptionCreateDTOFront
     {
         [Required(ErrorMessage = "Поле EntityId является обязательным")]
         public Guid EntityId { get; set; }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Library.Generics.DB.DTO.DTOModelServices.UserActivityService.Comment
 {
-    class CommentCreateDTO
+    public class CommentCreateDTO
     {
         // Текст комментария
         [Required(ErrorMessage = "Body является обязательным")]

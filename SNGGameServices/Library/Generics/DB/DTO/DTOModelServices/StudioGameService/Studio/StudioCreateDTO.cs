@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Studio
 {
-    class StudioCreateDTO
+    public class StudioCreateDTO
     {
         [Required(ErrorMessage = "Название является обязательным")]
         [MaxLength(255, ErrorMessage = "Название не должно превышать 255 символов")]

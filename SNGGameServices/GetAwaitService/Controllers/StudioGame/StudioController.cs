@@ -1,8 +1,9 @@
-﻿using GetAwaitService.Services.StudioGameService.Interfaces;
+﻿using AutoMapper;
+using GetAwaitService.Services.StudioGameService.Interfaces;
+using GetAwaitService.Services.UserAccessRightsService.Interfaces;
+using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Game;
 using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Studio;
 using Microsoft.AspNetCore.Mvc;
-using System.Text;
-using System.Text.Json;
 
 namespace GetAwaitService.Controllers.StudioGame
 {
@@ -11,10 +12,17 @@ namespace GetAwaitService.Controllers.StudioGame
     public class StudioController : ControllerBase
     {
         private readonly IStudioService _service;
+        private readonly IUserAccessRightsService _userAccessRightsService;
+        private readonly IMapper _mapper;
 
-        public StudioController(IStudioService service)
+        public StudioController(
+            IStudioService service,
+            IUserAccessRightsService userAccessRightsService,
+            IMapper mapper)
         {
             _service = service;
+            _userAccessRightsService = userAccessRightsService;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -39,12 +47,18 @@ namespace GetAwaitService.Controllers.StudioGame
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateStudio([FromBody] StudioDTO dto)
+        public async Task<IActionResult> CreateStudio([FromBody] StudioCreateDTO dtoC)
         {
-            var created = await _service.CreateAsync(dto);
-            return created != null
-                ? CreatedAtAction(nameof(GetStudioById), new { id = created.Id }, created)
-                : StatusCode(500, "Ошибка при создании студии.");
+            var userIdClaim = User.FindFirst("userId")?.Value;
+            if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var userId))
+                return BadRequest("User ID not found in claims.");
+
+                var studioDto = _mapper.Map<StudioDTO>(dtoC);
+
+                var created = await _service.CreateAsync(studioDto);
+                return created != null
+                    ? CreatedAtAction(nameof(GetStudioById), new { id = created.Id }, created)
+                    : StatusCode(500, "Ошибка при создании студии.");
         }
 
         [HttpPut("{id}")]

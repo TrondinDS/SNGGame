@@ -1,5 +1,7 @@
-﻿using GetAwaitService.Services.UserActivityService.Interfaces;
+﻿using AutoMapper;
+using GetAwaitService.Services.UserActivityService.Interfaces;
 using Library.Generics.DB.DTO.DTOModelServices.UserActivityService.Comment;
+using Library.Generics.DB.DTO.DTOModelServices.UserActivityService.UserReaction;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using System.Text.Json;
@@ -11,10 +13,12 @@ namespace GetAwaitService.Controllers.UserActivity
     public class CommentController : ControllerBase
     {
         private readonly ICommentApiService _commentService;
+        private readonly IMapper _mapper;
 
-        public CommentController(ICommentApiService commentService)
+        public CommentController(ICommentApiService commentService, IMapper mapper)
         {
             _commentService = commentService;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -32,8 +36,16 @@ namespace GetAwaitService.Controllers.UserActivity
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateComment([FromBody] CommentDTO commentDto)
+        public async Task<IActionResult> CreateComment([FromBody] CommentCreateDTO commentDtoC)
         {
+            var userIdClaim = User.FindFirst("userId")?.Value;
+            if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var userId))
+                return BadRequest("User ID not found in claims.");
+
+            var commentDto = _mapper.Map<CommentDTO>(commentDtoC);
+            commentDto.UserId = userId;
+
+
             var created = await _commentService.CreateAsync(commentDto);
             return created != null
                 ? CreatedAtAction(nameof(GetCommentById), new { id = created.Id }, created)

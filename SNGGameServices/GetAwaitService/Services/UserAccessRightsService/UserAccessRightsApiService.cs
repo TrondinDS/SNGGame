@@ -2,7 +2,6 @@
 using GetAwaitService.Services.StudioGameService.Interfaces;
 using GetAwaitService.Services.UserAccessRightsService.Interfaces;
 using GetAwaitService.Services.UserService.Interfaces;
-using Library.Generics.DB.DTO.DTOModelServices.UserService.Job;
 using Library.Types;
 
 namespace GetAwaitService.Services.UserAccessRightsService
@@ -12,19 +11,19 @@ namespace GetAwaitService.Services.UserAccessRightsService
         private IUserApiService userApiService;
         private IJobApiService jobApiService;
         private IStudioService studioApiService;
-        private IGameService gameService;
+        private IGameService gameApiService;
 
         public UserAccessRightsApiService(
             IUserApiService userApiService, 
             IJobApiService jobApiService, 
             IStudioService studioApiService,
-            IGameService gameService
+            IGameService gameApiService
             )
         {
             this.userApiService = userApiService;
             this.jobApiService = jobApiService;
             this.studioApiService = studioApiService;
-            this.gameService = gameService;
+            this.gameApiService = gameApiService;
         }
 
         public Task<bool> ChekUserRightsEventAsync(Guid userId, Guid entityId)
@@ -37,10 +36,11 @@ namespace GetAwaitService.Services.UserAccessRightsService
             throw new NotImplementedException();
         }
 
-        public async Task<bool> ChekUserRightsGameAsync(Guid userId, Guid entityId)
+        //GAME
+        public async Task<bool> ChekUserRightsModerAndAdminGameAsync(Guid userId, Guid entityId)
         {
             var userRights = await GetUserRightsAsync(userId);
-            var gameDTO = await gameService.GetByIdAsync(entityId);
+            var gameDTO = await gameApiService.GetByIdAsync(entityId);
 
             if (gameDTO is null)
                 return false;
@@ -50,10 +50,63 @@ namespace GetAwaitService.Services.UserAccessRightsService
                 userRights.StudioModeratorIds?.Contains(gameDTO.StudioId) == true;
         }
 
-        public Task<bool> ChekUserRightsStudioAsync(Guid userId, Guid entityId)
+        public async Task<bool> ChekUserRightsAdminGameAsync(Guid userId, Guid entityId)
         {
-            throw new NotImplementedException();
+            var userRights = await GetUserRightsAsync(userId);
+            var gameDTO = await gameApiService.GetByIdAsync(entityId);
+
+            if (gameDTO is null)
+                return false;
+
+            return
+                userRights.StudioOwnerIds?.Contains(gameDTO.StudioId) == true;
         }
+
+        //STUDIO
+        public async Task<bool> ChekUserRightsModerAndAdminStudioAsync(Guid userId, Guid entityId)
+        {
+            var userRights = await GetUserRightsAsync(userId);
+            var studioDTO = await studioApiService.GetByIdAsync(entityId);
+
+            if (studioDTO is null)
+                return false;
+
+            return
+                userRights.StudioOwnerIds?.Contains(studioDTO.Id) == true ||
+                userRights.StudioModeratorIds?.Contains(studioDTO.Id) == true;
+        }
+
+        public async Task<bool> ChekUserRightsAdminStudioAsync(Guid userId, Guid entityId)
+        {
+            var userRights = await GetUserRightsAsync(userId);
+            var studioDTO = await studioApiService.GetByIdAsync(entityId);
+
+            if (studioDTO is null)
+                return false;
+
+            return
+                userRights.StudioOwnerIds?.Contains(studioDTO.Id) == true;
+
+        }
+
+        //GLOBAL
+        public async Task<bool> ChekUserRightsModerAndAdminGlobalAsync(Guid userId, Guid entityId)
+        {
+            var userRights = await GetUserRightsAsync(userId);
+
+            return
+                userRights.IsAdmin == true ||
+                userRights.IsGlobalModerator == true;
+        }
+
+        public async Task<bool> ChekUserRightsAdminGlobalAsync(Guid userId, Guid entityId)
+        {
+            var userRights = await GetUserRightsAsync(userId);
+
+            return
+                userRights.IsAdmin == true;
+        }
+
 
         public async Task<UserAccessRightsDTO> GetUserRightsAsync(Guid userId)
         {
@@ -73,8 +126,8 @@ namespace GetAwaitService.Services.UserAccessRightsService
 
             if (jobsDTO is not null && jobsDTO.Any())
                 result.StudioModeratorIds = jobsDTO
-                    .Where(j => j.EntityType == (int)EntityType.Type.Studio)
-                    .Select(j => j.Id).ToList();
+                    .Where(j =>  j.EntityType == (int)EntityType.Type.Studio && j.DateFinish > DateTime.UtcNow)
+                        .Select(j => j.Id).ToList();
 
             if (studiosDTO is not null && studiosDTO.Any())
                 result.StudioOwnerIds = studiosDTO.Select(s => s.Id).ToList();

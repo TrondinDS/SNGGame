@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Library.Generics.DB.DTO.DTOModelServices.UserActivityService.Topic
 {
-    class TopicCreateDTO
+    public class TopicCreateDTO
     {
         // Идентификатор связанной сущности
         [Required(ErrorMessage = "EntityId является обязательным")]
