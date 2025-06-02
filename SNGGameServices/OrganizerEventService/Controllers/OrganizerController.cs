@@ -38,7 +38,7 @@ namespace OrganizerEventService.Controllers
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, "Ошибка при создании игры");
+                logger.LogError(ex, "Ошибка при создании организатора");
                 return StatusCode(StatusCodes.Status500InternalServerError, new { error = "Произошла внутренняя ошибка сервера", details = ex.Message });
             }
         }
@@ -86,7 +86,7 @@ namespace OrganizerEventService.Controllers
         }
 
         [HttpDelete]
-        public async Task<ActionResult> Delete(DeleteOrganizerDTO dto)
+        public async Task<ActionResult> Delete(OrganizerDTO dto)
         {
             var model = await service.GetByIdAsync(dto.Id);
             if (model == null)

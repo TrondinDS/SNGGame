@@ -19,7 +19,7 @@ namespace OrganizerEventService.Services
         const string avasCollection = "GameCollection";
 
         const string contentDatabase = "ImagesDatabase";
-        const string contentCollection = "ContentCollection";
+        const string contentCollection = "GameContentCollection";
 
         public OrganizerService(IOrganizerRepository repository, Mongo mongoService, IMapper mapper)
         {
