@@ -22,7 +22,7 @@ namespace GetAwaitService.Controllers.UserActivity
         {
             _topicService = topicService;
             _mapper = mapper;
-            _userAccessRightsService = userAccessRightsService
+            _userAccessRightsService = userAccessRightsService;
         }
 
         [HttpGet]

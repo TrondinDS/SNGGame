@@ -191,6 +191,8 @@ namespace GetAwaitService.Services.UserAccessRightsService
         public async Task<bool> ChekUserRightsBanned(Guid userId, CommentCreateDTO entity)
         {
             var topic = await topicApiService.GetByIdAsync(entity.TopicId);
+            if (topic is null)
+                return false;   
             var topicC = mapper.Map<TopicCreateDTO>(topic);
             return await ChekUserRightsBanned(userId, topicC);
         }

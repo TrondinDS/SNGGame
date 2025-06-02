@@ -2,11 +2,7 @@
 using GetAwaitService.Services.UserAccessRightsService.Interfaces;
 using GetAwaitService.Services.UserActivityService.Interfaces;
 using Library.Generics.DB.DTO.DTOModelServices.UserActivityService.Comment;
-using Library.Generics.DB.DTO.DTOModelServices.UserActivityService.Topic;
-using Library.Generics.DB.DTO.DTOModelServices.UserActivityService.UserReaction;
 using Microsoft.AspNetCore.Mvc;
-using System.Text;
-using System.Text.Json;
 
 namespace GetAwaitService.Controllers.UserActivity
 {
