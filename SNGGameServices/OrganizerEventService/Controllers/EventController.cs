@@ -1,10 +1,9 @@
 ﻿using AutoMapper;
-using Library.Generics.GenericService;
 using Microsoft.AspNetCore.Mvc;
-using OrganizerEventService.DB.Models;
-using OrganizerEventService.Repository;
 using OrganizerEventService.DB.DTO.Event;
-using OrganizerEventService.Enums;
+using OrganizerEventService.Services.Interfaces;
+using Library.Generics.DB.DTO.DTOModelServices.OrganizerEventService.Event;
+using OrganizerEventService.DB.DTO.Organizer;
 
 namespace OrganizerEventService.Controllers
 {
@@ -12,22 +11,30 @@ namespace OrganizerEventService.Controllers
     [ApiController]
     public class EventController : Controller
     {
-        private readonly CrudGenericService<Event, Guid, EventRepository> service;
+        private readonly IEventService service;
         private readonly IMapper mapper;
+        private readonly ILogger<EventController> logger;
 
-        public EventController(CrudGenericService<Event, Guid, EventRepository> service, IMapper mapper)
+        public EventController(IEventService service, IMapper mapper, ILogger<EventController> logger)
         {
             this.service = service;
             this.mapper = mapper;
+            this.logger = logger;
         }
 
         [HttpPost]
-        public async Task<ActionResult<EventIdDTO>> Create(CreateEventDTO dto)
+        public async Task<ActionResult<EventIdDTO>> Create(EventDTO dto)
         {
-            var model = mapper.Map<Event>(dto);
-            await service.AddAsync(model);
-            var res = mapper.Map<EventIdDTO>(model);
-            return Ok(res);
+            try
+            {
+                await service.AddAsync(dto);
+                return CreatedAtAction(nameof(GetById), new { id = dto.Id }, dto);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Ошибка при создании игры");
+                return StatusCode(StatusCodes.Status500InternalServerError, new { error = "Произошла внутренняя ошибка сервера", details = ex.Message });
+            }
         }
 
         [HttpGet("{id}")]
@@ -40,30 +47,40 @@ namespace OrganizerEventService.Controllers
             }
             if (model.IsDeleted)
             {
-                return Problem("event was deleted");
+                return Problem("organizer was deleted");
             }
-            var res = mapper.Map<GetByIdEventDTO>(model);
+            var res = mapper.Map<GetByIdOrganizerDTO>(model);
             return Ok(res);
         }
 
-        [HttpPut]
-        public async Task<ActionResult> Update(UpdateEventDTO dto)
+        [HttpPut("{id}")]
+        public async Task<ActionResult> Update(Guid id, EventDTO dto)
         {
-            var model = await service.GetByIdAsync(dto.Id);
-            if (model == null)
+            try
             {
-                return NotFound();
+                if (id != dto.Id)
+                {
+                    return BadRequest();
+                }
+
+                var existed = await service.GetByIdAsync(id);
+                if (existed == null)
+                {
+                    return NotFound();
+                }
+
+                await service.UpdateAsync(dto);
+                return Ok(dto);
             }
-            if (!Library.Utils.Enums.HasField<EventStatus>(dto.Status))
+            catch (Exception ex)
             {
-                return ValidationProblem($"Does not have {dto.Status} status, only have: {Library.Utils.Enums.GetFieldsAsString<EventStatus>()}");
+                logger.LogError(ex, "Ошибка при обновлении игры с ID: {Id}", id);
+                return StatusCode(StatusCodes.Status500InternalServerError, new { error = "Произошла внутренняя ошибка сервера", details = ex.Message });
             }
-            await service.UpdateAsync(model);
-            return Ok();
         }
 
         [HttpDelete]
-        public async Task<ActionResult> Delete(DeleteEventDTO dto)
+        public async Task<ActionResult> Delete(EventDTO dto)
         {
             var model = await service.GetByIdAsync(dto.Id);
             if (model == null)

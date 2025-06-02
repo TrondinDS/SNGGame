@@ -8,6 +8,7 @@ using OrganizerEventService.Repository;
 using OrganizerEventService.Services.Interfaces;
 using OrganizerEventService.Services;
 using OrganizerEventService.Repository.Interfaces;
+using MongoDB.Driver.Core.Operations;
 
 namespace OrganizerEventService
 {
@@ -33,6 +34,9 @@ namespace OrganizerEventService
 
             builder.Services.AddTransient<IOrganizerRepository, OrganizerRepository>();
             builder.Services.AddTransient<IOrganizerService, OrganizerService>();
+
+            builder.Services.AddTransient<IEventRepository, EventRepository>();
+            builder.Services.AddTransient<IEventService, EventService>();
 
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
