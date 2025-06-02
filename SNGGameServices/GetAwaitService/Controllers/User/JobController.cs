@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
+using GetAwaitService.Services.UserAccessRightsService.Interfaces;
 using GetAwaitService.Services.UserService.Interfaces;
 using Library.Generics.DB.DTO.DTOModelServices.UserService.Job;
 using Microsoft.AspNetCore.Mvc;
-using System.Text;
-using System.Text.Json;
 
 namespace GetAwaitService.Controllers.User
 {
@@ -12,12 +11,18 @@ namespace GetAwaitService.Controllers.User
     public class JobController : ControllerBase
     {
         private readonly IJobApiService _jobService;
+        private readonly IUserAccessRightsService _userAccessRightsService;
         private readonly IMapper _mapper;
 
-        public JobController(IJobApiService jobService, IMapper mapperService)
+        public JobController(
+            IJobApiService jobService,
+            IMapper mapperService,
+            IUserAccessRightsService userAccessRightsService
+            )
         {
             _jobService = jobService;
             _mapper = mapperService;
+            _userAccessRightsService = userAccessRightsService;
         }
 
         [HttpGet]
@@ -49,6 +54,8 @@ namespace GetAwaitService.Controllers.User
             {
                 return BadRequest("User ID not found in claims.");
             }
+            var checkUserRights = await _userAccessRightsService
+                .ChekUserRightsAdminStudioAsync(userId, jobDtoF.EntityId);
 
             var jobDto = _mapper.Map<JobCreateDTO>(jobDtoF);
             jobDto.UserId = userId;

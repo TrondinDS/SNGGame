@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using GetAwaitService.Services.StudioGameService.Interfaces;
 using GetAwaitService.Services.UserAccessRightsService.Interfaces;
-using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Game;
 using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Studio;
 using Microsoft.AspNetCore.Mvc;
 
@@ -54,7 +53,9 @@ namespace GetAwaitService.Controllers.StudioGame
                 return BadRequest("User ID not found in claims.");
 
                 var studioDto = _mapper.Map<StudioDTO>(dtoC);
-
+                studioDto.CreatorId = userId;
+                studioDto.OwnerId = userId;
+                
                 var created = await _service.CreateAsync(studioDto);
                 return created != null
                     ? CreatedAtAction(nameof(GetStudioById), new { id = created.Id }, created)
