@@ -4,6 +4,7 @@ using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.StatisticGame;
 using Library.Generics.Query.QueryModels.StudioGame;
 using System.Text.Json;
 using System.Text;
+using Library.Generics.DB.DTO.DTOModelView.StudioGameService.Game;
 
 namespace GetAwaitService.Services.StudioGameService
 {
@@ -77,6 +78,16 @@ namespace GetAwaitService.Services.StudioGameService
 
             var body = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<IEnumerable<StatisticGameDTO>>(body, _jsonOptions);
+        }
+
+        public async Task<IEnumerable<GameDTOView>?> GetGameDTOViewByIdGamesAsync(List<Guid> gameIds)
+        {
+            var content = new StringContent(JsonSerializer.Serialize(gameIds), Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync("api/Game/GetGameDTOViewByIdGames", content);
+            if (!response.IsSuccessStatusCode) return null;
+
+            var body = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<IEnumerable<GameDTOView>>(body, _jsonOptions);
         }
     }
 }

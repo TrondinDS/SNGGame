@@ -102,9 +102,16 @@ namespace GetAwaitService.Controllers.StudioGame
         }
 
         [HttpPost]
-        public async Task<IActionResult> GetStatisticGames([FromBody] List<Guid> ids)
+        public async Task<IActionResult> GetStatisticGamesByIdGames([FromBody] List<Guid> ids)
         {
             var stats = await _gameService.GetStatisticsAsync(ids);
+            return stats != null ? Ok(stats) : StatusCode(500, "Ошибка при получении статистики.");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> GetGameDTOViewByIdGames([FromBody] List<Guid> ids)
+        {
+            var stats = await _gameService.GetGameDTOViewByIdGamesAsync(ids);
             return stats != null ? Ok(stats) : StatusCode(500, "Ошибка при получении статистики.");
         }
     }

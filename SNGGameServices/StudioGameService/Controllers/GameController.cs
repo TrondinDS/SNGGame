@@ -177,5 +177,25 @@ namespace StudioGameService.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new { error = "Произошла внутренняя ошибка сервера", details = ex.Message });
             }
         }
+
+        /// <summary> Получение списка игр
+        /// </summary>
+        /// <param name="listGameId">параметры получения игр с подтянутыми параметрами</param>
+        /// <returns>Список статистики игр</returns>
+        [HttpPost]
+        public async Task<ActionResult> GetGameDTOViewByIdGames([FromBody] List<Guid> listGameId)
+        {
+            try
+            {
+                var result = await gameService.GetGameDTOViewByIdGamesAsync(listGameId);
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Ошибка при получении статистики игр");
+                return StatusCode(StatusCodes.Status500InternalServerError, new { error = "Произошла внутренняя ошибка сервера", details = ex.Message });
+            }
+        }
     }
 }

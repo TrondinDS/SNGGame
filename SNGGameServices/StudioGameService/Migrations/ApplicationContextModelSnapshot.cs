@@ -89,8 +89,6 @@ namespace StudioGameService.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("StatisticGameId");
-
                     b.HasIndex("StudioId");
 
                     b.ToTable("Games");
@@ -210,7 +208,8 @@ namespace StudioGameService.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("GameId");
+                    b.HasIndex("GameId")
+                        .IsUnique();
 
                     b.ToTable("statisticGames");
                 });
@@ -269,17 +268,11 @@ namespace StudioGameService.Migrations
 
             modelBuilder.Entity("StudioGameService.DB.Model.Game", b =>
                 {
-                    b.HasOne("StudioGameService.DB.Model.StatisticGame", "StatisticGame")
-                        .WithMany()
-                        .HasForeignKey("StatisticGameId");
-
                     b.HasOne("StudioGameService.DB.Model.Studio", "Studio")
                         .WithMany("Games")
                         .HasForeignKey("StudioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("StatisticGame");
 
                     b.Navigation("Studio");
                 });
@@ -336,8 +329,8 @@ namespace StudioGameService.Migrations
             modelBuilder.Entity("StudioGameService.DB.Model.StatisticGame", b =>
                 {
                     b.HasOne("StudioGameService.DB.Model.Game", "Game")
-                        .WithMany()
-                        .HasForeignKey("GameId")
+                        .WithOne("StatisticGame")
+                        .HasForeignKey("StudioGameService.DB.Model.StatisticGame", "GameId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -349,6 +342,8 @@ namespace StudioGameService.Migrations
                     b.Navigation("GameLibrarys");
 
                     b.Navigation("Genres");
+
+                    b.Navigation("StatisticGame");
 
                     b.Navigation("Tags");
                 });

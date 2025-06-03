@@ -9,6 +9,7 @@ using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Genre;
 using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.StatisticGame;
 using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Studio;
 using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Tag;
+using Library.Generics.DB.DTO.DTOModelView.StudioGameService.Game;
 using StudioGameService.DB.Model;
 
 namespace StudioGameService.DB.Mapping
@@ -25,6 +26,14 @@ namespace StudioGameService.DB.Mapping
             CreateMap<Genre, GenreDTO>().ReverseMap();
             CreateMap<Tag, TagDTO>().ReverseMap();
             CreateMap<StatisticGame, StatisticGameDTO>().ReverseMap();
+
+
+
+            CreateMap<Game, GameDTOView>()
+                .ForMember(dest => dest.Game, opt => opt.MapFrom(src => src))
+                .ForMember(dest => dest.StatisticGame, opt => opt.MapFrom(src => src.StatisticGame))
+                .ForMember(dest => dest.SelectedTags, opt => opt.MapFrom(src => src.Tags.Select(t => t.Tag)))
+                .ForMember(dest => dest.SelectedGenres, opt => opt.MapFrom(src => src.Genres.Select(g => g.Genre)));
 
 
             CreateMap<Game, CardGameDTO>()

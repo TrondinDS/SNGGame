@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.StatisticGame;
 using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Studio;
 using Library.Generics.Query.QueryModels.StudioGame;
 using Microsoft.AspNetCore.Mvc;

@@ -86,6 +86,12 @@ namespace StudioGameService.DB.Context
                 .HasOne(g => g.Studio)
                 .WithMany(s => s.Games)
                 .HasForeignKey(g => g.StudioId);
+
+            // Game -> StatisticGame
+            modelBuilder.Entity<StatisticGame>()
+                .HasOne<Game>(sg => sg.Game)
+                .WithOne(g => g.StatisticGame)
+                .HasForeignKey<StatisticGame>(sg => sg.GameId);
         }
     }
 }

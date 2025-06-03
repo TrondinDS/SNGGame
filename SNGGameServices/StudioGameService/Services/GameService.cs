@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Game;
+using Library.Generics.DB.DTO.DTOModelView.StudioGameService.Game;
 using Library.Generics.Query.QueryModels.StudioGame;
 using Library.Services;
 using MongoDB.Driver;
@@ -261,5 +262,11 @@ namespace StudioGameService.Services
             return await gameRepository.GetFiltreCardGameAsync(paramQuerySG);
         }
 
+        public async Task<IEnumerable<GameDTOView>> GetGameDTOViewByIdGamesAsync(IEnumerable<Guid> listGameId)
+        {
+            var result =  await gameRepository.GetGameDTOViewByIdGamesAsync(listGameId);
+            var resultDto = mapper.Map<IEnumerable<GameDTOView>>(result);
+            return resultDto; 
+        }
     }
 }

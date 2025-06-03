@@ -1,4 +1,5 @@
 ﻿using Library.Generics.DB.DTO.DTOModelObjects.Game;
+using Library.Generics.DB.DTO.DTOModelView.StudioGameService.Game;
 using Library.Generics.GenericRepository;
 using Library.Generics.Query.QueryModels.StudioGame;
 using Microsoft.EntityFrameworkCore;
@@ -76,6 +77,22 @@ namespace StudioGameService.Repository
         {
             var listStatistic = await dbSetStatisticGame.Where(sg => listGameId.Contains(sg.GameId)).ToListAsync();
             return listStatistic;
+        }
+
+        public async Task<IEnumerable<Game>> GetGameDTOViewByIdGamesAsync(IEnumerable<Guid> listGameId)
+        {
+            var result = await dbSetGame
+                .Include(g => g.StatisticGame)
+                .Include(gsg => gsg.Genres)
+                .ThenInclude(gsg => gsg.Genre)
+                .Include(gst => gst.Tags)
+                .ThenInclude(gst => gst.Tag)
+                .Where(g => listGameId.Contains(g.Id))
+                .ToListAsync();
+            bool a = true;
+            if (a == true)
+                a = false;
+            return result;
         }
     }
 }
