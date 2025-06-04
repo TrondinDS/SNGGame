@@ -10,7 +10,7 @@ using System.Text.Json;
 
 namespace GetAwaitService.Controllers.JWT
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class JWTController : ControllerBase
     {
