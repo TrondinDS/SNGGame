@@ -56,7 +56,7 @@ namespace UserService.Controllers
         public async Task<ActionResult<JobDTO>> GetJobsByUserId(Guid id)
         {
             var jobs = await jobService.GetJobsByUserIdAsync(id);
-            if (jobs == null || jobs.Any())
+            if (jobs == null || !jobs.Any())
             {
                 return NotFound();
             }

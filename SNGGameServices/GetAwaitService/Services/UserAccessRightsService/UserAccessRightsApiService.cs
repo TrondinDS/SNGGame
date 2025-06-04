@@ -236,8 +236,8 @@ namespace GetAwaitService.Services.UserAccessRightsService
 
             if (jobsDTO is not null && jobsDTO.Any())
                 result.StudioModeratorIds = jobsDTO
-                    .Where(j =>  j.EntityType == (int)EntityType.Type.Studio && j.DateFinish > DateTime.UtcNow)
-                        .Select(j => j.Id).ToList();
+                    .Where(j =>  j.EntityType == (int)EntityType.Type.Studio && (j.DateFinish > DateTime.UtcNow || j.DateFinish is null))
+                        .Select(j => j.EntityId).ToList();
 
             if (studiosDTO is not null && studiosDTO.Any())
                 result.StudioOwnerIds = studiosDTO.Select(s => s.Id).ToList();
