@@ -66,7 +66,8 @@ namespace OrganizerEventService.Controllers
                 var existed = await service.GetByIdAsync(id);
                 if (existed == null)
                 {
-                    return NotFound();
+                    //return NotFound();
+                    return Ok();
                 }
 
                 await service.UpdateAsync(dto);

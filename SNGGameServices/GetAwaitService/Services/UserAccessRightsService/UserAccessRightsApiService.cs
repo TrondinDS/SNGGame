@@ -236,11 +236,15 @@ namespace GetAwaitService.Services.UserAccessRightsService
 
             if (jobsDTO is not null && jobsDTO.Any())
                 result.StudioModeratorIds = jobsDTO
-                    .Where(j =>  j.EntityType == (int)EntityType.Type.Studio && (j.DateFinish > DateTime.UtcNow || j.DateFinish is null))
-                        .Select(j => j.EntityId).ToList();
+                    .Where(j =>  
+                        j.EntityType == (int)EntityType.Type.Studio && 
+                        (j.DateFinish > DateTime.UtcNow || j.DateFinish is null) &&
+                        j.IsModerator == true
+                    ).Select(j => j.EntityId).ToList();
 
             if (studiosDTO is not null && studiosDTO.Any())
-                result.StudioOwnerIds = studiosDTO.Select(s => s.Id).ToList();
+                result.StudioOwnerIds = studiosDTO.Where(s => s.OwnerId == userId)
+                    .Select(s => s.Id).ToList();
 
             return result;
         }
