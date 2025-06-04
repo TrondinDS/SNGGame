@@ -66,21 +66,18 @@ namespace GetAwaitService.Controllers.StudioGame
             return BadRequest("у вас недостаточно прав для выполения данного действия");
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateGame(Guid id, [FromBody] GameDTO gameDto)
+        [HttpPut]
+        public async Task<IActionResult> UpdateGame([FromBody] GameDTO gameDto)
         {
-            if (id != gameDto.Id)
-                return BadRequest("ID в запросе не совпадает с ID в данных.");
-
             var userIdClaim = User.FindFirst("userId")?.Value;
             if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var userId))
                 return BadRequest("User ID not found in claims.");
 
-            var checkUserRights = await _userAccessRightsService.ChekUserRightsModerAndAdminGameAsync(userId, id);
+            var checkUserRights = await _userAccessRightsService.ChekUserRightsModerAndAdminGameAsync(userId, gameDto.Id);
 
             if (checkUserRights)
             {
-                var updated = await _gameService.UpdateAsync(id, gameDto);
+                var updated = await _gameService.UpdateAsync(gameDto.Id, gameDto);
                 return updated ? Ok() : NotFound();
             }
 

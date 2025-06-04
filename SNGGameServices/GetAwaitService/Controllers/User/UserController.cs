@@ -41,13 +41,20 @@ namespace GetAwaitService.Controllers.User
                 : StatusCode(500, "Ошибка при создании пользователя");
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUser(Guid id, [FromBody] UserDTO userDto)
+        [HttpPut]
+        public async Task<IActionResult> UpdateUser([FromBody] UserDTO userDto)
         {
-            if (id != userDto.Id)
-                return BadRequest("ID в запросе не совпадает с ID в данных");
+            var userIdClaim = User.FindFirst("userId")?.Value;
+            if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var userId))
+            {
+                return BadRequest("User ID not found in claims.");
+            }
+            if (userId != userDto.Id)
+            {
+                return BadRequest("Отказ доступа");
+            }
 
-            var success = await _userService.UpdateUserAsync(id, userDto);
+            var success = await _userService.UpdateUserAsync(userId, userDto);
             return success ? Ok() : NotFound();
         }
 

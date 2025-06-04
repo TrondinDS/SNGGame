@@ -2,6 +2,7 @@
 using GetAwaitService.Services.StudioGameService.Interfaces;
 using GetAwaitService.Services.UserAccessRightsService.Interfaces;
 using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Studio;
+using Library.Generics.DB.DTO.DTOModelServices.UserService.User;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GetAwaitService.Controllers.StudioGame
@@ -62,14 +63,24 @@ namespace GetAwaitService.Controllers.StudioGame
                     : StatusCode(500, "Ошибка при создании студии.");
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateStudio(Guid id, [FromBody] StudioDTO dto)
+        [HttpPut]
+        public async Task<IActionResult> UpdateStudio([FromBody] StudioDTO dto)
         {
-            if (id != dto.Id)
-                return BadRequest("ID в запросе не совпадает с ID в теле запроса.");
+            var userIdClaim = User.FindFirst("userId")?.Value;
+            if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var userId))
+            {
+                return BadRequest("User ID not found in claims.");
+            }
 
-            var updated = await _service.UpdateAsync(dto);
-            return updated ? Ok() : NotFound();
+            var check = await _userAccessRightsService.ChekUserRightsModerAndAdminStudioAsync(userId, dto.Id);
+            if (check == true)
+            {
+                var updated = await _service.UpdateAsync(dto);
+                return updated ? Ok() : NotFound();
+            }
+
+            return BadRequest("Отказ доступа");
+
         }
 
         [HttpDelete("{id}")]
