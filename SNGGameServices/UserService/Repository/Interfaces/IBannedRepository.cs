@@ -4,7 +4,7 @@ using UserService.DB.Models;
 
 namespace UserService.Repository.Interfaces
 {
-    public interface IBannedRepository : IGenericRepository<Banned, int>
+    public interface IBannedRepository : IGenericRepository<Banned, Guid>
     {
         public Task<IEnumerable<Banned>> GetBannedsByUserIdAsync(Guid userId);
     }

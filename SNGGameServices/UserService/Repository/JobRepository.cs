@@ -6,7 +6,7 @@ using UserService.Repository.Interfaces;
 
 namespace UserService.Repository
 {
-    public class JobRepository : GenericRepository<Job, int>, IJobRepository
+    public class JobRepository : GenericRepository<Job, Guid>, IJobRepository
     {
         private DbSet<Job> dbSet;
         public JobRepository(ApplicationContext context)

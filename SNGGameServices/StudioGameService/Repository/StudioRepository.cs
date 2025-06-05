@@ -8,7 +8,7 @@ using StudioGameService.Repository.Interfaces;
 
 namespace StudioGameService.Repository
 {
-    public class StudioRepository : GenericRepository<Studio, int>, IStudioRepository
+    public class StudioRepository : GenericRepository<Studio, Guid>, IStudioRepository
     {
         private readonly DbSet<Studio> dbSet;
         public StudioRepository(ApplicationContext context)

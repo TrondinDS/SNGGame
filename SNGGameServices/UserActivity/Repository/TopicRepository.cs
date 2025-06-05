@@ -6,7 +6,7 @@ using UserActivityService.Repository.Interfaces;
 
 namespace UserActivityService.Repository
 {
-    public class TopicRepository : GenericRepository<Topic, int>, ITopicRepository 
+    public class TopicRepository : GenericRepository<Topic, Guid>, ITopicRepository 
     {
         private DbSet<Topic> topicDbSet;
         public TopicRepository(ApplicationContext context) : base(context)

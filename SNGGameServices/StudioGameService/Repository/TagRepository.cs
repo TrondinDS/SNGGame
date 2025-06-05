@@ -5,7 +5,7 @@ using StudioGameService.Repository.Interfaces;
 
 namespace StudioGameService.Repository
 {
-    public class TagRepository : GenericRepository<Tag, int>, ITagRepository
+    public class TagRepository : GenericRepository<Tag, Guid>, ITagRepository
     {
         public TagRepository(ApplicationContext context)
             : base(context) { }

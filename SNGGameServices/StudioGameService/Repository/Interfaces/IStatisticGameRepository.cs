@@ -3,7 +3,7 @@ using StudioGameService.DB.Model;
 
 namespace StudioGameService.Repository.Interfaces
 {
-    public interface IStatisticGameRepository : IGenericRepository<StatisticGame, int> 
+    public interface IStatisticGameRepository : IGenericRepository<StatisticGame, Guid> 
     {
     }
 }

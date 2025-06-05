@@ -6,7 +6,7 @@ using StudioGameService.Repository.Interfaces;
 
 namespace StudioGameService.Repository
 {
-    public class GenreRepository : GenericRepository<Genre, int>, IGenreRepository
+    public class GenreRepository : GenericRepository<Genre, Guid>, IGenreRepository
     {
         public GenreRepository(ApplicationContext context)
             : base(context) { }

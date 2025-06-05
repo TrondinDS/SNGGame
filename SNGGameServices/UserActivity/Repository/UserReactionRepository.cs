@@ -7,7 +7,7 @@ using UserActivityService.Repository.Interfaces;
 
 namespace UserActivityService.Repository
 {
-    public class UserReactionRepository : GenericRepository<UserReaction, int>, IUserReactionRepository
+    public class UserReactionRepository : GenericRepository<UserReaction, Guid>, IUserReactionRepository
     {
         private DbSet<UserReaction> dbSetUserReaction;
         private DbSet<Comment> dbSetComment;

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GetAwaitService.Repository
 {
-    public class UserTelegramInformationRepository : GenericRepository<UserTelegramInformation, int>, IUserTelegramInformationRepository
+    public class UserTelegramInformationRepository : GenericRepository<UserTelegramInformation, Guid>, IUserTelegramInformationRepository
     {
         private readonly DbSet<UserTelegramInformation> _userTgInfo;
         public UserTelegramInformationRepository(ApplicationContext context)

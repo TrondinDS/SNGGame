@@ -5,7 +5,7 @@ using UserActivityService.Repository.Interfaces;
 
 namespace UserActivityService.Repository
 {
-    public class CommentRepository : GenericRepository<Comment, int>, ICommentRepository
+    public class CommentRepository : GenericRepository<Comment, Guid>, ICommentRepository
     {
         public CommentRepository(ApplicationContext context) : base(context)
         { }

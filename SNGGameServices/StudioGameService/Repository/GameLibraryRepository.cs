@@ -6,7 +6,7 @@ using StudioGameService.Repository.Interfaces;
 
 namespace StudioGameService.Repository
 {
-    public class GameLibraryRepository : GenericRepository<GameLibrary, int>, IGameLibraryRepository
+    public class GameLibraryRepository : GenericRepository<GameLibrary, Guid>, IGameLibraryRepository
     {
         private DbSet<GameLibrary> dbSetGameLibrary;
         private DbSet<Game> dbSetGame;

@@ -6,7 +6,7 @@ using UserService.Repository.Interfaces;
 
 namespace UserService.Repository
 {
-    public class BannedRepository : GenericRepository<Banned, int>, IBannedRepository
+    public class BannedRepository : GenericRepository<Banned, Guid>, IBannedRepository
     {
         private DbSet<Banned> dbSetBanned;
         public BannedRepository(ApplicationContext context)

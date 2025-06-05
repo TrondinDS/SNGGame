@@ -3,7 +3,7 @@ using UserActivityService.DB.Models;
 
 namespace UserActivityService.Repository.Interfaces
 {
-    public interface IUserReactionRepository : IGenericRepository<UserReaction, int>
+    public interface IUserReactionRepository : IGenericRepository<UserReaction, Guid>
     {
     }
 }
