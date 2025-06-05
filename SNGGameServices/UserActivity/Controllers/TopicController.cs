@@ -3,6 +3,7 @@ using AutoMapper;
 using UserActivityService.DB.Models;
 using UserActivityService.Services.Interfaces;
 using Library.Generics.DB.DTO.DTOModelServices.UserActivityService.Topic;
+using Library.Generics.DB.DTO.DTOModelView.UserActivityService.Topic;
 
 namespace UserActivityService.Controllers
 {
@@ -46,6 +47,18 @@ namespace UserActivityService.Controllers
             }
             var topicDTO = mapper.Map<TopicDTO>(topic);
             return Ok(topicDTO);
+        }
+
+        /// <summary>
+        /// Получение тем по идентификатору сущности
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult<IEnumerable<TopicDTOView>>> GetTopicByEntityId(List<Guid> entityIds)
+        {
+            var topics = await topicService.GetTopicsByEntityIdAsync(entityIds);
+            var topicsDTO = mapper.Map<IEnumerable<TopicDTOView>>(topics);
+            return Ok(topicsDTO);
         }
 
         /// <summary>

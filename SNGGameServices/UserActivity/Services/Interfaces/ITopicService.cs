@@ -9,5 +9,7 @@ namespace UserActivityService.Services.Interfaces
         Task<IEnumerable<Topic>> GetAllAsync();
         Task<Topic> GetByIdAsync(Guid id);
         Task UpdateAsync(Topic topic);
+
+        public Task<IEnumerable<Topic>> GetTopicsByEntityIdAsync(List<Guid> entityIds);
     }
 }

@@ -32,11 +32,19 @@ namespace GetAwaitService.Controllers.UserActivity
             return topics != null ? Ok(topics) : StatusCode(500, "Ошибка при получении списка тем.");
         }
 
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetTopicById(Guid id)
         {
             var topic = await _topicService.GetByIdAsync(id);
             return topic != null ? Ok(topic) : NotFound();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> GetTopicByEntityId(List<Guid> entityIds)
+        {
+            var topics = await _topicService.GetTopicsByEntityIdAsync(entityIds);
+            return topics != null ? Ok(topics) : StatusCode(500, "Ошибка при получении списка тем.");
         }
 
         [HttpPost]

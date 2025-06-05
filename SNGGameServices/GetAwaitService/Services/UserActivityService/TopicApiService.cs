@@ -2,6 +2,7 @@
 using Library.Generics.DB.DTO.DTOModelServices.UserActivityService.Topic;
 using System.Text.Json;
 using System.Text;
+using Library.Generics.DB.DTO.DTOModelView.UserActivityService.Topic;
 
 namespace GetAwaitService.Services.UserActivityService
 {
@@ -26,6 +27,18 @@ namespace GetAwaitService.Services.UserActivityService
 
             var body = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<IEnumerable<TopicDTO>>(body, _jsonOptions);
+        }
+
+        public async Task<IEnumerable<TopicDTOView>?> GetTopicsByEntityIdAsync(List<Guid> entityIds)
+        {
+            var json = JsonSerializer.Serialize(entityIds);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PostAsync("api/Topic/GetTopicByEntityId", content);
+            if (!response.IsSuccessStatusCode) return null;
+
+            var body = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<IEnumerable<TopicDTOView>>(body, _jsonOptions);
         }
 
         public async Task<TopicDTO?> GetByIdAsync(Guid id)

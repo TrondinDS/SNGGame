@@ -24,7 +24,7 @@ namespace UserActivityService.Services
             var topic = await topicRepository.GetByIdAsync(id);
             if (topic != null)
             {
-                topicRepository.DeleteAsync(topic);
+                await topicRepository.DeleteAsync(topic);
                 await topicRepository.SaveChangesAsync();
             }
         }
@@ -41,8 +41,13 @@ namespace UserActivityService.Services
 
         public async Task UpdateAsync(Topic topic)
         {
-            topicRepository.UpdateAsync(topic);
+            await topicRepository.UpdateAsync(topic);
             await topicRepository.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<Topic>> GetTopicsByEntityIdAsync(List<Guid> entityIds)
+        {
+            return await topicRepository.GetTopicsByEntityIdAsync(entityIds);
         }
     }
 }
