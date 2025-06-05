@@ -9,6 +9,6 @@ namespace GetAwaitService.Services.GetAwaitService.Interfaces
         Task<IEnumerable<UserTelegramInformation>> GetAllAsync();
         Task<UserTelegramInformation> GetByIdAsync(Guid id);
         Task UpdateAsync(UserTelegramInformation userInfo);
-        public Task<UserTelegramInformation> GetUserTgInfoFromTgId(int tgId);
+        public Task<UserTelegramInformation> GetUserTgInfoFromTgId(ulong tgId);
     }
 }

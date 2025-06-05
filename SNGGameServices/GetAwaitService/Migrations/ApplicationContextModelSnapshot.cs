@@ -37,8 +37,8 @@ namespace GetAwaitService.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
-                    b.Property<int>("TelegramId")
-                        .HasColumnType("integer");
+                    b.Property<decimal>("TelegramId")
+                        .HasColumnType("numeric(20,0)");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");

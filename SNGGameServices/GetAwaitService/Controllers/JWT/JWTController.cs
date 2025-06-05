@@ -66,7 +66,7 @@ namespace GetAwaitService.Controllers.JWT
         }
 
         [HttpGet]
-        public async Task<IActionResult> LoginServiceJWT(int userTelegramId)
+        public async Task<IActionResult> LoginServiceJWT(ulong userTelegramId)
         {
             var result = await _authService.Login(userTelegramId);
             return Ok(result);

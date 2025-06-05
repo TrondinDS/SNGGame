@@ -8,7 +8,7 @@ namespace GetAwaitService.DB.Models
 
         public Guid UserId { get; set; }
 
-        public int TelegramId { get; set; }
+        public ulong TelegramId { get; set; }
 
         public required DateTime DateCreate { get; set; }
 

@@ -31,7 +31,7 @@ namespace GetAwaitService.Auth.JWT.Service
             };
         }
 
-        public async Task<string> Login(int userTelegramId)
+        public async Task<string> Login(ulong userTelegramId)
         {
             var userTelegramResultSearch = await SearchUser(userTelegramId);
             if (userTelegramResultSearch == null)
@@ -48,7 +48,7 @@ namespace GetAwaitService.Auth.JWT.Service
             return await GenerateJWT(userTelegramResultSearch.UserId, userTelegramId);
         }
 
-        private UserCreateDTO CreateInstanceUserCreteDTO(int userTelegramId)
+        private UserCreateDTO CreateInstanceUserCreteDTO(ulong userTelegramId)
         {
             var userDTO = new UserCreateDTO
             {
@@ -63,7 +63,7 @@ namespace GetAwaitService.Auth.JWT.Service
         }
 
 
-        public async Task<UserTelegramInformation> SearchUser(int userTelegramId)
+        public async Task<UserTelegramInformation> SearchUser(ulong userTelegramId)
         {
             var userTG = _userTelegramInformationService.GetUserTgInfoFromTgId(userTelegramId);
 
@@ -87,7 +87,7 @@ namespace GetAwaitService.Auth.JWT.Service
             throw new Exception($"Ошибка при создании пользователя. StatusCode: {response.StatusCode}, Response: {errorResponse}");
         }
 
-        public async Task<UserTelegramInformation> CreateUserTG(int userTelegramId, UserDTO userDTO)
+        public async Task<UserTelegramInformation> CreateUserTG(ulong userTelegramId, UserDTO userDTO)
         {
             // Создаем экземпляр класса UserTelegramInformation
             var userTelegramInfo = new UserTelegramInformation
@@ -104,7 +104,7 @@ namespace GetAwaitService.Auth.JWT.Service
             return userTelegramInfo;
         }
 
-        public async Task<string> GenerateJWT(Guid userId, int userTelegramId)
+        public async Task<string> GenerateJWT(Guid userId, ulong userTelegramId)
         {
             var issuer = _configuration["Jwt:Issuer"];
             var audience = _configuration["Jwt:Audience"];

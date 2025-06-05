@@ -14,7 +14,7 @@ namespace GetAwaitService.Repository
             _userTgInfo = context.Set<UserTelegramInformation>();
         }
 
-        public async Task<UserTelegramInformation> GetUserTgInfoFromTgId(int tgId)
+        public async Task<UserTelegramInformation> GetUserTgInfoFromTgId(ulong tgId)
         {
             return await _userTgInfo.FirstOrDefaultAsync(u => u.TelegramId == tgId);
         }
