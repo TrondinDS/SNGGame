@@ -12,11 +12,11 @@ namespace StudioGameService.Filter.AllFilter
         {
             if (queryPagination != null && BodyQuery != null)
             {
-                if (queryPagination.NumberInPage > 0 && queryPagination.NumberPage >= 0)
+                if (queryPagination.PageSize > 0 && queryPagination.PageNumber >= 0)
                 {
-                    int skip = Math.Max(0, (queryPagination.NumberPage - 1)) * queryPagination.NumberInPage;
+                    int skip = Math.Max(0, (queryPagination.PageNumber - 1)) * queryPagination.PageSize;
 
-                    BodyQuery = BodyQuery.Skip(skip).Take(queryPagination.NumberInPage);
+                    BodyQuery = BodyQuery.Skip(skip).Take(queryPagination.PageSize);
                 }
             }
 
@@ -27,11 +27,11 @@ namespace StudioGameService.Filter.AllFilter
         {
             if (queryPagination != null && BodyQuery != null)
             {
-                if (queryPagination.NumberInPage > 0 && queryPagination.NumberPage >= 0)
+                if (queryPagination.PageSize > 0 && queryPagination.PageNumber >= 0)
                 {
-                    int skip = Math.Max(0, (queryPagination.NumberPage - 1)) * queryPagination.NumberInPage;
+                    int skip = Math.Max(0, (queryPagination.PageNumber - 1)) * queryPagination.PageSize;
 
-                    BodyQuery = BodyQuery.Skip(skip).Take(queryPagination.NumberInPage);
+                    BodyQuery = BodyQuery.Skip(skip).Take(queryPagination.PageSize);
                 }
             }
 
