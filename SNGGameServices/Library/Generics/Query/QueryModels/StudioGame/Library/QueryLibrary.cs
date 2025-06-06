@@ -9,6 +9,7 @@ namespace Library.Generics.Query.QueryModels.StudioGame.Library;
 
 public class QueryLibrary
 {
+    public Guid? UserId { get; set; }
     [Range(1, 10, ErrorMessage = "Значение Rating должно быть от 1 до 10.")]
     public int? Rating { get; set; }
 }

@@ -25,7 +25,7 @@ public class ParamQueryGame
     public QueryLibrary? QueryLibrary { get; set; }
 
     //Pagination
-    public QueryPagination? QueryPagination { get; set; }
+    public QueryPagination? QueryPagination { get; set; } // для того что-бы была возможность вернуть 10 самых популярных
 
     //Top
     public QueryTop? QueryTop { get; set; }

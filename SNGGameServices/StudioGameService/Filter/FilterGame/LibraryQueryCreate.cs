@@ -7,7 +7,7 @@ namespace StudioGameService.Filter.FilterGame
     {
         public static IQueryable<Game> Create(QueryLibrary queryLibrary, IQueryable<Game> BodyQuery)
         {
-            if ( queryLibrary != null && BodyQuery != null )
+            if ( queryLibrary is not null && BodyQuery is not null )
             {
                 if ( queryLibrary.Rating > 0 )
                 {
@@ -16,6 +16,13 @@ namespace StudioGameService.Filter.FilterGame
                         g.StatisticGame.PeopleCount > 0 &&
                         (double)g.StatisticGame.RatingSum / g.StatisticGame.PeopleCount >= queryLibrary.Rating
                     );
+                }
+
+                if ( queryLibrary.UserId is not null )
+                {
+                    BodyQuery = BodyQuery.Where(g =>
+                            g.GameLibrarys.Any(gl => gl.UserId == queryLibrary.UserId)
+                        );
                 }
             }
 

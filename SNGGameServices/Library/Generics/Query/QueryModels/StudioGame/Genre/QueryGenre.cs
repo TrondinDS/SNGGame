@@ -8,7 +8,6 @@ namespace Library.Generics.Query.QueryModels.StudioGame.Genre
 {
     public class QueryGenre
     {
-        [ValidGenreIds(ErrorMessage = "Все значения в ListGenreId должны быть в диапазоне от 1 до максимального значения int.")]
         public List<Guid>? ListGenreId { get; set; }
     }
 }

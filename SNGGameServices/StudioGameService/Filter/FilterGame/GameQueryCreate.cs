@@ -10,6 +10,12 @@ namespace StudioGameService.Filter.FilterGame
         {
             if ( queryGame != null && BodyQuery != null )
             {
+                if (queryGame.GamesId is not null && queryGame.GamesId.Any())
+                {
+                    BodyQuery = BodyQuery.Where(g =>
+                        queryGame.GamesId.Contains(g.Id)
+                    );
+                }
                 
                 if ( !string.IsNullOrEmpty(queryGame.TitleGame) )
                 {

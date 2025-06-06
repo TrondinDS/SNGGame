@@ -9,6 +9,8 @@ namespace Library.Generics.Query.QueryModels.StudioGame.Game
 {
     public class QueryGame
     {
+        public List<Guid>? GamesId { get; set; }
+
         [StringLength(255, ErrorMessage = "Название игры не должно превышать 255 символов.")]
         public string? TitleGame { get; set; }
         [StringLength(255, ErrorMessage = "Название страны не должно превышать 255 символов.")]

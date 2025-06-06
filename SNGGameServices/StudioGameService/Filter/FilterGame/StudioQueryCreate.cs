@@ -9,10 +9,14 @@ namespace StudioGameService.Filter.FilterGame
     {
         public static IQueryable<Game> Create(QueryStudio queryStudio, IQueryable<Game> BodyQuery)
         {
-            if ( queryStudio != null && BodyQuery != null )
+            if (
+                 queryStudio?.StudiosId is not null && 
+                 queryStudio.StudiosId.Any() && 
+                 BodyQuery is not null 
+               )
             {
                 BodyQuery = BodyQuery.Where(g =>
-                        g.StudioId == queryStudio.StudioId
+                        queryStudio.StudiosId.Contains(g.StudioId)
                     );
             }
 
