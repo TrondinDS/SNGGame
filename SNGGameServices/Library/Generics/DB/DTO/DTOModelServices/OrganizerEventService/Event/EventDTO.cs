@@ -32,16 +32,13 @@ namespace Library.Generics.DB.DTO.DTOModelServices.OrganizerEventService.Event
         public string GeoUrl { get; set; }
 
         [Required(ErrorMessage = "Status is required")]
-        public int Status { get; set; }
+        public string Status { get; set; }
 
         public decimal? PriceMin { get; set; }
         public decimal? PriceMax { get; set; }
 
         [Required(ErrorMessage = "OrganizerEventId is required")]
         public Guid OrganizerEventId { get; set; }
-
-        public bool IsDeleted { get; set; }
-        public DateTime? DateDeleted { get; set; }
 
 
         [Required(ErrorMessage = "Image является обязательным")]

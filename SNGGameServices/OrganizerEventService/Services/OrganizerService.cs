@@ -34,16 +34,17 @@ namespace OrganizerEventService.Services
             try
             {
                 await repository.BeginTransactionAsync();
-                await repository.AddAsync(model);
 
                 await mongoService.Database(imgsDatabase)
-                .Collection(avasCollection)
+                    .Collection(avasCollection)
                     .InsertImg(model.Id, dto.Image, dto.ImageType);
 
                 await mongoService.Database(contentDatabase)
-                .Collection(contentCollection)
+                    .Collection(contentCollection)
                     .InsertStrContent(model.Id, dto.Content);
 
+                await repository.AddAsync(model);
+                await repository.SaveChangesAsync();
                 await repository.CommitTransactionAsync();
 
                 dto.Id = model.Id;

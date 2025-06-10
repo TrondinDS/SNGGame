@@ -72,8 +72,8 @@ namespace AdministratumService.Controllers
                 return BadRequest();
             }
 
-            var existingUser = await service.GetByIdAsync(id);
-            if (existingUser == null)
+            var existingMessageDTO = await service.GetByIdAsync(id);
+            if (existingMessageDTO == null)
             {
                 return NotFound();
             }

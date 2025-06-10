@@ -12,8 +12,8 @@ using OrganizerEventService.DB.Context;
 namespace OrganizerEventService.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20250501084106_InitCreate")]
-    partial class InitCreate
+    [Migration("20250610133753_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

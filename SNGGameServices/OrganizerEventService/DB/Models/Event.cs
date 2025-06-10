@@ -40,13 +40,33 @@ namespace OrganizerEventService.DB.Models
         public decimal? PriceMin { get; set; }
         public decimal? PriceMax { get; set; }
 
-        public bool IsDeleted { get; set; }
-        public DateTime? DateDeleted { get; set; }
 
         [Required(ErrorMessage = "OrganizerEventId is required")]
         public Guid OrganizerEventId { get; set; }
 
         [ForeignKey("OrganizerEventId")]
         public virtual Organizer Organizer { get; set; }
+        public bool IsDeleted { get; set; } = false;
+        [DataType(DataType.DateTime)]
+        public DateTime? DateDeleted
+        {
+            get => EnsureUtc(_dateDeleted);
+            set => _dateDeleted = ConvertToUtc(value);
+        }
+
+        [NotMapped] // Указывает EF Core игнорировать это поле
+        private DateTime? _dateDeleted;
+
+        //public ICollection<Event> Events { get; set; } = new List<Event>();
+
+        private static DateTime? EnsureUtc(DateTime? value)
+        {
+            return value == null ? null : DateTime.SpecifyKind(value.Value, DateTimeKind.Utc);
+        }
+
+        private static DateTime? ConvertToUtc(DateTime? value)
+        {
+            return value?.ToUniversalTime();
+        }
     }
 }

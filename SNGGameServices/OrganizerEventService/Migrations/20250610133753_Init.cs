@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace OrganizerEventService.Migrations
 {
     /// <inheritdoc />
-    public partial class InitCreate : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -43,9 +43,9 @@ namespace OrganizerEventService.Migrations
                     Status = table.Column<string>(type: "text", nullable: false),
                     PriceMin = table.Column<decimal>(type: "numeric", nullable: true),
                     PriceMax = table.Column<decimal>(type: "numeric", nullable: true),
+                    OrganizerEventId = table.Column<Guid>(type: "uuid", nullable: false),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false),
-                    DateDeleted = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    OrganizerEventId = table.Column<Guid>(type: "uuid", nullable: false)
+                    DateDeleted = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
