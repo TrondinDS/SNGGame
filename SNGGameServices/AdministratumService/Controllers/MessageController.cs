@@ -2,7 +2,10 @@
 using AdministratumService.DB.DTO.Message;
 using AdministratumService.DB.Models;
 using AdministratumService.Repository;
+using AdministratumService.Services.Interfaces;
 using AutoMapper;
+using Library.Generics.DB.DTO.DTOModelServices.AdministratumService.ComplainTicket;
+using Library.Generics.DB.DTO.DTOModelServices.AdministratumService.Message;
 using Library.Generics.GenericService;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,56 +15,82 @@ namespace AdministratumService.Controllers
     [ApiController]
     public class MessageController : Controller
     {
-        private readonly CrudGenericService<Message, Guid, MessageRepository> service;
+        private readonly IMessageService service;
         private readonly IMapper mapper;
 
-        public MessageController(CrudGenericService<Message, Guid, MessageRepository> service, IMapper mapper)
+        public MessageController(IMessageService service, IMapper mapper)
         {
             this.service = service;
             this.mapper = mapper;
         }
 
-        [HttpPost]
-        public async Task<ActionResult<MessageIdDTO>> Create(CreateMessageDTO dto)
+        /// <summary>
+        /// Получение всех тикетов
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<MessageDTO>>> GetAll()
         {
-            var model = mapper.Map<Message>(dto);
-            await service.AddAsync(model);
-            var res = mapper.Map<MessageIdDTO>(model);
-            return Ok(res);
+            return Ok(await service.GetAllAsync());
         }
 
+        /// <summary>
+        /// Получение тикета по ID
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("{id}")]
-        public async Task<ActionResult<GetByIdMessageDTO>> GetById(Guid id)
+        public async Task<ActionResult<MessageDTO>> GetById(Guid id)
         {
-            var model = await service.GetByIdAsync(id);
-            if (model == null)
+            var ticket = await service.GetByIdAsync(id);
+            if (ticket == null)
             {
                 return NotFound();
             }
-            var res = mapper.Map<GetByIdMessageDTO>(model);
-            return Ok(res);
+            return Ok(ticket);
         }
 
-        [HttpPut]
-        public async Task<ActionResult> Update(UpdateMessageDTO dto)
+        /// <summary>
+        /// Создание нового тикета
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> Create(MessageDTO dto)
         {
-            return BadRequest("операция обновления для сообщений чата недоступна");
+            await service.AddAsync(dto);
+            return CreatedAtAction(nameof(GetById), new { id = dto.Id }, dto);
         }
 
-        [HttpDelete]
-        public async Task<ActionResult> Delete(DeleteMessageDTO dto)
+        /// <summary>
+        /// Обновление тикета
+        /// </summary>
+        /// <returns></returns>
+        [HttpPut("{id}")]
+        public async Task<ActionResult> Update(Guid id, MessageDTO dto)
         {
-            var model = await service.GetByIdAsync(dto.Id);
-            if (model == null)
+            if (id != dto.Id)
+            {
+                return BadRequest();
+            }
+
+            var existingUser = await service.GetByIdAsync(id);
+            if (existingUser == null)
             {
                 return NotFound();
             }
-            if (model.IsDeleted)
-            {
-                return Problem("сообщение уже удалено");
-            }
-            model.DateDeleted = DateTime.UtcNow;
-            return Ok();
+            await service.UpdateAsync(dto);
+
+            return Ok(dto);
+        }
+
+        /// <summary>
+        /// Удаление тикета
+        /// </summary>
+        /// <returns></returns>
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteUser(Guid id)
+        {
+            await service.DeleteAsync(id);
+            return NoContent();
         }
     }
 }

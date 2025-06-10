@@ -28,6 +28,9 @@ namespace AdministratumService
 
                 builder.Services.AddTransient<IComplainTicketRepository, ComplainTicketRepository>();
                 builder.Services.AddTransient<IComplainTicketService, ComplainTicketService>();
+
+                builder.Services.AddTransient<IMessageRepository, MessageRepository>();
+                builder.Services.AddTransient<IMessageService, MessageService>();
             }
 
             builder.Services.AddDbContext<ApplicationContext>(opt =>

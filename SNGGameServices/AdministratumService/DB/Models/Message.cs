@@ -8,7 +8,7 @@ namespace AdministratumService.DB.Models
     public class Message : IIsDeleted
     {
         [Key]
-        public Guid id { get; set; }
+        public Guid Id { get; set; }
         public Guid UserId { get; set; }
 
         public string Content { get; set; }
@@ -16,7 +16,6 @@ namespace AdministratumService.DB.Models
         public bool IsDeleted { get; set; }
         public DateTime? DateDeleted { get; set; }
 
-        // Навигационные свойства
         public Guid ChatFeedbackId { get; set; }
 
         [ForeignKey("ChatFeedbackId")]

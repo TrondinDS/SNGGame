@@ -5,6 +5,7 @@ using AdministratumService.DB.Models;
 using AutoMapper;
 using Library.Generics.DB.DTO.DTOModelServices.AdministratumService.ChatFeedback;
 using Library.Generics.DB.DTO.DTOModelServices.AdministratumService.ComplainTicket;
+using Library.Generics.DB.DTO.DTOModelServices.AdministratumService.Message;
 
 namespace AdministratumService.DB.Mapping
 {
@@ -31,6 +32,7 @@ namespace AdministratumService.DB.Mapping
             }
 
 			{
+                CreateMap<Message, MessageDTO>().ReverseMap();
 				CreateMap<Message, CreateMessageDTO>().ReverseMap();
 				CreateMap<Message, DeleteMessageDTO>().ReverseMap();
 				CreateMap<Message, GetByIdMessageDTO>().ReverseMap();
