@@ -1,0 +1,66 @@
+﻿@page
+@model FrontService.Pages.User.IndexModel
+@{
+    ViewData["Title"] = "Users";
+}
+
+<h2 class="mb-4">Пользователи</h2>
+
+<form method="get" class="mb-3">
+    <button type="submit" class="btn btn-primary">🔄 Обновить</button>
+</form>
+
+@if (Model.Users.Count == 0)
+{
+    <div class="alert alert-warning">Пользователи не найдены.</div>
+}
+else
+{
+    <table class="table table-striped table-bordered table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Login</th>
+                <th>Name</th>
+                <th>Дата рождения</th>
+                <th>Админ</th>
+                <th>Глоб. Модератор</th>
+                <th>Изображение</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model.Users)
+            {
+                <tr>
+                    <td>@user.Id</td>
+                    <td>@user.Login</td>
+                    <td>@user.Name</td>
+                    <td>
+                        @(user.DateBirth?.ToString("dd.MM.yyyy") ?? "—")
+                    </td>
+                    <td>
+                        @(user.IsAdmin == true ? "✔️" : "—")
+                    </td>
+                    <td>
+                        @(user.IsGlobalModerator == true ? "✔️" : "—")
+                    </td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(user.Image) && !string.IsNullOrEmpty(user.ImageType))
+                        {
+                            <img src="data:@user.ImageType;base64,@user.Image" alt="User image" style="width: 64px; height: 64px; object-fit: cover; border-radius: 8px;" />
+                        }
+                        else
+                        {
+                            <span class="text-muted">Нет изображения</span>
+                        }
+                    </td>
+                    <td>
+                        <a class="btn btn-sm btn-outline-primary" asp-page="/User/Edit" asp-route-id="@user.Id">✏️</a>
+                        <a class="btn btn-sm btn-outline-danger ms-1" asp-page="/User/Delete" asp-route-id="@user.Id">🗑️</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

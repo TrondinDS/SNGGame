@@ -1,8 +1,6 @@
 ﻿using GetAwaitService.Services.UserService.Interfaces;
 using Library.Generics.DB.DTO.DTOModelServices.UserService.User;
 using Microsoft.AspNetCore.Mvc;
-using System.Text;
-using System.Text.Json;
 
 namespace GetAwaitService.Controllers.User
 {

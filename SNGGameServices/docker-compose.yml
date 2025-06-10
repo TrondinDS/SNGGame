@@ -280,6 +280,26 @@
           - userservices
 
 
+
+      front-service:
+        build:
+          context: ./FrontService
+          dockerfile: Dockerfile
+        image: myfrontimage:latest
+        environment:
+          ASPNETCORE_ENVIRONMENT: Development
+          ASPNETCORE_URLS: "http://*:8080;https://*:8081"
+          ASPNETCORE_HTTPS_PORT: "8081"
+        volumes:
+          - .:/app
+        ports:
+          - "5100:8080"
+          - "7000:8081"
+        depends_on:
+          - get-await-service
+
+
+
     volumes:
       user_service_db_data:
       user_service_mongo_data:
