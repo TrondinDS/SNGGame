@@ -1,12 +1,6 @@
 using AdministratumService.DB.Context;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Builder;
-using Swashbuckle.AspNetCore.SwaggerUI;
-using Swashbuckle.AspNetCore.SwaggerGen;
-using AdministratumService.DB.Models;
 using AdministratumService.Repository;
-using Library.Generics.GenericService;
-using Microsoft.EntityFrameworkCore.Internal;
 using AdministratumService.Repository.Interfaces;
 using AdministratumService.Services.Interfaces;
 using AdministratumService.Services;
@@ -31,6 +25,9 @@ namespace AdministratumService
             {
                 builder.Services.AddTransient<IChatFeedbackRepository, ChatFeedbackRepository>();
                 builder.Services.AddTransient<IChatFeedbackService, ChatFeedbackService>();
+
+                builder.Services.AddTransient<IComplainTicketRepository, ComplainTicketRepository>();
+                builder.Services.AddTransient<IComplainTicketService, ComplainTicketService>();
             }
 
             builder.Services.AddDbContext<ApplicationContext>(opt =>
