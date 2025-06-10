@@ -4,6 +4,7 @@ using OrganizerEventService.DB.DTO.Event;
 using OrganizerEventService.Services.Interfaces;
 using Library.Generics.DB.DTO.DTOModelServices.OrganizerEventService.Event;
 using OrganizerEventService.DB.DTO.Organizer;
+using Library.Generics.DB.DTO.DTOModelServices.OrganizerEventService.Organizer;
 
 namespace OrganizerEventService.Controllers
 {
@@ -12,16 +13,27 @@ namespace OrganizerEventService.Controllers
     public class EventController : Controller
     {
         private readonly IEventService service;
-        private readonly IMapper mapper;
-        private readonly ILogger<EventController> logger;
 
-        public EventController(IEventService service, IMapper mapper, ILogger<EventController> logger)
+        public EventController(IEventService service)
         {
             this.service = service;
-            this.mapper = mapper;
-            this.logger = logger;
         }
 
+
+        /// <summary>
+        /// Получение всех событий
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<EventDTO>>> GetAll()
+        {
+            return Ok(await service.GetAllAsync());
+        }
+
+        /// <summary>
+        /// Создание нового события
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<EventDTO>> Create(EventDTO dto)
         {
@@ -32,11 +44,14 @@ namespace OrganizerEventService.Controllers
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, "Ошибка при создании игры");
                 return StatusCode(StatusCodes.Status500InternalServerError, new { error = "Произошла внутренняя ошибка сервера", details = ex.Message });
             }
         }
 
+        /// <summary>
+        /// Получение события по идентификатору
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<EventDTO>> GetById(Guid id)
         {
@@ -45,54 +60,39 @@ namespace OrganizerEventService.Controllers
             {
                 return NotFound();
             }
-            if (model.IsDeleted)
-            {
-                return Problem("organizer was deleted");
-            }
-            var res = mapper.Map<GetByIdOrganizerDTO>(model);
-            return Ok(res);
+            return Ok(model);
         }
 
+        /// <summary>
+        /// Обновление информации о событиии
+        /// </summary>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<ActionResult> Update(Guid id, EventDTO dto)
         {
-            try
+            if (id != dto.Id)
             {
-                if (id != dto.Id)
-                {
-                    return BadRequest();
-                }
-
-                var existed = await service.GetByIdAsync(id);
-                if (existed == null)
-                {
-                    //return NotFound();
-                    return Ok();
-                }
-
-                await service.UpdateAsync(dto);
-                return Ok(dto);
+                return BadRequest();
             }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, "Ошибка при обновлении игры с ID: {Id}", id);
-                return StatusCode(StatusCodes.Status500InternalServerError, new { error = "Произошла внутренняя ошибка сервера", details = ex.Message });
-            }
-        }
 
-        [HttpDelete]
-        public async Task<ActionResult> Delete(EventDTO dto)
-        {
-            var model = await service.GetByIdAsync(dto.Id);
-            if (model == null)
+            var existingEventDTO = await service.GetByIdAsync(id);
+            if (existingEventDTO == null)
             {
                 return NotFound();
             }
-            if (model.IsDeleted)
-            {
-                return Problem("event already was deleted");
-            }
-            model.DateDeleted = DateTime.UtcNow;
+            await service.UpdateAsync(dto);
+
+            return Ok(dto);
+        }
+
+        /// <summary>
+        /// Удаление события
+        /// </summary>
+        /// <returns></returns>
+        [HttpDelete]
+        public async Task<ActionResult> Delete(EventDTO dto)
+        {
+            await service.DeleteAsync(dto.Id);
             return Ok();
         }
     }

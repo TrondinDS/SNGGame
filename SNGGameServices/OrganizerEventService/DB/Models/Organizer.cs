@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Library;
 
 namespace OrganizerEventService.DB.Models
@@ -22,9 +23,27 @@ namespace OrganizerEventService.DB.Models
         public Guid CreatorId { get; set; }
 
         public Guid OwnerId { get; set; }
-        public bool IsDeleted { get; set; }
-        public DateTime? DateDeleted { get; set; }
+        public bool IsDeleted { get; set; } = false;
+        [DataType(DataType.DateTime)]
+        public DateTime? DateDeleted
+        {
+            get => EnsureUtc(_dateDeleted);
+            set => _dateDeleted = ConvertToUtc(value);
+        }
+
+        [NotMapped] // Указывает EF Core игнорировать это поле
+        private DateTime? _dateDeleted;
 
         public ICollection<Event> Events { get; set; } = new List<Event>();
+
+        private static DateTime? EnsureUtc(DateTime? value)
+        {
+            return value == null ? null : DateTime.SpecifyKind(value.Value, DateTimeKind.Utc);
+        }
+
+        private static DateTime? ConvertToUtc(DateTime? value)
+        {
+            return value?.ToUniversalTime();
+        }
     }
 }

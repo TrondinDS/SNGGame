@@ -21,8 +21,6 @@ namespace Library.Generics.DB.DTO.DTOModelServices.OrganizerEventService.Organiz
         public Guid CreatorId { get; set; }
 
         public Guid OwnerId { get; set; }
-        public bool IsDeleted { get; set; }
-        public DateTime? DateDeleted { get; set; }
 
         [Required(ErrorMessage = "Image является обязательным")]
         public string Image { get; set; }

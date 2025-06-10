@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Library.Generics.DB.DTO.DTOModelServices.OrganizerEventService.Event;
+using Library.Generics.DB.DTO.DTOModelServices.OrganizerEventService.Organizer;
 using Library.Services;
 using OrganizerEventService.DB.Models;
 using OrganizerEventService.Repository.Interfaces;
@@ -33,7 +34,6 @@ namespace OrganizerEventService.Services
             {
                 await repository.BeginTransactionAsync();
 
-                var addTask = repository.AddAsync(model);
                 var imgTask = mongoService.Database(imgsDatabase)
                     .Collection(eventImgsCollection)
                     .InsertImg(model.Id, dto.Image, dto.ImageType);
@@ -41,7 +41,10 @@ namespace OrganizerEventService.Services
                     .Collection(contentCollection)
                     .InsertStrContent(model.Id, dto.Content);
 
-                await Task.WhenAll(addTask, imgTask, contentTask);
+                await Task.WhenAll(imgTask, contentTask);
+
+                await repository.AddAsync(model);
+                await repository.SaveChangesAsync();
                 await repository.CommitTransactionAsync();
 
                 dto.Id = model.Id;
@@ -107,17 +110,14 @@ namespace OrganizerEventService.Services
         public async Task<IEnumerable<EventDTO>> GetAllAsync()
         {
             var events = await repository.GetAllAsync();
+
             if (!events.Any())
                 return Enumerable.Empty<EventDTO>();
 
-            var dtos = new List<EventDTO>();
-            foreach (var eventItem in events)
-            {
-                var dto = await ModelToDTO(eventItem);
-                if (dto != null) dtos.Add(dto);
-            }
+            var tasks = events.Select(ev => ModelToDTO(ev));
+            var results = await Task.WhenAll(tasks);
 
-            return dtos;
+            return results.Where(dto => dto != null);
         }
 
         public async Task<EventDTO> GetByIdAsync(Guid id)

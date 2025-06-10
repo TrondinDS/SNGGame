@@ -9,6 +9,7 @@ using OrganizerEventService.Repository;
 using Library.Generics.DB.DTO.DTOModelServices.OrganizerEventService.Organizer;
 using OrganizerEventService.Services.Interfaces;
 using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Game;
+using Library.Generics.DB.DTO.DTOModelServices.AdministratumService.Message;
 
 namespace OrganizerEventService.Controllers
 {
@@ -17,19 +18,28 @@ namespace OrganizerEventService.Controllers
     public class OrganizerController : Controller
     {
         private readonly IOrganizerService service;
-        //private readonly CrudGenericService<Organizer, Guid, OrganizerRepository> service;
-        private readonly IMapper mapper;
-        private readonly ILogger<OrganizerController> logger;
 
-        public OrganizerController(IOrganizerService service, IMapper mapper, ILogger<OrganizerController> logger)
+        public OrganizerController(IOrganizerService service)
         {
             this.service = service;
-            this.mapper = mapper;
-            this.logger = logger;
         }
 
+        /// <summary>
+        /// Получение всех организаторов
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<OrganizerDTO>>> GetAll()
+        {
+            return Ok(await service.GetAllAsync());
+        }
+
+        /// <summary>
+        /// Создание нового организатора
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult<OrganizerIdDTO>> Create(OrganizerDTO dto)
+        public async Task<ActionResult<OrganizerDTO>> Create(OrganizerDTO dto)
         {
             try
             {
@@ -38,67 +48,51 @@ namespace OrganizerEventService.Controllers
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, "Ошибка при создании организатора");
                 return StatusCode(StatusCodes.Status500InternalServerError, new { error = "Произошла внутренняя ошибка сервера", details = ex.Message });
             }
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<GetByIdOrganizerDTO>> GetById(Guid id)
+        public async Task<ActionResult<OrganizerDTO>> GetById(Guid id)
         {
             var model = await service.GetByIdAsync(id);
             if (model == null)
             {
                 return NotFound();
             }
-            if (model.IsDeleted)
-            {
-                return Problem("organizer was deleted");
-            }
-            var res = mapper.Map<GetByIdOrganizerDTO>(model);
-            return Ok(res);
+            return Ok(model);
         }
 
+        /// <summary>
+        /// Обновление организатора
+        /// </summary>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<ActionResult> Update(Guid id, OrganizerDTO dto)
         {
-            try
+            if (id != dto.Id)
             {
-                if (id != dto.Id)
-                {
-                    return BadRequest();
-                }
-
-                var existed = await service.GetByIdAsync(id);
-                if (existed == null)
-                {
-                    return Ok();
-                    //return NotFound();
-                }
-
-                await service.UpdateAsync(dto);
-                return Ok(dto);
+                return BadRequest();
             }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, "Ошибка при обновлении игры с ID: {Id}", id);
-                return StatusCode(StatusCodes.Status500InternalServerError, new { error = "Произошла внутренняя ошибка сервера", details = ex.Message });
-            }
-        }
 
-        [HttpDelete]
-        public async Task<ActionResult> Delete(OrganizerDTO dto)
-        {
-            var model = await service.GetByIdAsync(dto.Id);
-            if (model == null)
+            var existingOrganizerDTO = await service.GetByIdAsync(id);
+            if (existingOrganizerDTO == null)
             {
                 return NotFound();
             }
-            if (model.IsDeleted)
-            {
-                return Problem("event already was deleted");
-            }
-            model.DateDeleted = DateTime.UtcNow;
+            await service.UpdateAsync(dto);
+
+            return Ok(dto);
+        }
+
+        /// <summary>
+        /// Удаление организатора
+        /// </summary>
+        /// <returns></returns>
+        [HttpDelete]
+        public async Task<ActionResult> Delete(OrganizerDTO dto)
+        {
+            await service.DeleteAsync(dto.Id);
             return Ok();
         }
     }
