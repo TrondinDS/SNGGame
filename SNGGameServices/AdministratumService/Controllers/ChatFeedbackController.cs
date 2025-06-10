@@ -1,7 +1,10 @@
 ﻿using AdministratumService.DB.DTO.ChatFeedback;
 using AdministratumService.DB.Models;
 using AdministratumService.Repository;
+using AdministratumService.Services.Interfaces;
 using AutoMapper;
+using Library.Generics.DB.DTO.DTOModelServices.AdministratumService.ChatFeedback;
+using Library.Generics.DB.DTO.DTOModelServices.OrganizerEventService.Event;
 using Library.Generics.GenericService;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,52 +14,81 @@ namespace AdministratumService.Controllers
     [ApiController]
     public class ChatFeedbackController : Controller
     {
-        private readonly CrudGenericService<ChatFeedback, Guid, ChatFeedbackRepository> service;
+        private readonly IChatFeedbackService service;
         private readonly IMapper mapper;
+        private readonly ILogger logger;
 
-        public ChatFeedbackController(CrudGenericService<ChatFeedback, Guid, ChatFeedbackRepository> service, IMapper mapper)
+        public ChatFeedbackController(IChatFeedbackService service, IMapper mapper, ILogger<ChatFeedbackController> logger)
         {
             this.service = service;
             this.mapper = mapper;
+            this.logger = logger;
         }
 
         [HttpPost]
-        public async Task<ActionResult<ChatFeedbackIdDTO>> Create(CreateChatFeedbackDTO DTO)
+        public async Task<ActionResult<ChatFeedbackDTO>> Create(ChatFeedbackDTO dto)
         {
-            var model = mapper.Map<ChatFeedback>(DTO);
-            await service.AddAsync(model);
-            var res = mapper.Map<ChatFeedbackIdDTO>(model);
-            return Ok(res);
+            try
+            {
+                await service.AddAsync(dto);
+                return CreatedAtAction(nameof(GetById), new { id = dto.Id }, dto);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Ошибка при создании чата");
+                return StatusCode(StatusCodes.Status500InternalServerError, new { error = "Произошла внутренняя ошибка сервера", details = ex.Message });
+            }
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<GetByIdChatFeedbackDTO>> GetById(Guid id)
+        public async Task<ActionResult<ChatFeedbackDTO>> GetById(Guid id)
         {
             var model = await service.GetByIdAsync(id);
             if (model == null)
             {
                 return NotFound();
             }
-            var res = mapper.Map<GetByIdChatFeedbackDTO>(model);
+            var res = mapper.Map<ChatFeedbackDTO>(model);
             return Ok(res);
         }
 
-        [HttpPut]
-        public async Task<ActionResult> Update(UpdateChatFeedbackDTO DTO)
+        [HttpPut("{id}")]
+        public async Task<ActionResult> Update(Guid id, ChatFeedbackDTO dto)
         {
-            var model = await service.GetByIdAsync(DTO.Id);
+            try
+            {
+                if (id != dto.Id)
+                {
+                    return BadRequest();
+                }
+
+                var existed = await service.GetByIdAsync(id);
+                if (existed == null)
+                {
+                    //return NotFound();
+                    return Ok();
+                }
+
+                await service.UpdateAsync(dto);
+                return Ok(dto);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Ошибка при обновлении игры с ID: {Id}", id);
+                return StatusCode(StatusCodes.Status500InternalServerError, new { error = "Произошла внутренняя ошибка сервера", details = ex.Message });
+            }
+        }
+
+        [HttpDelete]
+        public async Task<ActionResult> Delete(ChatFeedbackDTO dto)
+        {
+            var model = await service.GetByIdAsync(dto.Id);
             if (model == null)
             {
                 return NotFound();
             }
-            await service.UpdateAsync(model);
+            await service.DeleteAsync(dto.Id);
             return Ok();
-        }
-
-        [HttpDelete]
-        public async Task<ActionResult> Delete(DeleteChatFeedbackDTO DTO)
-        {
-            return BadRequest("операции удаления для чата недоступна");
         }
     }
 }

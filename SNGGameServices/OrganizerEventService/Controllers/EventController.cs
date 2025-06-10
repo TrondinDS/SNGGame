@@ -23,7 +23,7 @@ namespace OrganizerEventService.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<EventIdDTO>> Create(EventDTO dto)
+        public async Task<ActionResult<EventDTO>> Create(EventDTO dto)
         {
             try
             {
@@ -38,7 +38,7 @@ namespace OrganizerEventService.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<GetByIdEventDTO>> GetById(Guid id)
+        public async Task<ActionResult<EventDTO>> GetById(Guid id)
         {
             var model = await service.GetByIdAsync(id);
             if (model == null)

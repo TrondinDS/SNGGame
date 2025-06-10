@@ -7,6 +7,9 @@ using AdministratumService.DB.Models;
 using AdministratumService.Repository;
 using Library.Generics.GenericService;
 using Microsoft.EntityFrameworkCore.Internal;
+using AdministratumService.Repository.Interfaces;
+using AdministratumService.Services.Interfaces;
+using AdministratumService.Services;
 
 namespace AdministratumService
 {
@@ -26,16 +29,9 @@ namespace AdministratumService
             builder.Services.AddOpenApi();
 
             {
-                builder.Services.AddScoped<Repository.ChatFeedbackRepository>();
-                builder.Services.AddScoped<CrudGenericService<ChatFeedback, Guid, ChatFeedbackRepository>>();
-               
-                builder.Services.AddScoped<Repository.ComplainTicketRepository>();
-                builder.Services.AddScoped<CrudGenericService<ComplainTicket, Guid, ComplainTicketRepository>>();
-
-                builder.Services.AddScoped<Repository.MessageRepository>();
-                builder.Services.AddScoped<CrudGenericService<Message, Guid, MessageRepository>>();
+                builder.Services.AddTransient<IChatFeedbackRepository, ChatFeedbackRepository>();
+                builder.Services.AddTransient<IChatFeedbackService, ChatFeedbackService>();
             }
-
 
             builder.Services.AddDbContext<ApplicationContext>(opt =>
                 opt.UseNpgsql(
@@ -43,13 +39,22 @@ namespace AdministratumService
                 )
             );
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllOrigins", policy =>
+                {
+                    policy.AllowAnyOrigin() // Allow requests from any origin
+                          .AllowAnyMethod()  // Allow any HTTP method (GET, POST, etc.)
+                          .AllowAnyHeader(); // Allow any headers
+                });
+            });
+
             var app = builder.Build();
 
             using (var scope = app.Services.CreateScope())
             {
                 var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationContext>();
-                dbContext.Database.CreateExecutionStrategy();
-                //dbContext.Database.Migrate();
+                dbContext.Database.Migrate();
             }
 
             // Configure the HTTP request pipeline.
