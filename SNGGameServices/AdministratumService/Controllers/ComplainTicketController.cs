@@ -2,7 +2,11 @@
 using AdministratumService.DB.Models;
 using AdministratumService.Enums;
 using AdministratumService.Repository;
+using AdministratumService.Services.Interfaces;
 using AutoMapper;
+using Library.Generics.DB.DTO.DTOModelServices.AdministratumService.ChatFeedback;
+using Library.Generics.DB.DTO.DTOModelServices.AdministratumService.ComplainTicket;
+using Library.Generics.DB.DTO.DTOModelServices.UserService.User;
 using Library.Generics.GenericService;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,71 +16,82 @@ namespace AdministratumService.Controllers
     [ApiController]
     public class ComplainTicketController : Controller
     {
-        private readonly CrudGenericService<ComplainTicket, Guid, ComplainTicketRepository> service;
+        private readonly IComplainTicketService service;
         private readonly IMapper mapper;
 
-        public ComplainTicketController(CrudGenericService<ComplainTicket, Guid, ComplainTicketRepository> service, IMapper mapper)
+        public ComplainTicketController(IComplainTicketService service, IMapper mapper)
         {
             this.service = service;
             this.mapper = mapper;
         }
 
-        [HttpPost]
-        public async Task<ActionResult<ComplainTicketIdDTO>> Create(CreateComplainTicketDTO dto)
+        /// <summary>
+        /// Получение всех тикетов
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<ComplainTicketDTO>>> GetAll()
         {
-            var model = mapper.Map<ComplainTicket>(dto);
-            model.Status = nameof(ComplainType.Created);
-            await service.AddAsync(model);
-            var res = mapper.Map<ComplainTicketIdDTO>(model);
-            return Ok(res);
+            return Ok(await service.GetAllAsync());
         }
 
+        /// <summary>
+        /// Получение тикета по ID
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("{id}")]
-        public async Task<ActionResult<GetByIdComplainTicketDTO>> GetById(Guid id)
+        public async Task<ActionResult<ComplainTicketDTO>> GetById(Guid id)
         {
-            var model = await service.GetByIdAsync(id);
-            if (model == null)
+            var ticket = await service.GetByIdAsync(id);
+            if (ticket == null)
             {
                 return NotFound();
             }
-            var res = mapper.Map<GetByIdComplainTicketDTO>(model);
-            return Ok(res);
+            return Ok(ticket);
         }
 
-        [HttpPut]
-        public async Task<ActionResult> Update(UpdateComplainTicketDTO dto)
+        /// <summary>
+        /// Создание нового тикета
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<ActionResult> Create(ComplainTicketDTO dto)
         {
-            var model = await service.GetByIdAsync(dto.Id);
-            if (model == null)
-            {
-                return NotFound();
-            }
-            if (!Library.Utils.Enums.HasField<ComplainType>(dto.Status))
-            {
-                return ValidationProblem($"Нет статуса {dto.Status}, есть только: {Library.Utils.Enums.GetFieldsAsString<ComplainType>()}");
-            }
-            if (dto.Status != model.Status)
-            {
-                model.StatusUpdateDatetime = DateTime.UtcNow;
-            }
-            await service.UpdateAsync(model);
-            return Ok();
+            await service.AddAsync(dto);
+            return CreatedAtAction(nameof(GetById), new { id = dto.Id }, dto);
         }
 
-        [HttpDelete]
-        public async Task<ActionResult> Delete(DeleteComplainTicketDTO dto)
+        /// <summary>
+        /// Обновление тикета
+        /// </summary>
+        /// <returns></returns>
+        [HttpPut("{id}")]
+        public async Task<ActionResult> Update(Guid id, ComplainTicketDTO dto)
         {
-            var model = await service.GetByIdAsync(dto.Id);
-            if (model == null)
+            if (id != dto.Id)
+            {
+                return BadRequest();
+            }
+
+            var existingUser = await service.GetByIdAsync(id);
+            if (existingUser == null)
             {
                 return NotFound();
             }
-            if (model.IsDeleted)
-            {
-                return Problem("жалоба уже удалена");
-            }
-            model.DateDeleted = DateTime.UtcNow;
-            return Ok();
+            await service.UpdateAsync(dto);
+
+            return Ok(dto);
+        }
+
+        /// <summary>
+        /// Удаление тикета
+        /// </summary>
+        /// <returns></returns>
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteUser(Guid id)
+        {
+            await service.DeleteAsync(id);
+            return NoContent();
         }
     }
 }

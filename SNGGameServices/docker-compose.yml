@@ -150,10 +150,13 @@
         image: myadministratumimage:latest
         environment:
           ASPNETCORE_ENVIRONMENT: Development
+          ASPNETCORE_URLS: "http://*:8080;https://*:8081"
+          ASPNETCORE_HTTPS_PORT: "8081"
         volumes:
           - .:/app
         ports:
           - "5302:8080"
+          - "7135:8081"
         depends_on:
           - administratum-db
       

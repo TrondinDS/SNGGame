@@ -3,6 +3,9 @@ using AdministratumService.DB.DTO.ComplainTicket;
 using AdministratumService.DB.DTO.Message;
 using AdministratumService.DB.Models;
 using AutoMapper;
+using Library.Generics.DB.DTO.DTOModelServices.AdministratumService.ChatFeedback;
+using Library.Generics.DB.DTO.DTOModelServices.AdministratumService.ComplainTicket;
+using Library.Generics.DB.DTO.DTOModelServices.AdministratumService.Message;
 
 namespace AdministratumService.DB.Mapping
 {
@@ -11,6 +14,7 @@ namespace AdministratumService.DB.Mapping
         public MapperProfile()
         {
             {
+                CreateMap<ChatFeedback, ChatFeedbackDTO>().ReverseMap();
                 CreateMap<ChatFeedback, CreateChatFeedbackDTO>().ReverseMap();
                 CreateMap<ChatFeedback, ChatFeedbackIdDTO>().ReverseMap();
                 CreateMap<ChatFeedback, UpdateChatFeedbackDTO>().ReverseMap();
@@ -19,6 +23,7 @@ namespace AdministratumService.DB.Mapping
             }
 
             {
+                CreateMap<ComplainTicket, ComplainTicketDTO>().ReverseMap();
                 CreateMap<ComplainTicket, ComplainTicketIdDTO>().ReverseMap();
 				CreateMap<ComplainTicket, CreateComplainTicketDTO>().ReverseMap();
 				CreateMap<ComplainTicket, DeleteComplainTicketDTO>().ReverseMap();
@@ -27,6 +32,7 @@ namespace AdministratumService.DB.Mapping
             }
 
 			{
+                CreateMap<Message, MessageDTO>().ReverseMap();
 				CreateMap<Message, CreateMessageDTO>().ReverseMap();
 				CreateMap<Message, DeleteMessageDTO>().ReverseMap();
 				CreateMap<Message, GetByIdMessageDTO>().ReverseMap();
