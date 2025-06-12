@@ -1,4 +1,4 @@
-<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/27.0.2 Chrome/134.0.6998.205 Electron/35.3.0 Safari/537.36" version="27.0.2" pages="5">
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/26.0.15 Chrome/132.0.6834.196 Electron/34.2.0 Safari/537.36" version="26.0.15" pages="5">
   <diagram name="DataBase" id="dN8MApG5NE9Em9jVIcj2">
     <mxGraphModel dx="2117" dy="2967" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -982,7 +982,7 @@
     </mxGraphModel>
   </diagram>
   <diagram name="ShemMicroServices" id="HWV6VDRRQbkpBCBKxrrQ">
-    <mxGraphModel dx="4777" dy="3672" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="5061" dy="3596" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -1281,35 +1281,35 @@
         <mxCell id="LrCAzrOVbI99uoXvUA33-49" value="Реализация аутентификации telegram бота" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=30;fontStyle=1" parent="LrCAzrOVbI99uoXvUA33-50" vertex="1">
           <mxGeometry x="30" y="920" width="280" height="130" as="geometry" />
         </mxCell>
-        <mxCell id="LrCAzrOVbI99uoXvUA33-51" value="" style="group" parent="1" vertex="1" connectable="0">
-          <mxGeometry x="1300" y="-1810" width="840" height="1210" as="geometry" />
+        <mxCell id="LrCAzrOVbI99uoXvUA33-51" value="" style="group;fontSize=21;" parent="1" vertex="1" connectable="0">
+          <mxGeometry x="1300" y="-1810" width="840" height="1220" as="geometry" />
         </mxCell>
         <mxCell id="cx-hy2BCsI41yQWdVwEG-9" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;strokeWidth=1;absoluteArcSize=1;arcSize=44;dashed=1;dashPattern=8 8;" parent="LrCAzrOVbI99uoXvUA33-51" vertex="1">
-          <mxGeometry y="230" width="840" height="770" as="geometry" />
+          <mxGeometry y="220" width="840" height="740" as="geometry" />
         </mxCell>
-        <mxCell id="cx-hy2BCsI41yQWdVwEG-2" value="API GetAwaitAndAAService&amp;nbsp;&lt;div&gt;[Подсистема: C#, ASP.NET Core, EF Core, JWT]&lt;br&gt;Авторизация и аутентификация запросов пользователей, переадресация запросов на другие микросервисы.&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=18;fontStyle=1" parent="LrCAzrOVbI99uoXvUA33-51" vertex="1">
-          <mxGeometry x="40" width="360" height="200" as="geometry" />
+        <mxCell id="cx-hy2BCsI41yQWdVwEG-2" value="API GetAwaitAndAAService&amp;nbsp;&lt;div&gt;[Подсистема: C#, ASP.NET Core, EF Core, JWT]&lt;br&gt;Авторизация и аутентификация запросов пользователей, переадресация запросов на другие микросервисы.&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=27;fontStyle=1" parent="LrCAzrOVbI99uoXvUA33-51" vertex="1">
+          <mxGeometry width="840" height="201.65289256198346" as="geometry" />
         </mxCell>
-        <mxCell id="cx-hy2BCsI41yQWdVwEG-3" value="Сервис&lt;div&gt;[Компонент: C#, ASP.NET Core]&lt;br&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=18;fontStyle=1" parent="LrCAzrOVbI99uoXvUA33-51" vertex="1">
-          <mxGeometry x="40" y="490" width="360" height="200" as="geometry" />
+        <mxCell id="cx-hy2BCsI41yQWdVwEG-3" value="Сервис&lt;div&gt;[Компонент: C#, ASP.NET Core]&lt;br&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=27;fontStyle=1" parent="LrCAzrOVbI99uoXvUA33-51" vertex="1">
+          <mxGeometry x="40" y="494.0495867768595" width="360" height="201.65289256198346" as="geometry" />
         </mxCell>
-        <mxCell id="cx-hy2BCsI41yQWdVwEG-5" value="Контроллер&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;[Компонент: C#, ASP.NET Core, JWT]&lt;/span&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=18;fontStyle=1" parent="LrCAzrOVbI99uoXvUA33-51" vertex="1">
-          <mxGeometry x="40" y="260" width="360" height="200" as="geometry" />
+        <mxCell id="cx-hy2BCsI41yQWdVwEG-5" value="Контроллер&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;[Компонент: C#, ASP.NET Core, JWT]&lt;/span&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=27;fontStyle=1" parent="LrCAzrOVbI99uoXvUA33-51" vertex="1">
+          <mxGeometry x="40" y="262.1487603305785" width="360" height="201.65289256198346" as="geometry" />
         </mxCell>
-        <mxCell id="cx-hy2BCsI41yQWdVwEG-6" value="Репозиторий&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;[Компонент: C#, ASP.NET Core, EF Core]&lt;/span&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=18;fontStyle=1" parent="LrCAzrOVbI99uoXvUA33-51" vertex="1">
-          <mxGeometry x="40" y="730" width="360" height="200" as="geometry" />
+        <mxCell id="cx-hy2BCsI41yQWdVwEG-6" value="Репозиторий&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;[Компонент: C#, ASP.NET Core, EF Core]&lt;/span&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=27;fontStyle=1" parent="LrCAzrOVbI99uoXvUA33-51" vertex="1">
+          <mxGeometry x="40" y="736.0330578512396" width="360" height="201.65289256198346" as="geometry" />
         </mxCell>
-        <mxCell id="cx-hy2BCsI41yQWdVwEG-7" value="&lt;div&gt;БД&lt;/div&gt;&lt;div&gt;[Подсистема: PostgreSQL]&lt;/div&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;fontSize=18;fontStyle=1" parent="LrCAzrOVbI99uoXvUA33-51" vertex="1">
-          <mxGeometry x="40" y="1040" width="360" height="170" as="geometry" />
+        <mxCell id="cx-hy2BCsI41yQWdVwEG-7" value="&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;БД&lt;/div&gt;&lt;div&gt;[Подсистема: PostgreSQL]&lt;/div&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;fontSize=27;fontStyle=1" parent="LrCAzrOVbI99uoXvUA33-51" vertex="1">
+          <mxGeometry x="40" y="979.995041322314" width="360" height="171.40495867768595" as="geometry" />
         </mxCell>
-        <mxCell id="cx-hy2BCsI41yQWdVwEG-10" value="Реализация сервиса" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=30;fontStyle=1" parent="LrCAzrOVbI99uoXvUA33-51" vertex="1">
-          <mxGeometry x="40" y="950" width="360" height="30" as="geometry" />
+        <mxCell id="cx-hy2BCsI41yQWdVwEG-10" value="&lt;font style=&quot;font-size: 33px;&quot;&gt;Обобщенная&lt;br style=&quot;&quot;&gt;реализация&lt;br style=&quot;&quot;&gt;микросервиса&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=30;fontStyle=1" parent="LrCAzrOVbI99uoXvUA33-51" vertex="1">
+          <mxGeometry x="580" y="241.98347107438016" width="250" height="110.9090909090909" as="geometry" />
         </mxCell>
-        <mxCell id="cx-hy2BCsI41yQWdVwEG-18" value="MongoDB Сервис&lt;div&gt;[Компонент: C#, ASP.NET Core]&lt;br&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=18;fontStyle=1" parent="LrCAzrOVbI99uoXvUA33-51" vertex="1">
-          <mxGeometry x="440" y="490" width="360" height="200" as="geometry" />
+        <mxCell id="cx-hy2BCsI41yQWdVwEG-18" value="MongoDB Сервис&lt;div&gt;[Компонент: C#, ASP.NET Core]&lt;br&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fontSize=27;fontStyle=1" parent="LrCAzrOVbI99uoXvUA33-51" vertex="1">
+          <mxGeometry x="440" y="494.0495867768595" width="360" height="201.65289256198346" as="geometry" />
         </mxCell>
-        <mxCell id="cx-hy2BCsI41yQWdVwEG-20" value="&lt;div&gt;БД&lt;/div&gt;&lt;div&gt;[Подсистема: MongoDB]&lt;/div&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;fontSize=18;fontStyle=1" parent="LrCAzrOVbI99uoXvUA33-51" vertex="1">
-          <mxGeometry x="440" y="1040" width="360" height="170" as="geometry" />
+        <mxCell id="cx-hy2BCsI41yQWdVwEG-20" value="&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;БД&lt;/div&gt;&lt;div&gt;[Подсистема: MongoDB]&lt;/div&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.database;whiteSpace=wrap;fontSize=27;fontStyle=1" parent="LrCAzrOVbI99uoXvUA33-51" vertex="1">
+          <mxGeometry x="440" y="979.995041322314" width="360" height="171.40495867768595" as="geometry" />
         </mxCell>
         <mxCell id="cx-hy2BCsI41yQWdVwEG-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="LrCAzrOVbI99uoXvUA33-51" source="cx-hy2BCsI41yQWdVwEG-2" target="cx-hy2BCsI41yQWdVwEG-5" edge="1">
           <mxGeometry relative="1" as="geometry" />
