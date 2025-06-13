@@ -9,13 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Pages\Новая папка\**" />
-    <Content Remove="Pages\Новая папка\**" />
-    <EmbeddedResource Remove="Pages\Новая папка\**" />
-    <None Remove="Pages\Новая папка\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
   </ItemGroup>
 

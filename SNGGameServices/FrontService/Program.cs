@@ -1,3 +1,4 @@
+using FrontRazor.Services.StudioService;
 using FrontRazor.Services.UserService;
 using FrontService.Services;
 using FrontService.Services.Interfaces;
@@ -23,6 +24,7 @@ namespace FrontService
 
             // DI-сервисы
             builder.Services.AddScoped<IUserApiService, UserApiService>();
+            builder.Services.AddScoped<IStudioApiService, StudioApiService>();
             builder.Services.AddScoped<IAuthService, AuthService>();
 
             var app = builder.Build();

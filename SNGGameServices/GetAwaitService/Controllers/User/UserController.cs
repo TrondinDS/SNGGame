@@ -1,4 +1,5 @@
-﻿using GetAwaitService.Services.UserService.Interfaces;
+﻿using GetAwaitService.Auth.JWT.Service;
+using GetAwaitService.Services.UserService.Interfaces;
 using Library.Generics.DB.DTO.DTOModelServices.UserService.User;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,10 +10,12 @@ namespace GetAwaitService.Controllers.User
     public class UserController : ControllerBase
     {
         private readonly IUserApiService _userService;
+        private readonly IAuthServiceJWT _authServiceJWT;
 
-        public UserController(IUserApiService userService)
+        public UserController(IUserApiService userService, IAuthServiceJWT authServiceJWT)
         {
             _userService = userService;
+            _authServiceJWT = authServiceJWT;
         }
 
         [HttpGet]
@@ -59,7 +62,10 @@ namespace GetAwaitService.Controllers.User
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(Guid id)
         {
+
+            await _authServiceJWT.DeletAsync(id);
             var success = await _userService.DeleteUserAsync(id);
+
             return success ? NoContent() : NotFound();
         }
     }

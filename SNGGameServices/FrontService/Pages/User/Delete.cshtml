@@ -1,0 +1,54 @@
+﻿@page "{id:guid}"
+@model FrontService.Pages.User.DeleteModel
+@{
+    ViewData["Title"] = "Удаление пользователя";
+}
+
+<h2 class="mb-4 text-danger">Удаление пользователя</h2>
+
+<div class="alert alert-warning">
+    <strong>Вы уверены, что хотите удалить пользователя <u>@Model.User?.Login</u>?</strong>
+    Это действие необратимо.
+</div>
+
+<form method="post">
+    <input type="hidden" asp-for="User.Id" />
+    <button type="submit" class="btn btn-danger">🗑️ Удалить</button>
+    <a asp-page="Index" class="btn btn-secondary ms-2">↩️ Отмена</a>
+</form>
+
+<!-- Модальное окно для ошибок -->
+<div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content border-danger">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="errorModalLabel">Ошибка</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body" id="errorModalBody"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function showErrorModal(message) {
+            const modalBody = document.getElementById("errorModalBody");
+            modalBody.textContent = message;
+            const modal = new bootstrap.Modal(document.getElementById('errorModal'));
+            modal.show();
+        }
+
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <text>
+                    document.addEventListener("DOMContentLoaded", function () {
+                        showErrorModal(@Html.Raw(Json.Serialize(TempData["ErrorMessage"])));
+                    });
+            </text>
+        }
+    </script>
+}

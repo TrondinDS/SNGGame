@@ -49,5 +49,10 @@ namespace GetAwaitService.Services.GetAwaitService
             await userTelegramInformationRepository.UpdateAsync(userInfo);
             await userTelegramInformationRepository.SaveChangesAsync();
         }
+
+        public async Task<UserTelegramInformation> GetUserByIdUser(Guid userId)
+        {
+            return await userTelegramInformationRepository.GetUserByIdUser(userId);
+        }
     }
 }

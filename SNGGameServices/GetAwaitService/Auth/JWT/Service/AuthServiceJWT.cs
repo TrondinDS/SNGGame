@@ -54,7 +54,7 @@ namespace GetAwaitService.Auth.JWT.Service
             {
                 Name = "UserDefaultName",
                 DateBirth = null,   
-                Login = "UserDefaultLogin_" + userTelegramId.ToString() ,
+                Login = "UserDefaultLogin_" + userTelegramId.ToString() + "_" + Guid.NewGuid() ,
                 ImageType = "jpg",
                 Image = DefaultImgAndCont.GetImg(),
                 Content = "Default"
@@ -134,6 +134,20 @@ namespace GetAwaitService.Auth.JWT.Service
             var tokenHandler = new JwtSecurityTokenHandler();
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
+        }
+
+        public async Task<UserTelegramInformation> GetUserByIdUser(Guid userId)
+        {
+            return await _userTelegramInformationService.GetUserByIdUser(userId);
+        }
+
+        public async Task<bool> DeletAsync(Guid userId)
+        {
+            var userTG = await GetUserByIdUser(userId);
+            if (userTG is null)
+                return true;
+            await _userTelegramInformationService.DeleteAsync(userTG.Id);
+            return true;
         }
     }
 }

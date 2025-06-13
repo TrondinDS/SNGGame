@@ -10,5 +10,7 @@ namespace GetAwaitService.Auth.JWT.Service
         public Task<UserTelegramInformation> SearchUser(ulong userTelegramId);
         public Task<UserTelegramInformation> CreateUserTG(ulong userTelegramId, UserDTO userDTO);
         Task<UserDTO> CreateUserAsync(UserCreateDTO userDto);
+        public Task<UserTelegramInformation> GetUserByIdUser(Guid userId);
+        public Task<bool> DeletAsync(Guid userId);
     }
 }

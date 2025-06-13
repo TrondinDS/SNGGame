@@ -48,7 +48,13 @@ namespace FrontRazor.Services.UserService
         public async Task<bool> UpdateUserAsync(Guid id, UserDTO userDto)
         {
             var content = new StringContent(JsonSerializer.Serialize(userDto), Encoding.UTF8, "application/json");
-            var response = await _httpClient.PutAsync($"api/User/UpdateUser/{id}", content);
+            var response = await _httpClient.PutAsync($"api/User/UpdateUser", content);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorContent = await response.Content.ReadAsStringAsync();
+                Console.WriteLine($"Ошибка при обновлении пользователя. Статус: {response.StatusCode}, Детали: {errorContent}");
+            }    
             return response.IsSuccessStatusCode;
         }
 

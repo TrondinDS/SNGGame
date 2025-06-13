@@ -10,5 +10,6 @@ namespace GetAwaitService.Services.GetAwaitService.Interfaces
         Task<UserTelegramInformation> GetByIdAsync(Guid id);
         Task UpdateAsync(UserTelegramInformation userInfo);
         public Task<UserTelegramInformation> GetUserTgInfoFromTgId(ulong tgId);
+        public Task<UserTelegramInformation> GetUserByIdUser(Guid userId);
     }
 }

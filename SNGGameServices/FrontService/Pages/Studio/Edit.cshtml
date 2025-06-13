@@ -1,0 +1,73 @@
+﻿@page "{id:guid}"
+@model FrontService.Pages.Studio.EditModel
+@{
+    ViewData["Title"] = "Редактировать студию";
+}
+
+<h2 class="mb-4">Редактировать студию</h2>
+
+<form method="post" enctype="multipart/form-data">
+    <input type="hidden" asp-for="StudioNew.Id" />
+
+    <div class="mb-3">
+        <label asp-for="StudioNew.Title" class="form-label"></label>
+        <input asp-for="StudioNew.Title" class="form-control" />
+        <span asp-validation-for="StudioNew.Title" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="StudioNew.Email" class="form-label"></label>
+        <input asp-for="StudioNew.Email" class="form-control" />
+        <span asp-validation-for="StudioNew.Email" class="text-danger"></span>
+    </div>
+
+    <div class="form-check mb-3">
+        <input class="form-check-input" type="checkbox" asp-for="StudioNew.IsResolutionPublication" />
+        <label class="form-check-label" asp-for="StudioNew.IsResolutionPublication"></label>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="StudioNew.CreatorId" class="form-label"></label>
+        <input asp-for="StudioNew.CreatorId" class="form-control" />
+        <span asp-validation-for="StudioNew.CreatorId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="StudioNew.OwnerId" class="form-label"></label>
+        <input asp-for="StudioNew.OwnerId" class="form-control" />
+        <span asp-validation-for="StudioNew.OwnerId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="StudioNew.Content" class="form-label"></label>
+        <textarea asp-for="StudioNew.Content" class="form-control" rows="4"></textarea>
+        <span asp-validation-for="StudioNew.Content" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Текущее изображение</label><br />
+        @if (!string.IsNullOrEmpty(Model.StudioNew.Image) && !string.IsNullOrEmpty(Model.StudioNew.ImageType))
+        {
+            <img src="data:@Model.StudioNew.ImageType;base64,@Model.StudioNew.Image"
+                 alt="Current studio image"
+                 style="width: 128px; height: 128px; object-fit: cover; border-radius: 8px;" />
+        }
+        else
+        {
+            <span class="text-muted">Нет изображения</span>
+        }
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Загрузить новое изображение (JPG/PNG)</label>
+        <input asp-for="ImageFile" type="file" class="form-control" accept=".jpg,.jpeg,.png" />
+        <span asp-validation-for="ImageFile" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-success">💾 Сохранить</button>
+    <a class="btn btn-secondary ms-2" asp-page="Index">↩️ Назад к списку</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

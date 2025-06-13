@@ -1,0 +1,106 @@
+﻿@page "{id:guid}"
+@model FrontService.Pages.User.EditModel
+@{
+    ViewData["Title"] = "Редактировать пользователя";
+}
+
+<h2 class="mb-4">Редактировать пользователя</h2>
+
+<form method="post" enctype="multipart/form-data">
+    <input type="hidden" asp-for="UserNew.Id" />
+
+    <!-- Name -->
+    <div class="mb-3">
+        <label asp-for="UserNew.Name" class="form-label"></label>
+        <input asp-for="UserNew.Name" class="form-control" />
+        <span asp-validation-for="UserNew.Name" class="text-danger"></span>
+    </div>
+
+    <!-- Login -->
+    <div class="mb-3">
+        <label asp-for="UserNew.Login" class="form-label"></label>
+        <input asp-for="UserNew.Login" class="form-control" />
+        <span asp-validation-for="UserNew.Login" class="text-danger"></span>
+    </div>
+
+    <!-- DateBirth -->
+    <div class="mb-3">
+        <label asp-for="UserNew.DateBirth" class="form-label"></label>
+        <input asp-for="UserNew.DateBirth" class="form-control" type="date" />
+        <span asp-validation-for="UserNew.DateBirth" class="text-danger"></span>
+    </div>
+
+    <!-- Content -->
+    <div class="mb-3">
+        <label asp-for="UserNew.Content" class="form-label"></label>
+        <textarea asp-for="UserNew.Content" class="form-control" rows="4"></textarea>
+        <span asp-validation-for="UserNew.Content" class="text-danger"></span>
+    </div>
+
+    <!-- Текущее изображение -->
+    <div class="mb-3">
+        <label class="form-label">Текущее изображение</label><br />
+        @if (!string.IsNullOrEmpty(Model.UserNew.Image) && !string.IsNullOrEmpty(Model.UserNew.ImageType))
+        {
+            <img src="data:@Model.UserNew.ImageType;base64,@Model.UserNew.Image"
+                 alt="Current user image"
+                 style="width: 128px; height: 128px; object-fit: cover; border-radius: 8px;" />
+        }
+        else
+        {
+            <span class="text-muted">Нет изображения</span>
+        }
+    </div>
+
+    <!-- Новое изображение -->
+    <div class="mb-3">
+        <label class="form-label">Загрузить новое изображение (только JPG или PNG)</label>
+        <input asp-for="ImageFile" type="file" class="form-control" accept=".jpg,.jpeg,.png" />
+        <span asp-validation-for="ImageFile" class="text-danger"></span>
+    </div>
+
+    <!-- Кнопки -->
+    <button type="submit" class="btn btn-success">💾 Сохранить</button>
+    <a class="btn btn-secondary ms-2" asp-page="Index">↩️ Назад к списку</a>
+
+</form>
+
+
+<!-- Модальное окно для отображения ошибок -->
+<div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content border-danger">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="errorModalLabel">Ошибка</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+            </div>
+            <div class="modal-body" id="errorModalBody">
+                <!-- Ошибка будет вставлена сюда через JS -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function showErrorModal(message) {
+            const modalBody = document.getElementById("errorModalBody");
+            modalBody.textContent = message;
+
+            const modal = new bootstrap.Modal(document.getElementById('errorModal'));
+            modal.show();
+        }
+
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <text>
+                    document.addEventListener("DOMContentLoaded", function () {
+                        showErrorModal(@Html.Raw(Json.Serialize(TempData["ErrorMessage"])));
+                    });
+            </text>
+        }
+    </script>
+}
