@@ -1,0 +1,22 @@
+@startuml
+
+Participant "Пользователь" as usr
+Participant "Модератор" as mod
+Entity "Заявка на рассмотрение жалобы" as tkt
+Entity "Чат обратной связи" as cht
+
+usr -> tkt : Создание
+activate tkt
+mod -> tkt : Рассмотрение
+tkt -> mod : 
+mod -> cht : Создание чата, привязка \nк чату пользователя и \nотправка сообщения о \nрешении вопроса
+activate cht
+cht -> usr :
+usr -> cht : Отправляет сообщение об \nудовлетворенности принятым модератором \nрешении
+cht -> mod :
+mod -> cht : Закрытие
+deactivate cht
+mod -> tkt : Закрытие
+deactivate tkt
+
+@enduml
