@@ -1,0 +1,108 @@
+﻿@page
+@model FrontService.Pages.Game.IDModel
+@{
+    var game = Model.GameView?.Game;
+    var stats = Model.GameView?.StatisticGame;
+    var tags = Model.GameView?.SelectedTags ?? Enumerable.Empty<Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Tag.TagDTO>();
+    var genres = Model.GameView?.SelectedGenres ?? Enumerable.Empty<Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Genre.GenreDTO>();
+    ViewData["Title"] = game?.RussianTitle ?? "Информация об игре";
+}
+
+<h1>@game?.RussianTitle</h1>
+<h2>@game?.EnglishTitle</h2>
+
+@if (game != null)
+{
+    <div>
+        <img src="data:@game.ImageType;base64,@game.Image" alt="Обложка игры" style="max-width: 300px;" />
+
+        <p><strong>Альтернативное название:</strong> @game.AlternativeTitle</p>
+        <p><strong>Описание:</strong> @game.ShortDescription</p>
+        <p><strong>Сайт:</strong> <a href="@game.LinkSite" target="_blank">@game.LinkSite</a></p>
+        <p><strong>Студия:</strong> @game.Publisher</p>
+        <p><strong>Дата выхода:</strong> @game.ReleaseDate?.ToString("yyyy-MM-dd")</p>
+        <p><strong>Страна разработки:</strong> @game.CountryDevelopment</p>
+        <p><strong>Платформа:</strong> @game.Platform</p>
+        <p><strong>Ссылка на магазин:</strong> <a href="@game.LinkPageStore" target="_blank">@game.LinkPageStore</a></p>
+        <p><strong>Контент:</strong> @game.Content</p>
+    </div>
+
+    @if (stats != null)
+    {
+        <div>
+            <h3>Статистика</h3>
+            <p><strong>Оценка:</strong> @stats.RatingSum</p>
+            <p><strong>Пользователей оценило:</strong> @stats.PeopleCount</p>
+        </div>
+    }
+
+    @if (tags.Any())
+    {
+        <div>
+            <h3>Теги</h3>
+            <ul>
+                @foreach (var tag in tags)
+                {
+                    <li>@tag.Title</li>
+                }
+            </ul>
+        </div>
+    }
+
+    @if (genres.Any())
+    {
+        <div>
+            <h3>Жанры</h3>
+            <ul>
+                @foreach (var genre in genres)
+                {
+                    <li><strong>@genre.Title:</strong> @genre.Description</li>
+                }
+            </ul>
+        </div>
+    }
+}
+else
+{
+    <p>Игра не найдена.</p>
+}
+@if (Model.Topics.Any())
+{
+    <div class="mt-4">
+        <h3>Обсуждения (Темы)</h3>
+        <ul class="list-group">
+            @foreach (var topicView in Model.Topics)
+            {
+                var topic = topicView.Topic;
+                <li class="list-group-item">
+                    <strong>@topic.Title</strong> <small class="text-muted">(@topic.DateCreated.ToLocalTime().ToString("g"))</small>
+                    <p>@topic.Description</p>
+
+                    @if (topicView.CommentDTOs != null && topicView.CommentDTOs.Any())
+                    {
+                        <div class="ms-3 mt-2">
+                            <h5>Комментарии:</h5>
+                            <ul>
+                                @foreach (var comment in topicView.CommentDTOs)
+                                {
+                                    <li>
+                                        <p>@comment.Body</p>
+                                        <small class="text-muted">Дата: @comment.DateCreated.ToLocalTime().ToString("g") | Лайков: @comment.CountLike</small>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-muted">Нет комментариев.</p>
+                    }
+                </li>
+            }
+        </ul>
+    </div>
+}
+else
+{
+    <p class="text-muted">Тем для этой игры пока нет.</p>
+}

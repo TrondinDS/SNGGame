@@ -264,9 +264,30 @@ namespace StudioGameService.Services
 
         public async Task<IEnumerable<GameDTOView>> GetGameDTOViewByIdGamesAsync(IEnumerable<Guid> listGameId)
         {
-            var result =  await gameRepository.GetGameDTOViewByIdGamesAsync(listGameId);
-            var resultDto = mapper.Map<IEnumerable<GameDTOView>>(result);
-            return resultDto; 
+            // Получаем из репозитория базовые данные GameDTOView (или похожие)
+            var result = await gameRepository.GetGameDTOViewByIdGamesAsync(listGameId);
+
+            // Получаем полный список GameDTO с Image, ImageType, Content
+            var resultGameIMG = await MapToGameDTOsAsync(result);
+
+            // Мапим исходный результат к GameDTOView
+            var resultDto = mapper.Map<List<GameDTOView>>(result); // Сохраняем в List, чтобы можно было изменять
+
+            // Создаем словарь для быстрого поиска по Id из resultGameIMG
+            var gameImgDict = resultGameIMG.ToDictionary(x => x.Id);
+
+            // Проходимся по результату и подставляем Image, ImageType, Content из resultGameIMG
+            foreach (var dtoView in resultDto)
+            {
+                if (gameImgDict.TryGetValue(dtoView.Game.Id, out var gameImg))
+                {
+                    dtoView.Game.Image = gameImg.Image;
+                    dtoView.Game.ImageType = gameImg.ImageType;
+                    dtoView.Game.Content = gameImg.Content;
+                }
+            }
+
+            return resultDto;
         }
     }
 }

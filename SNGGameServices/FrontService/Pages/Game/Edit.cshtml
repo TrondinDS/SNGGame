@@ -1,0 +1,111 @@
+﻿@page "{id:guid}"
+@model FrontService.Pages.Game.EditModel
+@{
+    ViewData["Title"] = "Редактирование игры";
+}
+
+<h2>Редактирование игры</h2>
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+<form method="post" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label asp-for="GameNew.RussianTitle" class="form-label"></label>
+        <input asp-for="GameNew.RussianTitle" class="form-control" />
+        <span asp-validation-for="GameNew.RussianTitle" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="GameNew.EnglishTitle" class="form-label"></label>
+        <input asp-for="GameNew.EnglishTitle" class="form-control" />
+        <span asp-validation-for="GameNew.EnglishTitle" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="GameNew.AlternativeTitle" class="form-label"></label>
+        <input asp-for="GameNew.AlternativeTitle" class="form-control" />
+        <span asp-validation-for="GameNew.AlternativeTitle" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="GameNew.ShortDescription" class="form-label"></label>
+        <input asp-for="GameNew.ShortDescription" class="form-control" />
+        <span asp-validation-for="GameNew.ShortDescription" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="GameNew.LinkSite" class="form-label"></label>
+        <input asp-for="GameNew.LinkSite" class="form-control" />
+        <span asp-validation-for="GameNew.LinkSite" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="GameNew.Publisher" class="form-label"></label>
+        <input asp-for="GameNew.Publisher" class="form-control" />
+        <span asp-validation-for="GameNew.Publisher" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="GameNew.ReleaseDate" class="form-label"></label>
+        <input asp-for="GameNew.ReleaseDate" type="date" class="form-control" />
+        <span asp-validation-for="GameNew.ReleaseDate" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="GameNew.CountryDevelopment" class="form-label"></label>
+        <input asp-for="GameNew.CountryDevelopment" class="form-control" />
+        <span asp-validation-for="GameNew.CountryDevelopment" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="GameNew.LinkPageStore" class="form-label"></label>
+        <input asp-for="GameNew.LinkPageStore" class="form-control" />
+        <span asp-validation-for="GameNew.LinkPageStore" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="GameNew.Platform" class="form-label"></label>
+        <input asp-for="GameNew.Platform" class="form-control" />
+        <span asp-validation-for="GameNew.Platform" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="GameNew.Content" class="form-label"></label>
+        <textarea asp-for="GameNew.Content" class="form-control" rows="5"></textarea>
+        <span asp-validation-for="GameNew.Content" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label>Изображение (текущее):</label><br />
+        @if (!string.IsNullOrEmpty(Model.GameNew.Image))
+        {
+            <img src="data:@Model.GameNew.ImageType;base64,@Model.GameNew.Image"
+                 style="max-height:100px;border-radius:8px;" />
+        }
+        else
+        {
+            <span class="text-muted">Нет изображения</span>
+        }
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Новое изображение</label>
+        <input type="file" asp-for="ImageFile" class="form-control" accept="image/jpeg, image/png" />
+    </div>
+
+    <!-- Скрытые поля -->
+    <input type="hidden" asp-for="GameNew.Id" />
+    <input type="hidden" asp-for="GameNew.StudioId" />
+    <input type="hidden" asp-for="GameNew.Image" />
+    <input type="hidden" asp-for="GameNew.ImageType" />
+
+    <button type="submit" class="btn btn-success">💾 Сохранить</button>
+    <a asp-page="Index" class="btn btn-secondary ms-2">↩️ Назад</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
