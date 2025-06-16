@@ -16,6 +16,9 @@ using GetAwaitService.Services.StudioGameService.Interfaces;
 using GetAwaitService.Services.StudioGameService;
 using GetAwaitService.Services.UserAccessRightsService.Interfaces;
 using GetAwaitService.Services.UserAccessRightsService;
+using GetAwaitService.Services.ChatFeedbackService.Interfaces;
+using GetAwaitService.Services.ChatFeedbackService;
+using GetAwaitService.Services.AdministratumService;
 
 namespace GetAwaitService
 {
@@ -92,11 +95,16 @@ namespace GetAwaitService
             builder.Services.AddTransient<IUserTelegramInformationService, UserTelegramInformationService>();
 
             // Настройка HTTP-клиентов
+            AddNamedHttpClient(builder.Services, "AdministratumServiceClient", "https://administratum-service:8081");
             AddNamedHttpClient(builder.Services, "UserServiceClient", "https://userservices:8081");
             AddNamedHttpClient(builder.Services, "UserActivityServiceClient", "https://user-activity-service:8081");
             AddNamedHttpClient(builder.Services, "StudioGameServiceClient", "https://studio-game-service:8081");
 
             // Добавление сервисов для контроллеров
+            builder.Services.AddScoped<IChatFeedbackService, ChatFeedbackService>();
+            builder.Services.AddScoped<IComplainTicketService, ComplainTicketService>();
+            builder.Services.AddScoped<IMessageService, MessageService>();
+
             builder.Services.AddScoped<IUserApiService, UserApiService>();
             builder.Services.AddScoped<IJobApiService, JobApiService>();
             builder.Services.AddScoped<IUserSubscriptionApiService, UserSubscriptionApiService>();

@@ -4,6 +4,7 @@ using AdministratumService.Repository;
 using AdministratumService.Services.Interfaces;
 using AutoMapper;
 using Library.Generics.DB.DTO.DTOModelServices.AdministratumService.ChatFeedback;
+using Library.Generics.DB.DTO.DTOModelServices.AdministratumService.ComplainTicket;
 using Library.Generics.DB.DTO.DTOModelServices.OrganizerEventService.Event;
 using Library.Generics.GenericService;
 using Microsoft.AspNetCore.Mvc;
@@ -23,6 +24,16 @@ namespace AdministratumService.Controllers
             this.service = service;
             this.mapper = mapper;
             this.logger = logger;
+        }
+
+        /// <summary>
+        /// Получение всех тикетов
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<ComplainTicketDTO>>> GetAll()
+        {
+            return Ok(await service.GetAllAsync());
         }
 
         [HttpPost]
@@ -79,15 +90,15 @@ namespace AdministratumService.Controllers
             }
         }
 
-        [HttpDelete]
-        public async Task<ActionResult> Delete(ChatFeedbackDTO dto)
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(Guid id)
         {
-            var model = await service.GetByIdAsync(dto.Id);
+            var model = await service.GetByIdAsync(id);
             if (model == null)
             {
                 return NotFound();
             }
-            await service.DeleteAsync(dto.Id);
+            await service.DeleteAsync(id);
             return Ok();
         }
     }
