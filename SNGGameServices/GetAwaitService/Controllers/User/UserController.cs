@@ -68,5 +68,12 @@ namespace GetAwaitService.Controllers.User
 
             return success ? NoContent() : NotFound();
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Me()
+        {
+            var userId = User.FindFirst("userId")?.Value;
+            return Ok($"Current user ID: {userId}");
+        }
     }
 }
