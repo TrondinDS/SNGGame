@@ -1,0 +1,30 @@
+﻿@page "{id:guid}"
+@model FrontService.Pages.Topic.EditModel
+@{
+    ViewData["Title"] = "Редактировать тему";
+}
+
+<h2 class="mb-4">Редактировать тему</h2>
+
+<form method="post">
+    <input type="hidden" asp-for="TopicNew.Id" />
+
+    <div class="mb-3">
+        <label asp-for="TopicNew.Title" class="form-label">Название</label>
+        <input asp-for="TopicNew.Title" class="form-control" />
+        <span asp-validation-for="TopicNew.Title" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="TopicNew.Description" class="form-label">Описание</label>
+        <textarea asp-for="TopicNew.Description" class="form-control" rows="4"></textarea>
+        <span asp-validation-for="TopicNew.Description" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-success">💾 Сохранить</button>
+    <a asp-page="Index" class="btn btn-secondary ms-2">↩️ Назад</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

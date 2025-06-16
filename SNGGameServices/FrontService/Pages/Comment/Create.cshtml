@@ -1,0 +1,67 @@
+﻿@page
+@model FrontService.Pages.Comment.CreateModel
+@{
+    ViewData["Title"] = "Добавить комментарий";
+}
+
+<h2 class="mb-4">📝 Комментарии к теме: @Model.TopicWithComments?.Topic.Title</h2>
+
+@if (TempData["AuthError"] != null)
+{
+    <div class="alert alert-danger">@TempData["AuthError"]</div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+@if (Model.TopicWithComments == null)
+{
+    <div class="alert alert-warning">Тема не найдена.</div>
+}
+else
+{
+    <p>@Model.TopicWithComments.Topic.Description</p>
+
+    <hr />
+
+    <h3>Комментарии</h3>
+    @if (Model.TopicWithComments.CommentDTOs == null || !Model.TopicWithComments.CommentDTOs.Any())
+    {
+        <p>Комментариев пока нет.</p>
+    }
+    else
+    {
+        <ul class="list-group mb-4">
+            @foreach (var comment in Model.TopicWithComments.CommentDTOs)
+            {
+                <li class="list-group-item">
+                    <strong>@comment.Body</strong><br />
+                    <small class="text-muted">Лайков: @comment.CountLike</small>
+                </li>
+            }
+        </ul>
+    }
+
+    <hr />
+
+    <h3>Добавить комментарий</h3>
+
+    <form method="post" class="mb-3">
+        <input type="hidden" asp-for="NewComment.TopicId" />
+
+        <div class="mb-3">
+            <label asp-for="NewComment.Body" class="form-label">Комментарий</label>
+            <textarea asp-for="NewComment.Body" class="form-control" rows="4"></textarea>
+            <span asp-validation-for="NewComment.Body" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-primary">💬 Отправить</button>
+    </form>
+}
+
+<a asp-page="/Topic/Index" class="btn btn-secondary">↩️ Назад к списку тем</a>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

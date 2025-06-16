@@ -2,6 +2,7 @@ using FrontRazor.Services.GameService;
 using FrontRazor.Services.StudioService;
 using FrontRazor.Services.UserService;
 using FrontService.Services;
+using FrontService.Services.FrontService.Services.CommentService;
 using FrontService.Services.Interfaces;
 using FrontService.Services.TopicService;
 using Microsoft.AspNetCore.Http;
@@ -29,6 +30,7 @@ namespace FrontService
             builder.Services.AddScoped<IStudioApiService, StudioApiService>();
             builder.Services.AddScoped<IGameApiService, GameApiService>();
             builder.Services.AddScoped<ITopicApiService, TopicApiService>();
+            builder.Services.AddScoped<ICommentApiService, CommentApiService>();
             builder.Services.AddScoped<IAuthService, AuthService>();
 
             var app = builder.Build();

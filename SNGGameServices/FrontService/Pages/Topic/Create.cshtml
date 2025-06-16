@@ -1,0 +1,62 @@
+﻿@page
+@model FrontService.Pages.Topic.CreateModel
+@{
+    ViewData["Title"] = "Создать тему";
+}
+
+<h2 class="mb-4">🆕 Создание новой темы</h2>
+
+<form method="post">
+    <!-- поля формы как выше -->
+    <div class="mb-3">
+        <label asp-for="NewTopic.EntityId" class="form-label"></label>
+        <input asp-for="NewTopic.EntityId" class="form-control" />
+        <span asp-validation-for="NewTopic.EntityId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="NewTopic.EntityType" class="form-label"></label>
+        <input asp-for="NewTopic.EntityType" class="form-control" type="number" />
+        <span asp-validation-for="NewTopic.EntityType" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="NewTopic.Title" class="form-label"></label>
+        <input asp-for="NewTopic.Title" class="form-control" />
+        <span asp-validation-for="NewTopic.Title" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="NewTopic.Description" class="form-label"></label>
+        <textarea asp-for="NewTopic.Description" class="form-control" rows="4"></textarea>
+        <span asp-validation-for="NewTopic.Description" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-success">➕ Создать</button>
+    <a asp-page="Index" class="btn btn-secondary ms-2">↩️ Назад</a>
+</form>
+
+<!-- Модальное окно ошибки авторизации -->
+@if (TempData["AuthError"] != null)
+{
+    <div class="modal fade show" id="authErrorModal" tabindex="-1" style="display:block;" aria-modal="true" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content border-danger">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title">Ошибка авторизации</h5>
+                </div>
+                <div class="modal-body">
+                    <p>@TempData["AuthError"]</p>
+                </div>
+                <div class="modal-footer">
+                    <a href="/Account/Login" class="btn btn-danger">🔐 Войти</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-backdrop fade show"></div>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

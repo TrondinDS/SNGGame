@@ -32,8 +32,10 @@ else
             {
                 <tr>
                     <td>
-                        <strong>@game.RussianTitle</strong><br />
-                        <span class="text-muted">@game.EnglishTitle</span>
+                        <a asp-page="/Game/ID" asp-route-id="@game.Id" class="text-decoration-none">
+                            <strong>@game.RussianTitle</strong><br />
+                            <span class="text-muted">@game.EnglishTitle</span>
+                        </a>
                     </td>
                     <td>@game.ReleaseDate?.ToString("dd.MM.yyyy")</td>
                     <td>@game.Platform</td>
