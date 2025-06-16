@@ -18,6 +18,7 @@ using GetAwaitService.Services.UserAccessRightsService.Interfaces;
 using GetAwaitService.Services.UserAccessRightsService;
 using GetAwaitService.Services.ChatFeedbackService.Interfaces;
 using GetAwaitService.Services.ChatFeedbackService;
+using GetAwaitService.Services.AdministratumService;
 
 namespace GetAwaitService
 {
@@ -102,6 +103,7 @@ namespace GetAwaitService
             // Добавление сервисов для контроллеров
             builder.Services.AddScoped<IChatFeedbackService, ChatFeedbackService>();
             builder.Services.AddScoped<IComplainTicketService, ComplainTicketService>();
+            builder.Services.AddScoped<IMessageService, MessageService>();
 
             builder.Services.AddScoped<IUserApiService, UserApiService>();
             builder.Services.AddScoped<IJobApiService, JobApiService>();

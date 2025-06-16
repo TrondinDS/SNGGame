@@ -16,8 +16,6 @@ namespace Library.Generics.DB.DTO.DTOModelServices.AdministratumService.Message
 
         public string Content { get; set; }
         public DateTime Date { get; set; }
-        public bool IsDeleted { get; set; }
-        public DateTime? DateDeleted { get; set; }
 
         // Навигационные свойства
         public Guid ChatFeedbackId { get; set; }
