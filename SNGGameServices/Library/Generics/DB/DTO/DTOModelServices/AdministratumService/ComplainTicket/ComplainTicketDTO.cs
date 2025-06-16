@@ -17,7 +17,5 @@ namespace Library.Generics.DB.DTO.DTOModelServices.AdministratumService.Complain
         public required string Status { get; set; }
         public DateTime CreationDateTime { get; set; }
         public DateTime StatusUpdateDatetime { get; set; }
-        public bool IsDeleted { get; set; }
-        public DateTime? DateDeleted { get; set; }
     }
 }

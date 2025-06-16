@@ -101,6 +101,7 @@ namespace GetAwaitService
 
             // Добавление сервисов для контроллеров
             builder.Services.AddScoped<IChatFeedbackService, ChatFeedbackService>();
+            builder.Services.AddScoped<IComplainTicketService, ComplainTicketService>();
 
             builder.Services.AddScoped<IUserApiService, UserApiService>();
             builder.Services.AddScoped<IJobApiService, JobApiService>();
