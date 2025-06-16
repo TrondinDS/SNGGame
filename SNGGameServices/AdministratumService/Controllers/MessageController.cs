@@ -87,7 +87,7 @@ namespace AdministratumService.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteUser(Guid id)
+        public async Task<ActionResult> Delete(Guid id)
         {
             await service.DeleteAsync(id);
             return NoContent();
