@@ -2,7 +2,7 @@
 using Library.Generics.DB.DTO.DTOModelServices.OrganizerEventService.Organizer;
 using Library.Generics.DB.DTO.DTOModelServices.UserService.User;
 
-namespace GetAwaitService.Services.ChatFeedbackService.Interfaces
+namespace GetAwaitService.Services.OrganizerEventService.Interfaces
 {
     public interface IOrganizerService
     {

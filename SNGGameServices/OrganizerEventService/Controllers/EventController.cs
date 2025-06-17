@@ -89,10 +89,10 @@ namespace OrganizerEventService.Controllers
         /// Удаление события
         /// </summary>
         /// <returns></returns>
-        [HttpDelete]
-        public async Task<ActionResult> Delete(EventDTO dto)
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(Guid id)
         {
-            await service.DeleteAsync(dto.Id);
+            await service.DeleteAsync(id);
             return Ok();
         }
     }

@@ -20,6 +20,7 @@ using GetAwaitService.Services.ChatFeedbackService.Interfaces;
 using GetAwaitService.Services.ChatFeedbackService;
 using GetAwaitService.Services.AdministratumService;
 using GetAwaitService.Services.OrganizerEventService;
+using GetAwaitService.Services.OrganizerEventService.Interfaces;
 
 namespace GetAwaitService
 {
@@ -109,6 +110,7 @@ namespace GetAwaitService
             builder.Services.AddScoped<IMessageService, MessageService>();
             
             builder.Services.AddScoped<IOrganizerService, OrganizerService>();
+            builder.Services.AddScoped<IEventService, EventService>();
 
             builder.Services.AddScoped<IUserApiService, UserApiService>();
             builder.Services.AddScoped<IJobApiService, JobApiService>();

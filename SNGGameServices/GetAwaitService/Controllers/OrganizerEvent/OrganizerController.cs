@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using GetAwaitService.Services.ChatFeedbackService.Interfaces;
+using GetAwaitService.Services.OrganizerEventService.Interfaces;
 using GetAwaitService.Services.UserAccessRightsService.Interfaces;
 using Library.Generics.DB.DTO.DTOModelServices.OrganizerEventService.Organizer;
 using Microsoft.AspNetCore.Mvc;

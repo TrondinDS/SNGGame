@@ -1,16 +1,16 @@
-﻿using Library.Generics.DB.DTO.DTOModelServices.OrganizerEventService.Organizer;
-using System.Text.Json;
+﻿using System.Text.Json;
 using System.Text;
+using Library.Generics.DB.DTO.DTOModelServices.OrganizerEventService.Event;
 using GetAwaitService.Services.OrganizerEventService.Interfaces;
 
 namespace GetAwaitService.Services.OrganizerEventService
 {
-    public class OrganizerService : IOrganizerService
+    public class EventService : IEventService
     {
         private readonly HttpClient _httpClient;
         private readonly JsonSerializerOptions _jsonOptions;
 
-        public OrganizerService(IHttpClientFactory httpClientFactory)
+        public EventService(IHttpClientFactory httpClientFactory)
         {
             _httpClient = httpClientFactory.CreateClient("OrganizerEventServiceClient");
             _jsonOptions = new JsonSerializerOptions
@@ -19,45 +19,45 @@ namespace GetAwaitService.Services.OrganizerEventService
             };
         }
 
-        public async Task<IEnumerable<OrganizerDTO>?> GetAll()
+        public async Task<IEnumerable<EventDTO>?> GetAll()
         {
-            var response = await _httpClient.GetAsync("api/Organizer/GetAll");
+            var response = await _httpClient.GetAsync("api/Event/GetAll");
             if (!response.IsSuccessStatusCode) return null;
 
-            return await response.Content.ReadFromJsonAsync<IEnumerable<OrganizerDTO>>(_jsonOptions);
+            return await response.Content.ReadFromJsonAsync<IEnumerable<EventDTO>>(_jsonOptions);
         }
 
-        public async Task<OrganizerDTO?> GetById(Guid id)
+        public async Task<EventDTO?> GetById(Guid id)
         {
-            var response = await _httpClient.GetAsync($"api/Organizer/GetById/{id}");
+            var response = await _httpClient.GetAsync($"api/Event/GetById/{id}");
             if (!response.IsSuccessStatusCode) return null;
 
-            return await response.Content.ReadFromJsonAsync<OrganizerDTO>(_jsonOptions);
+            return await response.Content.ReadFromJsonAsync<EventDTO>(_jsonOptions);
         }
 
-        public async Task<OrganizerDTO?> Create(OrganizerDTO dto)
+        public async Task<EventDTO?> Create(EventDTO dto)
         {
             var json = JsonSerializer.Serialize(dto, _jsonOptions);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.PostAsync("api/Organizer/Create", content);
+            var response = await _httpClient.PostAsync("api/Event/Create", content);
             if (!response.IsSuccessStatusCode) return null;
 
-            return await response.Content.ReadFromJsonAsync<OrganizerDTO>(_jsonOptions);
+            return await response.Content.ReadFromJsonAsync<EventDTO>(_jsonOptions);
         }
 
-        public async Task<bool> Update(OrganizerDTO dto)
+        public async Task<bool> Update(EventDTO dto)
         {
             var json = JsonSerializer.Serialize(dto, _jsonOptions);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.PutAsync($"api/Organizer/Update/{dto.Id}", content);
+            var response = await _httpClient.PutAsync($"api/Event/Update/{dto.Id}", content);
             return response.IsSuccessStatusCode;
         }
 
         public async Task<bool> Delete(Guid id)
         {
-            var response = await _httpClient.DeleteAsync($"api/Organizer/Delete/{id}");
+            var response = await _httpClient.DeleteAsync($"api/Event/Delete/{id}");
             return response.IsSuccessStatusCode;
         }
     }
