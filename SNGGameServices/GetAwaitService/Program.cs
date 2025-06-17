@@ -19,6 +19,8 @@ using GetAwaitService.Services.UserAccessRightsService;
 using GetAwaitService.Services.ChatFeedbackService.Interfaces;
 using GetAwaitService.Services.ChatFeedbackService;
 using GetAwaitService.Services.AdministratumService;
+using GetAwaitService.Services.OrganizerEventService;
+using GetAwaitService.Services.OrganizerEventService.Interfaces;
 
 namespace GetAwaitService
 {
@@ -95,7 +97,9 @@ namespace GetAwaitService
             builder.Services.AddTransient<IUserTelegramInformationService, UserTelegramInformationService>();
 
             // Настройка HTTP-клиентов
+            
             AddNamedHttpClient(builder.Services, "AdministratumServiceClient", "https://administratum-service:8081");
+            AddNamedHttpClient(builder.Services, "OrganizerEventServiceClient", "https://organizer-event-service:8081");
             AddNamedHttpClient(builder.Services, "UserServiceClient", "https://userservices:8081");
             AddNamedHttpClient(builder.Services, "UserActivityServiceClient", "https://user-activity-service:8081");
             AddNamedHttpClient(builder.Services, "StudioGameServiceClient", "https://studio-game-service:8081");
@@ -104,6 +108,9 @@ namespace GetAwaitService
             builder.Services.AddScoped<IChatFeedbackService, ChatFeedbackService>();
             builder.Services.AddScoped<IComplainTicketService, ComplainTicketService>();
             builder.Services.AddScoped<IMessageService, MessageService>();
+            
+            builder.Services.AddScoped<IOrganizerService, OrganizerService>();
+            builder.Services.AddScoped<IEventService, EventService>();
 
             builder.Services.AddScoped<IUserApiService, UserApiService>();
             builder.Services.AddScoped<IJobApiService, JobApiService>();
