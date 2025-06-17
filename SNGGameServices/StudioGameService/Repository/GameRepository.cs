@@ -81,7 +81,7 @@ namespace StudioGameService.Repository
 
         public async Task<IEnumerable<Game>> GetGameDTOViewByIdGamesAsync(IEnumerable<Guid> listGameId)
         {
-            var result = await dbSetGame
+            return await dbSetGame
                 .Include(g => g.StatisticGame)
                 .Include(gsg => gsg.Genres)
                 .ThenInclude(gsg => gsg.Genre)
@@ -89,10 +89,6 @@ namespace StudioGameService.Repository
                 .ThenInclude(gst => gst.Tag)
                 .Where(g => listGameId.Contains(g.Id))
                 .ToListAsync();
-            bool a = true;
-            if (a == true)
-                a = false;
-            return result;
         }
     }
 }
