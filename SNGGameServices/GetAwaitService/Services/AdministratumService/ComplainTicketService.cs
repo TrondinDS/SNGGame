@@ -2,6 +2,8 @@
 using System.Text.Json;
 using System.Text;
 using GetAwaitService.Services.ChatFeedbackService.Interfaces;
+using Library.Generics.DB.DTO.DTOModelServices.AdministratumService.Message;
+using Library.Generics.Query.QueryModels.Administratum;
 
 namespace GetAwaitService.Services.ChatFeedbackService
 {
@@ -59,6 +61,17 @@ namespace GetAwaitService.Services.ChatFeedbackService
         {
             var response = await _httpClient.DeleteAsync($"api/ComplainTicket/Delete/{id}");
             return response.IsSuccessStatusCode;
+        }
+
+        public async Task<IEnumerable<ComplainTicketDTO>?> Filter(ParamQueryComplainTicket param)
+        {
+            var json = JsonSerializer.Serialize(param, _jsonOptions);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PostAsync("api/ComplainTicket/Filter", content);
+            if (!response.IsSuccessStatusCode) return null;
+
+            return await response.Content.ReadFromJsonAsync<IEnumerable<ComplainTicketDTO>>(_jsonOptions);
         }
     }
 }

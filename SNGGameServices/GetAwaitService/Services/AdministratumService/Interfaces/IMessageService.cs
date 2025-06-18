@@ -1,5 +1,6 @@
 ﻿using Library.Generics.DB.DTO.DTOModelServices.AdministratumService.ComplainTicket;
 using Library.Generics.DB.DTO.DTOModelServices.AdministratumService.Message;
+using Library.Generics.Query.QueryModels.Administratum;
 
 namespace GetAwaitService.Services.ChatFeedbackService.Interfaces
 {
@@ -10,5 +11,6 @@ namespace GetAwaitService.Services.ChatFeedbackService.Interfaces
         Task<MessageDTO?> Create(MessageDTO dto);
         Task<bool> Update(MessageDTO dto);
         Task<bool> Delete(Guid id);
+        Task<IEnumerable<MessageDTO>?> Filter(ParamQueryMessage param);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Library.Generics.DB.DTO.DTOModelServices.AdministratumService.ChatFeedback;
 using Library.Generics.DB.DTO.DTOModelServices.AdministratumService.Message;
+using Library.Generics.Query.QueryModels.Administratum;
 
 namespace AdministratumService.Services.Interfaces
 {
@@ -10,13 +11,6 @@ namespace AdministratumService.Services.Interfaces
         Task<IEnumerable<MessageDTO>> GetAllAsync();
         Task<MessageDTO> GetByIdAsync(Guid id);
         Task UpdateAsync(MessageDTO dto);
-
-        //Task<IEnumerable<GameDTO>> FilterGame(ParamQueryGame paramQuerySG);
-
-        //public Task<IEnumerable<Game>> GetAllCardGameAsync();
-        //public Task<IEnumerable<Game>> GetSelectCardGameAsync(IEnumerable<Guid> idGames);
-        //public Task<IEnumerable<Game>> GetFiltreCardGameAsync(ParamQueryGame paramQuerySG);
-
-        //public Task<IEnumerable<StatisticGame>> GetStatisticGames(IEnumerable<Guid> listGameId);
+        Task<IEnumerable<MessageDTO>> Filter(ParamQueryMessage param);
     }
 }

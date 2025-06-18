@@ -3,6 +3,9 @@ using AdministratumService.Repository.Interfaces;
 using AdministratumService.Services.Interfaces;
 using AutoMapper;
 using Library.Generics.DB.DTO.DTOModelServices.AdministratumService.ComplainTicket;
+using Library.Generics.DB.DTO.DTOModelServices.OrganizerEventService.Event;
+using Library.Generics.Query.QueryModels.Administratum;
+using Library.Generics.Query.QueryModels.OrganizerEvent;
 
 namespace AdministratumService.Services
 {
@@ -116,6 +119,23 @@ namespace AdministratumService.Services
                 Console.WriteLine($"Ошибка при обновлении тикета: {ex.Message}");
                 throw;
             }
+        }
+
+        private async Task<IEnumerable<ComplainTicketDTO>> ModelToDTOs(IEnumerable<ComplainTicket> elems)
+        {
+            if (!elems.Any())
+                return Enumerable.Empty<ComplainTicketDTO>();
+
+            var tasks = elems.Select(ModelToDTOAsync);
+            var results = await Task.WhenAll(tasks);
+
+            return results.Where(dto => dto != null);
+        }
+
+        public async Task<IEnumerable<ComplainTicketDTO>> Filter(ParamQueryComplainTicket param)
+        {
+            var elems = await repository.Filter(param);
+            return await ModelToDTOs(elems);
         }
     }
 }

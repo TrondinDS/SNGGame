@@ -2,6 +2,8 @@
 using GetAwaitService.Services.ChatFeedbackService.Interfaces;
 using GetAwaitService.Services.UserAccessRightsService.Interfaces;
 using Library.Generics.DB.DTO.DTOModelServices.AdministratumService.ComplainTicket;
+using Library.Generics.Query.QueryModels.Administratum;
+using Library.Generics.Query.QueryModels.OrganizerEvent;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GetAwaitService.Controllers.Administratum
@@ -88,6 +90,13 @@ namespace GetAwaitService.Controllers.Administratum
 
             var deleted = await _service.Delete(id);
             return deleted ? NoContent() : NotFound();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Filter([FromBody] ParamQueryComplainTicket param)
+        {
+            var elems = await _service.Filter(param);
+            return elems != null ? Ok(elems) : StatusCode(500, "Ошибка при фильтрации жалоб.");
         }
     }
 }

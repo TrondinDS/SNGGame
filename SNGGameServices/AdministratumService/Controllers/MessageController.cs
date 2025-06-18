@@ -7,6 +7,8 @@ using AutoMapper;
 using Library.Generics.DB.DTO.DTOModelServices.AdministratumService.ComplainTicket;
 using Library.Generics.DB.DTO.DTOModelServices.AdministratumService.Message;
 using Library.Generics.GenericService;
+using Library.Generics.Query.QueryModels.Administratum;
+using Library.Generics.Query.QueryModels.OrganizerEvent;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdministratumService.Controllers
@@ -91,6 +93,24 @@ namespace AdministratumService.Controllers
         {
             await service.DeleteAsync(id);
             return NoContent();
+        }
+
+        /// <summary>
+        /// Фильтрация сообщений
+        /// </summary>
+        /// <returns>Список событий</returns>
+        [HttpPost]
+        public async Task<ActionResult> Filter([FromBody] ParamQueryMessage param)
+        {
+            try
+            {
+                var elems = await service.Filter(param);
+                return Ok(elems);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { error = "Произошла внутренняя ошибка сервера", details = ex.Message });
+            }
         }
     }
 }

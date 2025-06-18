@@ -8,6 +8,7 @@ using Library.Generics.DB.DTO.DTOModelServices.AdministratumService.ChatFeedback
 using Library.Generics.DB.DTO.DTOModelServices.AdministratumService.ComplainTicket;
 using Library.Generics.DB.DTO.DTOModelServices.UserService.User;
 using Library.Generics.GenericService;
+using Library.Generics.Query.QueryModels.Administratum;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdministratumService.Controllers
@@ -92,6 +93,24 @@ namespace AdministratumService.Controllers
         {
             await service.DeleteAsync(id);
             return Ok();
+        }
+
+        /// <summary>
+        /// Фильтрация жалоб
+        /// </summary>
+        /// <returns>Список событий</returns>
+        [HttpPost]
+        public async Task<ActionResult> Filter([FromBody] ParamQueryComplainTicket param)
+        {
+            try
+            {
+                var elems = await service.Filter(param);
+                return Ok(elems);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { error = "Произошла внутренняя ошибка сервера", details = ex.Message });
+            }
         }
     }
 }

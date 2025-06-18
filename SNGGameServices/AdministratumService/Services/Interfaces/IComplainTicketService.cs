@@ -1,5 +1,6 @@
 ﻿using Library.Generics.DB.DTO.DTOModelServices.AdministratumService.ChatFeedback;
 using Library.Generics.DB.DTO.DTOModelServices.AdministratumService.ComplainTicket;
+using Library.Generics.Query.QueryModels.Administratum;
 
 namespace AdministratumService.Services.Interfaces
 {
@@ -10,6 +11,7 @@ namespace AdministratumService.Services.Interfaces
         Task<IEnumerable<ComplainTicketDTO>> GetAllAsync();
         Task<ComplainTicketDTO> GetByIdAsync(Guid id);
         Task UpdateAsync(ComplainTicketDTO dto);
+        Task<IEnumerable<ComplainTicketDTO>> Filter(ParamQueryComplainTicket param);
 
         //Task<IEnumerable<GameDTO>> FilterGame(ParamQueryGame paramQuerySG);
 
