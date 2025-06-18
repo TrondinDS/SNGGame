@@ -5,6 +5,7 @@ namespace GetAwaitService.Controllers.OrganizerEvent
     using AutoMapper;
     using global::GetAwaitService.Services.UserAccessRightsService.Interfaces;
     using Library.Generics.DB.DTO.DTOModelServices.OrganizerEventService.Event;
+    using Library.Generics.Query.QueryModels.OrganizerEvent;
     using Microsoft.AspNetCore.Mvc;
 
     namespace GetAwaitService.Controllers.OrganizerEvent
@@ -30,8 +31,15 @@ namespace GetAwaitService.Controllers.OrganizerEvent
             [HttpGet]
             public async Task<IActionResult> GetAll()
             {
-                var organizers = await _service.GetAll();
-                return organizers != null ? Ok(organizers) : StatusCode(500, "Ошибка при получении списка организаторов.");
+                var elems = await _service.GetAll();
+                return elems != null ? Ok(elems) : StatusCode(500, "Ошибка при получении списка событий.");
+            }
+
+            [HttpPost]
+            public async Task<IActionResult> Filter([FromBody] ParamQueryEvent param)
+            {
+                var elems = await _service.Filter(param);
+                return elems != null ? Ok(elems) : StatusCode(500, "Ошибка при фильтрации событий.");
             }
 
             [HttpGet("{id}")]
@@ -51,7 +59,7 @@ namespace GetAwaitService.Controllers.OrganizerEvent
                 var created = await _service.Create(dto);
                 return created != null
                     ? CreatedAtAction(nameof(GetById), new { id = created.Id }, created)
-                    : StatusCode(500, "Ошибка при создании организатора.");
+                    : StatusCode(500, "Ошибка при создании события.");
             }
 
             [HttpPut]

@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Library.Generics.DB.DTO.DTOModelServices.OrganizerEventService.Event;
 using Library.Generics.DB.DTO.DTOModelServices.OrganizerEventService.Organizer;
+using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Game;
+using Library.Generics.Query.QueryModels.OrganizerEvent;
 using Library.Services;
 using OrganizerEventService.DB.Models;
 using OrganizerEventService.Repository.Interfaces;
@@ -187,6 +189,23 @@ namespace OrganizerEventService.Services
                 Console.WriteLine($"Error processing event with ID {eventItem.Id}: {ex.Message}");
                 return null;
             }
+        }
+
+        private async Task<IEnumerable<EventDTO>> ModelToDTOs(IEnumerable<Event> games)
+        {
+            if (!games.Any())
+                return Enumerable.Empty<EventDTO>();
+
+            var tasks = games.Select(ModelToDTO);
+            var results = await Task.WhenAll(tasks);
+
+            return results.Where(dto => dto != null);
+        }
+
+        public async Task<IEnumerable<EventDTO>> Filter(ParamQueryEvent param)
+        {
+            var elems = await repository.Filter(param);
+            return await ModelToDTOs(elems);
         }
     }
 }

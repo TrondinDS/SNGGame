@@ -5,6 +5,8 @@ using OrganizerEventService.Services.Interfaces;
 using Library.Generics.DB.DTO.DTOModelServices.OrganizerEventService.Event;
 using OrganizerEventService.DB.DTO.Organizer;
 using Library.Generics.DB.DTO.DTOModelServices.OrganizerEventService.Organizer;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Library.Generics.Query.QueryModels.OrganizerEvent;
 
 namespace OrganizerEventService.Controllers
 {
@@ -18,7 +20,6 @@ namespace OrganizerEventService.Controllers
         {
             this.service = service;
         }
-
 
         /// <summary>
         /// Получение всех событий
@@ -94,6 +95,24 @@ namespace OrganizerEventService.Controllers
         {
             await service.DeleteAsync(id);
             return Ok();
+        }
+
+        /// <summary>
+        /// Фильтрация событий
+        /// </summary>
+        /// <returns>Список событий</returns>
+        [HttpPost]
+        public async Task<ActionResult> Filter([FromBody] ParamQueryEvent param)
+        {
+            try
+            {
+                var elems = await service.Filter(param);
+                return Ok(elems);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { error = "Произошла внутренняя ошибка сервера", details = ex.Message });
+            }
         }
     }
 }

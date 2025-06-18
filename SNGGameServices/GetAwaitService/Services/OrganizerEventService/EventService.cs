@@ -2,6 +2,7 @@
 using System.Text;
 using Library.Generics.DB.DTO.DTOModelServices.OrganizerEventService.Event;
 using GetAwaitService.Services.OrganizerEventService.Interfaces;
+using Library.Generics.Query.QueryModels.OrganizerEvent;
 
 namespace GetAwaitService.Services.OrganizerEventService
 {
@@ -22,6 +23,17 @@ namespace GetAwaitService.Services.OrganizerEventService
         public async Task<IEnumerable<EventDTO>?> GetAll()
         {
             var response = await _httpClient.GetAsync("api/Event/GetAll");
+            if (!response.IsSuccessStatusCode) return null;
+
+            return await response.Content.ReadFromJsonAsync<IEnumerable<EventDTO>>(_jsonOptions);
+        }
+
+        public async Task<IEnumerable<EventDTO>?> Filter(ParamQueryEvent param)
+        {
+            var json = JsonSerializer.Serialize(param, _jsonOptions);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PostAsync("api/Event/Filter", content);
             if (!response.IsSuccessStatusCode) return null;
 
             return await response.Content.ReadFromJsonAsync<IEnumerable<EventDTO>>(_jsonOptions);
