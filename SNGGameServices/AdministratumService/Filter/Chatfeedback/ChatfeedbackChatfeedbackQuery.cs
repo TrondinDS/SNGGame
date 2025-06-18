@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AdministratumService.Filter.Chatfeedback;
 
-public class EventChatfeedbackChatfeedback
+public class ChatfeedbackChatfeedbackQuery
 {
     public static IQueryable<DB.Models.ChatFeedback> Create(QueryChatfeedbackChatfeedback query, IQueryable<DB.Models.ChatFeedback> bodyQuery)
     {

@@ -22,7 +22,7 @@ public class FilterQueryChatfeedback
         IQueryable<DB.Models.ChatFeedback> bodyQuery
     )
     {
-        bodyQuery = EventChatfeedbackChatfeedback.Create(param.QueryChatfeedback, bodyQuery);
+        bodyQuery = ChatfeedbackChatfeedbackQuery.Create(param.QueryChatfeedback, bodyQuery);
         return bodyQuery;
     }
 }

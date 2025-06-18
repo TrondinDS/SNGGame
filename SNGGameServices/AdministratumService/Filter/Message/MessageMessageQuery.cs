@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AdministratumService.Filter.Message;
 
-public class EventMessageMessage
+public class MessageMessageQuery
 {
     public static IQueryable<DB.Models.Message> Create(QueryMessageMessage query, IQueryable<DB.Models.Message> bodyQuery)
     {

@@ -22,7 +22,7 @@ public class FilterQueryMessage
         IQueryable<DB.Models.Message> bodyQuery
     )
     {
-        bodyQuery = EventMessageMessage.Create(param.QueryMessage, bodyQuery);
+        bodyQuery = MessageMessageQuery.Create(param.QueryMessage, bodyQuery);
         return bodyQuery;
     }
 }
