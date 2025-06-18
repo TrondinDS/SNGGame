@@ -8,9 +8,9 @@ namespace AdministratumService.Filter;
 public class FilterQueryChatfeedback
 {
     public static IQueryable<DB.Models.ChatFeedback> CreateQuerybleAsNoTracking(
-    ParamQueryChatfeedback param,
-    IQueryable<DB.Models.ChatFeedback> bodyQuery
-)
+        ParamQueryChatfeedback param,
+        IQueryable<DB.Models.ChatFeedback> bodyQuery
+    )
     {
         bodyQuery = bodyQuery.AsNoTracking();
         bodyQuery = CreateQueryble(param, bodyQuery);
