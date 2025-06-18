@@ -1,6 +1,8 @@
 ﻿using Library.Generics.DB.DTO.DTOModelServices.AdministratumService.ChatFeedback;
 using Library.Generics.DB.DTO.DTOModelServices.OrganizerEventService.Organizer;
 using Library.Generics.DB.DTO.DTOModelServices.UserService.User;
+using Library.Generics.Query.QueryModels.OrganizerEvent;
+using Microsoft.AspNetCore.Mvc;
 
 namespace GetAwaitService.Services.OrganizerEventService.Interfaces
 {

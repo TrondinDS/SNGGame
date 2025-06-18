@@ -1,10 +1,10 @@
-﻿using Library.Generics.Query.QueryModels.OrganizerEvent.Organizer;
+﻿using Library.Generics.Query.QueryModels.OrganizerEvent.Event;
 
 namespace OrganizerEventService.Filter.Event
 {
-    public class OrganizerQuery
+    public class EventOrganizerQuery
     {
-        public static IQueryable<DB.Models.Event> Create(QueryOrganizer query, IQueryable<DB.Models.Event> bodyQuery)
+        public static IQueryable<DB.Models.Event> Create(QueryEventOrganizer query, IQueryable<DB.Models.Event> bodyQuery)
         {
             if (query == null || bodyQuery == null) return bodyQuery;
 

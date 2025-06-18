@@ -28,7 +28,7 @@ public class EventQuery
             bodyQuery = bodyQuery.Where(x => EF.Functions.ILike(x.City, $"%{query.City}%"));
 
         if (!string.IsNullOrEmpty(query.GeoUrl))
-            bodyQuery = bodyQuery.Where(x => EF.Functions.ILike(x.GeoUrl, $"%{query.GeoUrl}%"));
+            bodyQuery = bodyQuery.Where(x => x.GeoUrl.Equals(query.GeoUrl, StringComparison.OrdinalIgnoreCase));
 
         if (!string.IsNullOrEmpty(query.Status))
             bodyQuery = bodyQuery.Where(x => EF.Functions.ILike(x.Status, $"%{query.Status}%"));

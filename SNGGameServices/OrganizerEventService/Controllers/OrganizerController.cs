@@ -10,6 +10,7 @@ using Library.Generics.DB.DTO.DTOModelServices.OrganizerEventService.Organizer;
 using OrganizerEventService.Services.Interfaces;
 using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Game;
 using Library.Generics.DB.DTO.DTOModelServices.AdministratumService.Message;
+using Library.Generics.Query.QueryModels.OrganizerEvent;
 
 namespace OrganizerEventService.Controllers
 {
@@ -94,6 +95,25 @@ namespace OrganizerEventService.Controllers
         {
             await service.DeleteAsync(id);
             return Ok();
+        }
+
+        /// <summary>
+        /// Фильтрация организаторов
+        /// </summary>
+        /// <returns>Список событий</returns>
+        [HttpPost]
+        public async Task<ActionResult> Filter([FromBody] ParamQueryOrganizer param)
+        {
+            return Ok();
+            //try
+            //{
+            //    var elems = await service.Filter(param);
+            //    return Ok(elems);
+            //}
+            //catch (Exception ex)
+            //{
+            //    return StatusCode(StatusCodes.Status500InternalServerError, new { error = "Произошла внутренняя ошибка сервера", details = ex.Message });
+            //}
         }
     }
 }

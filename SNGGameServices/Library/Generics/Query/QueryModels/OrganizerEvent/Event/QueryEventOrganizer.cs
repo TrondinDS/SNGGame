@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Library.Generics.Query.QueryModels.OrganizerEvent.Organizer;
+namespace Library.Generics.Query.QueryModels.OrganizerEvent.Event;
 
-public class QueryOrganizer
+public class QueryEventOrganizer
 {
     public List<Guid>? OrganizerId { get; set; }
-
 }

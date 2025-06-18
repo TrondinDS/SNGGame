@@ -22,7 +22,7 @@ public class FilterQueryEvent
     )
     {
         bodyQuery = EventQuery.Create(param.QueryEvent, bodyQuery);
-        bodyQuery = OrganizerQuery.Create(param.QueryOrganizer, bodyQuery);
+        bodyQuery = EventOrganizerQuery.Create(param.QueryOrganizer, bodyQuery);
         return bodyQuery;
     }
 }

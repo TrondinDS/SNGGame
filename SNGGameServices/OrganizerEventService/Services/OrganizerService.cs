@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using Library.Generics.DB.DTO.DTOModelServices.OrganizerEventService.Event;
 using Library.Generics.DB.DTO.DTOModelServices.OrganizerEventService.Organizer;
 using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Game;
+using Library.Generics.Query.QueryModels.OrganizerEvent;
 using Library.Services;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using OrganizerEventService.DB.Models;
@@ -201,6 +203,22 @@ namespace OrganizerEventService.Services
                 Console.WriteLine($"Error processing organizer with ID {organizer.Id}: {ex.Message}");
                 return null;
             }
+        }
+        private async Task<IEnumerable<OrganizerDTO>> ModelToDTOs(IEnumerable<Organizer> elems)
+        {
+            if (!elems.Any())
+                return Enumerable.Empty<OrganizerDTO>();
+
+            var tasks = elems.Select(ModelToDTO);
+            var results = await Task.WhenAll(tasks);
+
+            return results.Where(dto => dto != null);
+        }
+
+        public async Task<IEnumerable<OrganizerDTO>> Filter(ParamQueryOrganizer param)
+        {
+            var elems = await repository.Filter(param);
+            return await ModelToDTOs(elems);
         }
     }
 }

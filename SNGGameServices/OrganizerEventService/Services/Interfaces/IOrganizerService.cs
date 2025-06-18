@@ -1,5 +1,6 @@
 ﻿using Library.Generics.DB.DTO.DTOModelServices.OrganizerEventService.Organizer;
 using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Game;
+using Library.Generics.Query.QueryModels.OrganizerEvent;
 using Library.Generics.Query.QueryModels.StudioGame;
 
 namespace OrganizerEventService.Services.Interfaces
@@ -11,6 +12,7 @@ namespace OrganizerEventService.Services.Interfaces
         Task<IEnumerable<OrganizerDTO>> GetAllAsync();
         Task<OrganizerDTO> GetByIdAsync(Guid id);
         Task UpdateAsync(OrganizerDTO dto);
+        Task<IEnumerable<OrganizerDTO>> Filter(ParamQueryOrganizer param);
 
         //Task<IEnumerable<GameDTO>> FilterGame(ParamQueryGame paramQuerySG);
 
