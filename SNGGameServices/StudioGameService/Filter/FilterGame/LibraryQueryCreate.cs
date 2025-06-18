@@ -1,4 +1,5 @@
 ﻿using Library.Generics.Query.QueryModels.StudioGame.Library;
+using Microsoft.EntityFrameworkCore;
 using StudioGameService.DB.Model;
 
 namespace StudioGameService.Filter.FilterGame
@@ -14,7 +15,7 @@ namespace StudioGameService.Filter.FilterGame
                     BodyQuery = BodyQuery.Where(g =>
                         g.StatisticGame != null &&
                         g.StatisticGame.PeopleCount > 0 &&
-                        (double)g.StatisticGame.RatingSum / g.StatisticGame.PeopleCount >= queryLibrary.Rating
+                        (int) (g.StatisticGame.RatingSum / g.StatisticGame.PeopleCount) >= queryLibrary.Rating
                     );
                 }
 

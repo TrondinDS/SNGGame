@@ -29,6 +29,8 @@ namespace FrontService
             builder.Services.AddScoped<IUserApiService, UserApiService>();
             builder.Services.AddScoped<IStudioApiService, StudioApiService>();
             builder.Services.AddScoped<IGameApiService, GameApiService>();
+            builder.Services.AddScoped<IGenreApiService, GenreApiService>();
+            builder.Services.AddScoped<ITagApiService, TagApiService>();
             builder.Services.AddScoped<ITopicApiService, TopicApiService>();
             builder.Services.AddScoped<ICommentApiService, CommentApiService>();
             builder.Services.AddScoped<IAuthService, AuthService>();

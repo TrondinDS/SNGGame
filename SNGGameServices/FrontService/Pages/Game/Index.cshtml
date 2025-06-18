@@ -6,9 +6,65 @@
 
 <h2 class="mb-4">🎮 Игры</h2>
 
-<form method="get" class="mb-3">
-    <button type="submit" class="btn btn-primary">🔄 Обновить</button>
-</form>
+<button class="btn btn-secondary mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#filterCollapse" aria-expanded="false" aria-controls="filterCollapse">
+    ⚙️ Показать/Скрыть фильтр
+</button>
+
+<div class="collapse mb-4" id="filterCollapse">
+    <form method="get" class="card card-body">
+        <div class="row g-3">
+            <div class="col-md-4">
+                <label for="Title" class="form-label">Название игры</label>
+                <input type="text" id="Title" name="Title" value="@Model.Title" class="form-control" placeholder="Введите название..." />
+            </div>
+
+            <div class="col-md-4">
+                <label for="SelectedGenres" class="form-label">Жанры</label>
+                <select id="SelectedGenres" name="SelectedGenres" multiple class="form-select" size="5">
+                    @foreach (var genre in Model.Genres)
+                    {
+                        <option value="@genre.Id" selected="@Model.SelectedGenres.Contains(genre.Id)">
+                            @genre.Title
+                        </option>
+                    }
+                </select>
+                <small class="form-text text-muted">Выберите один или несколько жанров</small>
+            </div>
+
+            <div class="col-md-4">
+                <label for="SelectedTags" class="form-label">Теги</label>
+                <select id="SelectedTags" name="SelectedTags" multiple class="form-select" size="5">
+                    @foreach (var tag in Model.Tags)
+                    {
+                        <option value="@tag.Id" selected="@Model.SelectedTags.Contains(tag.Id)">
+                            @tag.Title
+                        </option>
+                    }
+                </select>
+                <small class="form-text text-muted">Выберите один или несколько тегов</small>
+            </div>
+        </div>
+
+        <div class="row g-3 mt-3 align-items-center">
+            <div class="col-md-2">
+                <label for="Rating" class="form-label">Рейтинг (1-10)</label>
+                <input type="number" id="Rating" name="Rating" min="1" max="10" value="@(Model.Rating?.ToString() ?? "")" class="form-control" />
+            </div>
+
+            <div class="col-md-2 d-flex align-items-center">
+                <div class="form-check mt-4">
+                    <input class="form-check-input" type="checkbox" id="Top" name="Top" value="true" @(Model.Top ? "checked" : "") />
+                    <label class="form-check-label" for="Top">Топ игры</label>
+                </div>
+            </div>
+
+            <div class="col-md-8 text-end">
+                <button type="submit" class="btn btn-primary mt-3">🔍 Применить фильтр</button>
+                <a href="@Url.Page("/Game/Index")" class="btn btn-secondary mt-3 ms-2">✖ Сбросить</a>
+            </div>
+        </div>
+    </form>
+</div>
 
 @if (!Model.Games.Any())
 {
