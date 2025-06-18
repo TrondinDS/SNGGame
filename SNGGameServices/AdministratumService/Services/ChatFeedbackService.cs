@@ -3,6 +3,7 @@ using AdministratumService.Repository.Interfaces;
 using AdministratumService.Services.Interfaces;
 using AutoMapper;
 using Library.Generics.DB.DTO.DTOModelServices.AdministratumService.ChatFeedback;
+using Library.Generics.Query.QueryModels.Administratum;
 
 namespace AdministratumService.Services
 {
@@ -116,6 +117,23 @@ namespace AdministratumService.Services
                 Console.WriteLine($"Ошибка при обновлении чата: {ex.Message}");
                 throw;
             }
+        }
+
+        private async Task<IEnumerable<ChatFeedbackDTO>> ModelToDTOs(IEnumerable<ChatFeedback> elems)
+        {
+            if (!elems.Any())
+                return Enumerable.Empty<ChatFeedbackDTO>();
+
+            var tasks = elems.Select(ModelToDTOAsync);
+            var results = await Task.WhenAll(tasks);
+
+            return results.Where(dto => dto != null);
+        }
+
+        public async Task<IEnumerable<ChatFeedbackDTO>> Filter(ParamQueryChatfeedback param)
+        {
+            var elems = await repository.Filter(param);
+            return await ModelToDTOs(elems);
         }
     }
 }
