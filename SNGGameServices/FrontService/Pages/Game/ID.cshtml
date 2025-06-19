@@ -33,6 +33,14 @@
             <h3>Статистика</h3>
             <p><strong>Оценка:</strong> @stats.RatingSum</p>
             <p><strong>Пользователей оценило:</strong> @stats.PeopleCount</p>
+            <p>
+                <strong>Средняя оценка:</strong>
+                @(
+                    stats.PeopleCount > 0
+                    ? (stats.RatingSum / (double)stats.PeopleCount).ToString("0.0")
+                    : "—"
+                    )
+            </p>
         </div>
     }
 

@@ -1,7 +1,9 @@
 using FrontService.Services.Interfaces;
 using Library.Generics.DB.DTO.DTOModelServices.UserActivityService.Topic;
+using Library.Types;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FrontService.Pages.Topic
 {
@@ -14,10 +16,21 @@ namespace FrontService.Pages.Topic
         {
             _topicApiService = topicApiService;
             _httpContextAccessor = httpContextAccessor;
+
+            // Заполняем список типов сущностей из enum
+            EntityTypes = Enum.GetValues(typeof(EntityType.Type))
+                              .Cast<EntityType.Type>()
+                              .Select(e => new SelectListItem
+                              {
+                                  Value = ((int)e).ToString(),
+                                  Text = e.ToString()
+                              }).ToList();
         }
 
         [BindProperty]
         public TopicCreateDTO NewTopic { get; set; }
+
+        public List<SelectListItem> EntityTypes { get; set; } = new();
 
         public IActionResult OnGet()
         {
@@ -37,7 +50,7 @@ namespace FrontService.Pages.Topic
             if (string.IsNullOrEmpty(token))
             {
                 TempData["AuthError"] = "Вы не авторизованы. Войдите в систему, чтобы создать тему.";
-                return RedirectToPage(); // Возврат на ту же страницу для показа ошибки
+                return RedirectToPage();
             }
 
             if (!ModelState.IsValid)
@@ -54,9 +67,7 @@ namespace FrontService.Pages.Topic
             return RedirectToPage("Index");
         }
 
-        private string? GetToken()
-        {
-            return _httpContextAccessor.HttpContext?.Request.Cookies["AuthToken"];
-        }
+        private string? GetToken() =>
+            _httpContextAccessor.HttpContext?.Request.Cookies["AuthToken"];
     }
 }

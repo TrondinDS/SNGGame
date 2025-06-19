@@ -165,7 +165,7 @@ namespace GetAwaitService.Services.UserAccessRightsService
                             return false;
 
                         bool hasActiveBan = userRightsBans.Any(b =>
-                            b.EntityId == game.StudioId &&
+                            (b.EntityId == game.StudioId || b.EntityId == game.Id) &&
                             b.TypePunishment == (int)PunishmentType.Type.BanWriting &&
                             b.DateFinish > DateTime.UtcNow);
 

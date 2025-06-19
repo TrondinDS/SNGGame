@@ -1,23 +1,50 @@
 using FrontService.Services.Interfaces;
+using Library.Generics.DB.DTO.DTOModelServices.UserService.Banned;
 using Library.Generics.DB.DTO.DTOModelServices.UserService.User;
+using Library.Types;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 
 namespace FrontService.Pages.User
 {
+    /// <summary>
+    /// Страница для блокировки пользователя.
+    /// </summary>
     public class DeleteModel : PageModel
     {
         private readonly IUserApiService _userApiService;
+        private readonly IBannedApiService _bannedApiService;
 
-        public DeleteModel(IUserApiService userApiService)
+        public DeleteModel(IUserApiService userApiService, IBannedApiService bannedApiService)
         {
             _userApiService = userApiService;
+            _bannedApiService = bannedApiService;
         }
 
         [BindProperty]
         public UserDTO? User { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(Guid id)
+        [BindProperty]
+        public string? BanReason { get; set; }
+
+        [BindProperty]
+        public DateTime BanUntil { get; set; } = DateTime.UtcNow.AddDays(7);
+
+        [BindProperty]
+        public EntityType.Type SelectedEntityType { get; set; } = EntityType.Type.Studio;
+
+        [BindProperty]
+        public PunishmentType.Type SelectedPunishmentType { get; set; } = PunishmentType.Type.Ban;
+
+        [BindProperty]
+        [Required(ErrorMessage = "EntityId обязателен")]
+        public Guid EntityId { get; set; }
+        public SelectList EntityTypes { get; private set; } = default!;
+        public SelectList PunishmentTypes { get; private set; } = default!;
+
+        public async Task<IActionResult> OnGetAsync(Guid id, Guid entityId)
         {
             var user = await _userApiService.GetUserByIdAsync(id);
             if (user == null)
@@ -27,6 +54,9 @@ namespace FrontService.Pages.User
             }
 
             User = user;
+            EntityId = entityId;
+
+            LoadSelectLists();
             return Page();
         }
 
@@ -38,14 +68,42 @@ namespace FrontService.Pages.User
                 return RedirectToPage("Index");
             }
 
-            var success = await _userApiService.DeleteUserAsync(User.Id);
-            if (!success)
+            var dto = new BannedCreateDTO
             {
-                TempData["ErrorMessage"] = "Ошибка при удалении пользователя.";
+                EntityId = EntityId,
+                EntityType = (int)SelectedEntityType,
+                Reason = BanReason ?? "Не указана причина",
+                DateFinish = BanUntil,
+                TypePunishment = (int)SelectedPunishmentType,
+                UserIdBanned = User.Id
+            };
+
+            var result = await _bannedApiService.CreateBannedAsync(dto);
+
+            if (result == null)
+            {
+                TempData["ErrorMessage"] = "Не удалось заблокировать пользователя.";
                 return RedirectToPage("Index");
             }
 
             return RedirectToPage("Index");
+        }
+
+        private void LoadSelectLists()
+        {
+            EntityTypes = new SelectList(Enum.GetValues(typeof(EntityType.Type))
+                .Cast<EntityType.Type>()
+                .Select(e => new { Value = (int)e, Text = e.ToString() }), "Value", "Text");
+
+            PunishmentTypes = new SelectList(Enum.GetValues(typeof(PunishmentType.Type))
+                .Cast<PunishmentType.Type>()
+                .Select(e => new { Value = (int)e, Text = e.ToString() }), "Value", "Text");
+        }
+
+        private Guid GetCurrentUserId()
+        {
+            // TODO: Заменить на получение ID текущего пользователя
+            return Guid.Parse("00000000-0000-0000-0000-000000000001");
         }
     }
 }

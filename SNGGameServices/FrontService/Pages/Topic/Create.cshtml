@@ -16,7 +16,9 @@
 
     <div class="mb-3">
         <label asp-for="NewTopic.EntityType" class="form-label"></label>
-        <input asp-for="NewTopic.EntityType" class="form-control" type="number" />
+        <select asp-for="NewTopic.EntityType" class="form-select" asp-items="Model.EntityTypes">
+            <option disabled selected value="">-- Выберите тип сущности --</option>
+        </select>
         <span asp-validation-for="NewTopic.EntityType" class="text-danger"></span>
     </div>
 

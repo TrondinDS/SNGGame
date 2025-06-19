@@ -1,23 +1,50 @@
 ﻿@page "{id:guid}"
 @model FrontService.Pages.User.DeleteModel
 @{
-    ViewData["Title"] = "Удаление пользователя";
+    ViewData["Title"] = "Блокировка пользователя";
 }
 
-<h2 class="mb-4 text-danger">Удаление пользователя</h2>
+<h2 class="mb-4 text-danger">Блокировка пользователя</h2>
 
 <div class="alert alert-warning">
-    <strong>Вы уверены, что хотите удалить пользователя <u>@Model.User?.Login</u>?</strong>
-    Это действие необратимо.
+    <strong>Вы уверены, что хотите заблокировать пользователя <u>@Model.User?.Login</u>?</strong>
 </div>
 
 <form method="post">
     <input type="hidden" asp-for="User.Id" />
-    <button type="submit" class="btn btn-danger">🗑️ Удалить</button>
+
+    <div class="mb-3">
+        <label asp-for="BanReason" class="form-label">Причина блокировки</label>
+        <input asp-for="BanReason" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="BanUntil" class="form-label">Дата окончания</label>
+        <input asp-for="BanUntil" type="datetime-local" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="SelectedEntityType" class="form-label">Тип сущности</label>
+        <select asp-for="SelectedEntityType" asp-items="Model.EntityTypes" class="form-select"></select>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="EntityId" class="form-label">ID сущности (EntityId)</label>
+        <input asp-for="EntityId" class="form-control" placeholder="Введите GUID сущности" />
+        <span asp-validation-for="EntityId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="SelectedPunishmentType" class="form-label">Тип наказания</label>
+        <select asp-for="SelectedPunishmentType" asp-items="Model.PunishmentTypes" class="form-select"></select>
+    </div>
+
+    <button type="submit" class="btn btn-danger">🚫 Заблокировать</button>
     <a asp-page="Index" class="btn btn-secondary ms-2">↩️ Отмена</a>
 </form>
 
-<!-- Модальное окно для ошибок -->
+
+<!-- Модальное окно ошибок -->
 <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content border-danger">

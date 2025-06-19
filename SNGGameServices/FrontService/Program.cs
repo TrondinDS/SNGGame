@@ -5,7 +5,6 @@ using FrontService.Services;
 using FrontService.Services.FrontService.Services.CommentService;
 using FrontService.Services.Interfaces;
 using FrontService.Services.TopicService;
-using Microsoft.AspNetCore.Http;
 using System.Net.Http.Headers;
 
 namespace FrontService
@@ -34,6 +33,7 @@ namespace FrontService
             builder.Services.AddScoped<ITopicApiService, TopicApiService>();
             builder.Services.AddScoped<ICommentApiService, CommentApiService>();
             builder.Services.AddScoped<IAuthService, AuthService>();
+            builder.Services.AddScoped<IBannedApiService, BannedApiService>();
 
             var app = builder.Build();
 
