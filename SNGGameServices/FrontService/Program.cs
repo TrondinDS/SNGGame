@@ -19,13 +19,13 @@ public class Program
         // Razor Pages
         builder.Services.AddRazorPages();
 
-        // Добавляем доступ к HttpContext
+        // Г„Г®ГЎГ ГўГ«ГїГҐГ¬ Г¤Г®Г±ГІГіГЇ ГЄ HttpContext
         builder.Services.AddHttpContextAccessor();
 
-        // Добавляем HTTP-клиент с авторизацией по JWT из куки
+        // Г„Г®ГЎГ ГўГ«ГїГҐГ¬ HTTP-ГЄГ«ГЁГҐГ­ГІ Г± Г ГўГІГ®Г°ГЁГ§Г Г¶ГЁГҐГ© ГЇГ® JWT ГЁГ§ ГЄГіГЄГЁ
         AddNamedHttpClient(builder.Services, "GetAwaitClient", "https://get-await-service:8081");
 
-        // DI-сервисы
+        // DI-Г±ГҐГ°ГўГЁГ±Г»
         builder.Services.AddScoped<IUserApiService, UserApiService>();
         builder.Services.AddScoped<IStudioApiService, StudioApiService>();
         builder.Services.AddScoped<IGameApiService, GameApiService>();
@@ -49,7 +49,7 @@ public class Program
         app.UseHttpsRedirection();
         app.UseRouting();
 
-        app.UseAuthorization(); // можно позже добавить UseAuthentication, если будет логика с [Authorize]
+        app.UseAuthorization(); // Г¬Г®Г¦Г­Г® ГЇГ®Г§Г¦ГҐ Г¤Г®ГЎГ ГўГЁГІГј UseAuthentication, ГҐГ±Г«ГЁ ГЎГіГ¤ГҐГІ Г«Г®ГЈГЁГЄГ  Г± [Authorize]
 
         app.MapStaticAssets();
         app.MapRazorPages().WithStaticAssets();
@@ -58,7 +58,7 @@ public class Program
     }
 
     /// <summary>
-    /// Настраивает именованный HttpClient, который автоматически добавляет токен из куки в Authorization-заголовок
+    /// ГЌГ Г±ГІГ°Г ГЁГўГ ГҐГІ ГЁГ¬ГҐГ­Г®ГўГ Г­Г­Г»Г© HttpClient, ГЄГ®ГІГ®Г°Г»Г© Г ГўГІГ®Г¬Г ГІГЁГ·ГҐГ±ГЄГЁ Г¤Г®ГЎГ ГўГ«ГїГҐГІ ГІГ®ГЄГҐГ­ ГЁГ§ ГЄГіГЄГЁ Гў Authorization-Г§Г ГЈГ®Г«Г®ГўГ®ГЄ
     /// </summary>
     static void AddNamedHttpClient(IServiceCollection services, string name, string baseAddress)
     {

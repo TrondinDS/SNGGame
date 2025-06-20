@@ -1,0 +1,93 @@
+﻿@page
+@model FrontService.Pages.Event.IndexModel
+@{
+    ViewData["Title"] = "События";
+}
+
+<h2 class="mb-4">📅 События</h2>
+
+<button class="btn btn-secondary mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#filterCollapse" aria-expanded="false" aria-controls="filterCollapse">
+    ⚙️ Показать/Скрыть фильтр
+</button>
+
+<div class="collapse mb-4" id="filterCollapse">
+    <form method="get" class="card card-body">
+        <div class="row g-3">
+            <div class="col-md-4">
+                <label for="Title" class="form-label">Название события</label>
+                <input type="text" id="Title" name="Title" value="@Model.Title" class="form-control" placeholder="Введите название..." />
+            </div>
+
+            <div class="col-md-4">
+                <label for="Status" class="form-label">Статус</label>
+                <input type="text" id="Status" name="Status" value="@Model.Status" class="form-control" placeholder="Например: Активен" />
+            </div>
+
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-12 text-end">
+                <button type="submit" class="btn btn-primary">🔍 Применить фильтр</button>
+                <a href="@Url.Page("/Event/Index")" class="btn btn-secondary ms-2">✖ Сбросить</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+@if (!Model.Events.Any())
+{
+    <div class="alert alert-warning">События не найдены.</div>
+}
+else
+{
+    <table class="table table-bordered table-hover table-striped align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>Название</th>
+                <th>Адрес</th>
+                <th>Город / Регион / Страна</th>
+                <th>Цена</th>
+                <th>Статус</th>
+                <th>Изображение</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var evt in Model.Events)
+            {
+                <tr>
+                    <td>@evt.Title</td>
+                    <td>@evt.Address</td>
+                    <td>@evt.City / @evt.Region / @evt.Country</td>
+                    <td>
+                        @if (evt.PriceMin.HasValue || evt.PriceMax.HasValue)
+                        {
+                            @($"{evt.PriceMin?.ToString("0.##") ?? "?"} - {evt.PriceMax?.ToString("0.##") ?? "?"} ₽")
+                        }
+                        else
+                        {
+                            <span class="text-muted">Бесплатно</span>
+                        }
+                    </td>
+                    <td>@evt.Status</td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(evt.Image) && !string.IsNullOrEmpty(evt.ImageType))
+                        {
+                            <img src="data:@evt.ImageType;base64,@evt.Image"
+                                 alt="Event Image"
+                                 style="width: 64px; height: 64px; object-fit: cover; border-radius: 8px;" />
+                        }
+                        else
+                        {
+                            <span class="text-muted">Нет изображения</span>
+                        }
+                    </td>
+                    <td>
+                        <a class="btn btn-sm btn-outline-primary" asp-page="/Event/Edit" asp-route-id="@evt.Id">✏️</a>
+                        <a class="btn btn-sm btn-outline-danger ms-1" asp-page="/Event/Delete" asp-route-id="@evt.Id">🗑️</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
