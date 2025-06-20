@@ -6,6 +6,7 @@ using Library.Generics.Query.QueryModels.OrganizerEvent;
 using Library.Services;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MongoDB.Bson.Serialization.Serializers;
+using MongoDB.Driver;
 using OrganizerEventService.DB.Models;
 using OrganizerEventService.Repository.Interfaces;
 using OrganizerEventService.Services.Interfaces;
@@ -19,10 +20,10 @@ namespace OrganizerEventService.Services
         private readonly IMapper mapper;
 
         const string imgsDatabase = "ImagesDatabase";
-        const string avasCollection = "GameCollection";
+        const string avasCollection = "OrganizerAvasCollection";
 
-        const string contentDatabase = "ImagesDatabase";
-        const string contentCollection = "GameContentCollection";
+        const string contentDatabase = "ContentDatabase";
+        const string contentCollection = "OrganizerContentCollection";
 
         public OrganizerService(IOrganizerRepository repository, Mongo mongoService, IMapper mapper)
         {
@@ -151,12 +152,8 @@ namespace OrganizerEventService.Services
                 await repository.UpdateAsync(existingOrganizer);
                 await repository.SaveChangesAsync();
 
-                await mongoService.Database(imgsDatabase)
-                    .Collection(avasCollection)
-                    .InsertImg(dto.Id, dto.Image, dto.ImageType);
-                await mongoService.Database(contentDatabase)
-                    .Collection(contentCollection)
-                    .InsertStrContent(dto.Id, dto.Content);
+                await mongoService.Database(imgsDatabase).Collection(avasCollection).UpdateImg(dto.Id, dto.Image, dto.ImageType);
+                await mongoService.Database(contentDatabase).Collection(contentCollection).UpdateStrContent(dto.Id, dto.Content);
 
                 await repository.CommitTransactionAsync();
             }

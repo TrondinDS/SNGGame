@@ -29,6 +29,8 @@ namespace GetAwaitService
         public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            
+            builder.Services.AddAutoMapper(typeof(Program));
 
             // Add services to the container.
             builder.Services.AddAutoMapper(typeof(Program));

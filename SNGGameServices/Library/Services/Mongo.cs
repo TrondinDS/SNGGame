@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using System.Net.Mime;
 
 namespace Library.Services
 {
@@ -99,6 +100,7 @@ namespace Library.Services
                 Console.WriteLine(""); // TODO(kra53n): use logger
                 return;
             }
+
             var memStream = new MemoryStream();
             await formFile.CopyToAsync(memStream);
             await collection.InsertOneAsync(
@@ -127,6 +129,25 @@ namespace Library.Services
                     ContentType = contentType,
                 }.AsBsonDocument()
             );
+        }
+
+        public async Task UpdateImg(Guid id, string bytes, string contentType)
+        {
+            if (collection == null) return;
+            var filter = Builders<BsonDocument>.Filter.Eq("id", id.ToString());
+            var update = Builders<BsonDocument>.Update
+                .Set("Bytes", bytes)
+                .Set("contentType", contentType);
+            await collection.UpdateOneAsync(filter, update);
+        }
+
+        public async Task UpdateStrContent(Guid id, string content)
+        {
+            if (collection == null) return;
+            var filter = Builders<BsonDocument>.Filter.Eq("id", id.ToString());
+            var update = Builders<BsonDocument>.Update
+                .Set("value", content);
+            await collection.UpdateOneAsync(filter, update);
         }
 
         public async Task<Img> GetImgById(int id)

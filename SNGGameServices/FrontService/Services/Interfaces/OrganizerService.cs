@@ -1,9 +1,8 @@
 ﻿using Library.Generics.DB.DTO.DTOModelServices.OrganizerEventService.Organizer;
 using System.Text.Json;
 using System.Text;
-using GetAwaitService.Services.OrganizerEventService.Interfaces;
 
-namespace GetAwaitService.Services.OrganizerEventService;
+namespace FrontService.Services.Interfaces;
 
 public class OrganizerService : IOrganizerService
 {
@@ -12,7 +11,7 @@ public class OrganizerService : IOrganizerService
 
     public OrganizerService(IHttpClientFactory httpClientFactory)
     {
-        _httpClient = httpClientFactory.CreateClient("OrganizerEventServiceClient");
+        _httpClient = httpClientFactory.CreateClient("GetAwaitClient");
         _jsonOptions = new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true
@@ -56,10 +55,15 @@ public class OrganizerService : IOrganizerService
 
     public async Task<bool> Update(OrganizerDTO dto)
     {
-        var json = JsonSerializer.Serialize(dto, _jsonOptions);
-        var content = new StringContent(json, Encoding.UTF8, "application/json");
+        var content = new StringContent(JsonSerializer.Serialize(dto), Encoding.UTF8, "application/json");
+        var response = await _httpClient.PutAsync("api/Organizer/Update", content);
 
-        var response = await _httpClient.PutAsync($"api/Organizer/Update/{dto.Id}", content);
+        if (!response.IsSuccessStatusCode)
+        {
+            var error = await response.Content.ReadAsStringAsync();
+            Console.WriteLine($"Ошибка при обновлении игры: {response.StatusCode}. Детали: {error}");
+        }
+
         return response.IsSuccessStatusCode;
     }
 
