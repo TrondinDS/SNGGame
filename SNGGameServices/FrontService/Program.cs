@@ -34,6 +34,7 @@ namespace FrontService
             builder.Services.AddScoped<ICommentApiService, CommentApiService>();
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddScoped<IBannedApiService, BannedApiService>();
+            builder.Services.AddScoped<IEventApiService, EventApiService>();
 
             var app = builder.Build();
 
