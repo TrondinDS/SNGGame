@@ -47,7 +47,7 @@ namespace GetAwaitService.Controllers.StudioGame
             if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var userId))
                 return BadRequest("User ID not found in claims.");
 
-            var checkUserRights = await _serviceUserRight.ChekUserRightsModerAndAdminGameAsync(userId, dtoC.GameId);
+            var checkUserRights = await _serviceUserRight.CheckUserRightsModerAndAdminGameAsync(userId, dtoC.GameId);
 
             if (checkUserRights)
             {

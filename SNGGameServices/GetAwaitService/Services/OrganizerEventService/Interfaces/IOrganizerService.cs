@@ -13,5 +13,6 @@ namespace GetAwaitService.Services.OrganizerEventService.Interfaces
         Task<OrganizerDTO?> Create(OrganizerDTO userDto);
         Task<bool> Update(OrganizerDTO userDto);
         Task<bool> Delete(Guid id);
+        Task<IEnumerable<OrganizerDTO>?> GetByUserId(Guid id);
     }
 }

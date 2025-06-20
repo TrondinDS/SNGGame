@@ -15,12 +15,16 @@ namespace GetAwaitService.Services.UserAccessRightsService.Interfaces
 
 
         Task<bool> ChekUserRightsAdminStudioAsync(Guid userId, Guid entityId);
-        Task<bool> ChekUserRightsModerAndAdminStudioAsync(Guid userId, Guid entityId);
+        Task<bool> CheckUserRightsModerAndAdminStudioAsync(Guid userId, Guid entityId);
 
         Task<bool> ChekUserRightsAdminGameAsync(Guid userId, Guid entityId);
-        Task<bool> ChekUserRightsModerAndAdminGameAsync(Guid userId, Guid entityId);
+        Task<bool> CheckUserRightsModerAndAdminGameAsync(Guid userId, Guid entityId);
 
         Task<bool> ChekUserRightsModerAndAdminBanGlobalAndLocalAsync(Guid userId, BannedCreateDTO entity);
+
+
+        Task<bool> CheckUserRightsModerAndAdminEventAsync(Guid userId, Guid entityId);
+        Task<bool> CheckUserRightsModerAndAdminOrganizerAsync(Guid userId, Guid entityId);
 
         Task<bool> ChekUserRightsBanned(Guid userId, TopicCreateDTO entity);
         Task<bool> ChekUserRightsBanned(Guid userId, CommentCreateDTO entity);

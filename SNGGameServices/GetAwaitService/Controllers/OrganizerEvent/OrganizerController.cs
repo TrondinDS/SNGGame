@@ -38,6 +38,13 @@ namespace GetAwaitService.Controllers.OrganizerEvent
             return organizer != null ? Ok(organizer) : NotFound();
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetByUserId(Guid id)
+        {
+            var studio = await _service.GetByUserId(id);
+            return studio != null ? Ok(studio) : NotFound();
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] OrganizerDTO dto)
         {

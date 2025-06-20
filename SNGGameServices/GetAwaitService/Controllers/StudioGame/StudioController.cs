@@ -72,7 +72,7 @@ namespace GetAwaitService.Controllers.StudioGame
                 return BadRequest("User ID not found in claims.");
             }
 
-            var check = await _userAccessRightsService.ChekUserRightsModerAndAdminStudioAsync(userId, dto.Id);
+            var check = await _userAccessRightsService.CheckUserRightsModerAndAdminStudioAsync(userId, dto.Id);
             if (check == true)
             {
                 var updated = await _service.UpdateAsync(dto);

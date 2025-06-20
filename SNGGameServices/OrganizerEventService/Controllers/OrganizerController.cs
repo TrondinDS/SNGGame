@@ -11,6 +11,7 @@ using OrganizerEventService.Services.Interfaces;
 using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Game;
 using Library.Generics.DB.DTO.DTOModelServices.AdministratumService.Message;
 using Library.Generics.Query.QueryModels.OrganizerEvent;
+using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Studio;
 
 namespace OrganizerEventService.Controllers
 {
@@ -62,6 +63,29 @@ namespace OrganizerEventService.Controllers
                 return NotFound();
             }
             return Ok(model);
+        }
+
+        /// <summary>
+        /// Получение студий по ID собственника
+        /// </summary>
+        /// <param name="id">Идентификатор собственника (OwnerId)</param>
+        /// <returns>Организатор</returns>
+        [HttpGet("{id}")]
+        public async Task<ActionResult<IEnumerable<OrganizerDTO>>> GetByUserId(Guid id)
+        {
+            try
+            {
+                var result = await service.GetByUserId(id);
+                if (result == null || !result.Any())
+                {
+                    return NotFound();
+                }
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { error = "Произошла внутренняя ошибка сервера", details = ex.Message });
+            }
         }
 
         /// <summary>

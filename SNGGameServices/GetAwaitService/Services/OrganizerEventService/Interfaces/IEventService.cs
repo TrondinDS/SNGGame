@@ -1,4 +1,6 @@
 ﻿using Library.Generics.DB.DTO.DTOModelServices.OrganizerEventService.Event;
+using Library.Generics.DB.DTO.DTOModelServices.OrganizerEventService.Organizer;
+using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Studio;
 using Library.Generics.Query.QueryModels.OrganizerEvent;
 
 namespace GetAwaitService.Services.OrganizerEventService.Interfaces
@@ -12,5 +14,6 @@ namespace GetAwaitService.Services.OrganizerEventService.Interfaces
         Task<EventDTO?> Create(EventDTO userDto);
         Task<bool> Update(EventDTO userDto);
         Task<bool> Delete(Guid id);
+        //Task<IEnumerable<OrganizerDTO>?> GetByUserId(Guid id);
     }
 }
