@@ -5,6 +5,7 @@ namespace GetAwaitService.Controllers.OrganizerEvent;
 using AutoMapper;
 using GetAwaitService.Services.UserAccessRightsService.Interfaces;
 using Library.Generics.DB.DTO.DTOModelServices.OrganizerEventService.Event;
+using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Game;
 using Library.Generics.Query.QueryModels.OrganizerEvent;
 using Microsoft.AspNetCore.Mvc;
 
@@ -54,6 +55,11 @@ public class EventController : ControllerBase
         if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var userId))
             return BadRequest("User ID не найден в claims.");
 
+        var hasRights = await _userAccessRightsService
+            .CheckUserRightsModerAndAdminOrganizerAsync(userId, dto.OrganizerEventId);
+        if (!hasRights)
+            return BadRequest("у вас недостаточно прав для выполения данного действия");
+
         var created = await _service.Create(dto);
         return created != null
             ? CreatedAtAction(nameof(GetById), new { id = created.Id }, created)
@@ -67,6 +73,11 @@ public class EventController : ControllerBase
         if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var userId))
             return BadRequest("User ID не найден в claims.");
 
+        var hasRights = await _userAccessRightsService
+            .CheckUserRightsModerAndAdminOrganizerAsync(userId, dto.OrganizerEventId);
+        if (!hasRights)
+            return BadRequest("у вас недостаточно прав для выполения данного действия");
+
         var updated = await _service.Update(dto);
         return updated ? Ok() : NotFound();
     }
@@ -77,6 +88,11 @@ public class EventController : ControllerBase
         var userIdClaim = User.FindFirst("userId")?.Value;
         if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var userId))
             return BadRequest("User ID не найден в claims.");
+
+        var hasRights = await _userAccessRightsService
+            .CheckUserRightsModerAndAdminEventAsync(userId, id);
+        if (!hasRights)
+            return BadRequest("у вас недостаточно прав для выполения данного действия");
 
         var deleted = await _service.Delete(id);
         return deleted ? NoContent() : NotFound();

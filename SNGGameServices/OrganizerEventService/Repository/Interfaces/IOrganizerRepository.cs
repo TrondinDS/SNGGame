@@ -7,5 +7,7 @@ namespace OrganizerEventService.Repository.Interfaces
     public interface IOrganizerRepository : IGenericRepository<Organizer, Guid>
     {
         Task<IEnumerable<Organizer>> Filter(ParamQueryOrganizer param);
+        Task<IEnumerable<Organizer>> GetByUserId(Guid id);
     }
+
 }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using GetAwaitService.DB.DTO;
+using GetAwaitService.Services.OrganizerEventService.Interfaces;
 using GetAwaitService.Services.StudioGameService.Interfaces;
 using GetAwaitService.Services.UserAccessRightsService.Interfaces;
 using GetAwaitService.Services.UserActivityService.Interfaces;
@@ -8,6 +9,7 @@ using Library.Generics.DB.DTO.DTOModelServices.UserActivityService.Comment;
 using Library.Generics.DB.DTO.DTOModelServices.UserActivityService.Topic;
 using Library.Generics.DB.DTO.DTOModelServices.UserService.Banned;
 using Library.Types;
+using Microsoft.AspNetCore.Mvc.Diagnostics;
 
 namespace GetAwaitService.Services.UserAccessRightsService
 {
@@ -19,6 +21,8 @@ namespace GetAwaitService.Services.UserAccessRightsService
         private IGameService gameApiService;
         private IBannedApiService bannedApiService;
         private ITopicApiService topicApiService;
+        private IOrganizerService organizerApiService;
+        private IEventService eventApiService;
         private IMapper mapper;
 
         public UserAccessRightsApiService(
@@ -28,6 +32,8 @@ namespace GetAwaitService.Services.UserAccessRightsService
             IGameService gameApiService,
             IBannedApiService bannedApiService,
             ITopicApiService topicApiService,
+            IOrganizerService organizerApiService,
+            IEventService eventApiService,
             IMapper mapper
 
             )
@@ -38,6 +44,8 @@ namespace GetAwaitService.Services.UserAccessRightsService
             this.gameApiService = gameApiService;
             this.bannedApiService = bannedApiService;
             this.topicApiService = topicApiService;
+            this.organizerApiService = organizerApiService;
+            this.eventApiService = eventApiService;
             this.mapper = mapper;
         }
 
@@ -52,7 +60,7 @@ namespace GetAwaitService.Services.UserAccessRightsService
         }
 
         //GAME
-        public async Task<bool> ChekUserRightsModerAndAdminGameAsync(Guid userId, Guid entityId)
+        public async Task<bool> CheckUserRightsModerAndAdminGameAsync(Guid userId, Guid entityId)
         {
             var userRights = await GetUserRightsAsync(userId);
             var gameDTO = await gameApiService.GetByIdAsync(entityId);
@@ -78,7 +86,7 @@ namespace GetAwaitService.Services.UserAccessRightsService
         }
 
         //STUDIO
-        public async Task<bool> ChekUserRightsModerAndAdminStudioAsync(Guid userId, Guid entityId)
+        public async Task<bool> CheckUserRightsModerAndAdminStudioAsync(Guid userId, Guid entityId)
         {
             var userRights = await GetUserRightsAsync(userId);
             var studioDTO = await studioApiService.GetByIdAsync(entityId);
@@ -118,20 +126,16 @@ namespace GetAwaitService.Services.UserAccessRightsService
                 switch (entity.EntityType)
                 {
                     case (int)EntityType.Type.Studio:
-                        return await ChekUserRightsModerAndAdminStudioAsync(userId, entity.EntityId);
-                        break;
+                        return await CheckUserRightsModerAndAdminStudioAsync(userId, entity.EntityId);
 
                     case (int)EntityType.Type.Game:
-                        return await ChekUserRightsModerAndAdminGameAsync(userId, entity.EntityId);
-                        break;
+                        return await CheckUserRightsModerAndAdminGameAsync(userId, entity.EntityId);
 
                     case (int)EntityType.Type.Event:
-                        throw new Exception("Отсутсвие реализации");
-                        break;
+                        return await CheckUserRightsModerAndAdminEventAsync(userId, entity.EntityId);
 
                     case (int)EntityType.Type.Organizer:
-                        throw new Exception("Отсутсвие реализации");
-                        break;
+                        return await CheckUserRightsModerAndAdminOrganizerAsync(userId, entity.EntityId);
 
                     default:
                         throw new NotSupportedException($"Entity type {entity.EntityType} is not supported for banning.");
@@ -140,6 +144,28 @@ namespace GetAwaitService.Services.UserAccessRightsService
             return false;
         }
 
+        public async Task<bool> CheckUserRightsModerAndAdminEventAsync(Guid userId, Guid entityId)
+        {
+            var userRights = await GetUserRightsAsync(userId);
+            var dto = await eventApiService.GetById(entityId);
+
+            if (dto is null)
+                return false;
+
+            return
+                userRights.OrganizerOwnderIds?.Contains(dto.OrganizerEventId) == true ||
+                userRights.OrganizerModeratorIds?.Contains(dto.OrganizerEventId) == true;
+        }
+
+        public async Task<bool> CheckUserRightsModerAndAdminOrganizerAsync(Guid userId, Guid entityId)
+        {
+            var userRights = await GetUserRightsAsync(userId);
+            var dto = await organizerApiService.GetById(entityId);
+            if (dto is null) return false;
+            return
+                userRights.OrganizerOwnderIds?.Contains(dto.Id) == true ||
+                userRights.OrganizerModeratorIds?.Contains(dto.Id) == true;
+        }
 
         //TOPIC COMMENT
         public async Task<bool> ChekUserRightsBanned(Guid userId, TopicCreateDTO entity)
@@ -149,6 +175,7 @@ namespace GetAwaitService.Services.UserAccessRightsService
             switch (entity.EntityType)
             {
                 case (int)EntityType.Type.Studio:
+                case (int)EntityType.Type.Organizer:
                     {
                         bool hasActiveBan = userRightsBans.Any(b =>
                             b.EntityId == entity.EntityId &&
@@ -173,12 +200,18 @@ namespace GetAwaitService.Services.UserAccessRightsService
                     }
 
                 case (int)EntityType.Type.Event:
-                    throw new Exception("Отсутсвие реализации");
-                    break;
+                    {
+                        var evend = await eventApiService.GetById(entity.EntityId);
+                        if (evend == null)
+                            return false;
 
-                case (int)EntityType.Type.Organizer:
-                    throw new Exception("Отсутсвие реализации");
-                    break;
+                        bool hasActiveBan = userRightsBans.Any(b =>
+                            (b.EntityId == evend.OrganizerEventId || b.EntityId == evend.Id) &&
+                            b.TypePunishment == (int)PunishmentType.Type.BanWriting &&
+                            b.DateFinish > DateTime.UtcNow);
+
+                        return !hasActiveBan;
+                    }
 
                 default:
                     throw new NotSupportedException($"Entity type {entity.EntityType} is not supported for banning.");
@@ -196,7 +229,6 @@ namespace GetAwaitService.Services.UserAccessRightsService
             var topicC = mapper.Map<TopicCreateDTO>(topic);
             return await ChekUserRightsBanned(userId, topicC);
         }
-
 
         //GLOBAL
         public async Task<bool> ChekUserRightsModerAndAdminGlobalAsync(Guid userId)
@@ -216,13 +248,12 @@ namespace GetAwaitService.Services.UserAccessRightsService
                 userRights.IsAdmin == true;
         }
 
-
-
         public async Task<UserAccessRightsDTO> GetUserRightsAsync(Guid userId)
         {
             var userDTO = await userApiService.GetUserByIdAsync(userId);
             var jobsDTO = await jobApiService.GetJobsByUserIdAsync(userId);
-            var studiosDTO = await studioApiService.GetStudioByUserIdAsync(userId);
+            var studiosDTO  = await studioApiService.GetStudioByUserIdAsync(userId);
+            var organizersDTO = await organizerApiService.GetByUserId(userId);
 
             if (userDTO is null)
                 throw new Exception($"Пользователя с id = {userId} не существует.");
@@ -237,13 +268,17 @@ namespace GetAwaitService.Services.UserAccessRightsService
             if (jobsDTO is not null && jobsDTO.Any())
                 result.StudioModeratorIds = jobsDTO
                     .Where(j =>  
-                        j.EntityType == (int)EntityType.Type.Studio && 
+                        j.EntityType == (int)EntityType.Type.Studio || j.EntityType == (int)EntityType.Type.Organizer && 
                         (j.DateFinish > DateTime.UtcNow || j.DateFinish is null) &&
                         j.IsModerator == true
                     ).Select(j => j.EntityId).ToList();
 
             if (studiosDTO is not null && studiosDTO.Any())
                 result.StudioOwnerIds = studiosDTO.Where(s => s.OwnerId == userId)
+                    .Select(s => s.Id).ToList();
+
+            if (organizersDTO is not null && organizersDTO.Any())
+                result.OrganizerOwnderIds = organizersDTO.Where(s => s.OwnerId == userId)
                     .Select(s => s.Id).ToList();
 
             return result;

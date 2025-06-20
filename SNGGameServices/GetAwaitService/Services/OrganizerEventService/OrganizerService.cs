@@ -35,6 +35,14 @@ namespace GetAwaitService.Services.OrganizerEventService
             return await response.Content.ReadFromJsonAsync<OrganizerDTO>(_jsonOptions);
         }
 
+        public async Task<IEnumerable<OrganizerDTO>?> GetByUserId(Guid id)
+        {
+            var response = await _httpClient.GetAsync($"api/Organizer/GetByUserId/{id}");
+            if (!response.IsSuccessStatusCode) return null;
+
+            return await response.Content.ReadFromJsonAsync<IEnumerable<OrganizerDTO>?>(_jsonOptions);
+        }
+
         public async Task<OrganizerDTO?> Create(OrganizerDTO dto)
         {
             var json = JsonSerializer.Serialize(dto, _jsonOptions);

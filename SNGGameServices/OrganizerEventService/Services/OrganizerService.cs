@@ -5,6 +5,7 @@ using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Game;
 using Library.Generics.Query.QueryModels.OrganizerEvent;
 using Library.Services;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using MongoDB.Bson.Serialization.Serializers;
 using OrganizerEventService.DB.Models;
 using OrganizerEventService.Repository.Interfaces;
 using OrganizerEventService.Services.Interfaces;
@@ -125,6 +126,12 @@ namespace OrganizerEventService.Services
             if (organizer == null) return null;
 
             return await ModelToDTO(organizer);
+        }
+
+        public async Task<IEnumerable<OrganizerDTO>> GetByUserId(Guid id)
+        {
+            var elems = await repository.GetByUserId(id);
+            return mapper.Map<IEnumerable<OrganizerDTO>>(elems);
         }
 
         public async Task UpdateAsync(OrganizerDTO dto)

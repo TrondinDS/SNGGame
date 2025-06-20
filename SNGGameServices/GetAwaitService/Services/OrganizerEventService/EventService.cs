@@ -3,6 +3,8 @@ using System.Text;
 using Library.Generics.DB.DTO.DTOModelServices.OrganizerEventService.Event;
 using GetAwaitService.Services.OrganizerEventService.Interfaces;
 using Library.Generics.Query.QueryModels.OrganizerEvent;
+using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Studio;
+using Library.Generics.DB.DTO.DTOModelServices.OrganizerEventService.Organizer;
 
 namespace GetAwaitService.Services.OrganizerEventService
 {
@@ -46,6 +48,15 @@ namespace GetAwaitService.Services.OrganizerEventService
 
             return await response.Content.ReadFromJsonAsync<EventDTO>(_jsonOptions);
         }
+
+        //public async Task<IEnumerable<OrganizerDTO>?> GetByUserId(Guid id)
+        //{
+        //    var response = await _httpClient.GetAsync($"api/Event/GetByUserId/{id}");
+        //    if (!response.IsSuccessStatusCode) return null;
+
+        //    var json = await response.Content.ReadAsStringAsync();
+        //    return JsonSerializer.Deserialize<IEnumerable<OrganizerDTO>>(json, _jsonOptions);
+        //}
 
         public async Task<EventDTO?> Create(EventDTO dto)
         {

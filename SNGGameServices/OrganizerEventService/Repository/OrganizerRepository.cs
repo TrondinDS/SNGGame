@@ -27,5 +27,10 @@ namespace OrganizerEventService.Repository
             return result;
         }
 
+        public async Task<IEnumerable<Organizer>> GetByUserId(Guid id)
+        {
+            return await dbSet.Where(x => x.OwnerId == id).ToListAsync();
+        }
+
     }
 }

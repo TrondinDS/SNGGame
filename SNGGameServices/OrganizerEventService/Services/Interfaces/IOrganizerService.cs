@@ -13,6 +13,7 @@ namespace OrganizerEventService.Services.Interfaces
         Task<OrganizerDTO> GetByIdAsync(Guid id);
         Task UpdateAsync(OrganizerDTO dto);
         Task<IEnumerable<OrganizerDTO>> Filter(ParamQueryOrganizer param);
+        Task<IEnumerable<OrganizerDTO>> GetByUserId(Guid id);
 
         //Task<IEnumerable<GameDTO>> FilterGame(ParamQueryGame paramQuerySG);
 
