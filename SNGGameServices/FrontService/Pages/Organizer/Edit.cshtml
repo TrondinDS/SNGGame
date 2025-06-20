@@ -1,0 +1,66 @@
+﻿@page "{id:guid}"
+@model FrontService.Pages.Organizer.EditModel
+@{
+    ViewData["Title"] = "Редактирование организатора";
+}
+
+<h2>Редактирование организатора</h2>
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+
+<form method="post" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label asp-for="New.Title" class="form-label"></label>
+        <input asp-for="New.Title" class="form-control" />
+        <span asp-validation-for="New.Title" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="New.Mail" class="form-label"></label>
+        <input asp-for="New.Mail" class="form-control" />
+        <span asp-validation-for="New.Mail" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="New.Content" class="form-label"></label>
+        <input asp-for="New.Content" class="form-control" />
+        <span asp-validation-for="New.Content" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label>Изображение (текущее):</label><br />
+        @if (!string.IsNullOrEmpty(Model.New.Image))
+        {
+            <img src="data:@Model.New.ImageType;base64,@Model.New.Image"
+                 style="max-height:100px;border-radius:8px;" />
+        }
+        else
+        {
+            <span class="text-muted">Нет изображения</span>
+        }
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Новое изображение</label>
+        <input type="file" asp-for="ImageFile" class="form-control" accept="image/jpeg, image/png" />
+    </div>
+
+    <!-- Скрытые поля -->
+    <input type="hidden" asp-for="New.Id" />
+    <input type="hidden" asp-for="New.IsPublicationAllowed" />
+    <input type="hidden" asp-for="New.CreatorId" />
+    <input type="hidden" asp-for="New.OwnerId" />
+    <input type="hidden" asp-for="New.Image" />
+    <input type="hidden" asp-for="New.ImageType" />
+
+    <button type="submit" class="btn btn-success">💾 Сохранить</button>
+    <a asp-page="Index" class="btn btn-secondary ms-2">↩️ Назад</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

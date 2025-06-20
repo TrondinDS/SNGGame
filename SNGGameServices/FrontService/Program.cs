@@ -7,80 +7,80 @@ using FrontService.Services.Interfaces;
 using FrontService.Services.TopicService;
 using System.Net.Http.Headers;
 
-namespace FrontService
+namespace FrontService;
+
+public class Program
 {
-    public class Program
+    public static void Main(string[] args)
     {
-        public static void Main(string[] args)
+        var builder = WebApplication.CreateBuilder(args);
+        builder.Services.AddAutoMapper(typeof(Program));
+
+        // Razor Pages
+        builder.Services.AddRazorPages();
+
+        // Г„Г®ГЎГ ГўГ«ГїГҐГ¬ Г¤Г®Г±ГІГіГЇ ГЄ HttpContext
+        builder.Services.AddHttpContextAccessor();
+
+        // Г„Г®ГЎГ ГўГ«ГїГҐГ¬ HTTP-ГЄГ«ГЁГҐГ­ГІ Г± Г ГўГІГ®Г°ГЁГ§Г Г¶ГЁГҐГ© ГЇГ® JWT ГЁГ§ ГЄГіГЄГЁ
+        AddNamedHttpClient(builder.Services, "GetAwaitClient", "https://get-await-service:8081");
+
+        // DI-Г±ГҐГ°ГўГЁГ±Г»
+        builder.Services.AddScoped<IUserApiService, UserApiService>();
+        builder.Services.AddScoped<IStudioApiService, StudioApiService>();
+        builder.Services.AddScoped<IGameApiService, GameApiService>();
+        builder.Services.AddScoped<IGenreApiService, GenreApiService>();
+        builder.Services.AddScoped<ITagApiService, TagApiService>();
+        builder.Services.AddScoped<ITopicApiService, TopicApiService>();
+        builder.Services.AddScoped<ICommentApiService, CommentApiService>();
+        builder.Services.AddScoped<IAuthService, AuthService>();
+        builder.Services.AddScoped<IBannedApiService, BannedApiService>();
+        builder.Services.AddScoped<IOrganizerService, OrganizerService>();
+
+        var app = builder.Build();
+
+        // Middleware pipeline
+        if (!app.Environment.IsDevelopment())
         {
-            var builder = WebApplication.CreateBuilder(args);
+            app.UseExceptionHandler("/Error");
+            app.UseHsts();
+        }
 
-            // Razor Pages
-            builder.Services.AddRazorPages();
+        app.UseHttpsRedirection();
+        app.UseRouting();
 
-            // Добавляем доступ к HttpContext
-            builder.Services.AddHttpContextAccessor();
+        app.UseAuthorization(); // Г¬Г®Г¦Г­Г® ГЇГ®Г§Г¦ГҐ Г¤Г®ГЎГ ГўГЁГІГј UseAuthentication, ГҐГ±Г«ГЁ ГЎГіГ¤ГҐГІ Г«Г®ГЈГЁГЄГ  Г± [Authorize]
 
-            // Добавляем HTTP-клиент с авторизацией по JWT из куки
-            AddNamedHttpClient(builder.Services, "GetAwaitClient", "https://get-await-service:8081");
+        app.MapStaticAssets();
+        app.MapRazorPages().WithStaticAssets();
 
-            // DI-сервисы
-            builder.Services.AddScoped<IUserApiService, UserApiService>();
-            builder.Services.AddScoped<IStudioApiService, StudioApiService>();
-            builder.Services.AddScoped<IGameApiService, GameApiService>();
-            builder.Services.AddScoped<IGenreApiService, GenreApiService>();
-            builder.Services.AddScoped<ITagApiService, TagApiService>();
-            builder.Services.AddScoped<ITopicApiService, TopicApiService>();
-            builder.Services.AddScoped<ICommentApiService, CommentApiService>();
-            builder.Services.AddScoped<IAuthService, AuthService>();
-            builder.Services.AddScoped<IBannedApiService, BannedApiService>();
-            builder.Services.AddScoped<IEventApiService, EventApiService>();
+        app.Run();
+    }
 
-            var app = builder.Build();
+    /// <summary>
+    /// ГЌГ Г±ГІГ°Г ГЁГўГ ГҐГІ ГЁГ¬ГҐГ­Г®ГўГ Г­Г­Г»Г© HttpClient, ГЄГ®ГІГ®Г°Г»Г© Г ГўГІГ®Г¬Г ГІГЁГ·ГҐГ±ГЄГЁ Г¤Г®ГЎГ ГўГ«ГїГҐГІ ГІГ®ГЄГҐГ­ ГЁГ§ ГЄГіГЄГЁ Гў Authorization-Г§Г ГЈГ®Г«Г®ГўГ®ГЄ
+    /// </summary>
+    static void AddNamedHttpClient(IServiceCollection services, string name, string baseAddress)
+    {
+        services.AddHttpClient(name, (sp, client) =>
+        {
+            var httpContextAccessor = sp.GetRequiredService<IHttpContextAccessor>();
+            var token = httpContextAccessor.HttpContext?.Request.Cookies["AuthToken"];
 
-            // Middleware pipeline
-            if (!app.Environment.IsDevelopment())
+            if (!string.IsNullOrEmpty(token))
             {
-                app.UseExceptionHandler("/Error");
-                app.UseHsts();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             }
 
-            app.UseHttpsRedirection();
-            app.UseRouting();
-
-            app.UseAuthorization(); // можно позже добавить UseAuthentication, если будет логика с [Authorize]
-
-            app.MapStaticAssets();
-            app.MapRazorPages().WithStaticAssets();
-
-            app.Run();
-        }
-
-        /// <summary>
-        /// Настраивает именованный HttpClient, который автоматически добавляет токен из куки в Authorization-заголовок
-        /// </summary>
-        static void AddNamedHttpClient(IServiceCollection services, string name, string baseAddress)
+            client.BaseAddress = new Uri(baseAddress);
+        })
+        .ConfigurePrimaryHttpMessageHandler(() =>
         {
-            services.AddHttpClient(name, (sp, client) =>
+            var handler = new HttpClientHandler
             {
-                var httpContextAccessor = sp.GetRequiredService<IHttpContextAccessor>();
-                var token = httpContextAccessor.HttpContext?.Request.Cookies["AuthToken"];
-
-                if (!string.IsNullOrEmpty(token))
-                {
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                }
-
-                client.BaseAddress = new Uri(baseAddress);
-            })
-            .ConfigurePrimaryHttpMessageHandler(() =>
-            {
-                var handler = new HttpClientHandler
-                {
-                    ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
-                };
-                return handler;
-            });
-        }
+                ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+            };
+            return handler;
+        });
     }
 }

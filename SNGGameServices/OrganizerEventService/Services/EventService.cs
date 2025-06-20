@@ -143,12 +143,8 @@ namespace OrganizerEventService.Services
                 await repository.UpdateAsync(existingEvent);
                 await repository.SaveChangesAsync();
 
-                var imageTask = mongoService.Database(imgsDatabase)
-                    .Collection(eventImgsCollection)
-                    .InsertImg(dto.Id, dto.Image, dto.ImageType);
-                var contentTask = mongoService.Database(contentDatabase)
-                    .Collection(contentCollection)
-                    .InsertStrContent(dto.Id, dto.Content);
+                var imageTask = mongoService.Database(imgsDatabase).Collection(eventImgsCollection).UpdateImg(dto.Id, dto.Image, dto.ImageType);
+                var contentTask = mongoService.Database(contentDatabase).Collection(contentCollection).UpdateStrContent(dto.Id, dto.Content);
 
                 await Task.WhenAll(imageTask, contentTask);
                 await repository.CommitTransactionAsync();
