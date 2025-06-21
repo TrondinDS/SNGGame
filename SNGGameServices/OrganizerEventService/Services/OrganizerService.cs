@@ -39,6 +39,9 @@ namespace OrganizerEventService.Services
             {
                 await repository.BeginTransactionAsync();
 
+                await repository.AddAsync(model);
+                await repository.SaveChangesAsync();
+
                 await mongoService.Database(imgsDatabase)
                     .Collection(avasCollection)
                     .InsertImg(model.Id, dto.Image, dto.ImageType);
@@ -47,8 +50,6 @@ namespace OrganizerEventService.Services
                     .Collection(contentCollection)
                     .InsertStrContent(model.Id, dto.Content);
 
-                await repository.AddAsync(model);
-                await repository.SaveChangesAsync();
                 await repository.CommitTransactionAsync();
 
                 dto.Id = model.Id;
