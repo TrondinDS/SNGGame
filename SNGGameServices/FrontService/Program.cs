@@ -36,6 +36,7 @@ public class Program
         builder.Services.AddScoped<IAuthService, AuthService>();
         builder.Services.AddScoped<IBannedApiService, BannedApiService>();
         builder.Services.AddScoped<IOrganizerService, OrganizerService>();
+        builder.Services.AddScoped<IEventApiService, EventApiService>();
 
         var app = builder.Build();
 

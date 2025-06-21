@@ -1,0 +1,112 @@
+﻿@page "{id:guid}"
+@model FrontService.Pages.Event.EditModel
+@{
+    ViewData["Title"] = "Редактирование события";
+}
+
+<h2>Редактирование события</h2>
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+
+<form method="post" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label asp-for="New.Title" class="form-label"></label>
+        <input asp-for="New.Title" class="form-control" />
+        <span asp-validation-for="New.Title" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="New.Address" class="form-label"></label>
+        <input asp-for="New.Address" class="form-control" />
+        <span asp-validation-for="New.Address" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="New.Content" class="form-label"></label>
+        <input asp-for="New.Content" class="form-control" />
+        <span asp-validation-for="New.Content" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="New.Country" class="form-label"></label>
+        <input asp-for="New.Country" class="form-control" />
+        <span asp-validation-for="New.Country" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="New.Region" class="form-label"></label>
+        <input asp-for="New.Region" class="form-control" />
+        <span asp-validation-for="New.Region" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="New.City" class="form-label"></label>
+        <input asp-for="New.City" class="form-control" />
+        <span asp-validation-for="New.City" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="New.City" class="form-label"></label>
+        <input asp-for="New.City" class="form-control" />
+        <span asp-validation-for="New.City" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="New.PriceMin" class="form-label"></label>
+        <input asp-for="New.PriceMin" type="number" class="form-control" min="0"/>
+        <span asp-validation-for="New.PriceMin" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="New.PriceMax" class="form-label"></label>
+        <input asp-for="New.PriceMax" type="number" class="form-control" min="0" />
+        <span asp-validation-for="New.PriceMax" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="New.GeoUrl" class="form-label"></label>
+        <input asp-for="New.GeoUrl" class="form-control" />
+        <span asp-validation-for="New.GeoUrl" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="New.Status" class="form-label"></label>
+        <input asp-for="New.Status" class="form-control" />
+        <span asp-validation-for="New.Status" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label>Изображение (текущее):</label><br />
+        @if (!string.IsNullOrEmpty(Model.New.Image))
+        {
+            <img src="data:@Model.New.ImageType;base64,@Model.New.Image"
+                 style="max-height:100px;border-radius:8px;" />
+        }
+        else
+        {
+            <span class="text-muted">Нет изображения</span>
+        }
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Новое изображение</label>
+        <input type="file" asp-for="ImageFile" class="form-control" accept="image/jpeg, image/png" />
+    </div>
+
+    <!-- Скрытые поля -->
+    <input type="hidden" asp-for="New.Id" />
+    <input type="hidden" asp-for="New.OrganizerEventId" />
+    <input type="hidden" asp-for="New.Image" />
+    <input type="hidden" asp-for="New.ImageType" />
+
+    <button type="submit" class="btn btn-success">💾 Сохранить</button>
+    <a asp-page="Index" class="btn btn-secondary ms-2">↩️ Назад</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

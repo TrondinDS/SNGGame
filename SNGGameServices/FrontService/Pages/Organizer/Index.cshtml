@@ -14,21 +14,20 @@
     <form method="get" class="card card-body">
         <div class="row g-3">
             <div class="col-md-4">
-                <label for="Title" class="form-label">Название орагнизатора</label>
+                <label for="Title" class="form-label">Название</label>
                 <input type="text" id="Title" name="Title" value="@Model.Title" class="form-control" placeholder="Введите название..." />
             </div>
-        </div>
-
-        <div class="row g-3">
             <div class="col-md-4">
                 <label for="Mail" class="form-label">Email</label>
                 <input type="text" id="Mail" name="Mail" value="@Model.Mail" class="form-control" placeholder="Введите название..." />
             </div>
         </div>
 
-        <div class="tow g-3">
-            <button type="submit" class="btn btn-primary mt-3">🔍 Применить фильтр</button>
-            <a href="@Url.Page("/Organizer/Index")" class="btn btn-secondary mt-3 ms-2">✖ Сбросить</a>
+        <div class="row mt-3">
+            <div class="col-md-8 text-end">
+                <button type="submit" class="btn btn-primary">🔍 Применить фильтр</button>
+                <a href="@Url.Page("/Organizer/Index")" class="btn btn-secondary ms-2">✖ Сбросить</a>
+            </div>
         </div>
     </form>
 </div>
