@@ -136,7 +136,7 @@ namespace Library.Services
             if (collection == null) return;
             var filter = Builders<BsonDocument>.Filter.Eq("id", id.ToString());
             var update = Builders<BsonDocument>.Update
-                .Set("bytes", bytes)
+                .Set("data", bytes)
                 .Set("contentType", contentType);
             await collection.UpdateOneAsync(filter, update);
         }
