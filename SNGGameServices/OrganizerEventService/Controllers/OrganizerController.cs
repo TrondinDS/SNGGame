@@ -128,16 +128,15 @@ namespace OrganizerEventService.Controllers
         [HttpPost]
         public async Task<ActionResult> Filter([FromBody] ParamQueryOrganizer param)
         {
-            return Ok();
-            //try
-            //{
-            //    var elems = await service.Filter(param);
-            //    return Ok(elems);
-            //}
-            //catch (Exception ex)
-            //{
-            //    return StatusCode(StatusCodes.Status500InternalServerError, new { error = "Произошла внутренняя ошибка сервера", details = ex.Message });
-            //}
+            try
+            {
+                var elems = await service.Filter(param);
+                return Ok(elems);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { error = "Произошла внутренняя ошибка сервера", details = ex.Message });
+            }
         }
     }
 }

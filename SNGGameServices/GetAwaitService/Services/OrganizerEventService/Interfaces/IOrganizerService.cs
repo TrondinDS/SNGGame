@@ -14,4 +14,5 @@ public interface IOrganizerService
     Task<bool> Update(OrganizerDTO userDto);
     Task<bool> Delete(Guid id);
     Task<IEnumerable<OrganizerDTO>?> GetByUserId(Guid id);
+    Task<IEnumerable<OrganizerDTO>?> Filter(ParamQueryOrganizer param);
 }

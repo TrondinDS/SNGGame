@@ -16,7 +16,7 @@ public class OrganizerOrganizerQuery
             bodyQuery = bodyQuery.Where(x => EF.Functions.ILike(x.Title, $"%{query.Title}%"));
 
         if (!string.IsNullOrEmpty(query.Mail))
-            bodyQuery = bodyQuery.Where(x => x.Mail.Equals(query.Mail, StringComparison.OrdinalIgnoreCase));
+            bodyQuery = bodyQuery.Where(x => EF.Functions.ILike(x.Mail, $"%{query.Mail}%"));
 
         if (query.CreatorId is not null)
             bodyQuery = bodyQuery.Where(x => query.CreatorId.Contains(x.Id));

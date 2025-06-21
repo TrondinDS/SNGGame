@@ -24,7 +24,7 @@ namespace FrontService.Pages.Organizer
         public OrganizerDTO New { get; set; }
 
         [BindProperty]
-        public IFormFile ImageFile { get; set; }
+        public IFormFile? ImageFile { get; set; }
 
         public async Task<IActionResult> OnGetAsync(Guid id)
         {
