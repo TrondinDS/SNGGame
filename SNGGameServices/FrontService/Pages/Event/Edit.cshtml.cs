@@ -1,53 +1,60 @@
 using AutoMapper;
 using FrontService.Services.Interfaces;
+using Library.Generics.DB.DTO.DTOModelServices.OrganizerEventService.Event;
 using Library.Generics.DB.DTO.DTOModelServices.OrganizerEventService.Organizer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.VisualBasic;
-using System.Security;
 
-namespace FrontService.Pages.Organizer
+namespace FrontService.Pages.Event
 {
     public class EditModel : PageModel
     {
-        private readonly IOrganizerService service;
+        private readonly IEventApiService service;
         private readonly IMapper mapper;
 
-        public EditModel(IOrganizerService service, IMapper mapper)
+        public EditModel(IEventApiService service, IMapper mapper)
         {
             this.service = service;
             this.mapper = mapper;
         }
 
-        public OrganizerDTO dto { get; set; }
+        public EventDTO dto { get; set; }
 
         [BindProperty]
-        public OrganizerDTO New { get; set; }
+        public EventDTO New { get; set; }
 
         [BindProperty]
         public IFormFile? ImageFile { get; set; }
 
+
         public async Task<IActionResult> OnGetAsync(Guid id)
         {
-            var elem = await service.GetById(id);
-            if (elem == null) return NotFound();
+            var elem = await service.GetEventByIdAsync(id);
             dto = elem;
-            New = mapper.Map<OrganizerDTO>(elem); // глубокое копирование
+            New = mapper.Map<EventDTO>(elem); // глубокое копирование
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(Guid id)
         {
-            var existing = await service.GetById(New.Id);
+            var existing = await service.GetEventByIdAsync(New.Id);
             if (existing == null)
             {
-                TempData["ErrorMessage"] = "Организатор не найден.";
+                TempData["ErrorMessage"] = "Событие не найдено.";
                 return RedirectToPage();
             }
 
             existing.Title = New.Title;
-            existing.Mail = New.Mail;
+            existing.Address = New.Address;
+            existing.Country = New.Country;
+            existing.Region = New.Region;
+            existing.City = New.City;
+            existing.GeoUrl = New.GeoUrl;
+            existing.Status = New.Status;
+            existing.PriceMin = New.PriceMin;
+            existing.PriceMax = New.PriceMax;
             existing.Content = New.Content;
+            existing.OrganizerEventId = New.OrganizerEventId;
 
             if (ImageFile is { Length: > 0 })
             {
@@ -74,7 +81,7 @@ namespace FrontService.Pages.Organizer
                 }
             }
 
-            var success = await service.Update(existing);
+            var success = await service.UpdateEventAsync(existing);
             if (!success)
             {
                 TempData["ErrorMessage"] = "Ошибка при сохранении изменений.";

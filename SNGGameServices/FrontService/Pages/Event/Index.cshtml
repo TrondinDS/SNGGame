@@ -6,15 +6,17 @@
 
 <h2 class="mb-4">📅 События</h2>
 
+
 <button class="btn btn-secondary mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#filterCollapse" aria-expanded="false" aria-controls="filterCollapse">
     ⚙️ Показать/Скрыть фильтр
 </button>
+
 
 <div class="collapse mb-4" id="filterCollapse">
     <form method="get" class="card card-body">
         <div class="row g-3">
             <div class="col-md-4">
-                <label for="Title" class="form-label">Название события</label>
+                <label for="Title" class="form-label">Название</label>
                 <input type="text" id="Title" name="Title" value="@Model.Title" class="form-control" placeholder="Введите название..." />
             </div>
 
@@ -22,7 +24,45 @@
                 <label for="Status" class="form-label">Статус</label>
                 <input type="text" id="Status" name="Status" value="@Model.Status" class="form-control" placeholder="Например: Активен" />
             </div>
+        </div>
 
+        <div class="row g-3">
+            <div class="col-md-4">
+                <label for="Country" class="form-label">Страна</label>
+                <input type="text" id="Country" name="Country" value="@Model.Country" class="form-control" placeholder="Россия" />
+            </div>
+
+            <div class="col-md-4">
+                <label for="Region" class="form-label">Регион</label>
+                <input type="text" id="Region" name="Region" value="@Model.Region" class="form-control" placeholder="Брянская область" />
+            </div>
+
+            <div class="col-md-4">
+                <label for="City" class="form-label">Город</label>
+                <input type="text" id="City" name="City" value="@Model.City" class="form-control" placeholder="Брянск" />
+            </div>
+        </div>
+
+        <div class="row g-3">
+            <div class="col-md-4">
+                <label for="Address" class="form-label">Адрес</label>
+                <input type="text" id="Address" name="Address" value="@Model.Address" class="form-control" placeholder="" />
+            </div>
+
+            <div class="col-md-2">
+                <label for="PriceMin" class="form-label">Минимальная цена</label>
+                <input type="number" min="0" id="PriceMin" name="PriceMin" value="@Model.PriceMin" class="form-control" placeholder="0" />
+            </div>
+
+            <div class="col-md-2">
+                <label for="PriceMax" class="form-label">Максимальная цена</label>
+                <input type="number" min="0" id="PriceMax" name="PriceMax" value="@Model.PriceMax" class="form-control" placeholder="0" />
+            </div>
+
+            <div class="col-md-4">
+                <label for="GeoUrl" class="form-label">Место проведения</label>
+                <input type="url" id="GeoUrl" name="GeoUrl" value="@Model.GeoUrl" class="form-control" placeholder="https://maps.apple.com/?ll=37.7749,-122.4194" />
+            </div>
         </div>
 
         <div class="row mt-3">
