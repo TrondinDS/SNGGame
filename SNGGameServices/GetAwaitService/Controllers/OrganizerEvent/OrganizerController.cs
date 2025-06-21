@@ -2,6 +2,7 @@
 using GetAwaitService.Services.OrganizerEventService.Interfaces;
 using GetAwaitService.Services.UserAccessRightsService.Interfaces;
 using Library.Generics.DB.DTO.DTOModelServices.OrganizerEventService.Organizer;
+using Library.Generics.Query.QueryModels.OrganizerEvent;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GetAwaitService.Controllers.OrganizerEvent
@@ -29,6 +30,13 @@ namespace GetAwaitService.Controllers.OrganizerEvent
         {
             var organizers = await _service.GetAll();
             return organizers != null ? Ok(organizers) : StatusCode(500, "Ошибка при получении списка организаторов.");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Filter([FromBody] ParamQueryOrganizer param)
+        {
+            var elems = await _service.Filter(param);
+            return elems != null ? Ok(elems) : StatusCode(500, "Ошибка при фильтрации событий.");
         }
 
         [HttpGet("{id}")]
