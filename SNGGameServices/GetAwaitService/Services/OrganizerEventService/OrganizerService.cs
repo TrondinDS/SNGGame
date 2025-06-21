@@ -37,6 +37,9 @@ public class OrganizerService : IOrganizerService
         var response = await _httpClient.PostAsync("api/Organizer/Filter", content);
         if (!response.IsSuccessStatusCode) return null;
 
+        var respContent = await response.Content.ReadAsStringAsync();
+        Console.WriteLine(respContent);
+
         return await response.Content.ReadFromJsonAsync<IEnumerable<OrganizerDTO>>(_jsonOptions);
     }
 

@@ -1,6 +1,9 @@
 ﻿using Library.Generics.DB.DTO.DTOModelServices.OrganizerEventService.Organizer;
 using System.Text.Json;
 using System.Text;
+using Library.Generics.DB.DTO.DTOModelServices.StudioGameService.Game;
+using Library.Generics.Query.QueryModels.StudioGame;
+using Library.Generics.Query.QueryModels.OrganizerEvent;
 
 namespace FrontService.Services.Interfaces;
 
@@ -26,6 +29,16 @@ public class OrganizerService : IOrganizerService
         return await response.Content.ReadFromJsonAsync<IEnumerable<OrganizerDTO>>(_jsonOptions);
     }
 
+    public async Task<IEnumerable<OrganizerDTO>?> Filter(ParamQueryOrganizer query)
+    {
+        var content = new StringContent(JsonSerializer.Serialize(query), Encoding.UTF8, "application/json");
+        var response = await _httpClient.PostAsync("api/Organizer/Filter", content);
+
+        if (!response.IsSuccessStatusCode) return null;
+
+        var body = await response.Content.ReadAsStringAsync();
+        return JsonSerializer.Deserialize<IEnumerable<OrganizerDTO>>(body, _jsonOptions);
+    }
     public async Task<OrganizerDTO?> GetById(Guid id)
     {
         var response = await _httpClient.GetAsync($"api/Organizer/GetById/{id}");
